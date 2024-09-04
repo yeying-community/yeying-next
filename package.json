@@ -1,0 +1,35 @@
+{
+  "name": "yeying-next",
+  "version": "1.0.0",
+  "description": "a web3 library for browser",
+  "browser": "dist/yeying.next.umd.js",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "keywords": ["web3", "application"],
+  "author": "yeying.community@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "@yeying-community/yeying-web3": "^0.0.5",
+    "elliptic": "^6.5.7",
+    "google-protobuf": "^3.21.4",
+    "grpc-web": "^1.5.0",
+    "luxon": "^3.5.0",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/preset-typescript": "^7.24.7",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "jsdom": "^25.0.0",
+    "rollup": "^4.21.0",
+    "vitest": "^2.0.5"
+  }
+}

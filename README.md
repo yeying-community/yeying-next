@@ -1,2 +1,2 @@
 # yeying-next
-a web3 library for browser
+a web3 application library for browser
