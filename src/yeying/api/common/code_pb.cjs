@@ -38,6 +38,7 @@ goog.exportSymbol('proto.yeying.api.common.ResponseContentFormatEnum', null, glo
 goog.exportSymbol('proto.yeying.api.common.ServiceCodeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.SessionRoleEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.SessionSceneEnum', null, global);
+goog.exportSymbol('proto.yeying.api.common.StreamDataTagEnum', null, global);
 /**
  * @enum {number}
  */
@@ -217,6 +218,15 @@ proto.yeying.api.common.AuthenticateTypeEnum = {
   AUTHENTICATE_TYPE_UNKNOWN: 0,
   AUTHENTICATE_TYPE_CERT: 1,
   AUTHENTICATE_TYPE_TOKEN: 2
+};
+
+/**
+ * @enum {number}
+ */
+proto.yeying.api.common.StreamDataTagEnum = {
+  STREAM_DATA_TAG_HEAD: 0,
+  STREAM_DATA_TAG_BODY: 1,
+  STREAM_DATA_TAG_TAIL: 2
 };
 
 goog.object.extend(exports, proto.yeying.api.common);

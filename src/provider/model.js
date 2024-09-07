@@ -1,7 +1,7 @@
 import {IdentityProvider} from './identity/identity.js'
 import {UserProvider} from './user/user.js'
-import {LlmAdaptor} from './llm/llm.js'
-import {AssetAdaptor} from './asset/asset.js'
+import {LlmProvider} from './llm/llm.js'
+import {AssetProvider} from './asset/asset.js'
 import {CertificateProvider} from './certificate/certificate.js'
 import code_pkg from '../yeying/api/common/code_pb.cjs'
 import {fromApiCodeToStr, fromStrToApiCode,} from '../domain/model/identity/model.js'
@@ -47,7 +47,7 @@ export function getStoreAdaptor(storeMetadata, signer) {
   if (!isSupported(serviceMetadata, ApiCodeEnum.API_CODE_ASSET)) {
     return undefined
   } else {
-    return new AssetAdaptor(serviceMetadata, signer)
+    return new AssetProvider(serviceMetadata, signer)
   }
 }
 
@@ -56,7 +56,7 @@ export function getLlmAdaptor(agentMetadata, signer) {
   if (!isSupported(serviceMetadata, ApiCodeEnum.API_CODE_LLM)) {
     return undefined
   } else {
-    return new LlmAdaptor(serviceMetadata, signer)
+    return new LlmProvider(serviceMetadata, signer)
   }
 }
 
@@ -109,9 +109,9 @@ export function getAdaptor(apiCode, serviceMetadata, signer) {
     case ApiCodeEnum.API_CODE_USER:
       return new UserProvider(serviceMetadata, signer)
     case ApiCodeEnum.API_CODE_LLM:
-      return new LlmAdaptor(serviceMetadata, signer)
+      return new LlmProvider(serviceMetadata, signer)
     case ApiCodeEnum.API_CODE_ASSET:
-      return new AssetAdaptor(serviceMetadata, signer)
+      return new AssetProvider(serviceMetadata, signer)
     case ApiCodeEnum.API_CODE_CERTIFICATE:
       return new CertificateProvider(serviceMetadata, signer)
     default:

@@ -8,7 +8,7 @@ export class ApplicationProvider {
   constructor(authenticate, provider) {
     this.authenticate = authenticate
     this.provider = provider
-    this.client = new ApplicationClient(this.provider.metadata.extend.proxy)
+    this.client = new ApplicationClient(this.provider.extend.proxy)
   }
 
   search(code, page, pageSize) {
@@ -24,7 +24,7 @@ export class ApplicationProvider {
         header = await this.authenticate.createHeader(method, body)
       } catch (err) {
         console.error('Fail to create header for adding user', err)
-        throw err
+        return reject(err)
       }
 
       const request = new SearchRequest()

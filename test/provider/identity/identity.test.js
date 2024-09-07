@@ -1,6 +1,6 @@
 import {Authenticate} from '../../../src/authenticate/authenticate.js'
 import {IdentityProvider} from '../../../src/provider/identity/identity.js'
-import {getServiceAgentCode, getServiceMessageBoxCode, getServiceNodeCode, getServiceStoreCode} from '../../../src/common/code.js'
+import {getServiceAgentCode, getServiceMessageBoxCode, getServiceNodeCode, getServiceStoreCode} from '../../../src/common/common.js'
 
 const identity = {
   blockAddress: {

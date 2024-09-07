@@ -1,4 +1,3 @@
-import {UserProvider} from '../../../src/provider/user/user.js'
 import {Authenticate} from '../../../src/authenticate/authenticate.js'
 import {CertificateProvider} from '../../../src/provider/certificate/certificate.js'
 

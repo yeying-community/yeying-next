@@ -4,9 +4,10 @@ import {getCurrentUtcString, isExpired, parseDateTime} from '../common/date.js'
 import {composite, concat} from '../common/object.js'
 import {generateUuid} from '../common/string.js'
 import {convertDidToPublicKey, sign, verify} from '../crypto/signature.js'
-import {fromAuthenticateTypeToStr} from '../common/code.js'
+import {convertAuthenticateTypeTo} from '../common/common.js'
 import {InvalidArgument, NoPermission} from '../common/error.js'
 import {computeHash} from '../crypto/hash.js'
+import {encodeHex} from '../common/codec.js'
 
 const {MessageHeader} = message_pkg
 
@@ -23,7 +24,7 @@ export class Authenticate {
     const nonce = generateUuid()
     const version = 0
     let data
-    const type = fromAuthenticateTypeToStr(AuthenticateTypeEnum.AUTHENTICATE_TYPE_CERT)
+    const type = convertAuthenticateTypeTo(AuthenticateTypeEnum.AUTHENTICATE_TYPE_CERT)
     if (body === undefined) {
       data = composite(concat(did, method, type, timestamp, nonce, `${version}`))
     } else {
@@ -50,7 +51,8 @@ export class Authenticate {
     }
 
     let data
-    const h = concat(header.getDid(), method, fromAuthenticateTypeToStr(header.getAuthtype()), timestamp, header.getNonce(), `${header.getVersion()}`)
+    const authType = convertAuthenticateTypeTo(header.getAuthtype())
+    const h = concat(header.getDid(), method, authType, timestamp, header.getNonce(), `${header.getVersion()}`)
     if (body === undefined) {
       data = composite(h)
     } else {

@@ -1,5 +1,6 @@
 import {UserProvider} from '../../../src/provider/user/user.js'
 import {Authenticate} from '../../../src/authenticate/authenticate.js'
+import {AssetProvider} from '../../../src/provider/asset/asset.js'
 
 const identity = {
   blockAddress: {
@@ -20,8 +21,8 @@ const provider = {extend: {proxy: 'http://localhost:8541'}}
 
 describe('User', () => {
   it('add', async () => {
-    const userProvider = new UserProvider(new Authenticate(identity), provider)
-    await userProvider.add('test1', '13584001111', 'yeying.community@gmail.com')
+    const assetProvider = new AssetProvider(new Authenticate(identity), provider)
+    await assetProvider.search('test1', '13584001111', 'yeying.community@gmail.com')
     console.log(`Success to add new user=${identity.blockAddress.identifier}`)
   })
 

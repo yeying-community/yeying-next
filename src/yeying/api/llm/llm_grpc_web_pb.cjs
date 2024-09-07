@@ -205,61 +205,61 @@ proto.yeying.api.llm.LlmPromiseClient.prototype.delLlm =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.yeying.api.llm.ConfigRequest,
- *   !proto.yeying.api.llm.ConfigResponse>}
+ *   !proto.yeying.api.llm.GetLlmRequest,
+ *   !proto.yeying.api.llm.GetLlmResponse>}
  */
-const methodDescriptor_Llm_Config = new grpc.web.MethodDescriptor(
-  '/yeying.api.llm.Llm/Config',
+const methodDescriptor_Llm_GetLlm = new grpc.web.MethodDescriptor(
+  '/yeying.api.llm.Llm/GetLlm',
   grpc.web.MethodType.UNARY,
-  proto.yeying.api.llm.ConfigRequest,
-  proto.yeying.api.llm.ConfigResponse,
+  proto.yeying.api.llm.GetLlmRequest,
+  proto.yeying.api.llm.GetLlmResponse,
   /**
-   * @param {!proto.yeying.api.llm.ConfigRequest} request
+   * @param {!proto.yeying.api.llm.GetLlmRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.yeying.api.llm.ConfigResponse.deserializeBinary
+  proto.yeying.api.llm.GetLlmResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.yeying.api.llm.ConfigRequest} request The
+ * @param {!proto.yeying.api.llm.GetLlmRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.RpcError, ?proto.yeying.api.llm.ConfigResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.yeying.api.llm.GetLlmResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.yeying.api.llm.ConfigResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.yeying.api.llm.GetLlmResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.yeying.api.llm.LlmClient.prototype.config =
+proto.yeying.api.llm.LlmClient.prototype.getLlm =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/yeying.api.llm.Llm/Config',
+      '/yeying.api.llm.Llm/GetLlm',
       request,
       metadata || {},
-      methodDescriptor_Llm_Config,
+      methodDescriptor_Llm_GetLlm,
       callback);
 };
 
 
 /**
- * @param {!proto.yeying.api.llm.ConfigRequest} request The
+ * @param {!proto.yeying.api.llm.GetLlmRequest} request The
  *     request proto
  * @param {?Object<string, string>=} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.yeying.api.llm.ConfigResponse>}
+ * @return {!Promise<!proto.yeying.api.llm.GetLlmResponse>}
  *     Promise that resolves to the response
  */
-proto.yeying.api.llm.LlmPromiseClient.prototype.config =
+proto.yeying.api.llm.LlmPromiseClient.prototype.getLlm =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/yeying.api.llm.Llm/Config',
+      '/yeying.api.llm.Llm/GetLlm',
       request,
       metadata || {},
-      methodDescriptor_Llm_Config);
+      methodDescriptor_Llm_GetLlm);
 };
 
 

@@ -1,8 +1,6 @@
-import {InvitationProvider} from '../../../src/provider/invitation/invitation.js'
 import {Authenticate} from '../../../src/authenticate/authenticate.js'
-import {getRegisterScene} from '../../../src/provider/invitation/model.js'
 import {ApplicationProvider} from '../../../src/provider/application/application.js'
-import {getAppIdentityCode} from '../../../src/common/code.js'
+import {getAppIdentityCode} from '../../../src/common/common.js'
 
 const identity = {
   blockAddress: {

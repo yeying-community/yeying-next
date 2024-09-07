@@ -19,6 +19,17 @@ export function doError(err, reject, extend) {
   }
 }
 
+export function doStatuses(statuses, resolve, reject, extend, isSuccess) {
+  isSuccess = isSuccess === undefined ? isOk : isSuccess
+  const status = statuses.find(s => !isSuccess(s.getCode()))
+  if (status === undefined) {
+    resolve()
+  } else {
+    console.error(`Service error, code=${status.getCode()}, message=${status.getMessage()}`)
+    reject(convertResponseStatusToError(status.getCode(), status.getMessage(), extend))
+  }
+}
+
 export function doStatus(status, resolve, reject, extend, isSuccess) {
   isSuccess = isSuccess === undefined ? isOk : isSuccess
   if (isSuccess(status.getCode())) {

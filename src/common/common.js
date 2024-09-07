@@ -1,5 +1,15 @@
 import code_pkg from '../yeying/api/common/code_pb.cjs'
-const {AuthenticateTypeEnum, CategoryCodeEnum, ServiceCodeEnum, ApiCodeEnum, AccountCodeEnum, CipherTypeEnum, ApplicationCodeEnum} = code_pkg
+
+const {
+  AuthenticateTypeEnum,
+  StreamDataTagEnum,
+  CategoryCodeEnum,
+  ServiceCodeEnum,
+  ApiCodeEnum,
+  AccountCodeEnum,
+  CipherTypeEnum,
+  ApplicationCodeEnum
+} = code_pkg
 
 export function getAppIdentityCode() {
   return ApplicationCodeEnum.APPLICATION_CODE_IDENTITY
@@ -21,6 +31,18 @@ export function getServiceStoreCode() {
   return ServiceCodeEnum.SERVICE_CODE_STORE
 }
 
+export function getStreamDataTagHead(tag) {
+  return StreamDataTagEnum.STREAM_DATA_TAG_HEAD
+}
+
+export function getStreamDataTagBody(tag) {
+  return StreamDataTagEnum.STREAM_DATA_TAG_BODY
+}
+
+export function getStreamDataTagTail(tag) {
+  return StreamDataTagEnum.STREAM_DATA_TAG_TAIL
+}
+
 export function fromStrToAuthenticateType(str) {
   if (str === undefined) {
     return undefined
@@ -29,7 +51,7 @@ export function fromStrToAuthenticateType(str) {
   return value === AuthenticateTypeEnum.AUTHENTICATE_TYPE_UNKNOWN ? undefined : value
 }
 
-export function fromAuthenticateTypeToStr(authenticateType) {
+export function convertAuthenticateTypeTo(authenticateType) {
   if (authenticateType === undefined || authenticateType === AuthenticateTypeEnum.AUTHENTICATE_TYPE_UNKNOWN) {
     return undefined
   }
@@ -58,7 +80,7 @@ export function fromCategoryCodeToStr(category) {
   return Object.keys(CategoryCodeEnum).find(s => CategoryCodeEnum[s] === category)
 }
 
-export function fromStrToServiceCode(str) {
+export function convertServiceCodeFrom(str) {
   if (str === undefined) {
     return undefined
   }
@@ -67,7 +89,7 @@ export function fromStrToServiceCode(str) {
 }
 
 export function getApiCodeListByServiceCode(serviceCodeStr) {
-  const serviceCode = fromStrToServiceCode(serviceCodeStr)
+  const serviceCode = convertServiceCodeFrom(serviceCodeStr)
   switch (serviceCode) {
     case ServiceCodeEnum.SERVICE_CODE_NODE:
       return [ApiCodeEnum.API_CODE_USER, ApiCodeEnum.API_CODE_IDENTITY, ApiCodeEnum.API_CODE_CERTIFICATE]
@@ -113,7 +135,7 @@ export function fromAccountCodeToStr(accountCode) {
   return Object.keys(AccountCodeEnum).find(s => AccountCodeEnum[s] === accountCode)
 }
 
-export function fromStrToApiCode(str) {
+export function convertApiCodeFrom(str) {
   if (str === undefined) {
     return undefined
   }
