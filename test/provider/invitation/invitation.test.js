@@ -1,4 +1,4 @@
-import {Authenticate} from '../../../src/authenticate/authenticate.js'
+import {Authenticate} from '../../../src/identity/authenticate.js'
 import {InvitationProvider} from '../../../src/provider/invitation/invitation.js'
 import {getRegisterScene} from '../../../src/provider/invitation/model.js'
 

@@ -25,7 +25,7 @@ var yeying_api_common_message_pb = require('../../../yeying/api/common/message_p
 goog.object.extend(proto, yeying_api_common_message_pb);
 var yeying_api_common_code_pb = require('../../../yeying/api/common/code_pb.cjs');
 goog.object.extend(proto, yeying_api_common_code_pb);
-goog.exportSymbol('proto.yeying.api.asset.Action', null, global);
+goog.exportSymbol('proto.yeying.api.asset.AssetActionEnum', null, global);
 goog.exportSymbol('proto.yeying.api.asset.AssetMetadata', null, global);
 goog.exportSymbol('proto.yeying.api.asset.ChunkMetadata', null, global);
 goog.exportSymbol('proto.yeying.api.asset.DetailRequest', null, global);
@@ -34,6 +34,7 @@ goog.exportSymbol('proto.yeying.api.asset.DetailResponse', null, global);
 goog.exportSymbol('proto.yeying.api.asset.DetailResponseBody', null, global);
 goog.exportSymbol('proto.yeying.api.asset.GetRequest', null, global);
 goog.exportSymbol('proto.yeying.api.asset.GetRequestBody', null, global);
+goog.exportSymbol('proto.yeying.api.asset.GetRequestBody.ChunkCase', null, global);
 goog.exportSymbol('proto.yeying.api.asset.GetResponse', null, global);
 goog.exportSymbol('proto.yeying.api.asset.GetResponseBody', null, global);
 goog.exportSymbol('proto.yeying.api.asset.PutRequest', null, global);
@@ -648,7 +649,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.yeying.api.asset.GetRequestBody = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.yeying.api.asset.GetRequestBody.oneofGroups_);
 };
 goog.inherits(proto.yeying.api.asset.GetRequestBody, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -1187,8 +1188,9 @@ proto.yeying.api.asset.SearchRequestBody.prototype.toObject = function(opt_inclu
 proto.yeying.api.asset.SearchRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
     format: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    page: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    pagesize: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    assethash: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    page: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    pagesize: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -1230,10 +1232,14 @@ proto.yeying.api.asset.SearchRequestBody.deserializeBinaryFromReader = function(
       msg.setFormat(value);
       break;
     case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAssethash(value);
+      break;
+    case 3:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setPage(value);
       break;
-    case 3:
+    case 4:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setPagesize(value);
       break;
@@ -1273,17 +1279,24 @@ proto.yeying.api.asset.SearchRequestBody.serializeBinaryToWriter = function(mess
       f
     );
   }
+  f = message.getAssethash();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
   f = message.getPage();
   if (f !== 0) {
     writer.writeUint32(
-      2,
+      3,
       f
     );
   }
   f = message.getPagesize();
   if (f !== 0) {
     writer.writeUint32(
-      3,
+      4,
       f
     );
   }
@@ -1309,28 +1322,28 @@ proto.yeying.api.asset.SearchRequestBody.prototype.setFormat = function(value) {
 
 
 /**
- * optional uint32 page = 2;
+ * optional string assetHash = 2;
+ * @return {string}
+ */
+proto.yeying.api.asset.SearchRequestBody.prototype.getAssethash = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.asset.SearchRequestBody} returns this
+ */
+proto.yeying.api.asset.SearchRequestBody.prototype.setAssethash = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional uint32 page = 3;
  * @return {number}
  */
 proto.yeying.api.asset.SearchRequestBody.prototype.getPage = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.yeying.api.asset.SearchRequestBody} returns this
- */
-proto.yeying.api.asset.SearchRequestBody.prototype.setPage = function(value) {
-  return jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-/**
- * optional uint32 pageSize = 3;
- * @return {number}
- */
-proto.yeying.api.asset.SearchRequestBody.prototype.getPagesize = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
@@ -1339,8 +1352,26 @@ proto.yeying.api.asset.SearchRequestBody.prototype.getPagesize = function() {
  * @param {number} value
  * @return {!proto.yeying.api.asset.SearchRequestBody} returns this
  */
-proto.yeying.api.asset.SearchRequestBody.prototype.setPagesize = function(value) {
+proto.yeying.api.asset.SearchRequestBody.prototype.setPage = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional uint32 pageSize = 4;
+ * @return {number}
+ */
+proto.yeying.api.asset.SearchRequestBody.prototype.getPagesize = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.yeying.api.asset.SearchRequestBody} returns this
+ */
+proto.yeying.api.asset.SearchRequestBody.prototype.setPagesize = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -2302,7 +2333,9 @@ proto.yeying.api.asset.StreamPutRequestHeadBody.prototype.toObject = function(op
 proto.yeying.api.asset.StreamPutRequestHeadBody.toObject = function(includeInstance, msg) {
   var f, obj = {
     assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    chunk: (f = msg.getChunk()) && proto.yeying.api.asset.ChunkMetadata.toObject(includeInstance, f)
+    version: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    chunkhash: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    chunksize: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -2344,9 +2377,16 @@ proto.yeying.api.asset.StreamPutRequestHeadBody.deserializeBinaryFromReader = fu
       msg.setAssetid(value);
       break;
     case 2:
-      var value = new proto.yeying.api.asset.ChunkMetadata;
-      reader.readMessage(value,proto.yeying.api.asset.ChunkMetadata.deserializeBinaryFromReader);
-      msg.setChunk(value);
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setVersion(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setChunkhash(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readUint64());
+      msg.setChunksize(value);
       break;
     default:
       reader.skipField();
@@ -2384,12 +2424,25 @@ proto.yeying.api.asset.StreamPutRequestHeadBody.serializeBinaryToWriter = functi
       f
     );
   }
-  f = message.getChunk();
-  if (f != null) {
-    writer.writeMessage(
+  f = message.getVersion();
+  if (f !== 0) {
+    writer.writeUint32(
       2,
-      f,
-      proto.yeying.api.asset.ChunkMetadata.serializeBinaryToWriter
+      f
+    );
+  }
+  f = message.getChunkhash();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getChunksize();
+  if (f !== 0) {
+    writer.writeUint64(
+      4,
+      f
     );
   }
 };
@@ -2414,39 +2467,56 @@ proto.yeying.api.asset.StreamPutRequestHeadBody.prototype.setAssetid = function(
 
 
 /**
- * optional ChunkMetadata chunk = 2;
- * @return {?proto.yeying.api.asset.ChunkMetadata}
+ * optional uint32 version = 2;
+ * @return {number}
  */
-proto.yeying.api.asset.StreamPutRequestHeadBody.prototype.getChunk = function() {
-  return /** @type{?proto.yeying.api.asset.ChunkMetadata} */ (
-    jspb.Message.getWrapperField(this, proto.yeying.api.asset.ChunkMetadata, 2));
+proto.yeying.api.asset.StreamPutRequestHeadBody.prototype.getVersion = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
 /**
- * @param {?proto.yeying.api.asset.ChunkMetadata|undefined} value
- * @return {!proto.yeying.api.asset.StreamPutRequestHeadBody} returns this
-*/
-proto.yeying.api.asset.StreamPutRequestHeadBody.prototype.setChunk = function(value) {
-  return jspb.Message.setWrapperField(this, 2, value);
-};
-
-
-/**
- * Clears the message field making it undefined.
+ * @param {number} value
  * @return {!proto.yeying.api.asset.StreamPutRequestHeadBody} returns this
  */
-proto.yeying.api.asset.StreamPutRequestHeadBody.prototype.clearChunk = function() {
-  return this.setChunk(undefined);
+proto.yeying.api.asset.StreamPutRequestHeadBody.prototype.setVersion = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
 /**
- * Returns whether this field is set.
- * @return {boolean}
+ * optional string chunkHash = 3;
+ * @return {string}
  */
-proto.yeying.api.asset.StreamPutRequestHeadBody.prototype.hasChunk = function() {
-  return jspb.Message.getField(this, 2) != null;
+proto.yeying.api.asset.StreamPutRequestHeadBody.prototype.getChunkhash = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.asset.StreamPutRequestHeadBody} returns this
+ */
+proto.yeying.api.asset.StreamPutRequestHeadBody.prototype.setChunkhash = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional uint64 chunkSize = 4;
+ * @return {number}
+ */
+proto.yeying.api.asset.StreamPutRequestHeadBody.prototype.getChunksize = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.yeying.api.asset.StreamPutRequestHeadBody} returns this
+ */
+proto.yeying.api.asset.StreamPutRequestHeadBody.prototype.setChunksize = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -2969,7 +3039,9 @@ proto.yeying.api.asset.PutRequestBody.prototype.toObject = function(opt_includeI
 proto.yeying.api.asset.PutRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
     assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    chunk: (f = msg.getChunk()) && proto.yeying.api.asset.ChunkMetadata.toObject(includeInstance, f)
+    version: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    chunkhash: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    chunksize: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -3011,9 +3083,16 @@ proto.yeying.api.asset.PutRequestBody.deserializeBinaryFromReader = function(msg
       msg.setAssetid(value);
       break;
     case 2:
-      var value = new proto.yeying.api.asset.ChunkMetadata;
-      reader.readMessage(value,proto.yeying.api.asset.ChunkMetadata.deserializeBinaryFromReader);
-      msg.setChunk(value);
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setVersion(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setChunkhash(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readUint64());
+      msg.setChunksize(value);
       break;
     default:
       reader.skipField();
@@ -3051,12 +3130,25 @@ proto.yeying.api.asset.PutRequestBody.serializeBinaryToWriter = function(message
       f
     );
   }
-  f = message.getChunk();
-  if (f != null) {
-    writer.writeMessage(
+  f = message.getVersion();
+  if (f !== 0) {
+    writer.writeUint32(
       2,
-      f,
-      proto.yeying.api.asset.ChunkMetadata.serializeBinaryToWriter
+      f
+    );
+  }
+  f = message.getChunkhash();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getChunksize();
+  if (f !== 0) {
+    writer.writeUint64(
+      4,
+      f
     );
   }
 };
@@ -3081,39 +3173,56 @@ proto.yeying.api.asset.PutRequestBody.prototype.setAssetid = function(value) {
 
 
 /**
- * optional ChunkMetadata chunk = 2;
- * @return {?proto.yeying.api.asset.ChunkMetadata}
+ * optional uint32 version = 2;
+ * @return {number}
  */
-proto.yeying.api.asset.PutRequestBody.prototype.getChunk = function() {
-  return /** @type{?proto.yeying.api.asset.ChunkMetadata} */ (
-    jspb.Message.getWrapperField(this, proto.yeying.api.asset.ChunkMetadata, 2));
+proto.yeying.api.asset.PutRequestBody.prototype.getVersion = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
 /**
- * @param {?proto.yeying.api.asset.ChunkMetadata|undefined} value
- * @return {!proto.yeying.api.asset.PutRequestBody} returns this
-*/
-proto.yeying.api.asset.PutRequestBody.prototype.setChunk = function(value) {
-  return jspb.Message.setWrapperField(this, 2, value);
-};
-
-
-/**
- * Clears the message field making it undefined.
+ * @param {number} value
  * @return {!proto.yeying.api.asset.PutRequestBody} returns this
  */
-proto.yeying.api.asset.PutRequestBody.prototype.clearChunk = function() {
-  return this.setChunk(undefined);
+proto.yeying.api.asset.PutRequestBody.prototype.setVersion = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
 /**
- * Returns whether this field is set.
- * @return {boolean}
+ * optional string chunkHash = 3;
+ * @return {string}
  */
-proto.yeying.api.asset.PutRequestBody.prototype.hasChunk = function() {
-  return jspb.Message.getField(this, 2) != null;
+proto.yeying.api.asset.PutRequestBody.prototype.getChunkhash = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.asset.PutRequestBody} returns this
+ */
+proto.yeying.api.asset.PutRequestBody.prototype.setChunkhash = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional uint64 chunkSize = 4;
+ * @return {number}
+ */
+proto.yeying.api.asset.PutRequestBody.prototype.getChunksize = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.yeying.api.asset.PutRequestBody} returns this
+ */
+proto.yeying.api.asset.PutRequestBody.prototype.setChunksize = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -3960,8 +4069,8 @@ proto.yeying.api.asset.SignRequestBody.prototype.toObject = function(opt_include
  */
 proto.yeying.api.asset.SignRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    asset: (f = msg.getAsset()) && proto.yeying.api.asset.AssetMetadata.toObject(includeInstance, f),
-    action: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    action: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    asset: (f = msg.getAsset()) && proto.yeying.api.asset.AssetMetadata.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3999,13 +4108,13 @@ proto.yeying.api.asset.SignRequestBody.deserializeBinaryFromReader = function(ms
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
+      var value = /** @type {!proto.yeying.api.asset.AssetActionEnum} */ (reader.readEnum());
+      msg.setAction(value);
+      break;
+    case 2:
       var value = new proto.yeying.api.asset.AssetMetadata;
       reader.readMessage(value,proto.yeying.api.asset.AssetMetadata.deserializeBinaryFromReader);
       msg.setAsset(value);
-      break;
-    case 2:
-      var value = /** @type {!proto.yeying.api.asset.Action} */ (reader.readEnum());
-      msg.setAction(value);
       break;
     default:
       reader.skipField();
@@ -4036,31 +4145,49 @@ proto.yeying.api.asset.SignRequestBody.prototype.serializeBinary = function() {
  */
 proto.yeying.api.asset.SignRequestBody.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getAsset();
-  if (f != null) {
-    writer.writeMessage(
-      1,
-      f,
-      proto.yeying.api.asset.AssetMetadata.serializeBinaryToWriter
-    );
-  }
   f = message.getAction();
   if (f !== 0.0) {
     writer.writeEnum(
-      2,
+      1,
       f
+    );
+  }
+  f = message.getAsset();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.yeying.api.asset.AssetMetadata.serializeBinaryToWriter
     );
   }
 };
 
 
 /**
- * optional AssetMetadata asset = 1;
+ * optional AssetActionEnum action = 1;
+ * @return {!proto.yeying.api.asset.AssetActionEnum}
+ */
+proto.yeying.api.asset.SignRequestBody.prototype.getAction = function() {
+  return /** @type {!proto.yeying.api.asset.AssetActionEnum} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/**
+ * @param {!proto.yeying.api.asset.AssetActionEnum} value
+ * @return {!proto.yeying.api.asset.SignRequestBody} returns this
+ */
+proto.yeying.api.asset.SignRequestBody.prototype.setAction = function(value) {
+  return jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional AssetMetadata asset = 2;
  * @return {?proto.yeying.api.asset.AssetMetadata}
  */
 proto.yeying.api.asset.SignRequestBody.prototype.getAsset = function() {
   return /** @type{?proto.yeying.api.asset.AssetMetadata} */ (
-    jspb.Message.getWrapperField(this, proto.yeying.api.asset.AssetMetadata, 1));
+    jspb.Message.getWrapperField(this, proto.yeying.api.asset.AssetMetadata, 2));
 };
 
 
@@ -4069,7 +4196,7 @@ proto.yeying.api.asset.SignRequestBody.prototype.getAsset = function() {
  * @return {!proto.yeying.api.asset.SignRequestBody} returns this
 */
 proto.yeying.api.asset.SignRequestBody.prototype.setAsset = function(value) {
-  return jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 2, value);
 };
 
 
@@ -4087,25 +4214,7 @@ proto.yeying.api.asset.SignRequestBody.prototype.clearAsset = function() {
  * @return {boolean}
  */
 proto.yeying.api.asset.SignRequestBody.prototype.hasAsset = function() {
-  return jspb.Message.getField(this, 1) != null;
-};
-
-
-/**
- * optional Action action = 2;
- * @return {!proto.yeying.api.asset.Action}
- */
-proto.yeying.api.asset.SignRequestBody.prototype.getAction = function() {
-  return /** @type {!proto.yeying.api.asset.Action} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
-};
-
-
-/**
- * @param {!proto.yeying.api.asset.Action} value
- * @return {!proto.yeying.api.asset.SignRequestBody} returns this
- */
-proto.yeying.api.asset.SignRequestBody.prototype.setAction = function(value) {
-  return jspb.Message.setProto3EnumField(this, 2, value);
+  return jspb.Message.getField(this, 2) != null;
 };
 
 
@@ -4696,7 +4805,9 @@ proto.yeying.api.asset.VersionRequestBody.prototype.toObject = function(opt_incl
  */
 proto.yeying.api.asset.VersionRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    assetid: jspb.Message.getFieldWithDefault(msg, 1, "")
+    assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    page: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    pagesize: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -4737,6 +4848,14 @@ proto.yeying.api.asset.VersionRequestBody.deserializeBinaryFromReader = function
       var value = /** @type {string} */ (reader.readString());
       msg.setAssetid(value);
       break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setPage(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setPagesize(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -4773,6 +4892,20 @@ proto.yeying.api.asset.VersionRequestBody.serializeBinaryToWriter = function(mes
       f
     );
   }
+  f = message.getPage();
+  if (f !== 0) {
+    writer.writeUint32(
+      2,
+      f
+    );
+  }
+  f = message.getPagesize();
+  if (f !== 0) {
+    writer.writeUint32(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -4791,6 +4924,42 @@ proto.yeying.api.asset.VersionRequestBody.prototype.getAssetid = function() {
  */
 proto.yeying.api.asset.VersionRequestBody.prototype.setAssetid = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional uint32 page = 2;
+ * @return {number}
+ */
+proto.yeying.api.asset.VersionRequestBody.prototype.getPage = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.yeying.api.asset.VersionRequestBody} returns this
+ */
+proto.yeying.api.asset.VersionRequestBody.prototype.setPage = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional uint32 pageSize = 3;
+ * @return {number}
+ */
+proto.yeying.api.asset.VersionRequestBody.prototype.getPagesize = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.yeying.api.asset.VersionRequestBody} returns this
+ */
+proto.yeying.api.asset.VersionRequestBody.prototype.setPagesize = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -5441,7 +5610,8 @@ proto.yeying.api.asset.DetailRequestBody.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.asset.DetailRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    assethash: jspb.Message.getFieldWithDefault(msg, 1, "")
+    assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    version: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -5480,7 +5650,11 @@ proto.yeying.api.asset.DetailRequestBody.deserializeBinaryFromReader = function(
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setAssethash(value);
+      msg.setAssetid(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setVersion(value);
       break;
     default:
       reader.skipField();
@@ -5511,10 +5685,17 @@ proto.yeying.api.asset.DetailRequestBody.prototype.serializeBinary = function() 
  */
 proto.yeying.api.asset.DetailRequestBody.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getAssethash();
+  f = message.getAssetid();
   if (f.length > 0) {
     writer.writeString(
       1,
+      f
+    );
+  }
+  f = message.getVersion();
+  if (f !== 0) {
+    writer.writeUint32(
+      2,
       f
     );
   }
@@ -5522,10 +5703,10 @@ proto.yeying.api.asset.DetailRequestBody.serializeBinaryToWriter = function(mess
 
 
 /**
- * optional string assetHash = 1;
+ * optional string assetId = 1;
  * @return {string}
  */
-proto.yeying.api.asset.DetailRequestBody.prototype.getAssethash = function() {
+proto.yeying.api.asset.DetailRequestBody.prototype.getAssetid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -5534,8 +5715,26 @@ proto.yeying.api.asset.DetailRequestBody.prototype.getAssethash = function() {
  * @param {string} value
  * @return {!proto.yeying.api.asset.DetailRequestBody} returns this
  */
-proto.yeying.api.asset.DetailRequestBody.prototype.setAssethash = function(value) {
+proto.yeying.api.asset.DetailRequestBody.prototype.setAssetid = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional uint32 version = 2;
+ * @return {number}
+ */
+proto.yeying.api.asset.DetailRequestBody.prototype.getVersion = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.yeying.api.asset.DetailRequestBody} returns this
+ */
+proto.yeying.api.asset.DetailRequestBody.prototype.setVersion = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -6146,6 +6345,32 @@ proto.yeying.api.asset.GetRequest.prototype.hasBody = function() {
 
 
 
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.yeying.api.asset.GetRequestBody.oneofGroups_ = [[3,4]];
+
+/**
+ * @enum {number}
+ */
+proto.yeying.api.asset.GetRequestBody.ChunkCase = {
+  CHUNK_NOT_SET: 0,
+  HASH: 3,
+  INDEX: 4
+};
+
+/**
+ * @return {proto.yeying.api.asset.GetRequestBody.ChunkCase}
+ */
+proto.yeying.api.asset.GetRequestBody.prototype.getChunkCase = function() {
+  return /** @type {proto.yeying.api.asset.GetRequestBody.ChunkCase} */(jspb.Message.computeOneofCase(this, proto.yeying.api.asset.GetRequestBody.oneofGroups_[0]));
+};
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -6177,8 +6402,10 @@ proto.yeying.api.asset.GetRequestBody.prototype.toObject = function(opt_includeI
  */
 proto.yeying.api.asset.GetRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    assetmergedhash: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    chunkhash: jspb.Message.getFieldWithDefault(msg, 2, "")
+    assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    version: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    hash: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    index: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -6217,11 +6444,19 @@ proto.yeying.api.asset.GetRequestBody.deserializeBinaryFromReader = function(msg
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setAssetmergedhash(value);
+      msg.setAssetid(value);
       break;
     case 2:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setVersion(value);
+      break;
+    case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setChunkhash(value);
+      msg.setHash(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setIndex(value);
       break;
     default:
       reader.skipField();
@@ -6252,17 +6487,31 @@ proto.yeying.api.asset.GetRequestBody.prototype.serializeBinary = function() {
  */
 proto.yeying.api.asset.GetRequestBody.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getAssetmergedhash();
+  f = message.getAssetid();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = message.getChunkhash();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getVersion();
+  if (f !== 0) {
+    writer.writeUint32(
       2,
+      f
+    );
+  }
+  f = /** @type {string} */ (jspb.Message.getField(message, 3));
+  if (f != null) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = /** @type {number} */ (jspb.Message.getField(message, 4));
+  if (f != null) {
+    writer.writeUint32(
+      4,
       f
     );
   }
@@ -6270,10 +6519,10 @@ proto.yeying.api.asset.GetRequestBody.serializeBinaryToWriter = function(message
 
 
 /**
- * optional string assetMergedHash = 1;
+ * optional string assetId = 1;
  * @return {string}
  */
-proto.yeying.api.asset.GetRequestBody.prototype.getAssetmergedhash = function() {
+proto.yeying.api.asset.GetRequestBody.prototype.getAssetid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -6282,17 +6531,35 @@ proto.yeying.api.asset.GetRequestBody.prototype.getAssetmergedhash = function() 
  * @param {string} value
  * @return {!proto.yeying.api.asset.GetRequestBody} returns this
  */
-proto.yeying.api.asset.GetRequestBody.prototype.setAssetmergedhash = function(value) {
+proto.yeying.api.asset.GetRequestBody.prototype.setAssetid = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
- * optional string chunkHash = 2;
+ * optional uint32 version = 2;
+ * @return {number}
+ */
+proto.yeying.api.asset.GetRequestBody.prototype.getVersion = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.yeying.api.asset.GetRequestBody} returns this
+ */
+proto.yeying.api.asset.GetRequestBody.prototype.setVersion = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional string Hash = 3;
  * @return {string}
  */
-proto.yeying.api.asset.GetRequestBody.prototype.getChunkhash = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+proto.yeying.api.asset.GetRequestBody.prototype.getHash = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -6300,8 +6567,62 @@ proto.yeying.api.asset.GetRequestBody.prototype.getChunkhash = function() {
  * @param {string} value
  * @return {!proto.yeying.api.asset.GetRequestBody} returns this
  */
-proto.yeying.api.asset.GetRequestBody.prototype.setChunkhash = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
+proto.yeying.api.asset.GetRequestBody.prototype.setHash = function(value) {
+  return jspb.Message.setOneofField(this, 3, proto.yeying.api.asset.GetRequestBody.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.yeying.api.asset.GetRequestBody} returns this
+ */
+proto.yeying.api.asset.GetRequestBody.prototype.clearHash = function() {
+  return jspb.Message.setOneofField(this, 3, proto.yeying.api.asset.GetRequestBody.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.yeying.api.asset.GetRequestBody.prototype.hasHash = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional uint32 Index = 4;
+ * @return {number}
+ */
+proto.yeying.api.asset.GetRequestBody.prototype.getIndex = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.yeying.api.asset.GetRequestBody} returns this
+ */
+proto.yeying.api.asset.GetRequestBody.prototype.setIndex = function(value) {
+  return jspb.Message.setOneofField(this, 4, proto.yeying.api.asset.GetRequestBody.oneofGroups_[0], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.yeying.api.asset.GetRequestBody} returns this
+ */
+proto.yeying.api.asset.GetRequestBody.prototype.clearIndex = function() {
+  return jspb.Message.setOneofField(this, 4, proto.yeying.api.asset.GetRequestBody.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.yeying.api.asset.GetRequestBody.prototype.hasIndex = function() {
+  return jspb.Message.getField(this, 4) != null;
 };
 
 
@@ -8218,7 +8539,8 @@ proto.yeying.api.asset.RemoveRequestBody.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.asset.RemoveRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    assethash: jspb.Message.getFieldWithDefault(msg, 2, "")
+    assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    version: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -8255,9 +8577,13 @@ proto.yeying.api.asset.RemoveRequestBody.deserializeBinaryFromReader = function(
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 2:
+    case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setAssethash(value);
+      msg.setAssetid(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setVersion(value);
       break;
     default:
       reader.skipField();
@@ -8288,9 +8614,16 @@ proto.yeying.api.asset.RemoveRequestBody.prototype.serializeBinary = function() 
  */
 proto.yeying.api.asset.RemoveRequestBody.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getAssethash();
+  f = message.getAssetid();
   if (f.length > 0) {
     writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getVersion();
+  if (f !== 0) {
+    writer.writeUint32(
       2,
       f
     );
@@ -8299,11 +8632,11 @@ proto.yeying.api.asset.RemoveRequestBody.serializeBinaryToWriter = function(mess
 
 
 /**
- * optional string assetHash = 2;
+ * optional string assetId = 1;
  * @return {string}
  */
-proto.yeying.api.asset.RemoveRequestBody.prototype.getAssethash = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+proto.yeying.api.asset.RemoveRequestBody.prototype.getAssetid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -8311,8 +8644,26 @@ proto.yeying.api.asset.RemoveRequestBody.prototype.getAssethash = function() {
  * @param {string} value
  * @return {!proto.yeying.api.asset.RemoveRequestBody} returns this
  */
-proto.yeying.api.asset.RemoveRequestBody.prototype.setAssethash = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
+proto.yeying.api.asset.RemoveRequestBody.prototype.setAssetid = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional uint32 version = 2;
+ * @return {number}
+ */
+proto.yeying.api.asset.RemoveRequestBody.prototype.getVersion = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.yeying.api.asset.RemoveRequestBody} returns this
+ */
+proto.yeying.api.asset.RemoveRequestBody.prototype.setVersion = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -8945,7 +9296,8 @@ proto.yeying.api.asset.AssetMetadata.toObject = function(includeInstance, msg) {
     encrypted: jspb.Message.getBooleanFieldWithDefault(msg, 15, false),
     extend: jspb.Message.getFieldWithDefault(msg, 16, ""),
     chunksList: jspb.Message.toObjectList(msg.getChunksList(),
-    proto.yeying.api.asset.ChunkMetadata.toObject, includeInstance)
+    proto.yeying.api.asset.ChunkMetadata.toObject, includeInstance),
+    signature: jspb.Message.getFieldWithDefault(msg, 18, "")
   };
 
   if (includeInstance) {
@@ -9050,6 +9402,10 @@ proto.yeying.api.asset.AssetMetadata.deserializeBinaryFromReader = function(msg,
       var value = new proto.yeying.api.asset.ChunkMetadata;
       reader.readMessage(value,proto.yeying.api.asset.ChunkMetadata.deserializeBinaryFromReader);
       msg.addChunks(value);
+      break;
+    case 18:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSignature(value);
       break;
     default:
       reader.skipField();
@@ -9198,6 +9554,13 @@ proto.yeying.api.asset.AssetMetadata.serializeBinaryToWriter = function(message,
       17,
       f,
       proto.yeying.api.asset.ChunkMetadata.serializeBinaryToWriter
+    );
+  }
+  f = message.getSignature();
+  if (f.length > 0) {
+    writer.writeString(
+      18,
+      f
     );
   }
 };
@@ -9530,11 +9893,30 @@ proto.yeying.api.asset.AssetMetadata.prototype.clearChunksList = function() {
 
 
 /**
+ * optional string signature = 18;
+ * @return {string}
+ */
+proto.yeying.api.asset.AssetMetadata.prototype.getSignature = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 18, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.asset.AssetMetadata} returns this
+ */
+proto.yeying.api.asset.AssetMetadata.prototype.setSignature = function(value) {
+  return jspb.Message.setProto3StringField(this, 18, value);
+};
+
+
+/**
  * @enum {number}
  */
-proto.yeying.api.asset.Action = {
-  OVERWRITE: 0,
-  APPEND: 1
+proto.yeying.api.asset.AssetActionEnum = {
+  ASSET_ACTION_UNKNOWN: 0,
+  ASSET_ACTION_OVERWRITE: 1,
+  ASSET_ACTION_APPEND: 2
 };
 
 goog.object.extend(exports, proto.yeying.api.asset);

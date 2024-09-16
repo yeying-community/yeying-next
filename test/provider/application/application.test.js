@@ -1,4 +1,4 @@
-import {Authenticate} from '../../../src/authenticate/authenticate.js'
+import {Authenticate} from '../../../src/identity/authenticate.js'
 import {ApplicationProvider} from '../../../src/provider/application/application.js'
 import {getAppIdentityCode} from '../../../src/common/common.js'
 

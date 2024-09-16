@@ -1,7 +1,8 @@
 import pkg from '../../yeying/api/asset/asset_pb.cjs'
 import {AssetClient} from '../../yeying/api/asset/asset_grpc_web_pb.cjs'
-import {isDeleted} from '../tool/status.js'
-import {doError, doStatus} from '../../common/status.js'
+import {doError, doStatus, isExisted, isDeleted} from '../../common/status.js'
+import {convertDigitalFormatFrom} from '../../common/common.js'
+import {Asset} from './model.js'
 
 const {
   VersionRequest,
@@ -27,11 +28,22 @@ export class AssetProvider {
     this.client = new AssetClient(this.provider.extend.proxy)
   }
 
-  search(format) {
+  getDid() {
+    return this.authenticate.getDid()
+  }
+
+  getIdentityCipher() {
+    return this.authenticate.getIdentityCipher()
+  }
+
+  search(format, page, pageSize) {
     return new Promise(async (resolve, reject) => {
       const method = '/yeying.api.asset.Asset/Search'
       const body = new SearchRequestBody()
-      body.setFormat(format)
+      body.setFormat(typeof format === 'string' ? convertDigitalFormatFrom(format) : format)
+      body.setPage(page)
+      body.setPagesize(pageSize)
+
       let header
       try {
         header = await this.authenticate.createHeader(method, body)
@@ -61,11 +73,13 @@ export class AssetProvider {
     }, e => reject(e))
   }
 
-  version(assetId) {
+  version(assetId, pageIndex, pageSize) {
     return new Promise(async (resolve, reject) => {
       const method = '/yeying.api.asset.Asset/Version'
       const body = new VersionRequestBody()
       body.setAssetid(assetId)
+      body.setPage(pageIndex)
+      body.setPagesize(pageSize)
       let header
       try {
         header = await this.authenticate.createHeader(method, body)
@@ -95,11 +109,12 @@ export class AssetProvider {
     }, e => reject(e))
   }
 
-  detail(hash) {
+  detail(assetId, version) {
     return new Promise(async (resolve, reject) => {
       const method = '/yeying.api.asset.Asset/Detail'
       const body = new DetailRequestBody()
-      body.setAssethash(hash)
+      body.setAssetid(assetId)
+      body.setVersion(version)
       let header
       try {
         header = await this.authenticate.createHeader(method, body)
@@ -130,11 +145,12 @@ export class AssetProvider {
     }, e => reject(e))
   }
 
-  remove(hash) {
+  remove(assetId, version) {
     return new Promise(async (resolve, reject) => {
       const method = '/yeying.api.asset.Asset/Remove'
       const body = new RemoveRequestBody()
-      body.setAssethash(hash)
+      body.setAssetid(assetId)
+      body.setVersion(version)
       let header
       try {
         header = await this.authenticate.createHeader(method, body)
@@ -165,12 +181,12 @@ export class AssetProvider {
     }, e => reject(e))
   }
 
-  sign(asset, action) {
+  sign(action, asset) {
     return new Promise(async (resolve, reject) => {
       const method = '/yeying.api.asset.Asset/Sign'
       const body = new SignRequestBody()
-      body.setAsset(asset)
       body.setAction(action)
+      body.setAsset(asset)
       let header
       try {
         header = await this.authenticate.createHeader(method, body)
@@ -182,7 +198,7 @@ export class AssetProvider {
       const request = new SignRequest()
       request.setHeader(header)
       request.setBody(body)
-      this.client.sign(request, undefined, (err, response) => {
+      this.client.sign(request, undefined, (err, res) => {
         this.doSignResponse(method, err, res, resolve, reject)
       })
     })
@@ -196,16 +212,17 @@ export class AssetProvider {
 
     const body = res.getBody()
     this.authenticate.verifyHeader(method, res.getHeader(), body).then(() => {
-      doStatus(body.getStatus(), resolve, reject, this.provider)
+      doStatus(body.getStatus(), resolve, reject, this.provider, isExisted)
     }, e => reject(e))
   }
 
-  get(mergedHash, chunkHash) {
+  get(assetId, version, index) {
     return new Promise(async (resolve, reject) => {
       const method = '/yeying.api.asset.Asset/Get'
       const body = new GetRequestBody()
-      body.setAssetmergedhash(mergedHash)
-      body.setChunkhash(chunkHash)
+      body.setAssetid(assetId)
+      body.setVersion(version)
+      body.setIndex(index)
       let header
       try {
         header = await this.authenticate.createHeader(method, body)
@@ -235,12 +252,14 @@ export class AssetProvider {
     }, e => reject(e))
   }
 
-  put(assetId, chunk, data) {
+  put(assetId, version, hash, data) {
     return new Promise(async (resolve, reject) => {
       const method = '/yeying.api.asset.Asset/Put'
       const body = new PutRequestBody()
       body.setAssetid(assetId)
-      body.setChunk(chunk)
+      body.setVersion(version)
+      body.setChunkhash(hash)
+      body.setChunksize(data.byteLength)
       let header
       try {
         header = await this.authenticate.createHeader(method, body)
@@ -267,7 +286,7 @@ export class AssetProvider {
 
     const body = res.getBody()
     this.authenticate.verifyHeader(method, res.getHeader(), body).then(() => {
-      doStatus(body.getStatus(), resolve, reject, this.provider)
+      doStatus(body.getStatus(), resolve, reject, this.provider, isExisted)
     }, e => reject(e))
   }
 }

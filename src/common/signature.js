@@ -1,5 +1,5 @@
 import elliptic from 'elliptic'
-import {isBlank, trimLeft} from '../common/string.js'
+import {isBlank, trimLeft} from './string.js'
 import BN from 'bn.js'
 
 export function convertDidToPublicKey(did) {

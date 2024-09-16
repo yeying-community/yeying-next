@@ -40,23 +40,6 @@ export function doStatus(status, resolve, reject, extend, isSuccess) {
   }
 }
 
-export function doResponse(serviceMetadata, resolve, reject, err, response, isSuccess) {
-  // 请求是否过期
-
-  if (err) {
-    return doError(err, reject, serviceMetadata)
-  } else {
-    const status = response.getStatus()
-    isSuccess = isSuccess === undefined ? isOk : isSuccess
-    if (isSuccess(status.getCode())) {
-      return resolve()
-    } else {
-      console.error(`Service error, code=${status.getCode()}, message=${status.getMessage()}`)
-      reject(convertResponseStatusToError(status.getCode(), status.getMessage(), serviceMetadata))
-    }
-  }
-}
-
 export function convertResponseStatusToError(code, message, serviceMetadata) {
   switch (code) {
     case ResponseCodeEnum.ALREADY_EXISTS:
@@ -74,7 +57,7 @@ export function isOk(code) {
   return code === ResponseCodeEnum.OK
 }
 
-export function isCreated(code) {
+export function isExisted(code) {
   return code === ResponseCodeEnum.OK || code === ResponseCodeEnum.ALREADY_EXISTS
 }
 

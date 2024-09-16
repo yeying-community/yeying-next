@@ -1,5 +1,5 @@
 import {UserProvider} from '../../../src/provider/user/user.js'
-import {Authenticate} from '../../../src/authenticate/authenticate.js'
+import {Authenticate} from '../../../src/identity/authenticate.js'
 
 const identity = {
   blockAddress: {

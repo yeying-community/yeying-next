@@ -1,4 +1,4 @@
-import {Authenticate} from '../../../src/authenticate/authenticate.js'
+import {Authenticate} from '../../../src/identity/authenticate.js'
 import {IdentityProvider} from '../../../src/provider/identity/identity.js'
 import {getServiceAgentCode, getServiceMessageBoxCode, getServiceNodeCode, getServiceStoreCode} from '../../../src/common/common.js'
 

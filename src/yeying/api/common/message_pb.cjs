@@ -632,11 +632,11 @@ proto.yeying.api.common.ResponsePage.deserializeBinaryFromReader = function(msg,
       msg.setPagecount(value);
       break;
     case 3:
-      var value = /** @type {number} */ (reader.readInt32());
+      var value = /** @type {number} */ (reader.readUint32());
       msg.setCurrentpage(value);
       break;
     case 4:
-      var value = /** @type {number} */ (reader.readInt32());
+      var value = /** @type {number} */ (reader.readUint32());
       msg.setPagesize(value);
       break;
     default:
@@ -684,14 +684,14 @@ proto.yeying.api.common.ResponsePage.serializeBinaryToWriter = function(message,
   }
   f = message.getCurrentpage();
   if (f !== 0) {
-    writer.writeInt32(
+    writer.writeUint32(
       3,
       f
     );
   }
   f = message.getPagesize();
   if (f !== 0) {
-    writer.writeInt32(
+    writer.writeUint32(
       4,
       f
     );
@@ -736,7 +736,7 @@ proto.yeying.api.common.ResponsePage.prototype.setPagecount = function(value) {
 
 
 /**
- * optional int32 currentPage = 3;
+ * optional uint32 currentPage = 3;
  * @return {number}
  */
 proto.yeying.api.common.ResponsePage.prototype.getCurrentpage = function() {
@@ -754,7 +754,7 @@ proto.yeying.api.common.ResponsePage.prototype.setCurrentpage = function(value) 
 
 
 /**
- * optional int32 pageSize = 4;
+ * optional uint32 pageSize = 4;
  * @return {number}
  */
 proto.yeying.api.common.ResponsePage.prototype.getPagesize = function() {
@@ -842,11 +842,11 @@ proto.yeying.api.common.RequestPage.deserializeBinaryFromReader = function(msg, 
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt32());
+      var value = /** @type {number} */ (reader.readUint32());
       msg.setPageindex(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt32());
+      var value = /** @type {number} */ (reader.readUint32());
       msg.setPagesize(value);
       break;
     default:
@@ -880,14 +880,14 @@ proto.yeying.api.common.RequestPage.serializeBinaryToWriter = function(message, 
   var f = undefined;
   f = message.getPageindex();
   if (f !== 0) {
-    writer.writeInt32(
+    writer.writeUint32(
       1,
       f
     );
   }
   f = message.getPagesize();
   if (f !== 0) {
-    writer.writeInt32(
+    writer.writeUint32(
       2,
       f
     );
@@ -896,7 +896,7 @@ proto.yeying.api.common.RequestPage.serializeBinaryToWriter = function(message, 
 
 
 /**
- * optional int32 pageIndex = 1;
+ * optional uint32 pageIndex = 1;
  * @return {number}
  */
 proto.yeying.api.common.RequestPage.prototype.getPageindex = function() {
@@ -914,7 +914,7 @@ proto.yeying.api.common.RequestPage.prototype.setPageindex = function(value) {
 
 
 /**
- * optional int32 pageSize = 2;
+ * optional uint32 pageSize = 2;
  * @return {number}
  */
 proto.yeying.api.common.RequestPage.prototype.getPagesize = function() {

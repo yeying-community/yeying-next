@@ -2,7 +2,7 @@ import {LlmClient} from '../../yeying/api/llm/llm_grpc_web_pb.cjs'
 import llm_pkg from '../../yeying/api/llm/llm_pb.cjs'
 import code_pkg from '../../yeying/api/common/code_pb.cjs'
 import {getCurrentUtcString} from '../../common/date.js'
-import {doError, doStatus, doStatuses, isCreated} from '../../common/status.js'
+import {doError, doStatus, doStatuses, isExisted} from '../../common/status.js'
 import {getStreamDataTagBody, getStreamDataTagHead, getStreamDataTagTail} from '../../common/common.js'
 import {Cancelled} from '../../common/error.js'
 
@@ -64,7 +64,7 @@ export class LlmProvider {
 
     const body = res.getBody()
     this.authenticate.verifyHeader(method, res.getHeader(), body).then(r => {
-      doStatus(body.getStatus(), resolve, reject, this.provider, isCreated)
+      doStatus(body.getStatus(), resolve, reject, this.provider, isExisted)
     }, e => reject(e))
   }
 
@@ -130,7 +130,7 @@ export class LlmProvider {
 
     const body = res.getBody()
     this.authenticate.verifyHeader(method, res.getHeader(), body).then(r => {
-      doStatus(body.getStatus(), resolve, reject, this.provider, isCreated)
+      doStatus(body.getStatus(), resolve, reject, this.provider, isExisted)
     }, e => reject(e))
   }
 

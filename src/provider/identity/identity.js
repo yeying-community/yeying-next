@@ -1,7 +1,7 @@
 import {IdentityClient} from '../../yeying/api/identity/identity_grpc_web_pb.cjs'
 import identity_pkg from '../../yeying/api/identity/identity_pb.cjs'
-import {fromStrToCategoryCode} from '../../common/common.js'
-import {doError, doStatus, isCreated, isDeleted} from '../../common/status.js'
+import {convertCategoryCodeFrom} from '../../common/common.js'
+import {doError, doStatus, isExisted, isDeleted} from '../../common/status.js'
 
 const {
   RegisterRequest, RegisterRequestBody, IdentityMetadata, UnregisterRequest, UnregisterRequestBody, SearchRequest, SearchRequestBody,
@@ -22,7 +22,7 @@ export class IdentityProvider {
       metadata.setNetwork(identity.metadata.network)
       metadata.setAddress(identity.blockAddress.address)
       metadata.setParent(identity.metadata.parent)
-      metadata.setCategory(fromStrToCategoryCode(identity.metadata.category))
+      metadata.setCategory(convertCategoryCodeFrom(identity.metadata.category))
       metadata.setCode(identity.metadata.code)
       metadata.setName(identity.metadata.name)
       metadata.setExtend(identity.metadata.extend)
@@ -101,7 +101,7 @@ export class IdentityProvider {
 
     const body = res.getBody()
     this.authenticate.verifyHeader(method, res.getHeader(), body).then(() => {
-      doStatus(body.getStatus(), resolve, reject, this.provider, isCreated)
+      doStatus(body.getStatus(), resolve, reject, this.provider, isExisted)
     }, e => reject(e))
   }
 

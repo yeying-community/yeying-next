@@ -1,11 +1,12 @@
 import {convertApiCodeFrom} from '../common/common.js'
 import code_pkg from '../yeying/api/common/code_pb.cjs'
 import {UserProvider} from './user/user.js'
-import {Authenticate} from '../authenticate/authenticate.js'
+import {Authenticate} from '../identity/authenticate.js'
 import {IdentityProvider} from './identity/identity.js'
 import {ApplicationProvider} from './application/application.js'
 import {CertificateProvider} from './certificate/certificate.js'
 import {InvitationProvider} from './invitation/invitation.js'
+import {AssetProvider} from './asset/asset.js'
 
 const {ApiCodeEnum} = code_pkg
 
@@ -28,6 +29,8 @@ export class ProviderFactory {
         return new CertificateProvider(new Authenticate(this.identity), this.provider)
       case ApiCodeEnum.API_CODE_IDENTITY:
         return new IdentityProvider(new Authenticate(this.identity), this.provider)
+      case ApiCodeEnum.API_CODE_ASSET:
+        return new AssetProvider(new Authenticate(this.identity), this.provider)
       default:
         return new Error(`Not supported api code=${apiCode}`)
     }

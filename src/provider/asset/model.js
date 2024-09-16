@@ -1,11 +1,83 @@
+import code_pkg from '../../yeying/api/common/code_pb.cjs'
+import pkg from '../../yeying/api/asset/asset_pb.cjs'
+
+const {CipherTypeEnum, DigitalFormatEnum} = code_pkg
+
+const {AssetActionEnum} = pkg
 
 export class Asset {
-  constructor(id, value) {
-    this.id = id;
-    this.value = value;
+  constructor(id, name, parentHash, hash, mergedHash, description, format, size, created, checkpoint, total, block, encrypted, extend) {
+    this.id = id
+    this.name = name
+    this.parentHash = parentHash
+    this.hash = hash
+    this.mergedHash = mergedHash
+    this.description = description
+    this.format = format
+    this.size = size
+    this.created = created
+    this.checkpoint = checkpoint
+    // 资产内容分成多少块
+    this.total = total
+    // 资产块的大小
+    this.block = block
+    this.encrypted = encrypted
+    this.extend = extend
+  }
+}
+
+export class Chunk {
+  constructor(index, hash, size, extend) {
+    // 块在资产中的索引
+    this.index = index
+    this.hash = hash
+    // 明文块大小
+    this.size = size
+    // 块的扩展信息
+    this.extend = extend
+  }
+}
+
+export function getDigitalFormatByName(name) {
+  const digitalFormat = Object.values(DigitalFormatEnum).find(t => {
+    const extList = getExtListByDigitalFormat(t)
+    const exist = extList.find(e => name !== undefined && name.endsWith(e))
+    return exist !== undefined
+  })
+  return digitalFormat === undefined ? DigitalFormatEnum.DIGITAL_FORMAT_OTHER : digitalFormat
+}
+
+export function getExtListByDigitalFormat(digitalFormat) {
+  switch (digitalFormat) {
+    case DigitalFormatEnum.DIGITAL_FORMAT_IMAGE:
+      return ['.jpg', 'jpeg', '.gif', '.png', 'webp']
+    case DigitalFormatEnum.DIGITAL_FORMAT_VIDEO:
+      return ['.mp4', '.avi', '.mov', '.flv']
+    case DigitalFormatEnum.DIGITAL_FORMAT_AUDIO:
+      return ['.mp3', '.wav', '.ogg']
+    case DigitalFormatEnum.DIGITAL_FORMAT_TEXT:
+      return ['.txt', '.csv', '.html', '.css']
+    case DigitalFormatEnum.DIGITAL_FORMAT_APP:
+      return ['.id', '.session', '.app', '.metadata', '.state', '.prompt']
+    case DigitalFormatEnum.DIGITAL_FORMAT_OTHER:
+      return []
+    default:
+      return []
+  }
+}
+
+export function ConvertAssetActionFrom(str) {
+  if (str === undefined) {
+    return undefined
+  }
+  const value = AssetActionEnum[str]
+  return value === AssetActionEnum.ASSET_ACTION_UNKNOWN ? undefined : value
+}
+
+export function convertAssetActionTo(assetAction) {
+  if (assetAction === undefined || assetAction === AssetActionEnum.ASSET_ACTION_UNKNOWN) {
+    return undefined
   }
 
-  getValue() {
-    return this.value;
-  }
+  return Object.keys(AssetActionEnum).find(s => AssetActionEnum[s] === assetAction)
 }

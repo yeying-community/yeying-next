@@ -1,4 +1,4 @@
-import {Authenticate} from '../../../src/authenticate/authenticate.js'
+import {Authenticate} from '../../../src/identity/authenticate.js'
 import {CertificateProvider} from '../../../src/provider/certificate/certificate.js'
 
 const identity = {

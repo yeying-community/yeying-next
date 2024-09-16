@@ -8,7 +8,8 @@ const {
   ApiCodeEnum,
   AccountCodeEnum,
   CipherTypeEnum,
-  ApplicationCodeEnum
+  ApplicationCodeEnum,
+  DigitalFormatEnum
 } = code_pkg
 
 export function getAppIdentityCode() {
@@ -43,6 +44,27 @@ export function getStreamDataTagTail(tag) {
   return StreamDataTagEnum.STREAM_DATA_TAG_TAIL
 }
 
+export function convertDigitalFormatFrom(str) {
+  if (str === undefined) {
+    return undefined
+  }
+
+  const value = DigitalFormatEnum[str.toUpperCase()]
+  return value === DigitalFormatEnum.DIGITAL_FORMAT_UNKNOWN ? undefined : value
+}
+
+export function listDigitalFormat() {
+  return Object.keys(DigitalFormatEnum).filter(d => DigitalFormatEnum[d] > 0)
+}
+
+export function convertDigitalFormatTo(digitalFormat) {
+  if (digitalFormat === undefined || digitalFormat === DigitalFormatEnum.DIGITAL_FORMAT_UNKNOWN) {
+    return undefined
+  }
+
+  return Object.keys(DigitalFormatEnum).find(s => DigitalFormatEnum[s] === digitalFormat)
+}
+
 export function fromStrToAuthenticateType(str) {
   if (str === undefined) {
     return undefined
@@ -60,7 +82,7 @@ export function convertAuthenticateTypeTo(authenticateType) {
 }
 
 
-export function fromStrToCategoryCode(str) {
+export function convertCategoryCodeFrom(str) {
   if (str === undefined) {
     return undefined
   }
@@ -72,7 +94,7 @@ export function listCategoryCode() {
   return Object.keys(CategoryCodeEnum).filter(s => CategoryCodeEnum[s] > 0)
 }
 
-export function fromCategoryCodeToStr(category) {
+export function convertCategoryCodeTo(category) {
   if (category === undefined || category === CategoryCodeEnum.CATEGORY_CODE_UNKNOWN) {
     return undefined
   }
@@ -106,7 +128,7 @@ export function listServiceCode() {
   return Object.keys(ServiceCodeEnum).filter(s => ServiceCodeEnum[s] > 0)
 }
 
-export function fromServiceCodeToStr(serviceCode) {
+export function convertServiceCodeTo(serviceCode) {
   if (serviceCode === undefined || serviceCode === ServiceCodeEnum.SERVICE_CODE_UNKNOWN) {
     return undefined
   }
@@ -155,7 +177,7 @@ export function fromApiCodeToStr(apiCode) {
   return Object.keys(ApiCodeEnum).find(s => ApiCodeEnum[s] === apiCode)
 }
 
-export function fromStrToCipherType(str) {
+export function convertCipherTypeFrom(str) {
   if (str === undefined) {
     return undefined
   }
@@ -163,7 +185,7 @@ export function fromStrToCipherType(str) {
   return value === CipherTypeEnum.CIPHER_TYPE_UNKNOWN ? undefined : value
 }
 
-export function fromCipherTypeToStr(cipherType) {
+export function convertCipherTypeTo(cipherType) {
   if (cipherType === undefined || cipherType === CipherTypeEnum.CIPHER_TYPE_UNKNOWN) {
     return undefined
   }

@@ -1,4 +1,4 @@
-import {Authenticate} from '../../../src/authenticate/authenticate.js'
+import {Authenticate} from '../../../src/identity/authenticate.js'
 import {LlmProvider} from '../../../src/provider/llm/llm.js'
 import {convertLlmCodeTo, getZhiPuAiCode} from '../../../src/provider/llm/model.js'
 
