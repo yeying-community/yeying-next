@@ -1,4 +1,4 @@
-import {ChunkReader} from '../../file/chunk.js'
+import {ChunkReader} from './chunk/reader.js'
 import {computeHash, Digest} from '../../common/digest.js'
 import {decodeHex, encodeHex} from '../../common/codec.js'
 import {ConvertAssetActionFrom, getDigitalFormatByName} from './model.js'

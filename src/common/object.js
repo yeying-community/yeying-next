@@ -8,6 +8,11 @@ export function concat(...args) {
   return new TextEncoder().encode(args.join(''))
 }
 
+// 深度克隆
+export function cloneObject(object) {
+  return structuredClone(object)
+}
+
 /**
  * 将多个 Uint8Array 拼接成一个大的 Uint8Array
  * @param {Uint8Array[]} arrays - 多个 Uint8Array 的数组
@@ -26,4 +31,19 @@ export function composite(...args) {
   }
 
   return result
+}
+
+// 按照key的字母顺序排序，并且剔除value为null或者undefined的key
+export function sortKeys(obj) {
+  if (Array.isArray(obj)) {
+    return obj.map(sortKeys)
+  } else if (typeof obj === 'object' && obj !== null) {
+    return Object.keys(obj).sort().reduce((result, key) => {
+      result[key] = sortKeys(obj[key])
+      return result
+    }, {})
+  } else if (obj === null) {
+    return undefined
+  }
+  return obj
 }

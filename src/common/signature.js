@@ -41,12 +41,13 @@ export function verify(publicKey, hashBytes, signature) {
     return false
   }
 
+  publicKey = trimLeft(publicKey, '0x')
   const signatureBuffer = Buffer.from(signature, 'hex')
   const r = new BN(signatureBuffer.subarray(0, 32), 'be')
   const s = new BN(signatureBuffer.subarray(32, 64), 'be')
   const recoveryParam = signatureBuffer[64]
   const ec = new elliptic.ec('secp256k1')
-  const pubKeyEc = ec.keyFromPublic(trimLeft(publicKey, '0x'), 'hex')
+  const pubKeyEc = ec.keyFromPublic(publicKey, 'hex')
   return pubKeyEc.verify(new Uint8Array(hashBytes), {r: r, s: s, recoveryParam: recoveryParam,})
 }
 

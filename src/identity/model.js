@@ -3,6 +3,7 @@ import {trimLeft} from '../common/string.js'
 import {convertCipherTypeFrom} from '../common/common.js'
 import {decodeBase64} from '../common/codec.js'
 import code_pkg from '../yeying/api/common/code_pb.cjs'
+import {deriveRawKeyFromPairKey} from '../common/crypto.js'
 const {CipherTypeEnum} = code_pkg
 
 
@@ -13,12 +14,18 @@ export class CryptoAlgorithm {
   }
 }
 
+export function convertDidToPublicKey(did) {
+  if (did === undefined || did === null) {
+    return did
+  }
+
+  const publicKey = did.slice(did.lastIndexOf(':') + 1)
+  return trimLeft(publicKey, '0x')
+}
+
 export function deriveRawKeyFromIdentity(identity) {
-  const ec = new elliptic.ec('secp256k1')
-  const priKeyEc = ec.keyFromPrivate(trimLeft(identity['blockAddress'].privateKey, '0x'), 'hex')
-  const pubKeyEc = ec.keyFromPublic(trimLeft(identity['blockAddress'].publicKey, '0x'), 'hex')
-  const deriveKey = priKeyEc.derive(pubKeyEc.getPublic())
-  return new Uint8Array(deriveKey.toArray('be'))
+  const blockAddress = identity.blockAddress
+  return deriveRawKeyFromPairKey(blockAddress.publicKey, blockAddress.privateKey)
 }
 
 export function convertCryptoAlgorithmFromIdentity(identity) {
