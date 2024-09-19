@@ -24,7 +24,7 @@ export class SessionCache {
     if (key === undefined) {
       console.error('Invalid key(undefined)')
     } else {
-      this.instance.setItem(key, value)
+      this.instance.setItem(key, JSON.stringify(value))
     }
   }
 }

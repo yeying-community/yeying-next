@@ -35,12 +35,19 @@ export class AccountManager {
   #addAccount(identity) {
     const historyAccounts = this.localCache.get(this.historyAccountKey, [])
     const account = new Account(identity.metadata.name, identity.metadata.did, identity.metadata.extend.avatar)
-    historyAccounts.push(account)
+
+    const index = historyAccounts.findIndex(i => i.did === identity.metadata.did)
+    if (index !== -1) {
+      historyAccounts[index] = account
+    } else {
+      historyAccounts.push(account)
+    }
+
     this.localCache.set(this.historyAccountKey, historyAccounts)
     return account
   }
 
-  getLoginAccount() {
+  getActiveAccount() {
     return this.sessionCache.get(this.loginAccountKey)
   }
 
@@ -48,7 +55,7 @@ export class AccountManager {
     return this.identityMap[did]
   }
 
-  login(did, password) {
+  active(did, password) {
     return new Promise(async (resolve, reject) => {
       if (this.identityMap[did] !== undefined) {
         return resolve(this.identityMap[did])
@@ -81,7 +88,7 @@ export class AccountManager {
       const account = this.#addAccount(identity)
 
       // 设置当前登陆帐户
-      this.localCache.set(this.loginAccountKey, account)
+      this.sessionCache.set(this.loginAccountKey, account)
       resolve(account)
     })
   }
