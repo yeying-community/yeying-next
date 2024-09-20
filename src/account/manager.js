@@ -32,27 +32,15 @@ export class AccountManager {
     return this.localCache.get(this.historyAccountKey, [])
   }
 
-  #addAccount(identity) {
-    const historyAccounts = this.localCache.get(this.historyAccountKey, [])
-    const account = new Account(identity.metadata.name, identity.metadata.did, identity.metadata.extend.avatar)
-
-    const index = historyAccounts.findIndex(i => i.did === identity.metadata.did)
-    if (index !== -1) {
-      historyAccounts[index] = account
-    } else {
-      historyAccounts.push(account)
-    }
-
-    this.localCache.set(this.historyAccountKey, historyAccounts)
-    return account
-  }
-
   getActiveAccount() {
     return this.sessionCache.get(this.loginAccountKey)
   }
 
-  getIdentity(did) {
-    return this.identityMap[did]
+  getActiveIdentity() {
+    const activeAccount = this.getActiveAccount()
+    if (activeAccount !== undefined) {
+      return this.identityMap[activeAccount.did]
+    }
   }
 
   active(did, password) {
@@ -64,7 +52,7 @@ export class AccountManager {
       // 从本地缓存获取身份信息
       const identity = this.localCache.get(did)
       if (identity === undefined) {
-        return reject(new NotFound(`Not found=${account.name}`))
+        return reject(new NotFound(`Not found=${did}`))
       }
 
       // 验证身份
@@ -75,7 +63,7 @@ export class AccountManager {
 
       // 解密
       try {
-        identity.blockAddress = this.#decrypt(identity.blockAddress, convertCryptoAlgorithmFromIdentity(identity), password)
+        identity.blockAddress = await this.#decrypt(identity.blockAddress, convertCryptoAlgorithmFromIdentity(identity), password)
       } catch (err) {
         console.error(`Fail to decrypt identity=${did}`, err)
         reject(new InvalidPassword(`Invalid password!`))
@@ -85,7 +73,7 @@ export class AccountManager {
       this.identityMap[did] = identity
 
       // 添加到历史账号中
-      const account = this.#addAccount(identity)
+      const account = this.#addAccount(identity.metadata.name, identity.metadata.did, identity.metadata.extend.avatar)
 
       // 设置当前登陆帐户
       this.sessionCache.set(this.loginAccountKey, account)
@@ -109,7 +97,7 @@ export class AccountManager {
       const algorithm = convertCryptoAlgorithmFromIdentity(identity)
       // 解密
       try {
-        identity.blockAddress = this.#decrypt(identity.blockAddress, algorithm, oldPassword)
+        identity.blockAddress = await this.#decrypt(identity.blockAddress, algorithm, oldPassword)
       } catch (err) {
         console.error(`Fail to decrypt identity=${account.did}`, err)
         return reject(new InvalidPassword(`Invalid old password!`))
@@ -118,9 +106,9 @@ export class AccountManager {
       const privateKey = identity.blockAddress.privateKey
       // 加密
       try {
-        identity.blockAddress = this.#encrypt(identity.blockAddress, algorithm, newPassword)
+        identity.blockAddress = await this.#encrypt(identity.blockAddress, algorithm, newPassword)
       } catch (err) {
-        console.error(`Fail to decrypt identity=${account.did}`, err)
+        console.error(`Fail to encrypt identity=${account.did} when changing password!`, err)
         return reject(new InvalidPassword(`Invalid new password!`))
       }
 
@@ -131,6 +119,38 @@ export class AccountManager {
         return reject(new DataForgery('Invalid identity!'))
       }
 
+      resolve(identity)
+    })
+  }
+
+  getIdentity(did) {
+    return this.identityMap[did]
+  }
+
+  addIdentity(plainIdentity, password) {
+    return new Promise(async (resolve, reject) => {
+      const algorithm = convertCryptoAlgorithmFromIdentity(plainIdentity)
+
+      const identity = cloneObject(plainIdentity)
+
+      // 加密
+      try {
+        identity.blockAddress = await this.#encrypt(identity.blockAddress, algorithm, password)
+      } catch (err) {
+        console.error(`Fail to encrypt identity=${JSON.stringify(identity)} when adding identity!`, err)
+        return reject(new DataForgery('Invalid identity!'))
+      }
+
+      // 添加签名
+      try {
+        await this.#sign(identity, plainIdentity.blockAddress.privateKey)
+      } catch (err) {
+        return reject(new DataForgery('Invalid identity!'))
+      }
+
+      // 添加身份
+      this.localCache.set(identity.metadata.did, identity)
+      this.#addAccount(identity.metadata.name, identity.metadata.did, identity.metadata.extend.avatar)
       resolve(identity)
     })
   }
@@ -154,7 +174,7 @@ export class AccountManager {
       this.localCache.set(identity.metadata.did, identity)
 
       // 添加帐户信息
-      resolve(this.#addAccount(identity))
+      resolve(this.#addAccount(identity.metadata.name, identity.metadata.did, identity.metadata.extend.avatar))
     })
   }
 
@@ -174,6 +194,21 @@ export class AccountManager {
         resolve(identity)
       }
     })
+  }
+
+  #addAccount(name, did, avatar) {
+    const historyAccounts = this.localCache.get(this.historyAccountKey, [])
+    const account = new Account(name, did, avatar)
+
+    const index = historyAccounts.findIndex(i => i.did === did)
+    if (index !== -1) {
+      historyAccounts[index] = account
+    } else {
+      historyAccounts.push(account)
+    }
+
+    this.localCache.set(this.historyAccountKey, historyAccounts)
+    return account
   }
 
   async #encrypt(blockAddress, algorithm, password) {

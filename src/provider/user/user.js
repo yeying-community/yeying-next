@@ -2,6 +2,7 @@ import {UserClient} from '../../yeying/api/user/user_grpc_web_pb.cjs'
 import user_pkg from '../../yeying/api/user/user_pb.cjs'
 import {doError, doStatus, isExisted, isDeleted, isOk} from '../../common/status.js'
 import {getCurrentUtcString} from '../../common/date.js'
+import {convertUserTo} from './model.js'
 
 const {AddRequest, AddRequestBody, DelRequest, GetRequest, ModRequest, ModRequestBody} = user_pkg
 
@@ -131,7 +132,7 @@ export class UserProvider {
 
     const body = res.getBody()
     this.authenticate.verifyHeader(method, res.getHeader(), body).then(() => {
-      doStatus(body.getStatus(), () => resolve(body.getUser()), reject, this.provider, isExisted)
+      doStatus(body.getStatus(), () => resolve(convertUserTo(body.getUser())), reject, this.provider, isExisted)
     }, e => reject(e))
   }
 
