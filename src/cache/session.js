@@ -27,4 +27,8 @@ export class SessionCache {
       this.instance.setItem(key, JSON.stringify(value))
     }
   }
+
+  remove(key) {
+    this.instance.removeItem(key)
+  }
 }

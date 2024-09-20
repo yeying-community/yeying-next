@@ -43,7 +43,15 @@ export class AccountManager {
     }
   }
 
-  active(did, password) {
+  logout() {
+    const activeAccount = this.sessionCache.get(this.loginAccountKey)
+    if (activeAccount !== undefined) {
+      delete this.identityMap[activeAccount.did]
+      this.sessionCache.remove(this.loginAccountKey)
+    }
+  }
+
+  login(did, password) {
     return new Promise(async (resolve, reject) => {
       if (this.identityMap[did] !== undefined) {
         return resolve(this.identityMap[did])
