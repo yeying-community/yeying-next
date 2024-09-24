@@ -17,7 +17,7 @@ const identity = {
 }
 
 const provider = {
-  metadata: {extend: {proxy: 'http://localhost:8441'}},
+  metadata: {proxy: 'http://localhost:8441'},
 }
 
 describe('Application', () => {

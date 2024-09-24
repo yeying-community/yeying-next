@@ -8,7 +8,7 @@ export class InvitationProvider{
   constructor(authenticate, provider) {
     this.authenticate = authenticate
     this.provider = provider
-    this.client = new InvitationClient(this.provider.extend.proxy)
+    this.client = new InvitationClient(this.provider.proxy)
   }
 
   input(code) {

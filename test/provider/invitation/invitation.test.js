@@ -16,9 +16,8 @@ const identity = {
   }
 }
 
-const provider = {
-  metadata: {extend: {proxy: 'http://localhost:8441'}},
-}
+const provider = {proxy: 'http://localhost:8441'}
+
 
 describe('Invitation', () => {
   it('generate', async () => {

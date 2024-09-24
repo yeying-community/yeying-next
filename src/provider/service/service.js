@@ -1,35 +1,50 @@
-import {IdentityClient} from '../../yeying/api/identity/identity_grpc_web_pb.cjs'
-import identity_pkg from '../../yeying/api/identity/identity_pb.cjs'
-import {convertCategoryCodeFrom} from '../../common/common.js'
+import {ServiceClient} from '../../yeying/api/service/service_grpc_web_pb.cjs'
+import service_pkg from '../../yeying/api/service/service_pb.cjs'
+import {convertApiCodeFrom, convertServiceCodeFrom} from '../../common/common.js'
 import {doError, doStatus, isExisted, isDeleted} from '../../common/status.js'
+import {convertServiceTo} from './model.js'
 
 const {
-  RegisterRequest, RegisterRequestBody, IdentityMetadata, UnregisterRequest, UnregisterRequestBody, SearchRequest, SearchRequestBody,
-} = identity_pkg
+  RegisterRequest, WhoamiRequest, RegisterRequestBody, ServiceMetadata, UnregisterRequest, UnregisterRequestBody, SearchRequest, SearchRequestBody,
+} = service_pkg
 
-export class IdentityProvider {
+export class ServiceProvider {
   constructor(authenticate, provider) {
     this.authenticate = authenticate
     this.provider = provider
-    this.client = new IdentityClient(this.provider.proxy)
+    this.client = new ServiceClient(this.provider.proxy)
+  }
+
+  whoami() {
+    return new Promise((resolve, reject) => {
+      this.client.whoami(new WhoamiRequest(), undefined, (err, res) => {
+        if (doError(err, reject, this.provider)) {
+          return
+        }
+        resolve(convertServiceTo(res.getService()))
+      })
+    })
   }
 
   register(identity) {
     return new Promise(async (resolve, reject) => {
-      const method = '/yeying.api.identity.Identity/Register'
-      const metadata = new IdentityMetadata()
+      const method = '/yeying.api.service.Service/Register'
+      const metadata = new ServiceMetadata()
       metadata.setDid(identity.metadata.did)
       metadata.setNetwork(identity.metadata.network)
       metadata.setAddress(identity.blockAddress.address)
-      metadata.setParent(identity.metadata.parent)
-      metadata.setCategory(convertCategoryCodeFrom(identity.metadata.category))
-      metadata.setCode(identity.metadata.code)
+      metadata.setOwner(identity.metadata.parent)
+      metadata.setCode(convertServiceCodeFrom(identity.extend.code))
+      metadata.setApisList(identity.extend.apis.map(a => convertApiCodeFrom(a)))
       metadata.setName(identity.metadata.name)
+      metadata.setProxy(identity.extend.proxy)
+      metadata.setGrpc(identity.extend.grpc)
       metadata.setExtend(identity.metadata.extend)
+      metadata.setAvatar(identity.metadata.avatar)
       metadata.setCreated(identity.metadata.created)
       metadata.setCheckpoint(identity.metadata.checkpoint)
       const body = new RegisterRequestBody()
-      body.setIdentity(metadata)
+      body.setService(metadata)
 
       let header
       try {
@@ -50,7 +65,7 @@ export class IdentityProvider {
 
   unregister(did) {
     return new Promise(async (resolve, reject) => {
-      const method = '/yeying.api.identity.Identity/Unregister'
+      const method = '/yeying.api.service.Service/Unregister'
       const body = new UnregisterRequestBody()
       body.setDid(did)
 
@@ -74,7 +89,7 @@ export class IdentityProvider {
 
   search(serviceCode) {
     return new Promise(async (resolve, reject) => {
-      const method = '/yeying.api.identity.Identity/Search'
+      const method = '/yeying.api.service.Service/Search'
       const body = new SearchRequestBody()
       body.setServicecode(serviceCode)
       let header
@@ -123,7 +138,7 @@ export class IdentityProvider {
 
     const body = res.getBody()
     this.authenticate.verifyHeader(method, res.getHeader(), body).then(() => {
-      doStatus(body.getStatus(), () => resolve(body.getIdentitiesList()), reject, this.provider)
+      doStatus(body.getStatus(), () => resolve(body.getServicesList().map(s => convertServiceTo(s))), reject, this.provider)
     }, e => reject(e))
   }
 }

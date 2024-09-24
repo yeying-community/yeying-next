@@ -21,15 +21,14 @@ var global =
     (function () { return this; }).call(null) ||
     Function('return this')();
 
-goog.exportSymbol('proto.yeying.api.common.AccountCodeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ApiCodeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ApplicationCodeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ApplicationStatusEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.AuthenticateTypeEnum', null, global);
-goog.exportSymbol('proto.yeying.api.common.CategoryCodeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.CipherTypeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ContractStatusEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.DigitalFormatEnum', null, global);
+goog.exportSymbol('proto.yeying.api.common.IdentityCodeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ImageFormatEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.LanguageCodeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ParticipantTypeEnum', null, global);
@@ -91,7 +90,8 @@ proto.yeying.api.common.ApiCodeEnum = {
   API_CODE_STORAGE: 6,
   API_CODE_APPLICATION: 7,
   API_CODE_EVENT: 8,
-  API_CODE_INVITATION: 9
+  API_CODE_INVITATION: 9,
+  API_CODE_SERVICE: 10
 };
 
 /**
@@ -108,20 +108,13 @@ proto.yeying.api.common.ServiceCodeEnum = {
 /**
  * @enum {number}
  */
-proto.yeying.api.common.AccountCodeEnum = {
-  ACCOUNT_CODE_UNKNOWN: 0,
-  ACCOUNT_CODE_PERSONAL: 1,
-  ACCOUNT_CODE_ENTERPRISE: 2,
-  ACCOUNT_CODE_COMMUNITY: 3
-};
-
-/**
- * @enum {number}
- */
-proto.yeying.api.common.CategoryCodeEnum = {
-  CATEGORY_CODE_UNKNOWN: 0,
-  CATEGORY_CODE_HUMANITY: 1,
-  CATEGORY_CODE_SOFTWARE: 2
+proto.yeying.api.common.IdentityCodeEnum = {
+  IDENTITY_CODE_UNKNOWN: 0,
+  IDENTITY_CODE_PERSONAL: 1,
+  IDENTITY_CODE_ORGANIZATION: 2,
+  IDENTITY_CODE_SERVICE: 3,
+  IDENTITY_CODE_APPLICATION: 4,
+  IDENTITY_CODE_ASSET: 5
 };
 
 /**

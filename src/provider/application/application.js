@@ -8,7 +8,7 @@ export class ApplicationProvider {
   constructor(authenticate, provider) {
     this.authenticate = authenticate
     this.provider = provider
-    this.client = new ApplicationClient(this.provider.extend.proxy)
+    this.client = new ApplicationClient(this.provider.proxy)
   }
 
   search(code, page, pageSize) {

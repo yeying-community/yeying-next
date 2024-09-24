@@ -83,183 +83,183 @@ proto.yeying.api.identity.IdentityPromiseClient =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.yeying.api.identity.RegisterRequest,
- *   !proto.yeying.api.identity.RegisterResponse>}
+ *   !proto.yeying.api.identity.DepositRequest,
+ *   !proto.yeying.api.identity.DepositResponse>}
  */
-const methodDescriptor_Identity_Register = new grpc.web.MethodDescriptor(
-  '/yeying.api.identity.Identity/Register',
+const methodDescriptor_Identity_Deposit = new grpc.web.MethodDescriptor(
+  '/yeying.api.identity.Identity/Deposit',
   grpc.web.MethodType.UNARY,
-  proto.yeying.api.identity.RegisterRequest,
-  proto.yeying.api.identity.RegisterResponse,
+  proto.yeying.api.identity.DepositRequest,
+  proto.yeying.api.identity.DepositResponse,
   /**
-   * @param {!proto.yeying.api.identity.RegisterRequest} request
+   * @param {!proto.yeying.api.identity.DepositRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.yeying.api.identity.RegisterResponse.deserializeBinary
+  proto.yeying.api.identity.DepositResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.yeying.api.identity.RegisterRequest} request The
+ * @param {!proto.yeying.api.identity.DepositRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.RpcError, ?proto.yeying.api.identity.RegisterResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.yeying.api.identity.DepositResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.yeying.api.identity.RegisterResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.yeying.api.identity.DepositResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.yeying.api.identity.IdentityClient.prototype.register =
+proto.yeying.api.identity.IdentityClient.prototype.deposit =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/yeying.api.identity.Identity/Register',
+      '/yeying.api.identity.Identity/Deposit',
       request,
       metadata || {},
-      methodDescriptor_Identity_Register,
+      methodDescriptor_Identity_Deposit,
       callback);
 };
 
 
 /**
- * @param {!proto.yeying.api.identity.RegisterRequest} request The
+ * @param {!proto.yeying.api.identity.DepositRequest} request The
  *     request proto
  * @param {?Object<string, string>=} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.yeying.api.identity.RegisterResponse>}
+ * @return {!Promise<!proto.yeying.api.identity.DepositResponse>}
  *     Promise that resolves to the response
  */
-proto.yeying.api.identity.IdentityPromiseClient.prototype.register =
+proto.yeying.api.identity.IdentityPromiseClient.prototype.deposit =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/yeying.api.identity.Identity/Register',
+      '/yeying.api.identity.Identity/Deposit',
       request,
       metadata || {},
-      methodDescriptor_Identity_Register);
+      methodDescriptor_Identity_Deposit);
 };
 
 
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.yeying.api.identity.SearchRequest,
- *   !proto.yeying.api.identity.SearchResponse>}
+ *   !proto.yeying.api.identity.QueryRequest,
+ *   !proto.yeying.api.identity.QueryResponse>}
  */
-const methodDescriptor_Identity_Search = new grpc.web.MethodDescriptor(
-  '/yeying.api.identity.Identity/Search',
+const methodDescriptor_Identity_Query = new grpc.web.MethodDescriptor(
+  '/yeying.api.identity.Identity/Query',
   grpc.web.MethodType.UNARY,
-  proto.yeying.api.identity.SearchRequest,
-  proto.yeying.api.identity.SearchResponse,
+  proto.yeying.api.identity.QueryRequest,
+  proto.yeying.api.identity.QueryResponse,
   /**
-   * @param {!proto.yeying.api.identity.SearchRequest} request
+   * @param {!proto.yeying.api.identity.QueryRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.yeying.api.identity.SearchResponse.deserializeBinary
+  proto.yeying.api.identity.QueryResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.yeying.api.identity.SearchRequest} request The
+ * @param {!proto.yeying.api.identity.QueryRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.RpcError, ?proto.yeying.api.identity.SearchResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.yeying.api.identity.QueryResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.yeying.api.identity.SearchResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.yeying.api.identity.QueryResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.yeying.api.identity.IdentityClient.prototype.search =
+proto.yeying.api.identity.IdentityClient.prototype.query =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/yeying.api.identity.Identity/Search',
+      '/yeying.api.identity.Identity/Query',
       request,
       metadata || {},
-      methodDescriptor_Identity_Search,
+      methodDescriptor_Identity_Query,
       callback);
 };
 
 
 /**
- * @param {!proto.yeying.api.identity.SearchRequest} request The
+ * @param {!proto.yeying.api.identity.QueryRequest} request The
  *     request proto
  * @param {?Object<string, string>=} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.yeying.api.identity.SearchResponse>}
+ * @return {!Promise<!proto.yeying.api.identity.QueryResponse>}
  *     Promise that resolves to the response
  */
-proto.yeying.api.identity.IdentityPromiseClient.prototype.search =
+proto.yeying.api.identity.IdentityPromiseClient.prototype.query =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/yeying.api.identity.Identity/Search',
+      '/yeying.api.identity.Identity/Query',
       request,
       metadata || {},
-      methodDescriptor_Identity_Search);
+      methodDescriptor_Identity_Query);
 };
 
 
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.yeying.api.identity.UnregisterRequest,
- *   !proto.yeying.api.identity.UnregisterResponse>}
+ *   !proto.yeying.api.identity.CancelRequest,
+ *   !proto.yeying.api.identity.CancelResponse>}
  */
-const methodDescriptor_Identity_Unregister = new grpc.web.MethodDescriptor(
-  '/yeying.api.identity.Identity/Unregister',
+const methodDescriptor_Identity_Cancel = new grpc.web.MethodDescriptor(
+  '/yeying.api.identity.Identity/Cancel',
   grpc.web.MethodType.UNARY,
-  proto.yeying.api.identity.UnregisterRequest,
-  proto.yeying.api.identity.UnregisterResponse,
+  proto.yeying.api.identity.CancelRequest,
+  proto.yeying.api.identity.CancelResponse,
   /**
-   * @param {!proto.yeying.api.identity.UnregisterRequest} request
+   * @param {!proto.yeying.api.identity.CancelRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.yeying.api.identity.UnregisterResponse.deserializeBinary
+  proto.yeying.api.identity.CancelResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.yeying.api.identity.UnregisterRequest} request The
+ * @param {!proto.yeying.api.identity.CancelRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.RpcError, ?proto.yeying.api.identity.UnregisterResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.yeying.api.identity.CancelResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.yeying.api.identity.UnregisterResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.yeying.api.identity.CancelResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.yeying.api.identity.IdentityClient.prototype.unregister =
+proto.yeying.api.identity.IdentityClient.prototype.cancel =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/yeying.api.identity.Identity/Unregister',
+      '/yeying.api.identity.Identity/Cancel',
       request,
       metadata || {},
-      methodDescriptor_Identity_Unregister,
+      methodDescriptor_Identity_Cancel,
       callback);
 };
 
 
 /**
- * @param {!proto.yeying.api.identity.UnregisterRequest} request The
+ * @param {!proto.yeying.api.identity.CancelRequest} request The
  *     request proto
  * @param {?Object<string, string>=} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.yeying.api.identity.UnregisterResponse>}
+ * @return {!Promise<!proto.yeying.api.identity.CancelResponse>}
  *     Promise that resolves to the response
  */
-proto.yeying.api.identity.IdentityPromiseClient.prototype.unregister =
+proto.yeying.api.identity.IdentityPromiseClient.prototype.cancel =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/yeying.api.identity.Identity/Unregister',
+      '/yeying.api.identity.Identity/Cancel',
       request,
       metadata || {},
-      methodDescriptor_Identity_Unregister);
+      methodDescriptor_Identity_Cancel);
 };
 
 

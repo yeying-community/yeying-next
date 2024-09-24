@@ -14,7 +14,7 @@ export class UserProvider {
   constructor(authenticate, provider) {
     this.authenticate = authenticate
     this.provider = provider
-    this.client = new UserClient(this.provider.extend.proxy)
+    this.client = new UserClient(this.provider.proxy)
   }
 
   add(name, telephone, email, avatar) {
@@ -22,7 +22,8 @@ export class UserProvider {
       const method = '/yeying.api.user.User/Add'
       const body = new AddRequestBody()
       body.setName(name)
-      body.setExtend(JSON.stringify({telephone: telephone, email: email, avatar: avatar}))
+      body.setExtend(JSON.stringify({telephone: telephone, email: email}))
+      body.setAvatar(avatar)
       body.setCreated(getCurrentUtcString())
       body.setCheckpoint(getCurrentUtcString())
       let header

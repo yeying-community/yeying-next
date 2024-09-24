@@ -1,6 +1,7 @@
 import {Authenticate} from '../../../src/identity/authenticate.js'
 import {IdentityProvider} from '../../../src/provider/identity/identity.js'
 import {getServiceAgentCode, getServiceMessageBoxCode, getServiceNodeCode, getServiceStoreCode} from '../../../src/common/common.js'
+import {ServiceProvider} from '../../../src/provider/service/service.js'
 
 const identity = {
   blockAddress: {
@@ -16,9 +17,8 @@ const identity = {
   }
 }
 
-const provider = {
-  metadata: {extend: {proxy: 'http://localhost:8441'}},
-}
+const provider = {proxy: 'http://localhost:8441'}
+
 
 const software = {
   blockAddress: {
@@ -59,25 +59,31 @@ describe('Identity', () => {
     console.log(`extend=${JSON.stringify(json)}`)
   })
 
+  it('whoami', async () => {
+    const serviceProvider = new ServiceProvider(new Authenticate(identity), provider)
+    const service = await serviceProvider.whoami()
+    console.log(`whoami=${JSON.stringify(service)}`)
+  })
+
   it('register', async () => {
-    const identityProvider = new IdentityProvider(new Authenticate(identity), provider)
-    await identityProvider.register(software)
+    const serviceProvider = new ServiceProvider(new Authenticate(identity), provider)
+    await serviceProvider.register(software)
     console.log(`Success to register identity=${software.blockAddress.identifier}`)
   })
 
   it('search', async () => {
-    const identityProvider = new IdentityProvider(new Authenticate(identity), provider)
-    const identities1 = await identityProvider.search(getServiceMessageBoxCode())
+    const serviceProvider = new ServiceProvider(new Authenticate(identity), provider)
+    const identities1 = await serviceProvider.search(getServiceMessageBoxCode())
     identities1.forEach(i => console.log(`Success to get node identity=${i.getName()}, did=${i.getDid()}`))
-    const identities2 = await identityProvider.search(getServiceAgentCode())
+    const identities2 = await serviceProvider.search(getServiceAgentCode())
     identities2.forEach(i => console.log(`Success to get agent identity=${i.getName()}, did=${i.getDid()}`))
-    const identities3 = await identityProvider.search(getServiceStoreCode())
+    const identities3 = await serviceProvider.search(getServiceStoreCode())
     identities3.forEach(i => console.log(`Success to get store identity=${i.getName()}, did=${i.getDid()}`))
   })
 
   it('unregister', async () => {
-    const identityProvider = new IdentityProvider(new Authenticate(identity), provider)
-    await identityProvider.unregister(software.metadata.did)
+    const serviceProvider = new ServiceProvider(new Authenticate(identity), provider)
+    await serviceProvider.unregister(software.metadata.did)
     console.log(`Success to mod user=${identity.blockAddress.identifier}`)
   })
 })

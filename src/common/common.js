@@ -136,27 +136,6 @@ export function convertServiceCodeTo(serviceCode) {
   return Object.keys(ServiceCodeEnum).find(s => ServiceCodeEnum[s] === serviceCode)
 }
 
-
-export function fromStrToAccountCode(str) {
-  if (str === undefined) {
-    return undefined
-  }
-  const value = AccountCodeEnum[str]
-  return value === AccountCodeEnum.ACCOUNT_CODE_UNKNOWN ? undefined : value
-}
-
-export function listAccountCode() {
-  return Object.keys(AccountCodeEnum).filter(s => AccountCodeEnum[s] > 0)
-}
-
-export function fromAccountCodeToStr(accountCode) {
-  if (accountCode === undefined || accountCode === AccountCodeEnum.ACCOUNT_CODE_UNKNOWN) {
-    return undefined
-  }
-
-  return Object.keys(AccountCodeEnum).find(s => AccountCodeEnum[s] === accountCode)
-}
-
 export function convertApiCodeFrom(str) {
   if (str === undefined) {
     return undefined
@@ -169,7 +148,7 @@ export function listApiCode() {
   return Object.keys(ApiCodeEnum).filter(s => ApiCodeEnum[s] > 0)
 }
 
-export function fromApiCodeToStr(apiCode) {
+export function convertApiCodeTo(apiCode) {
   if (apiCode === undefined || apiCode === ApiCodeEnum.API_CODE_UNKNOWN) {
     return undefined
   }

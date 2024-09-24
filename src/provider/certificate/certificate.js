@@ -8,7 +8,7 @@ export class CertificateProvider {
   constructor(authenticate, provider) {
     this.authenticate = authenticate
     this.provider = provider
-    this.client = new CertificateClient(this.provider.extend.proxy)
+    this.client = new CertificateClient(this.provider.proxy)
   }
 
   sign(domain, csr) {

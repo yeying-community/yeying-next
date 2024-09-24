@@ -26,7 +26,7 @@ export class LlmProvider {
   constructor(authenticate, provider) {
     this.authenticate = authenticate
     this.provider = provider
-    this.client = new LlmClient(this.provider.extend.proxy)
+    this.client = new LlmClient(this.provider.proxy)
   }
 
   addLlm(uid, code, name, key, extend) {

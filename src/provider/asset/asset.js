@@ -1,8 +1,7 @@
 import pkg from '../../yeying/api/asset/asset_pb.cjs'
 import {AssetClient} from '../../yeying/api/asset/asset_grpc_web_pb.cjs'
-import {doError, doStatus, isExisted, isDeleted} from '../../common/status.js'
+import {doError, doStatus, isDeleted, isExisted} from '../../common/status.js'
 import {convertDigitalFormatFrom} from '../../common/common.js'
-import {Asset} from './model.js'
 
 const {
   VersionRequest,
@@ -25,7 +24,7 @@ export class AssetProvider {
   constructor(authenticate, provider) {
     this.authenticate = authenticate
     this.provider = provider
-    this.client = new AssetClient(this.provider.extend.proxy)
+    this.client = new AssetClient(this.provider.proxy)
   }
 
   getDid() {

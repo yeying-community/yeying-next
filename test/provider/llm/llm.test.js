@@ -16,7 +16,7 @@ const identity = {
   }
 }
 
-const provider = {extend: {proxy: 'http://localhost:8541'}}
+const provider = {proxy: 'http://localhost:8541'}
 
 
 describe('Llm', () => {

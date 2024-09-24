@@ -3,12 +3,13 @@ import user_pkg from '../../yeying/api/user/user_pb.cjs'
 const {UserRoleEnum, UserStatusEnum} = user_pkg
 
 export class User {
-  constructor(name, did, status, role, extend, checkpoint, created) {
+  constructor(name, did, status, role, extend, avatar, checkpoint, created) {
     this.name = name
     this.did = did
     this.status = status
     this.role = role
     this.extend = extend
+    this.avatar = avatar
     this.checkpoint = checkpoint
     this.created = created
   }
@@ -19,7 +20,7 @@ export function convertUserTo(u) {
     return undefined
   }
 
-  return new User(u.getName(), u.getDid(), convertUserStatusTo(u.getStatus()), convertUserRoleTo(u.getRole()), u.getExtend(), u.getCheckpoint(), u.getCreated(),)
+  return new User(u.getName(), u.getDid(), convertUserStatusTo(u.getStatus()), convertUserRoleTo(u.getRole()), u.getExtend(), u.getAvatar(), u.getCheckpoint(), u.getCreated(),)
 }
 
 export function convertUserRoleFrom(str) {

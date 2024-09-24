@@ -388,12 +388,13 @@ proto.yeying.api.user.UserMetadata.prototype.toObject = function(opt_includeInst
 proto.yeying.api.user.UserMetadata.toObject = function(includeInstance, msg) {
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    did: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    role: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    extend: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    status: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    created: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    checkpoint: jspb.Message.getFieldWithDefault(msg, 7, "")
+    avatar: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    did: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    role: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    extend: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    status: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    created: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    checkpoint: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -436,25 +437,29 @@ proto.yeying.api.user.UserMetadata.deserializeBinaryFromReader = function(msg, r
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setDid(value);
+      msg.setAvatar(value);
       break;
     case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDid(value);
+      break;
+    case 4:
       var value = /** @type {!proto.yeying.api.user.UserRoleEnum} */ (reader.readEnum());
       msg.setRole(value);
       break;
-    case 4:
+    case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.setExtend(value);
       break;
-    case 5:
+    case 6:
       var value = /** @type {!proto.yeying.api.user.UserStatusEnum} */ (reader.readEnum());
       msg.setStatus(value);
       break;
-    case 6:
+    case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.setCreated(value);
       break;
-    case 7:
+    case 8:
       var value = /** @type {string} */ (reader.readString());
       msg.setCheckpoint(value);
       break;
@@ -494,45 +499,52 @@ proto.yeying.api.user.UserMetadata.serializeBinaryToWriter = function(message, w
       f
     );
   }
-  f = message.getDid();
+  f = message.getAvatar();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
+  f = message.getDid();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
   f = message.getRole();
   if (f !== 0.0) {
     writer.writeEnum(
-      3,
+      4,
       f
     );
   }
   f = message.getExtend();
   if (f.length > 0) {
     writer.writeString(
-      4,
+      5,
       f
     );
   }
   f = message.getStatus();
   if (f !== 0.0) {
     writer.writeEnum(
-      5,
+      6,
       f
     );
   }
   f = message.getCreated();
   if (f.length > 0) {
     writer.writeString(
-      6,
+      7,
       f
     );
   }
   f = message.getCheckpoint();
   if (f.length > 0) {
     writer.writeString(
-      7,
+      8,
       f
     );
   }
@@ -558,10 +570,10 @@ proto.yeying.api.user.UserMetadata.prototype.setName = function(value) {
 
 
 /**
- * optional string did = 2;
+ * optional string avatar = 2;
  * @return {string}
  */
-proto.yeying.api.user.UserMetadata.prototype.getDid = function() {
+proto.yeying.api.user.UserMetadata.prototype.getAvatar = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -570,17 +582,35 @@ proto.yeying.api.user.UserMetadata.prototype.getDid = function() {
  * @param {string} value
  * @return {!proto.yeying.api.user.UserMetadata} returns this
  */
-proto.yeying.api.user.UserMetadata.prototype.setDid = function(value) {
+proto.yeying.api.user.UserMetadata.prototype.setAvatar = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional UserRoleEnum role = 3;
+ * optional string did = 3;
+ * @return {string}
+ */
+proto.yeying.api.user.UserMetadata.prototype.getDid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.user.UserMetadata} returns this
+ */
+proto.yeying.api.user.UserMetadata.prototype.setDid = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional UserRoleEnum role = 4;
  * @return {!proto.yeying.api.user.UserRoleEnum}
  */
 proto.yeying.api.user.UserMetadata.prototype.getRole = function() {
-  return /** @type {!proto.yeying.api.user.UserRoleEnum} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+  return /** @type {!proto.yeying.api.user.UserRoleEnum} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
 
@@ -589,16 +619,16 @@ proto.yeying.api.user.UserMetadata.prototype.getRole = function() {
  * @return {!proto.yeying.api.user.UserMetadata} returns this
  */
 proto.yeying.api.user.UserMetadata.prototype.setRole = function(value) {
-  return jspb.Message.setProto3EnumField(this, 3, value);
+  return jspb.Message.setProto3EnumField(this, 4, value);
 };
 
 
 /**
- * optional string extend = 4;
+ * optional string extend = 5;
  * @return {string}
  */
 proto.yeying.api.user.UserMetadata.prototype.getExtend = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
 
@@ -607,16 +637,16 @@ proto.yeying.api.user.UserMetadata.prototype.getExtend = function() {
  * @return {!proto.yeying.api.user.UserMetadata} returns this
  */
 proto.yeying.api.user.UserMetadata.prototype.setExtend = function(value) {
-  return jspb.Message.setProto3StringField(this, 4, value);
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
 /**
- * optional UserStatusEnum status = 5;
+ * optional UserStatusEnum status = 6;
  * @return {!proto.yeying.api.user.UserStatusEnum}
  */
 proto.yeying.api.user.UserMetadata.prototype.getStatus = function() {
-  return /** @type {!proto.yeying.api.user.UserStatusEnum} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+  return /** @type {!proto.yeying.api.user.UserStatusEnum} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
 };
 
 
@@ -625,33 +655,15 @@ proto.yeying.api.user.UserMetadata.prototype.getStatus = function() {
  * @return {!proto.yeying.api.user.UserMetadata} returns this
  */
 proto.yeying.api.user.UserMetadata.prototype.setStatus = function(value) {
-  return jspb.Message.setProto3EnumField(this, 5, value);
+  return jspb.Message.setProto3EnumField(this, 6, value);
 };
 
 
 /**
- * optional string created = 6;
+ * optional string created = 7;
  * @return {string}
  */
 proto.yeying.api.user.UserMetadata.prototype.getCreated = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.yeying.api.user.UserMetadata} returns this
- */
-proto.yeying.api.user.UserMetadata.prototype.setCreated = function(value) {
-  return jspb.Message.setProto3StringField(this, 6, value);
-};
-
-
-/**
- * optional string checkpoint = 7;
- * @return {string}
- */
-proto.yeying.api.user.UserMetadata.prototype.getCheckpoint = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
@@ -660,8 +672,26 @@ proto.yeying.api.user.UserMetadata.prototype.getCheckpoint = function() {
  * @param {string} value
  * @return {!proto.yeying.api.user.UserMetadata} returns this
  */
-proto.yeying.api.user.UserMetadata.prototype.setCheckpoint = function(value) {
+proto.yeying.api.user.UserMetadata.prototype.setCreated = function(value) {
   return jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional string checkpoint = 8;
+ * @return {string}
+ */
+proto.yeying.api.user.UserMetadata.prototype.getCheckpoint = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.user.UserMetadata} returns this
+ */
+proto.yeying.api.user.UserMetadata.prototype.setCheckpoint = function(value) {
+  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
@@ -900,9 +930,10 @@ proto.yeying.api.user.AddRequestBody.prototype.toObject = function(opt_includeIn
 proto.yeying.api.user.AddRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    extend: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    created: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    checkpoint: jspb.Message.getFieldWithDefault(msg, 4, "")
+    avatar: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    extend: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    created: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    checkpoint: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -945,13 +976,17 @@ proto.yeying.api.user.AddRequestBody.deserializeBinaryFromReader = function(msg,
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setExtend(value);
+      msg.setAvatar(value);
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCreated(value);
+      msg.setExtend(value);
       break;
     case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCreated(value);
+      break;
+    case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.setCheckpoint(value);
       break;
@@ -991,24 +1026,31 @@ proto.yeying.api.user.AddRequestBody.serializeBinaryToWriter = function(message,
       f
     );
   }
-  f = message.getExtend();
+  f = message.getAvatar();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getCreated();
+  f = message.getExtend();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getCheckpoint();
+  f = message.getCreated();
   if (f.length > 0) {
     writer.writeString(
       4,
+      f
+    );
+  }
+  f = message.getCheckpoint();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
       f
     );
   }
@@ -1034,10 +1076,10 @@ proto.yeying.api.user.AddRequestBody.prototype.setName = function(value) {
 
 
 /**
- * optional string extend = 2;
+ * optional string avatar = 2;
  * @return {string}
  */
-proto.yeying.api.user.AddRequestBody.prototype.getExtend = function() {
+proto.yeying.api.user.AddRequestBody.prototype.getAvatar = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -1046,16 +1088,16 @@ proto.yeying.api.user.AddRequestBody.prototype.getExtend = function() {
  * @param {string} value
  * @return {!proto.yeying.api.user.AddRequestBody} returns this
  */
-proto.yeying.api.user.AddRequestBody.prototype.setExtend = function(value) {
+proto.yeying.api.user.AddRequestBody.prototype.setAvatar = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional string created = 3;
+ * optional string extend = 3;
  * @return {string}
  */
-proto.yeying.api.user.AddRequestBody.prototype.getCreated = function() {
+proto.yeying.api.user.AddRequestBody.prototype.getExtend = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -1064,16 +1106,16 @@ proto.yeying.api.user.AddRequestBody.prototype.getCreated = function() {
  * @param {string} value
  * @return {!proto.yeying.api.user.AddRequestBody} returns this
  */
-proto.yeying.api.user.AddRequestBody.prototype.setCreated = function(value) {
+proto.yeying.api.user.AddRequestBody.prototype.setExtend = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional string checkpoint = 4;
+ * optional string created = 4;
  * @return {string}
  */
-proto.yeying.api.user.AddRequestBody.prototype.getCheckpoint = function() {
+proto.yeying.api.user.AddRequestBody.prototype.getCreated = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -1082,8 +1124,26 @@ proto.yeying.api.user.AddRequestBody.prototype.getCheckpoint = function() {
  * @param {string} value
  * @return {!proto.yeying.api.user.AddRequestBody} returns this
  */
-proto.yeying.api.user.AddRequestBody.prototype.setCheckpoint = function(value) {
+proto.yeying.api.user.AddRequestBody.prototype.setCreated = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string checkpoint = 5;
+ * @return {string}
+ */
+proto.yeying.api.user.AddRequestBody.prototype.getCheckpoint = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.user.AddRequestBody} returns this
+ */
+proto.yeying.api.user.AddRequestBody.prototype.setCheckpoint = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
