@@ -3,6 +3,7 @@ import code_pkg from '../yeying/api/common/code_pb.cjs'
 const {
   AuthenticateTypeEnum,
   StreamDataTagEnum,
+  IdentityCodeEnum,
   ServiceCodeEnum,
   ApiCodeEnum,
   ApplicationCodeEnum,
@@ -38,6 +39,28 @@ export function getStreamDataTagTail(tag) {
   return StreamDataTagEnum.STREAM_DATA_TAG_TAIL
 }
 
+export function convertIdentityCodeFrom(str) {
+  if (str === undefined) {
+    return undefined
+  }
+
+  const value = IdentityCodeEnum[str.toUpperCase()]
+  return value === IdentityCodeEnum.IDENTITY_CODE_UNKNOWN ? undefined : value
+}
+
+export function isServiceIdentity(identityCode) {
+  identityCode = typeof identityCode === 'string' ? convertIdentityCodeTo(identityCode) : identityCode
+  return identityCode === IdentityCodeEnum.IDENTITY_CODE_SERVICE
+}
+
+export function convertIdentityCodeTo(code) {
+  if (code === undefined || code === IdentityCodeEnum.IDENTITY_CODE_UNKNOWN) {
+    return undefined
+  }
+
+  return Object.keys(IdentityCodeEnum).find(s => IdentityCodeEnum[s] === code)
+}
+
 export function convertDigitalFormatFrom(str) {
   if (str === undefined) {
     return undefined
@@ -59,7 +82,7 @@ export function convertDigitalFormatTo(digitalFormat) {
   return Object.keys(DigitalFormatEnum).find(s => DigitalFormatEnum[s] === digitalFormat)
 }
 
-export function fromStrToAuthenticateType(str) {
+export function convertAuthenticateTypeFrom(str) {
   if (str === undefined) {
     return undefined
   }

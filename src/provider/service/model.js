@@ -1,10 +1,11 @@
 import {convertApiCodeTo, convertServiceCodeTo} from '../../common/common.js'
 
 export class Service {
-  constructor(owner, network, did, address, name, code, apis, proxy, grpc, avatar, extend, created, checkpoint) {
+  constructor(owner, network, did, version, address, name, code, apis, proxy, grpc, avatar, extend, created, checkpoint) {
     this.owner = owner
     this.network = network
     this.did = did
+    this.version = version
     this.address = address
     this.name = name
     this.code = code
@@ -23,10 +24,11 @@ export function convertServiceTo(metadata) {
     metadata.getOwner(),
     metadata.getNetwork(),
     metadata.getDid(),
+    metadata.getVersion(),
     metadata.getAddress(),
     convertServiceCodeTo(metadata.getCode()),
     metadata.getName(),
-    JSON.stringify(metadata.getApisList().map(i => convertApiCodeTo(i))),
+    metadata.getApisList().map(i => convertApiCodeTo(i)),
     metadata.getProxy(),
     metadata.getGrpc(),
     metadata.getExtend(),

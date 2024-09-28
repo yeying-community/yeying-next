@@ -1,8 +1,14 @@
 import {ServiceClient} from '../../yeying/api/service/service_grpc_web_pb.cjs'
 import service_pkg from '../../yeying/api/service/service_pb.cjs'
-import {convertApiCodeFrom, convertServiceCodeFrom} from '../../common/common.js'
+import {
+  convertApiCodeFrom,
+  convertIdentityCodeTo,
+  convertServiceCodeFrom,
+  isServiceIdentity
+} from '../../common/common.js'
 import {doError, doStatus, isExisted, isDeleted} from '../../common/status.js'
 import {convertServiceTo} from './model.js'
+import {InvalidArgument} from '../../common/error.js'
 
 const {
   RegisterRequest, WhoamiRequest, RegisterRequestBody, ServiceMetadata, UnregisterRequest, UnregisterRequestBody, SearchRequest, SearchRequestBody,
@@ -29,20 +35,26 @@ export class ServiceProvider {
   register(identity) {
     return new Promise(async (resolve, reject) => {
       const method = '/yeying.api.service.Service/Register'
+      if (!isServiceIdentity(identity.metadata.code)) {
+        return reject(new InvalidArgument(`Mismatch identity=${identity.metadata.code}`))
+      }
+
       const metadata = new ServiceMetadata()
       metadata.setDid(identity.metadata.did)
       metadata.setNetwork(identity.metadata.network)
       metadata.setAddress(identity.blockAddress.address)
       metadata.setOwner(identity.metadata.parent)
-      metadata.setCode(convertServiceCodeFrom(identity.extend.code))
-      metadata.setApisList(identity.extend.apis.map(a => convertApiCodeFrom(a)))
+      metadata.setVersion(identity.metadata.version)
       metadata.setName(identity.metadata.name)
-      metadata.setProxy(identity.extend.proxy)
-      metadata.setGrpc(identity.extend.grpc)
-      metadata.setExtend(identity.metadata.extend)
       metadata.setAvatar(identity.metadata.avatar)
       metadata.setCreated(identity.metadata.created)
       metadata.setCheckpoint(identity.metadata.checkpoint)
+
+      metadata.setCode(convertServiceCodeFrom(identity.extend.code))
+      metadata.setApisList(identity.extend.apis.map(a => convertApiCodeFrom(a)))
+      metadata.setProxy(identity.extend.proxy)
+      metadata.setGrpc(identity.extend.grpc)
+
       const body = new RegisterRequestBody()
       body.setService(metadata)
 
@@ -50,7 +62,7 @@ export class ServiceProvider {
       try {
         header = await this.authenticate.createHeader(method, body)
       } catch (err) {
-        console.error('Fail to create header for register identity', err)
+        console.error('Fail to create header for register service', err)
         return reject(err)
       }
 
