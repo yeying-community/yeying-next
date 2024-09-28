@@ -7,28 +7,22 @@ import {convertDidToPublicKey, sign, verify} from '../common/signature.js'
 import {convertAuthenticateTypeTo} from '../common/common.js'
 import {InvalidArgument, NoPermission} from '../common/error.js'
 import {computeHash} from '../common/digest.js'
-import {IdentityCipher} from './cipher.js'
-import {convertCryptoAlgorithmFromIdentity, deriveRawKeyFromIdentity} from './model.js'
 
 const {MessageHeader} = message_pkg
 
 const {AuthenticateTypeEnum} = code_pkg
 
 export class Authenticate {
-  constructor(identity) {
-    this.identity = identity
+  constructor(blockAddress) {
+    this.blockAddress = blockAddress
   }
 
   getDid() {
-    return this.identity.blockAddress.identifier
-  }
-
-  getIdentityCipher() {
-    return new IdentityCipher(convertCryptoAlgorithmFromIdentity(this.identity), deriveRawKeyFromIdentity(this.identity))
+    return this.blockAddress.identifier
   }
 
   async createHeader(method, body) {
-    const did = this.identity.blockAddress.identifier
+    const did = this.blockAddress.identifier
     const timestamp = getCurrentUtcString()
     const nonce = generateUuid()
     const version = 0
@@ -41,7 +35,7 @@ export class Authenticate {
     }
 
     const hashBytes = await computeHash(data)
-    const signature = sign(this.identity.blockAddress.privateKey, hashBytes)
+    const signature = sign(this.blockAddress.privateKey, hashBytes)
     const header = new MessageHeader()
     header.setDid(did)
     header.setAuthtype(AuthenticateTypeEnum.AUTHENTICATE_TYPE_CERT)

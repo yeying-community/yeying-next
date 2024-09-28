@@ -1,9 +1,9 @@
-import elliptic from 'elliptic'
 import {trimLeft} from '../common/string.js'
 import {convertCipherTypeFrom} from '../common/common.js'
 import {decodeBase64} from '../common/codec.js'
 import code_pkg from '../yeying/api/common/code_pb.cjs'
 import {deriveRawKeyFromPairKey} from '../common/crypto.js'
+
 const {CipherTypeEnum} = code_pkg
 
 
@@ -23,13 +23,22 @@ export function convertDidToPublicKey(did) {
   return trimLeft(publicKey, '0x')
 }
 
-export function deriveRawKeyFromIdentity(identity) {
-  const blockAddress = identity.blockAddress
+export function deriveRawKeyFromBlockAddress(blockAddress) {
   return deriveRawKeyFromPairKey(blockAddress.publicKey, blockAddress.privateKey)
 }
 
 export function convertCryptoAlgorithmFromIdentity(identity) {
   const algorithm = identity['extend']['securityConfig']['algorithm']
+  const cipherType = convertCipherTypeFrom(algorithm.name)
+  switch (cipherType) {
+    case CipherTypeEnum.CIPHER_TYPE_AES_GCM_256:
+      return new CryptoAlgorithm('AES-GCM', decodeBase64(algorithm.iv))
+    default:
+      return undefined
+  }
+}
+
+export function convertCryptoAlgorithmFromAlgorithm(algorithm) {
   const cipherType = convertCipherTypeFrom(algorithm.name)
   switch (cipherType) {
     case CipherTypeEnum.CIPHER_TYPE_AES_GCM_256:

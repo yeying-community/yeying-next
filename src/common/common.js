@@ -3,18 +3,12 @@ import code_pkg from '../yeying/api/common/code_pb.cjs'
 const {
   AuthenticateTypeEnum,
   StreamDataTagEnum,
-  CategoryCodeEnum,
   ServiceCodeEnum,
   ApiCodeEnum,
-  AccountCodeEnum,
-  CipherTypeEnum,
   ApplicationCodeEnum,
+  CipherTypeEnum,
   DigitalFormatEnum
 } = code_pkg
-
-export function getAppIdentityCode() {
-  return ApplicationCodeEnum.APPLICATION_CODE_IDENTITY
-}
 
 export function getServiceMessageBoxCode() {
   return ServiceCodeEnum.SERVICE_CODE_MESSAGEBOX
@@ -82,30 +76,27 @@ export function convertAuthenticateTypeTo(authenticateType) {
 }
 
 
-export function convertCategoryCodeFrom(str) {
+export function convertApplicationCodeFrom(str) {
   if (str === undefined) {
     return undefined
   }
-  const value = CategoryCodeEnum[str]
-  return value === CategoryCodeEnum.CATEGORY_CODE_UNKNOWN ? undefined : value
+  const value = ApplicationCodeEnum[str]
+  return value === ApplicationCodeEnum.APPLICATION_CODE_UNKNOWN ? undefined : value
 }
 
-export function listCategoryCode() {
-  return Object.keys(CategoryCodeEnum).filter(s => CategoryCodeEnum[s] > 0)
-}
-
-export function convertCategoryCodeTo(category) {
-  if (category === undefined || category === CategoryCodeEnum.CATEGORY_CODE_UNKNOWN) {
+export function convertApplicationCodeTo(applicationCode) {
+  if (applicationCode === undefined || applicationCode === ApplicationCodeEnum.APPLICATION_CODE_UNKNOWN) {
     return undefined
   }
 
-  return Object.keys(CategoryCodeEnum).find(s => CategoryCodeEnum[s] === category)
+  return Object.keys(ApplicationCodeEnum).find(s => ApplicationCodeEnum[s] === applicationCode)
 }
 
 export function convertServiceCodeFrom(str) {
   if (str === undefined) {
     return undefined
   }
+
   const value = ServiceCodeEnum[str.toUpperCase()]
   return value === ServiceCodeEnum.SERVICE_CODE_UNKNOWN ? undefined : value
 }

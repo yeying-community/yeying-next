@@ -1,7 +1,7 @@
 import {ChunkReader} from './chunk/reader.js'
 import {computeHash, Digest} from '../../common/digest.js'
 import {decodeHex, encodeHex} from '../../common/codec.js'
-import {ConvertAssetActionFrom, getDigitalFormatByName} from './model.js'
+import {ConvertAssetActionFrom, convertAssetTo, getDigitalFormatByName} from './model.js'
 import pkg from '../../yeying/api/asset/asset_pb.cjs'
 import {convertDateToDateTime, convertToUtcDateTime, formatDateTime, getCurrentUtcString} from '../../common/date.js'
 
@@ -47,10 +47,12 @@ export class ChunkSender {
 }
 
 export class Uploader {
-  constructor(provider, assetId, file, encrypted, chunkSize = 16 * 1024 * 1024, sender = undefined) {
+  constructor(provider, assetId, file, encrypted, version = undefined, parent = undefined, chunkSize = 16 * 1024 * 1024, sender = undefined) {
     this.provider = provider
     this.sender = sender === undefined ? new ChunkSender(provider, provider.getIdentityCipher()) : sender
     this.chunkSize = chunkSize
+    this.parent = parent
+    this.version = version
     this.assetId = assetId
     this.file = file
     this.encrypted = encrypted
@@ -63,24 +65,25 @@ export class Uploader {
   upload(action, description, extend) {
     return new Promise(async (resolve, reject) => {
       action = typeof action === 'string' ? ConvertAssetActionFrom(action) : action
+
       // 获得资产版本信息
-      const assets = await this.provider.version(this.assetId, 1, 1)
-      const asset = new AssetMetadata()
-      let version = 0
-      let parentHash = ''
-      if (assets.length > 0) {
-        version = assets[0].getVersion() + 1
-        if (action === AssetActionEnum.ASSET_ACTION_OVERWRITE) {
-          parentHash = assets[0].getParent()
-        } else {
-          parentHash = assets[0].getHash()
+      if (this.parent === undefined || this.version === undefined) {
+        const assets = await this.provider.version(this.assetId, 1, 1)
+        if (assets.length > 0) {
+          this.version = assets[0].getVersion() + 1
+          if (action === AssetActionEnum.ASSET_ACTION_OVERWRITE) {
+            this.parent = assets[0].getParent()
+          } else {
+            this.parent = assets[0].getHash()
+          }
         }
       }
 
+      const asset = new AssetMetadata()
       asset.setOwner(this.provider.getDid())
-      asset.setParenthash(parentHash)
-      asset.setVersion(version)
-      asset.setId(this.assetId)
+      asset.setParenthash(this.parent)
+      asset.setVersion(this.version)
+      asset.setUid(this.assetId)
       asset.setName(this.file.name)
       asset.setFormat(getDigitalFormatByName(this.file.name))
       const lastModified = formatDateTime(convertToUtcDateTime(convertDateToDateTime(new Date(this.file.lastModified))))
@@ -98,7 +101,7 @@ export class Uploader {
         const reader = new ChunkReader(this.file, index, this.chunkSize)
         reader.read().then(data => {
           this.digest.update(data)
-          this.sender.send(this.assetId, version, index, this.encrypted, data).then(chunk => {
+          this.sender.send(this.assetId, this.version, index, this.encrypted, data).then(chunk => {
             this.chunkList[index] = chunk
             if (index === this.total - 1) {
               const chunkDigest = new Digest()
@@ -112,7 +115,7 @@ export class Uploader {
               asset.setHash(this.digest.sum())
               asset.setSize(size)
               asset.setChunksList(this.chunkList)
-              this.provider.sign(action, asset).then(() => resolve(asset)).catch(e => reject(e))
+              this.provider.sign(action, asset).then(() => resolve(convertAssetTo(asset))).catch(e => reject(e))
             } else {
               uploadChunk(index + 1)
             }

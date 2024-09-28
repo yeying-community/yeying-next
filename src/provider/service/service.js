@@ -73,7 +73,7 @@ export class ServiceProvider {
       try {
         header = await this.authenticate.createHeader(method, body)
       } catch (err) {
-        console.error('Fail to create header for unregister identity', err)
+        console.error('Fail to create header for unregister service', err)
         return reject(err)
       }
 
@@ -96,7 +96,7 @@ export class ServiceProvider {
       try {
         header = await this.authenticate.createHeader(method, body)
       } catch (err) {
-        console.error('Fail to create header for searching identity', err)
+        console.error('Fail to create header for searching service', err)
         return reject(err)
       }
 

@@ -1,6 +1,5 @@
 import {IdentityClient} from '../../yeying/api/identity/identity_grpc_web_pb.cjs'
 import identity_pkg from '../../yeying/api/identity/identity_pb.cjs'
-import {convertCategoryCodeFrom} from '../../common/common.js'
 import {doError, doStatus, isExisted, isDeleted} from '../../common/status.js'
 
 const {

@@ -2,6 +2,7 @@ import pkg from '../../yeying/api/asset/asset_pb.cjs'
 import {AssetClient} from '../../yeying/api/asset/asset_grpc_web_pb.cjs'
 import {doError, doStatus, isDeleted, isExisted} from '../../common/status.js'
 import {convertDigitalFormatFrom} from '../../common/common.js'
+import {convertAssetTo} from './model.js'
 
 const {
   VersionRequest,
@@ -21,10 +22,11 @@ const {
 } = pkg
 
 export class AssetProvider {
-  constructor(authenticate, provider) {
+  constructor(authenticate, provider, identityCipher) {
     this.authenticate = authenticate
     this.provider = provider
     this.client = new AssetClient(this.provider.proxy)
+    this.identityCipher = identityCipher
   }
 
   getDid() {
@@ -32,7 +34,7 @@ export class AssetProvider {
   }
 
   getIdentityCipher() {
-    return this.authenticate.getIdentityCipher()
+    return this.identityCipher
   }
 
   search(format, page, pageSize) {
@@ -68,7 +70,7 @@ export class AssetProvider {
 
     const body = res.getBody()
     this.authenticate.verifyHeader(method, res.getHeader(), body).then(() => {
-      doStatus(body.getStatus(), () => resolve(body.getAssetsList()), reject, this.provider)
+      doStatus(body.getStatus(), () => resolve(body.getAssetsList().map(a => convertAssetTo(a))), reject, this.provider)
     }, e => reject(e))
   }
 
@@ -104,7 +106,7 @@ export class AssetProvider {
 
     const body = res.getBody()
     this.authenticate.verifyHeader(method, res.getHeader(), body).then(() => {
-      doStatus(body.getStatus(), () => resolve(body.getAssetsList()), reject, this.provider)
+      doStatus(body.getStatus(), () => resolve(body.getAssetsList().map(a => convertAssetTo(a))), reject, this.provider)
     }, e => reject(e))
   }
 
@@ -140,7 +142,7 @@ export class AssetProvider {
 
     const body = res.getBody()
     this.authenticate.verifyHeader(method, res.getHeader(), body).then(() => {
-      doStatus(body.getStatus(), () => resolve(body.getAsset()), reject, this.provider)
+      doStatus(body.getStatus(), () => resolve(convertAssetTo(body.getAsset())), reject, this.provider)
     }, e => reject(e))
   }
 

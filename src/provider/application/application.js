@@ -1,6 +1,7 @@
 import application_pkg from '../../yeying/api/application/application_pb.cjs'
 import {ApplicationClient} from '../../yeying/api/application/application_grpc_web_pb.cjs'
 import {doError, doStatus} from '../../common/status.js'
+import {convertApplicationCodeFrom} from '../../common/common.js'
 
 const {SearchRequest, SearchRequestBody} = application_pkg
 
@@ -15,7 +16,7 @@ export class ApplicationProvider {
     return new Promise(async (resolve, reject) => {
       const method = '/yeying.api.application.Application/Search'
       const body = new SearchRequestBody()
-      body.setCode(code)
+      body.setCode(typeof code === 'string' ? convertApplicationCodeFrom(code) : code)
       body.setPage(page)
       body.setPagesize(pageSize)
 

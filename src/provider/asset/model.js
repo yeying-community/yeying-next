@@ -1,13 +1,14 @@
 import code_pkg from '../../yeying/api/common/code_pb.cjs'
 import pkg from '../../yeying/api/asset/asset_pb.cjs'
+import {convertDigitalFormatTo} from '../../common/common.js'
 
-const {CipherTypeEnum, DigitalFormatEnum} = code_pkg
-
+const {DigitalFormatEnum} = code_pkg
 const {AssetActionEnum} = pkg
 
 export class Asset {
-  constructor(id, name, parentHash, hash, mergedHash, description, format, size, created, checkpoint, total, block, encrypted, extend) {
-    this.id = id
+  constructor(owner, version, uid, name, parentHash, hash, mergedHash, description, format, size, created, checkpoint, total, block, encrypted, extend, chunks) {
+    this.owner = owner
+    this.uid = uid
     this.name = name
     this.parentHash = parentHash
     this.hash = hash
@@ -23,6 +24,7 @@ export class Asset {
     this.block = block
     this.encrypted = encrypted
     this.extend = extend
+    this.chunks = chunks
   }
 }
 
@@ -36,6 +38,45 @@ export class Chunk {
     // 块的扩展信息
     this.extend = extend
   }
+}
+
+export function convertAssetTo(a) {
+  if (a === undefined) {
+    return undefined
+  }
+
+  return new Asset(
+    a.getOwner(),
+    a.getVersion(),
+    a.getUid(),
+    a.getName(),
+    a.getParenthash(),
+    a.getHash(),
+    a.getMergedhash(),
+    a.getDescription(),
+    convertDigitalFormatTo(a.getFormat()),
+    a.getSize(),
+    a.getCreated(),
+    a.getCheckpoint(),
+    a.getTotal(),
+    a.getBlock(),
+    a.getEncrypted(),
+    a.getExtend(),
+    a.getChunksList().map(c => convertChunkTo(c)),
+  )
+}
+
+export function convertChunkTo(c) {
+  if (c === undefined) {
+    return undefined
+  }
+
+  return new Chunk(
+    c.getIndex(),
+    c.getHash(),
+    c.getSize(),
+    c.getExtend(),
+  )
 }
 
 export function getDigitalFormatByName(name) {

@@ -2779,7 +2779,7 @@ proto.yeying.api.service.UnregisterResponseBody.prototype.hasStatus = function()
  * @private {!Array<number>}
  * @const
  */
-proto.yeying.api.service.ServiceMetadata.repeatedFields_ = [7];
+proto.yeying.api.service.ServiceMetadata.repeatedFields_ = [8];
 
 
 
@@ -2815,16 +2815,17 @@ proto.yeying.api.service.ServiceMetadata.toObject = function(includeInstance, ms
     owner: jspb.Message.getFieldWithDefault(msg, 1, ""),
     network: jspb.Message.getFieldWithDefault(msg, 2, ""),
     did: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    address: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    name: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    code: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    apisList: (f = jspb.Message.getRepeatedField(msg, 7)) == null ? undefined : f,
-    proxy: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    grpc: jspb.Message.getFieldWithDefault(msg, 9, ""),
-    avatar: jspb.Message.getFieldWithDefault(msg, 10, ""),
-    extend: jspb.Message.getFieldWithDefault(msg, 11, ""),
-    created: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    checkpoint: jspb.Message.getFieldWithDefault(msg, 13, "")
+    version: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    address: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    name: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    code: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    apisList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
+    proxy: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    grpc: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    avatar: jspb.Message.getFieldWithDefault(msg, 11, ""),
+    extend: jspb.Message.getFieldWithDefault(msg, 12, ""),
+    created: jspb.Message.getFieldWithDefault(msg, 13, ""),
+    checkpoint: jspb.Message.getFieldWithDefault(msg, 14, "")
   };
 
   if (includeInstance) {
@@ -2874,44 +2875,48 @@ proto.yeying.api.service.ServiceMetadata.deserializeBinaryFromReader = function(
       msg.setDid(value);
       break;
     case 4:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setAddress(value);
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setVersion(value);
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setName(value);
+      msg.setAddress(value);
       break;
     case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 7:
       var value = /** @type {!proto.yeying.api.common.ServiceCodeEnum} */ (reader.readEnum());
       msg.setCode(value);
       break;
-    case 7:
+    case 8:
       var values = /** @type {!Array<!proto.yeying.api.common.ApiCodeEnum>} */ (reader.isDelimited() ? reader.readPackedEnum() : [reader.readEnum()]);
       for (var i = 0; i < values.length; i++) {
         msg.addApis(values[i]);
       }
       break;
-    case 8:
+    case 9:
       var value = /** @type {string} */ (reader.readString());
       msg.setProxy(value);
       break;
-    case 9:
+    case 10:
       var value = /** @type {string} */ (reader.readString());
       msg.setGrpc(value);
       break;
-    case 10:
+    case 11:
       var value = /** @type {string} */ (reader.readString());
       msg.setAvatar(value);
       break;
-    case 11:
+    case 12:
       var value = /** @type {string} */ (reader.readString());
       msg.setExtend(value);
       break;
-    case 12:
+    case 13:
       var value = /** @type {string} */ (reader.readString());
       msg.setCreated(value);
       break;
-    case 13:
+    case 14:
       var value = /** @type {string} */ (reader.readString());
       msg.setCheckpoint(value);
       break;
@@ -2965,73 +2970,80 @@ proto.yeying.api.service.ServiceMetadata.serializeBinaryToWriter = function(mess
       f
     );
   }
-  f = message.getAddress();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getVersion();
+  if (f !== 0) {
+    writer.writeUint32(
       4,
       f
     );
   }
-  f = message.getName();
+  f = message.getAddress();
   if (f.length > 0) {
     writer.writeString(
       5,
       f
     );
   }
+  f = message.getName();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
   f = message.getCode();
   if (f !== 0.0) {
     writer.writeEnum(
-      6,
+      7,
       f
     );
   }
   f = message.getApisList();
   if (f.length > 0) {
     writer.writePackedEnum(
-      7,
+      8,
       f
     );
   }
   f = message.getProxy();
   if (f.length > 0) {
     writer.writeString(
-      8,
+      9,
       f
     );
   }
   f = message.getGrpc();
   if (f.length > 0) {
     writer.writeString(
-      9,
+      10,
       f
     );
   }
   f = message.getAvatar();
   if (f.length > 0) {
     writer.writeString(
-      10,
+      11,
       f
     );
   }
   f = message.getExtend();
   if (f.length > 0) {
     writer.writeString(
-      11,
+      12,
       f
     );
   }
   f = message.getCreated();
   if (f.length > 0) {
     writer.writeString(
-      12,
+      13,
       f
     );
   }
   f = message.getCheckpoint();
   if (f.length > 0) {
     writer.writeString(
-      13,
+      14,
       f
     );
   }
@@ -3093,28 +3105,28 @@ proto.yeying.api.service.ServiceMetadata.prototype.setDid = function(value) {
 
 
 /**
- * optional string address = 4;
+ * optional uint32 version = 4;
+ * @return {number}
+ */
+proto.yeying.api.service.ServiceMetadata.prototype.getVersion = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.yeying.api.service.ServiceMetadata} returns this
+ */
+proto.yeying.api.service.ServiceMetadata.prototype.setVersion = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional string address = 5;
  * @return {string}
  */
 proto.yeying.api.service.ServiceMetadata.prototype.getAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.yeying.api.service.ServiceMetadata} returns this
- */
-proto.yeying.api.service.ServiceMetadata.prototype.setAddress = function(value) {
-  return jspb.Message.setProto3StringField(this, 4, value);
-};
-
-
-/**
- * optional string name = 5;
- * @return {string}
- */
-proto.yeying.api.service.ServiceMetadata.prototype.getName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -3123,17 +3135,35 @@ proto.yeying.api.service.ServiceMetadata.prototype.getName = function() {
  * @param {string} value
  * @return {!proto.yeying.api.service.ServiceMetadata} returns this
  */
-proto.yeying.api.service.ServiceMetadata.prototype.setName = function(value) {
+proto.yeying.api.service.ServiceMetadata.prototype.setAddress = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
 /**
- * optional yeying.api.common.ServiceCodeEnum code = 6;
+ * optional string name = 6;
+ * @return {string}
+ */
+proto.yeying.api.service.ServiceMetadata.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.service.ServiceMetadata} returns this
+ */
+proto.yeying.api.service.ServiceMetadata.prototype.setName = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional yeying.api.common.ServiceCodeEnum code = 7;
  * @return {!proto.yeying.api.common.ServiceCodeEnum}
  */
 proto.yeying.api.service.ServiceMetadata.prototype.getCode = function() {
-  return /** @type {!proto.yeying.api.common.ServiceCodeEnum} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+  return /** @type {!proto.yeying.api.common.ServiceCodeEnum} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
 };
 
 
@@ -3142,16 +3172,16 @@ proto.yeying.api.service.ServiceMetadata.prototype.getCode = function() {
  * @return {!proto.yeying.api.service.ServiceMetadata} returns this
  */
 proto.yeying.api.service.ServiceMetadata.prototype.setCode = function(value) {
-  return jspb.Message.setProto3EnumField(this, 6, value);
+  return jspb.Message.setProto3EnumField(this, 7, value);
 };
 
 
 /**
- * repeated yeying.api.common.ApiCodeEnum apis = 7;
+ * repeated yeying.api.common.ApiCodeEnum apis = 8;
  * @return {!Array<!proto.yeying.api.common.ApiCodeEnum>}
  */
 proto.yeying.api.service.ServiceMetadata.prototype.getApisList = function() {
-  return /** @type {!Array<!proto.yeying.api.common.ApiCodeEnum>} */ (jspb.Message.getRepeatedField(this, 7));
+  return /** @type {!Array<!proto.yeying.api.common.ApiCodeEnum>} */ (jspb.Message.getRepeatedField(this, 8));
 };
 
 
@@ -3160,7 +3190,7 @@ proto.yeying.api.service.ServiceMetadata.prototype.getApisList = function() {
  * @return {!proto.yeying.api.service.ServiceMetadata} returns this
  */
 proto.yeying.api.service.ServiceMetadata.prototype.setApisList = function(value) {
-  return jspb.Message.setField(this, 7, value || []);
+  return jspb.Message.setField(this, 8, value || []);
 };
 
 
@@ -3170,7 +3200,7 @@ proto.yeying.api.service.ServiceMetadata.prototype.setApisList = function(value)
  * @return {!proto.yeying.api.service.ServiceMetadata} returns this
  */
 proto.yeying.api.service.ServiceMetadata.prototype.addApis = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 7, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 8, value, opt_index);
 };
 
 
@@ -3184,28 +3214,10 @@ proto.yeying.api.service.ServiceMetadata.prototype.clearApisList = function() {
 
 
 /**
- * optional string proxy = 8;
+ * optional string proxy = 9;
  * @return {string}
  */
 proto.yeying.api.service.ServiceMetadata.prototype.getProxy = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.yeying.api.service.ServiceMetadata} returns this
- */
-proto.yeying.api.service.ServiceMetadata.prototype.setProxy = function(value) {
-  return jspb.Message.setProto3StringField(this, 8, value);
-};
-
-
-/**
- * optional string grpc = 9;
- * @return {string}
- */
-proto.yeying.api.service.ServiceMetadata.prototype.getGrpc = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
 };
 
@@ -3214,16 +3226,16 @@ proto.yeying.api.service.ServiceMetadata.prototype.getGrpc = function() {
  * @param {string} value
  * @return {!proto.yeying.api.service.ServiceMetadata} returns this
  */
-proto.yeying.api.service.ServiceMetadata.prototype.setGrpc = function(value) {
+proto.yeying.api.service.ServiceMetadata.prototype.setProxy = function(value) {
   return jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
 /**
- * optional string avatar = 10;
+ * optional string grpc = 10;
  * @return {string}
  */
-proto.yeying.api.service.ServiceMetadata.prototype.getAvatar = function() {
+proto.yeying.api.service.ServiceMetadata.prototype.getGrpc = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
 };
 
@@ -3232,16 +3244,16 @@ proto.yeying.api.service.ServiceMetadata.prototype.getAvatar = function() {
  * @param {string} value
  * @return {!proto.yeying.api.service.ServiceMetadata} returns this
  */
-proto.yeying.api.service.ServiceMetadata.prototype.setAvatar = function(value) {
+proto.yeying.api.service.ServiceMetadata.prototype.setGrpc = function(value) {
   return jspb.Message.setProto3StringField(this, 10, value);
 };
 
 
 /**
- * optional string extend = 11;
+ * optional string avatar = 11;
  * @return {string}
  */
-proto.yeying.api.service.ServiceMetadata.prototype.getExtend = function() {
+proto.yeying.api.service.ServiceMetadata.prototype.getAvatar = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
 };
 
@@ -3250,16 +3262,16 @@ proto.yeying.api.service.ServiceMetadata.prototype.getExtend = function() {
  * @param {string} value
  * @return {!proto.yeying.api.service.ServiceMetadata} returns this
  */
-proto.yeying.api.service.ServiceMetadata.prototype.setExtend = function(value) {
+proto.yeying.api.service.ServiceMetadata.prototype.setAvatar = function(value) {
   return jspb.Message.setProto3StringField(this, 11, value);
 };
 
 
 /**
- * optional string created = 12;
+ * optional string extend = 12;
  * @return {string}
  */
-proto.yeying.api.service.ServiceMetadata.prototype.getCreated = function() {
+proto.yeying.api.service.ServiceMetadata.prototype.getExtend = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
 };
 
@@ -3268,16 +3280,16 @@ proto.yeying.api.service.ServiceMetadata.prototype.getCreated = function() {
  * @param {string} value
  * @return {!proto.yeying.api.service.ServiceMetadata} returns this
  */
-proto.yeying.api.service.ServiceMetadata.prototype.setCreated = function(value) {
+proto.yeying.api.service.ServiceMetadata.prototype.setExtend = function(value) {
   return jspb.Message.setProto3StringField(this, 12, value);
 };
 
 
 /**
- * optional string checkpoint = 13;
+ * optional string created = 13;
  * @return {string}
  */
-proto.yeying.api.service.ServiceMetadata.prototype.getCheckpoint = function() {
+proto.yeying.api.service.ServiceMetadata.prototype.getCreated = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
 };
 
@@ -3286,8 +3298,26 @@ proto.yeying.api.service.ServiceMetadata.prototype.getCheckpoint = function() {
  * @param {string} value
  * @return {!proto.yeying.api.service.ServiceMetadata} returns this
  */
-proto.yeying.api.service.ServiceMetadata.prototype.setCheckpoint = function(value) {
+proto.yeying.api.service.ServiceMetadata.prototype.setCreated = function(value) {
   return jspb.Message.setProto3StringField(this, 13, value);
+};
+
+
+/**
+ * optional string checkpoint = 14;
+ * @return {string}
+ */
+proto.yeying.api.service.ServiceMetadata.prototype.getCheckpoint = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 14, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.service.ServiceMetadata} returns this
+ */
+proto.yeying.api.service.ServiceMetadata.prototype.setCheckpoint = function(value) {
+  return jspb.Message.setProto3StringField(this, 14, value);
 };
 
 

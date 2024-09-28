@@ -9281,7 +9281,7 @@ proto.yeying.api.asset.AssetMetadata.toObject = function(includeInstance, msg) {
   var f, obj = {
     owner: jspb.Message.getFieldWithDefault(msg, 1, ""),
     version: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    id: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    uid: jspb.Message.getFieldWithDefault(msg, 3, ""),
     name: jspb.Message.getFieldWithDefault(msg, 4, ""),
     parenthash: jspb.Message.getFieldWithDefault(msg, 5, ""),
     hash: jspb.Message.getFieldWithDefault(msg, 6, ""),
@@ -9344,7 +9344,7 @@ proto.yeying.api.asset.AssetMetadata.deserializeBinaryFromReader = function(msg,
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setId(value);
+      msg.setUid(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
@@ -9450,7 +9450,7 @@ proto.yeying.api.asset.AssetMetadata.serializeBinaryToWriter = function(message,
       f
     );
   }
-  f = message.getId();
+  f = message.getUid();
   if (f.length > 0) {
     writer.writeString(
       3,
@@ -9603,10 +9603,10 @@ proto.yeying.api.asset.AssetMetadata.prototype.setVersion = function(value) {
 
 
 /**
- * optional string id = 3;
+ * optional string uid = 3;
  * @return {string}
  */
-proto.yeying.api.asset.AssetMetadata.prototype.getId = function() {
+proto.yeying.api.asset.AssetMetadata.prototype.getUid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -9615,7 +9615,7 @@ proto.yeying.api.asset.AssetMetadata.prototype.getId = function() {
  * @param {string} value
  * @return {!proto.yeying.api.asset.AssetMetadata} returns this
  */
-proto.yeying.api.asset.AssetMetadata.prototype.setId = function(value) {
+proto.yeying.api.asset.AssetMetadata.prototype.setUid = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 

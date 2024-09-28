@@ -13,6 +13,26 @@ export function cloneObject(object) {
   return structuredClone(object)
 }
 
+// 深度合并
+export function deepMerge(oldObject, newObject) {
+  // 遍历源对象中的每一个键
+  for (const key in newObject) {
+    // 如果源对象的值是对象，并且目标对象中对应的键也是对象，则递归合并
+    if (newObject[key] && typeof newObject[key] === 'object') {
+      if (!oldObject[key] || typeof oldObject[key] !== 'object') {
+        oldObject[key] = {}
+      }
+      deepMerge(oldObject[key], newObject[key])
+    } else {
+      // 如果源对象中的值不是对象，或目标对象中对应的键不是对象，则用源对象中的值覆盖目标对象中的值
+      oldObject[key] = newObject[key]
+    }
+  }
+
+  // 返回合并后的目标对象
+  return oldObject
+}
+
 /**
  * 将多个 Uint8Array 拼接成一个大的 Uint8Array
  * @param {Uint8Array[]} arrays - 多个 Uint8Array 的数组
@@ -46,4 +66,13 @@ export function sortKeys(obj) {
     return undefined
   }
   return obj
+}
+
+export function convertBlobToString(blob) {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader()
+    fileReader.onload = (event) => resolve(event.target.result)
+    fileReader.onerror = reject
+    fileReader.readAsText(blob)
+  })
 }
