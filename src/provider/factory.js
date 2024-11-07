@@ -1,4 +1,4 @@
-import {convertApiCodeFrom} from '../common/common.js'
+import {convertApiCodeFrom} from '../common/helper.js'
 import code_pkg from '../yeying/api/common/code_pb.cjs'
 import {UserProvider} from './user/user.js'
 import {Authenticate} from '../identity/authenticate.js'

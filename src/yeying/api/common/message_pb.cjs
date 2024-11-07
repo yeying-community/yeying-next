@@ -991,10 +991,11 @@ proto.yeying.api.common.IdentityMetadata.toObject = function(includeInstance, ms
     version: jspb.Message.getFieldWithDefault(msg, 4, 0),
     address: jspb.Message.getFieldWithDefault(msg, 5, ""),
     name: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    code: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    avatar: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    created: jspb.Message.getFieldWithDefault(msg, 9, ""),
-    checkpoint: jspb.Message.getFieldWithDefault(msg, 10, "")
+    description: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    code: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    avatar: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    created: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    checkpoint: jspb.Message.getFieldWithDefault(msg, 11, "")
   };
 
   if (includeInstance) {
@@ -1057,17 +1058,21 @@ proto.yeying.api.common.IdentityMetadata.deserializeBinaryFromReader = function(
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCode(value);
+      msg.setDescription(value);
       break;
     case 8:
       var value = /** @type {string} */ (reader.readString());
-      msg.setAvatar(value);
+      msg.setCode(value);
       break;
     case 9:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCreated(value);
+      msg.setAvatar(value);
       break;
     case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCreated(value);
+      break;
+    case 11:
       var value = /** @type {string} */ (reader.readString());
       msg.setCheckpoint(value);
       break;
@@ -1142,31 +1147,38 @@ proto.yeying.api.common.IdentityMetadata.serializeBinaryToWriter = function(mess
       f
     );
   }
-  f = message.getCode();
+  f = message.getDescription();
   if (f.length > 0) {
     writer.writeString(
       7,
       f
     );
   }
-  f = message.getAvatar();
+  f = message.getCode();
   if (f.length > 0) {
     writer.writeString(
       8,
       f
     );
   }
-  f = message.getCreated();
+  f = message.getAvatar();
   if (f.length > 0) {
     writer.writeString(
       9,
       f
     );
   }
-  f = message.getCheckpoint();
+  f = message.getCreated();
   if (f.length > 0) {
     writer.writeString(
       10,
+      f
+    );
+  }
+  f = message.getCheckpoint();
+  if (f.length > 0) {
+    writer.writeString(
+      11,
       f
     );
   }
@@ -1282,10 +1294,10 @@ proto.yeying.api.common.IdentityMetadata.prototype.setName = function(value) {
 
 
 /**
- * optional string code = 7;
+ * optional string description = 7;
  * @return {string}
  */
-proto.yeying.api.common.IdentityMetadata.prototype.getCode = function() {
+proto.yeying.api.common.IdentityMetadata.prototype.getDescription = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
@@ -1294,16 +1306,16 @@ proto.yeying.api.common.IdentityMetadata.prototype.getCode = function() {
  * @param {string} value
  * @return {!proto.yeying.api.common.IdentityMetadata} returns this
  */
-proto.yeying.api.common.IdentityMetadata.prototype.setCode = function(value) {
+proto.yeying.api.common.IdentityMetadata.prototype.setDescription = function(value) {
   return jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
 /**
- * optional string avatar = 8;
+ * optional string code = 8;
  * @return {string}
  */
-proto.yeying.api.common.IdentityMetadata.prototype.getAvatar = function() {
+proto.yeying.api.common.IdentityMetadata.prototype.getCode = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
 };
 
@@ -1312,16 +1324,16 @@ proto.yeying.api.common.IdentityMetadata.prototype.getAvatar = function() {
  * @param {string} value
  * @return {!proto.yeying.api.common.IdentityMetadata} returns this
  */
-proto.yeying.api.common.IdentityMetadata.prototype.setAvatar = function(value) {
+proto.yeying.api.common.IdentityMetadata.prototype.setCode = function(value) {
   return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
 /**
- * optional string created = 9;
+ * optional string avatar = 9;
  * @return {string}
  */
-proto.yeying.api.common.IdentityMetadata.prototype.getCreated = function() {
+proto.yeying.api.common.IdentityMetadata.prototype.getAvatar = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
 };
 
@@ -1330,16 +1342,16 @@ proto.yeying.api.common.IdentityMetadata.prototype.getCreated = function() {
  * @param {string} value
  * @return {!proto.yeying.api.common.IdentityMetadata} returns this
  */
-proto.yeying.api.common.IdentityMetadata.prototype.setCreated = function(value) {
+proto.yeying.api.common.IdentityMetadata.prototype.setAvatar = function(value) {
   return jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
 /**
- * optional string checkpoint = 10;
+ * optional string created = 10;
  * @return {string}
  */
-proto.yeying.api.common.IdentityMetadata.prototype.getCheckpoint = function() {
+proto.yeying.api.common.IdentityMetadata.prototype.getCreated = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
 };
 
@@ -1348,8 +1360,26 @@ proto.yeying.api.common.IdentityMetadata.prototype.getCheckpoint = function() {
  * @param {string} value
  * @return {!proto.yeying.api.common.IdentityMetadata} returns this
  */
-proto.yeying.api.common.IdentityMetadata.prototype.setCheckpoint = function(value) {
+proto.yeying.api.common.IdentityMetadata.prototype.setCreated = function(value) {
   return jspb.Message.setProto3StringField(this, 10, value);
+};
+
+
+/**
+ * optional string checkpoint = 11;
+ * @return {string}
+ */
+proto.yeying.api.common.IdentityMetadata.prototype.getCheckpoint = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.common.IdentityMetadata} returns this
+ */
+proto.yeying.api.common.IdentityMetadata.prototype.setCheckpoint = function(value) {
+  return jspb.Message.setProto3StringField(this, 11, value);
 };
 
 

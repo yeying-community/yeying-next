@@ -1,4 +1,4 @@
-import {convertApplicationCodeFrom} from '../common/common.js'
+import {convertApplicationCodeFrom} from '../common/helper.js'
 import code_pkg from '../yeying/api/common/code_pb.cjs'
 import {NodeApplication} from './node/node.js'
 import {KnowledgeApplication} from './knowledge/knowledge.js'

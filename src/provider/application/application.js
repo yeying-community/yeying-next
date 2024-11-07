@@ -1,7 +1,7 @@
 import application_pkg from '../../yeying/api/application/application_pb.cjs'
 import {ApplicationClient} from '../../yeying/api/application/application_grpc_web_pb.cjs'
 import {doError, doStatus} from '../../common/status.js'
-import {convertApplicationCodeFrom} from '../../common/common.js'
+import {convertApplicationCodeFrom} from '../../common/helper.js'
 
 const {SearchRequest, SearchRequestBody} = application_pkg
 

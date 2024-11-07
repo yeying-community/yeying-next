@@ -2814,9 +2814,9 @@ proto.yeying.api.service.ServiceMetadata.toObject = function(includeInstance, ms
   var f, obj = {
     owner: jspb.Message.getFieldWithDefault(msg, 1, ""),
     network: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    did: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    version: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    address: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    address: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    did: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    version: jspb.Message.getFieldWithDefault(msg, 5, 0),
     name: jspb.Message.getFieldWithDefault(msg, 6, ""),
     code: jspb.Message.getFieldWithDefault(msg, 7, 0),
     apisList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
@@ -2825,7 +2825,8 @@ proto.yeying.api.service.ServiceMetadata.toObject = function(includeInstance, ms
     avatar: jspb.Message.getFieldWithDefault(msg, 11, ""),
     extend: jspb.Message.getFieldWithDefault(msg, 12, ""),
     created: jspb.Message.getFieldWithDefault(msg, 13, ""),
-    checkpoint: jspb.Message.getFieldWithDefault(msg, 14, "")
+    checkpoint: jspb.Message.getFieldWithDefault(msg, 14, ""),
+    signature: jspb.Message.getFieldWithDefault(msg, 15, "")
   };
 
   if (includeInstance) {
@@ -2872,15 +2873,15 @@ proto.yeying.api.service.ServiceMetadata.deserializeBinaryFromReader = function(
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setDid(value);
+      msg.setAddress(value);
       break;
     case 4:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setVersion(value);
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDid(value);
       break;
     case 5:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setAddress(value);
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setVersion(value);
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
@@ -2919,6 +2920,10 @@ proto.yeying.api.service.ServiceMetadata.deserializeBinaryFromReader = function(
     case 14:
       var value = /** @type {string} */ (reader.readString());
       msg.setCheckpoint(value);
+      break;
+    case 15:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSignature(value);
       break;
     default:
       reader.skipField();
@@ -2963,23 +2968,23 @@ proto.yeying.api.service.ServiceMetadata.serializeBinaryToWriter = function(mess
       f
     );
   }
-  f = message.getDid();
+  f = message.getAddress();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getVersion();
-  if (f !== 0) {
-    writer.writeUint32(
+  f = message.getDid();
+  if (f.length > 0) {
+    writer.writeString(
       4,
       f
     );
   }
-  f = message.getAddress();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getVersion();
+  if (f !== 0) {
+    writer.writeUint32(
       5,
       f
     );
@@ -3047,6 +3052,13 @@ proto.yeying.api.service.ServiceMetadata.serializeBinaryToWriter = function(mess
       f
     );
   }
+  f = message.getSignature();
+  if (f.length > 0) {
+    writer.writeString(
+      15,
+      f
+    );
+  }
 };
 
 
@@ -3087,10 +3099,10 @@ proto.yeying.api.service.ServiceMetadata.prototype.setNetwork = function(value) 
 
 
 /**
- * optional string did = 3;
+ * optional string address = 3;
  * @return {string}
  */
-proto.yeying.api.service.ServiceMetadata.prototype.getDid = function() {
+proto.yeying.api.service.ServiceMetadata.prototype.getAddress = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -3099,17 +3111,35 @@ proto.yeying.api.service.ServiceMetadata.prototype.getDid = function() {
  * @param {string} value
  * @return {!proto.yeying.api.service.ServiceMetadata} returns this
  */
-proto.yeying.api.service.ServiceMetadata.prototype.setDid = function(value) {
+proto.yeying.api.service.ServiceMetadata.prototype.setAddress = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional uint32 version = 4;
+ * optional string did = 4;
+ * @return {string}
+ */
+proto.yeying.api.service.ServiceMetadata.prototype.getDid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.service.ServiceMetadata} returns this
+ */
+proto.yeying.api.service.ServiceMetadata.prototype.setDid = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional uint32 version = 5;
  * @return {number}
  */
 proto.yeying.api.service.ServiceMetadata.prototype.getVersion = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
 };
 
 
@@ -3118,25 +3148,7 @@ proto.yeying.api.service.ServiceMetadata.prototype.getVersion = function() {
  * @return {!proto.yeying.api.service.ServiceMetadata} returns this
  */
 proto.yeying.api.service.ServiceMetadata.prototype.setVersion = function(value) {
-  return jspb.Message.setProto3IntField(this, 4, value);
-};
-
-
-/**
- * optional string address = 5;
- * @return {string}
- */
-proto.yeying.api.service.ServiceMetadata.prototype.getAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.yeying.api.service.ServiceMetadata} returns this
- */
-proto.yeying.api.service.ServiceMetadata.prototype.setAddress = function(value) {
-  return jspb.Message.setProto3StringField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -3318,6 +3330,24 @@ proto.yeying.api.service.ServiceMetadata.prototype.getCheckpoint = function() {
  */
 proto.yeying.api.service.ServiceMetadata.prototype.setCheckpoint = function(value) {
   return jspb.Message.setProto3StringField(this, 14, value);
+};
+
+
+/**
+ * optional string signature = 15;
+ * @return {string}
+ */
+proto.yeying.api.service.ServiceMetadata.prototype.getSignature = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 15, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.service.ServiceMetadata} returns this
+ */
+proto.yeying.api.service.ServiceMetadata.prototype.setSignature = function(value) {
+  return jspb.Message.setProto3StringField(this, 15, value);
 };
 
 

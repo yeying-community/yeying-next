@@ -1,11 +1,18 @@
 import {trimLeft} from '../common/string.js'
-import {convertCipherTypeFrom} from '../common/common.js'
+import {convertCipherTypeFrom} from '../common/helper.js'
 import {decodeBase64} from '../common/codec.js'
 import code_pkg from '../yeying/api/common/code_pb.cjs'
 import {deriveRawKeyFromPairKey} from '../common/crypto.js'
 
 const {CipherTypeEnum} = code_pkg
 
+export class Identity {
+  constructor(metadata, blockAddress, extend) {
+    this.metadata = metadata
+    this.blockAddress = blockAddress
+    this.extend = extend
+  }
+}
 
 export class CryptoAlgorithm {
   constructor(name, iv) {

@@ -1,6 +1,6 @@
 import code_pkg from '../../yeying/api/common/code_pb.cjs'
 import pkg from '../../yeying/api/asset/asset_pb.cjs'
-import {convertDigitalFormatTo} from '../../common/common.js'
+import {convertDigitalFormatTo} from '../../common/helper.js'
 
 const {DigitalFormatEnum} = code_pkg
 const {AssetActionEnum} = pkg

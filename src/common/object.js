@@ -76,3 +76,18 @@ export function convertBlobToString(blob) {
     fileReader.readAsText(blob)
   })
 }
+
+export function updateNestedObject(target, updates) {
+  for (const key in updates) {
+    if (updates.hasOwnProperty(key)) {
+      if (typeof updates[key] === 'object' && updates[key] !== null) {
+        if (!target.hasOwnProperty(key) || typeof target[key] !== 'object' || target[key] === null) {
+          target[key] = {}
+        }
+        updateNestedObject(target[key], updates[key])
+      } else {
+        target[key] = updates[key]
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@ import {getCurrentUtcString, isExpired, parseDateTime} from '../common/date.js'
 import {composite, concat} from '../common/object.js'
 import {generateUuid} from '../common/string.js'
 import {convertDidToPublicKey, sign, verify} from '../common/signature.js'
-import {convertAuthenticateTypeTo} from '../common/common.js'
+import {convertAuthenticateTypeTo} from '../common/helper.js'
 import {InvalidArgument, NoPermission} from '../common/error.js'
 import {computeHash} from '../common/digest.js'
 

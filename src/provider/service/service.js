@@ -5,7 +5,7 @@ import {
   convertIdentityCodeTo,
   convertServiceCodeFrom,
   isServiceIdentity
-} from '../../common/common.js'
+} from '../../common/helper.js'
 import {doError, doStatus, isExisted, isDeleted} from '../../common/status.js'
 import {convertServiceTo} from './model.js'
 import {InvalidArgument} from '../../common/error.js'

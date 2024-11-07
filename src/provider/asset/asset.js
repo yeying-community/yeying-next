@@ -1,7 +1,7 @@
 import pkg from '../../yeying/api/asset/asset_pb.cjs'
 import {AssetClient} from '../../yeying/api/asset/asset_grpc_web_pb.cjs'
 import {doError, doStatus, isDeleted, isExisted} from '../../common/status.js'
-import {convertDigitalFormatFrom} from '../../common/common.js'
+import {convertDigitalFormatFrom} from '../../common/helper.js'
 import {convertAssetTo} from './model.js'
 
 const {

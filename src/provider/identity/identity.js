@@ -21,7 +21,6 @@ export class IdentityProvider {
       metadata.setNetwork(identity.metadata.network)
       metadata.setAddress(identity.blockAddress.address)
       metadata.setParent(identity.metadata.parent)
-      metadata.setCategory(convertCategoryCodeFrom(identity.metadata.category))
       metadata.setCode(identity.metadata.code)
       metadata.setName(identity.metadata.name)
       metadata.setExtend(identity.metadata.extend)

@@ -3,7 +3,7 @@ import llm_pkg from '../../yeying/api/llm/llm_pb.cjs'
 import code_pkg from '../../yeying/api/common/code_pb.cjs'
 import {getCurrentUtcString} from '../../common/date.js'
 import {doError, doStatus, doStatuses, isExisted} from '../../common/status.js'
-import {getStreamDataTagBody, getStreamDataTagHead, getStreamDataTagTail} from '../../common/common.js'
+import {getStreamDataTagBody, getStreamDataTagHead, getStreamDataTagTail} from '../../common/helper.js'
 import {Cancelled} from '../../common/error.js'
 
 const {
