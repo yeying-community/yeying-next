@@ -26,6 +26,7 @@ goog.exportSymbol('proto.yeying.api.common.ApplicationCodeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ApplicationStatusEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.AuthenticateTypeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.CipherTypeEnum', null, global);
+goog.exportSymbol('proto.yeying.api.common.ContentFormatEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ContractStatusEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.DigitalFormatEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.IdentityCodeEnum', null, global);
@@ -33,7 +34,6 @@ goog.exportSymbol('proto.yeying.api.common.ImageFormatEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.LanguageCodeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ParticipantTypeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ResponseCodeEnum', null, global);
-goog.exportSymbol('proto.yeying.api.common.ResponseContentFormatEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ServiceCodeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.SessionRoleEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.SessionSceneEnum', null, global);
@@ -100,9 +100,8 @@ proto.yeying.api.common.ApiCodeEnum = {
 proto.yeying.api.common.ServiceCodeEnum = {
   SERVICE_CODE_UNKNOWN: 0,
   SERVICE_CODE_NODE: 1,
-  SERVICE_CODE_AGENT: 2,
-  SERVICE_CODE_STORE: 3,
-  SERVICE_CODE_MESSAGEBOX: 4
+  SERVICE_CODE_WAREHOUSE: 2,
+  SERVICE_CODE_AGENT: 3
 };
 
 /**
@@ -141,10 +140,10 @@ proto.yeying.api.common.DigitalFormatEnum = {
 /**
  * @enum {number}
  */
-proto.yeying.api.common.ResponseContentFormatEnum = {
-  RESPONSE_CONTENT_FORMAT_UNKNOWN: 0,
-  RESPONSE_CONTENT_FORMAT_URL: 1,
-  RESPONSE_CONTENT_FORMAT_BASE64: 2
+proto.yeying.api.common.ContentFormatEnum = {
+  CONTENT_FORMAT_UNKNOWN: 0,
+  CONTENT_FORMAT_URL: 1,
+  CONTENT_FORMAT_BASE64: 2
 };
 
 /**
@@ -190,9 +189,9 @@ proto.yeying.api.common.ApplicationStatusEnum = {
  */
 proto.yeying.api.common.ApplicationCodeEnum = {
   APPLICATION_CODE_UNKNOWN: 0,
-  APPLICATION_CODE_NODE: 1,
+  APPLICATION_CODE_STORE: 1,
   APPLICATION_CODE_KNOWLEDGE: 2,
-  APPLICATION_CODE_STORE: 3,
+  APPLICATION_CODE_WAREHOUSE: 3,
   APPLICATION_CODE_KEEPER: 4,
   APPLICATION_CODE_SOCIAL: 5,
   APPLICATION_CODE_WORKBENCH: 6

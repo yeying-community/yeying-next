@@ -144,6 +144,67 @@ proto.yeying.api.identity.IdentityPromiseClient.prototype.deposit =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
+ *   !proto.yeying.api.identity.RetrieveRequest,
+ *   !proto.yeying.api.identity.RetrieveResponse>}
+ */
+const methodDescriptor_Identity_Retrieve = new grpc.web.MethodDescriptor(
+  '/yeying.api.identity.Identity/Retrieve',
+  grpc.web.MethodType.UNARY,
+  proto.yeying.api.identity.RetrieveRequest,
+  proto.yeying.api.identity.RetrieveResponse,
+  /**
+   * @param {!proto.yeying.api.identity.RetrieveRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.yeying.api.identity.RetrieveResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.yeying.api.identity.RetrieveRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.yeying.api.identity.RetrieveResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.yeying.api.identity.RetrieveResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.yeying.api.identity.IdentityClient.prototype.retrieve =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/yeying.api.identity.Identity/Retrieve',
+      request,
+      metadata || {},
+      methodDescriptor_Identity_Retrieve,
+      callback);
+};
+
+
+/**
+ * @param {!proto.yeying.api.identity.RetrieveRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.yeying.api.identity.RetrieveResponse>}
+ *     Promise that resolves to the response
+ */
+proto.yeying.api.identity.IdentityPromiseClient.prototype.retrieve =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/yeying.api.identity.Identity/Retrieve',
+      request,
+      metadata || {},
+      methodDescriptor_Identity_Retrieve);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
  *   !proto.yeying.api.identity.QueryRequest,
  *   !proto.yeying.api.identity.QueryResponse>}
  */
@@ -199,6 +260,67 @@ proto.yeying.api.identity.IdentityPromiseClient.prototype.query =
       request,
       metadata || {},
       methodDescriptor_Identity_Query);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.yeying.api.identity.ShareRequest,
+ *   !proto.yeying.api.identity.ShareResponse>}
+ */
+const methodDescriptor_Identity_Share = new grpc.web.MethodDescriptor(
+  '/yeying.api.identity.Identity/Share',
+  grpc.web.MethodType.UNARY,
+  proto.yeying.api.identity.ShareRequest,
+  proto.yeying.api.identity.ShareResponse,
+  /**
+   * @param {!proto.yeying.api.identity.ShareRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.yeying.api.identity.ShareResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.yeying.api.identity.ShareRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.yeying.api.identity.ShareResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.yeying.api.identity.ShareResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.yeying.api.identity.IdentityClient.prototype.share =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/yeying.api.identity.Identity/Share',
+      request,
+      metadata || {},
+      methodDescriptor_Identity_Share,
+      callback);
+};
+
+
+/**
+ * @param {!proto.yeying.api.identity.ShareRequest} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.yeying.api.identity.ShareResponse>}
+ *     Promise that resolves to the response
+ */
+proto.yeying.api.identity.IdentityPromiseClient.prototype.share =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/yeying.api.identity.Identity/Share',
+      request,
+      metadata || {},
+      methodDescriptor_Identity_Share);
 };
 
 

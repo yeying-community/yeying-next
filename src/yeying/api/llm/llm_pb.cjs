@@ -5934,7 +5934,7 @@ proto.yeying.api.llm.GenerateRequestBody.deserializeBinaryFromReader = function(
       msg.setPrompt(value);
       break;
     case 4:
-      var value = /** @type {!proto.yeying.api.common.ResponseContentFormatEnum} */ (reader.readEnum());
+      var value = /** @type {!proto.yeying.api.common.ContentFormatEnum} */ (reader.readEnum());
       msg.setResponsecontentformat(value);
       break;
     case 5:
@@ -6096,16 +6096,16 @@ proto.yeying.api.llm.GenerateRequestBody.prototype.setPrompt = function(value) {
 
 
 /**
- * optional yeying.api.common.ResponseContentFormatEnum responseContentFormat = 4;
- * @return {!proto.yeying.api.common.ResponseContentFormatEnum}
+ * optional yeying.api.common.ContentFormatEnum responseContentFormat = 4;
+ * @return {!proto.yeying.api.common.ContentFormatEnum}
  */
 proto.yeying.api.llm.GenerateRequestBody.prototype.getResponsecontentformat = function() {
-  return /** @type {!proto.yeying.api.common.ResponseContentFormatEnum} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+  return /** @type {!proto.yeying.api.common.ContentFormatEnum} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
 
 /**
- * @param {!proto.yeying.api.common.ResponseContentFormatEnum} value
+ * @param {!proto.yeying.api.common.ContentFormatEnum} value
  * @return {!proto.yeying.api.llm.GenerateRequestBody} returns this
  */
 proto.yeying.api.llm.GenerateRequestBody.prototype.setResponsecontentformat = function(value) {
@@ -7773,7 +7773,7 @@ proto.yeying.api.llm.ImageResult.deserializeBinaryFromReader = function(msg, rea
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {!proto.yeying.api.common.ResponseContentFormatEnum} */ (reader.readEnum());
+      var value = /** @type {!proto.yeying.api.common.ContentFormatEnum} */ (reader.readEnum());
       msg.setResponsecontentformat(value);
       break;
     case 2:
@@ -7860,16 +7860,16 @@ proto.yeying.api.llm.ImageResult.serializeBinaryToWriter = function(message, wri
 
 
 /**
- * optional yeying.api.common.ResponseContentFormatEnum responseContentFormat = 1;
- * @return {!proto.yeying.api.common.ResponseContentFormatEnum}
+ * optional yeying.api.common.ContentFormatEnum responseContentFormat = 1;
+ * @return {!proto.yeying.api.common.ContentFormatEnum}
  */
 proto.yeying.api.llm.ImageResult.prototype.getResponsecontentformat = function() {
-  return /** @type {!proto.yeying.api.common.ResponseContentFormatEnum} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {!proto.yeying.api.common.ContentFormatEnum} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
 /**
- * @param {!proto.yeying.api.common.ResponseContentFormatEnum} value
+ * @param {!proto.yeying.api.common.ContentFormatEnum} value
  * @return {!proto.yeying.api.llm.ImageResult} returns this
  */
 proto.yeying.api.llm.ImageResult.prototype.setResponsecontentformat = function(value) {
