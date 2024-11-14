@@ -24,7 +24,7 @@ var yeying_api_common_message_pb = require('../../../yeying/api/common/message_p
 const proto = {};
 proto.yeying = {};
 proto.yeying.api = {};
-proto.yeying.api.invitation = require('./invitation_pb.cjs');
+proto.yeying.api.invitation = require('./Invitation_pb.cjs');
 
 /**
  * @param {string} hostname
@@ -35,21 +35,21 @@ proto.yeying.api.invitation = require('./invitation_pb.cjs');
  * @final
  */
 proto.yeying.api.invitation.InvitationClient =
-    function(hostname, credentials, options) {
-  if (!options) options = {};
-  options.format = 'binary';
+  function (hostname, credentials, options) {
+    if (!options) options = {};
+    options.format = 'binary';
 
-  /**
-   * @private @const {!grpc.web.GrpcWebClientBase} The client
-   */
-  this.client_ = new grpc.web.GrpcWebClientBase(options);
+    /**
+     * @private @const {!grpc.web.GrpcWebClientBase} The client
+     */
+    this.client_ = new grpc.web.GrpcWebClientBase(options);
 
-  /**
-   * @private @const {string} The hostname
-   */
-  this.hostname_ = hostname.replace(/\/+$/, '');
+    /**
+     * @private @const {string} The hostname
+     */
+    this.hostname_ = hostname.replace(/\/+$/, '');
 
-};
+  };
 
 
 /**
@@ -61,21 +61,21 @@ proto.yeying.api.invitation.InvitationClient =
  * @final
  */
 proto.yeying.api.invitation.InvitationPromiseClient =
-    function(hostname, credentials, options) {
-  if (!options) options = {};
-  options.format = 'binary';
+  function (hostname, credentials, options) {
+    if (!options) options = {};
+    options.format = 'binary';
 
-  /**
-   * @private @const {!grpc.web.GrpcWebClientBase} The client
-   */
-  this.client_ = new grpc.web.GrpcWebClientBase(options);
+    /**
+     * @private @const {!grpc.web.GrpcWebClientBase} The client
+     */
+    this.client_ = new grpc.web.GrpcWebClientBase(options);
 
-  /**
-   * @private @const {string} The hostname
-   */
-  this.hostname_ = hostname.replace(/\/+$/, '');
+    /**
+     * @private @const {string} The hostname
+     */
+    this.hostname_ = hostname.replace(/\/+$/, '');
 
-};
+  };
 
 
 /**
@@ -93,7 +93,7 @@ const methodDescriptor_Invitation_Input = new grpc.web.MethodDescriptor(
    * @param {!proto.yeying.api.invitation.InputRequest} request
    * @return {!Uint8Array}
    */
-  function(request) {
+  function (request) {
     return request.serializeBinary();
   },
   proto.yeying.api.invitation.InputResponse.deserializeBinary
@@ -111,14 +111,14 @@ const methodDescriptor_Invitation_Input = new grpc.web.MethodDescriptor(
  *     The XHR Node Readable Stream
  */
 proto.yeying.api.invitation.InvitationClient.prototype.input =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
+  function (request, metadata, callback) {
+    return this.client_.rpcCall(this.hostname_ +
       '/yeying.api.invitation.Invitation/Input',
       request,
       metadata || {},
       methodDescriptor_Invitation_Input,
       callback);
-};
+  };
 
 
 /**
@@ -130,13 +130,13 @@ proto.yeying.api.invitation.InvitationClient.prototype.input =
  *     Promise that resolves to the response
  */
 proto.yeying.api.invitation.InvitationPromiseClient.prototype.input =
-    function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
+  function (request, metadata) {
+    return this.client_.unaryCall(this.hostname_ +
       '/yeying.api.invitation.Invitation/Input',
       request,
       metadata || {},
       methodDescriptor_Invitation_Input);
-};
+  };
 
 
 /**
@@ -154,7 +154,7 @@ const methodDescriptor_Invitation_Generate = new grpc.web.MethodDescriptor(
    * @param {!proto.yeying.api.invitation.GenerateRequest} request
    * @return {!Uint8Array}
    */
-  function(request) {
+  function (request) {
     return request.serializeBinary();
   },
   proto.yeying.api.invitation.GenerateResponse.deserializeBinary
@@ -172,14 +172,14 @@ const methodDescriptor_Invitation_Generate = new grpc.web.MethodDescriptor(
  *     The XHR Node Readable Stream
  */
 proto.yeying.api.invitation.InvitationClient.prototype.generate =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
+  function (request, metadata, callback) {
+    return this.client_.rpcCall(this.hostname_ +
       '/yeying.api.invitation.Invitation/Generate',
       request,
       metadata || {},
       methodDescriptor_Invitation_Generate,
       callback);
-};
+  };
 
 
 /**
@@ -191,13 +191,13 @@ proto.yeying.api.invitation.InvitationClient.prototype.generate =
  *     Promise that resolves to the response
  */
 proto.yeying.api.invitation.InvitationPromiseClient.prototype.generate =
-    function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
+  function (request, metadata) {
+    return this.client_.unaryCall(this.hostname_ +
       '/yeying.api.invitation.Invitation/Generate',
       request,
       metadata || {},
       methodDescriptor_Invitation_Generate);
-};
+  };
 
 
 module.exports = proto.yeying.api.invitation;
