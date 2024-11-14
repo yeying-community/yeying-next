@@ -1,4 +1,4 @@
-import invitation_pkg from '../../yeying/api/invitation/invitation_pb.cjs'
+import invitation_pkg from '../../yeying/api/invitation/Invitation_pb.cjs'
 
 const {InvitationSceneEnum} = invitation_pkg
 
