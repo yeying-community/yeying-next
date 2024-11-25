@@ -15,24 +15,24 @@ const identity = {
   }
 }
 
-const provider = {proxy: 'http://localhost:8541'}
+const provider = {proxy: 'http://localhost:8441'}
 
 
 describe('User', () => {
   it('add', async () => {
-    const userProvider = new UserProvider(new Authenticate(identity), provider)
+    const userProvider = new UserProvider(new Authenticate(identity.blockAddress), provider)
     await userProvider.add('test1', '13584001111', 'yeying.community@gmail.com')
     console.log(`Success to add new user=${identity.blockAddress.identifier}`)
   })
 
   it('get', async () => {
-    const userProvider = new UserProvider(new Authenticate(identity), provider)
+    const userProvider = new UserProvider(new Authenticate(identity.blockAddress), provider)
     const user = await userProvider.get(identity.blockAddress.identifier)
     console.log(`Success to get user=${JSON.stringify(user)}`)
   })
 
   it('mod', async () => {
-    const userProvider = new UserProvider(new Authenticate(identity), provider)
+    const userProvider = new UserProvider(new Authenticate(identity.blockAddress), provider)
     await userProvider.mod('test2')
     console.log(`Success to mod user=${identity.blockAddress.identifier}`)
   })
