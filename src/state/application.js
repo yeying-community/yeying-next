@@ -1,8 +1,8 @@
 import {ApplicationData, Metadata, State, StateMessage,} from './model.js'
 import {StateResultOperator, StatusCode} from './worker/model.js'
 import {LocalCache} from '../cache/local.js'
-import {Digest} from '../common/digest.js'
-import {encodeString} from '../common/string.js'
+import {Digest} from '../tool/digest.js'
+import {encodeString} from '../tool/string.js'
 
 export class ApplicationState {
   constructor(identity, application, store) {

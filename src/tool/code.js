@@ -11,10 +11,6 @@ const {
   DigitalFormatEnum
 } = code_pkg
 
-export function getServiceMessageBoxCode() {
-  return ServiceCodeEnum.SERVICE_CODE_MESSAGEBOX
-}
-
 export function getServiceNodeCode() {
   return ServiceCodeEnum.SERVICE_CODE_NODE
 }
@@ -24,18 +20,18 @@ export function getServiceAgentCode() {
 }
 
 export function getServiceStoreCode() {
-  return ServiceCodeEnum.SERVICE_CODE_STORE
+  return ServiceCodeEnum.SERVICE_CODE_WAREHOUSE
 }
 
-export function getStreamDataTagHead(tag) {
+export function getStreamDataTagHead() {
   return StreamDataTagEnum.STREAM_DATA_TAG_HEAD
 }
 
-export function getStreamDataTagBody(tag) {
+export function getStreamDataTagBody() {
   return StreamDataTagEnum.STREAM_DATA_TAG_BODY
 }
 
-export function getStreamDataTagTail(tag) {
+export function getStreamDataTagTail() {
   return StreamDataTagEnum.STREAM_DATA_TAG_TAIL
 }
 
@@ -46,6 +42,10 @@ export function convertIdentityCodeFrom(str) {
 
   const value = IdentityCodeEnum[str.toUpperCase()]
   return value === IdentityCodeEnum.IDENTITY_CODE_UNKNOWN ? undefined : value
+}
+
+export function getPersonalIdentityCode() {
+  return convertIdentityCodeTo(IdentityCodeEnum.IDENTITY_CODE_PERSONAL)
 }
 
 export function isServiceIdentity(identityCode) {
@@ -131,7 +131,7 @@ export function getApiCodeListByServiceCode(serviceCodeStr) {
       return [ApiCodeEnum.API_CODE_USER, ApiCodeEnum.API_CODE_IDENTITY, ApiCodeEnum.API_CODE_CERTIFICATE]
     case ServiceCodeEnum.SERVICE_CODE_AGENT:
       return [ApiCodeEnum.API_CODE_USER, ApiCodeEnum.API_CODE_LLM]
-    case ServiceCodeEnum.SERVICE_CODE_STORE:
+    case ServiceCodeEnum.SERVICE_CODE_WAREHOUSE:
       return [ApiCodeEnum.API_CODE_USER, ApiCodeEnum.API_CODE_ASSET, ApiCodeEnum.API_CODE_STORAGE]
     default:
       return listApiCode()
@@ -168,6 +168,10 @@ export function convertApiCodeTo(apiCode) {
   }
 
   return Object.keys(ApiCodeEnum).find(s => ApiCodeEnum[s] === apiCode)
+}
+
+export function getAesGcmCipherType() {
+  return convertCipherTypeTo(CipherTypeEnum.CIPHER_TYPE_AES_GCM_256)
 }
 
 export function convertCipherTypeFrom(str) {

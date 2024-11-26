@@ -5,10 +5,10 @@ import {
   convertIdentityCodeTo,
   convertServiceCodeFrom,
   isServiceIdentity
-} from '../../common/helper.js'
-import {doError, doStatus, isExisted, isDeleted} from '../../common/status.js'
+} from '../../tool/code.js'
+import {doError, doStatus, isExisted, isDeleted} from '../../tool/status.js'
 import {convertServiceTo} from './model.js'
-import {InvalidArgument} from '../../common/error.js'
+import {InvalidArgument} from '../../tool/error.js'
 
 const {
   RegisterRequest, WhoamiRequest, RegisterRequestBody, ServiceMetadata, UnregisterRequest, UnregisterRequestBody, SearchRequest, SearchRequestBody,

@@ -1,12 +1,12 @@
 import code_pkg from '../yeying/api/common/code_pb.cjs'
 import message_pkg from '../yeying/api/common/message_pb.cjs'
-import {getCurrentUtcString, isExpired, parseDateTime} from '../common/date.js'
-import {composite, concat} from '../common/object.js'
-import {generateUuid} from '../common/string.js'
-import {convertDidToPublicKey, sign, verify} from '../common/signature.js'
-import {convertAuthenticateTypeTo} from '../common/helper.js'
-import {InvalidArgument, NoPermission} from '../common/error.js'
-import {computeHash} from '../common/digest.js'
+import {getCurrentUtcString, isExpired, parseDateTime} from '../tool/date.js'
+import {composite, concat} from '../tool/object.js'
+import {generateUuid} from '../tool/string.js'
+import {convertDidToPublicKey, sign, verify} from '../tool/signature.js'
+import {convertAuthenticateTypeTo} from '../tool/code.js'
+import {InvalidArgument, NoPermission} from '../tool/error.js'
+import {computeHash} from '../tool/digest.js'
 
 const {MessageHeader} = message_pkg
 

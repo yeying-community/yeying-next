@@ -1,8 +1,8 @@
-import {trimLeft} from '../common/string.js'
-import {convertCipherTypeFrom} from '../common/helper.js'
-import {decodeBase64} from '../common/codec.js'
+import {trimLeft} from '../tool/string.js'
+import {convertCipherTypeFrom} from '../tool/code.js'
+import {decodeBase64} from '../tool/codec.js'
 import code_pkg from '../yeying/api/common/code_pb.cjs'
-import {deriveRawKeyFromPairKey} from '../common/crypto.js'
+import {deriveRawKeyFromPairKey} from '../tool/crypto.js'
 
 const {CipherTypeEnum} = code_pkg
 

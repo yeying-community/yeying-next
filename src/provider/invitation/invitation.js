@@ -1,6 +1,6 @@
 import {InvitationClient} from '../../yeying/api/invitation/invitation_grpc_web_pb.cjs'
 import invitation_pkg from '../../yeying/api/invitation/invitation_pb.cjs'
-import {doError, doStatus} from '../../common/status.js'
+import {doError, doStatus} from '../../tool/status.js'
 
 const {GenerateRequest, InputRequest, InputRequestBody, GenerateRequestBody} = invitation_pkg
 

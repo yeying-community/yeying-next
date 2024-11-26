@@ -6,7 +6,7 @@
 // 4、对于不再端上使用的身份，能够一键清理不留痕迹；
 import {SessionCache} from '../cache/session.js'
 import {LocalCache} from '../cache/local.js'
-import {InvalidPassword} from '../common/error.js'
+import {InvalidPassword} from '../tool/error.js'
 import {Account} from './model.js'
 import {IdentityManager} from '../identity/manager.js'
 
@@ -44,6 +44,7 @@ export class AccountManager {
     }
   }
 
+  // 注销，清理登陆信息
   logout() {
     const activeAccount = this.sessionCache.get(this.loginAccountKey)
     if (activeAccount !== undefined) {
@@ -52,6 +53,12 @@ export class AccountManager {
     }
   }
 
+  // 清理缓存，清理当前浏览器中所有和这个身份相关信息
+  clear(did) {
+
+  }
+
+  // 登陆，解密身份信息
   login(did, password) {
     return new Promise(async (resolve, reject) => {
       if (this.identityMap[did] !== undefined) {

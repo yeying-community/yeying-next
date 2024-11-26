@@ -1,6 +1,6 @@
 import {CertificateClient} from '../../yeying/api/certificate/certificate_grpc_web_pb.cjs'
 import certificate_pkg from '../../yeying/api/certificate/certificate_pb.cjs'
-import {doError, doStatus} from '../../common/status.js'
+import {doError, doStatus} from '../../tool/status.js'
 
 const {SignRequest, SignRequestBody} = certificate_pkg
 

@@ -1,4 +1,4 @@
-import {convertApiCodeTo, convertServiceCodeTo} from '../../common/helper.js'
+import {convertApiCodeTo, convertServiceCodeTo} from '../../tool/code.js'
 
 export class Service {
   constructor(owner, network, did, version, address, name, code, apis, proxy, grpc, avatar, extend, created, checkpoint) {

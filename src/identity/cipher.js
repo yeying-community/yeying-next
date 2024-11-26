@@ -1,5 +1,5 @@
-import {InvalidPassword} from '../common/error.js'
-import {decryptObject, encryptObject} from '../common/crypto.js'
+import {InvalidPassword} from '../tool/error.js'
+import {decryptObject, encryptObject} from '../tool/crypto.js'
 
 
 export class IdentityCipher {

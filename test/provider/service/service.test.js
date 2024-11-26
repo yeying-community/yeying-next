@@ -1,6 +1,6 @@
 import {Authenticate} from '../../../src/identity/authenticate.js'
 import {IdentityProvider} from '../../../src/provider/identity/identity.js'
-import {getServiceAgentCode, getServiceMessageBoxCode, getServiceNodeCode, getServiceStoreCode} from '../../../src/common/helper.js'
+import {getServiceAgentCode, getServiceMessageBoxCode, getServiceNodeCode, getServiceStoreCode} from '../../../src/tool/code.js'
 import {ServiceProvider} from '../../../src/provider/service/service.js'
 
 const identity = {

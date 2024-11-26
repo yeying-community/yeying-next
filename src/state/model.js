@@ -1,4 +1,4 @@
-import {getCurrentUtcString} from '../common/date.js'
+import {getCurrentUtcString} from '../tool/date.js'
 
 export function StateMessage(assetId, workerType, state, store, blockAddress, algorithm) {
   // 状态资产id

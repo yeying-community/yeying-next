@@ -1,17 +1,12 @@
 import {LocalCache} from '../cache/local.js'
-import {
-  convertCryptoAlgorithmFromAlgorithm,
-  convertCryptoAlgorithmFromIdentity,
-  convertDidToPublicKey
-} from './model.js'
-import {cloneObject, sortKeys, updateNestedObject} from '../common/object.js'
-import {AlreadyExist, DataForgery, InvalidPassword, NotFound} from '../common/error.js'
-import {decryptObject, deriveRawKeyFromPassword, encryptObject} from '../common/crypto.js'
-import {decodeString, encodeString} from '../common/string.js'
-import {decodeBase64, encodeBase64} from '../common/codec.js'
-import {computeHash} from '../common/digest.js'
-import {sign, verify} from '../common/signature.js'
-import {Identity} from '../provider/identity/model.js'
+import {convertCryptoAlgorithmFromAlgorithm, convertDidToPublicKey, Identity} from './model.js'
+import {cloneObject, sortKeys, updateNestedObject} from '../tool/object.js'
+import {AlreadyExist, DataForgery, InvalidPassword, NotFound} from '../tool/error.js'
+import {decryptObject, deriveRawKeyFromPassword, encryptObject} from '../tool/crypto.js'
+import {decodeString, encodeString} from '../tool/string.js'
+import {decodeBase64, encodeBase64} from '../tool/codec.js'
+import {computeHash} from '../tool/digest.js'
+import {sign, verify} from '../tool/signature.js'
 
 
 export class IdentityManager {
@@ -23,7 +18,6 @@ export class IdentityManager {
   createNewIdentity(metadata, blockAddress, extend, password) {
     return new Promise(async (resolve, reject) => {
       let identity = new Identity(metadata, blockAddress, extend)
-
       // 加密
       try {
         identity = await this.encryptIdentity(identity, password)
@@ -41,8 +35,10 @@ export class IdentityManager {
   encryptIdentity(identity, password) {
     return new Promise(async (resolve, reject) => {
       // 加密
+      const privateKey = identity?.blockAddress?.privateKey
       try {
-        identity.blockAddress = await this.#encryptBlockAddress(identity.blockAddress, convertCryptoAlgorithmFromAlgorithm(extend['securityConfig']['algorithm']), password)
+        const algorithm = convertCryptoAlgorithmFromAlgorithm(identity.extend['securityConfig']['algorithm'])
+        identity.blockAddress = await this.#encryptBlockAddress(identity.blockAddress, algorithm, password)
       } catch (err) {
         console.error(`Fail to encrypt identity=${JSON.stringify(identity)} when adding identity!`, err)
         return reject(new DataForgery('Invalid identity!'))
@@ -50,11 +46,10 @@ export class IdentityManager {
 
       // 添加签名
       try {
-        await this.#signIdentity(identity, identity.blockAddress.privateKey)
+        await this.#signIdentity(identity, privateKey)
       } catch (err) {
         return reject(new DataForgery('Invalid identity!'))
       }
-
       resolve(identity)
     })
   }
@@ -70,7 +65,8 @@ export class IdentityManager {
 
       // 解密
       try {
-        identity.blockAddress = await this.#decryptBlockAddress(identity.blockAddress, convertCryptoAlgorithmFromIdentity(identity), password)
+        const algorithm = convertCryptoAlgorithmFromAlgorithm(identity.extend['securityConfig']['algorithm'])
+        identity.blockAddress = await this.#decryptBlockAddress(identity.blockAddress, algorithm, password)
       } catch (err) {
         console.error(`Fail to decrypt identity=${did}`, err)
         reject(new InvalidPassword(`Invalid password!`))
@@ -122,6 +118,7 @@ export class IdentityManager {
         return reject(new InvalidPassword(`Invalid new password!`))
       }
 
+      this.localCache.set(did, identity)
       resolve(identity)
     })
   }
@@ -151,6 +148,8 @@ export class IdentityManager {
         console.error(`Fail to encrypt identity=${did} when changing identity metadata!`, err)
         return reject(new InvalidPassword(`Invalid password!`))
       }
+
+      this.localCache.set(did, identity)
       resolve(identity)
     })
   }
@@ -180,6 +179,8 @@ export class IdentityManager {
         console.error(`Fail to encrypt identity=${did} when changing identity extend!`, err)
         return reject(new InvalidPassword(`Invalid password!`))
       }
+
+      this.localCache.set(did, identity)
       resolve(identity)
     })
   }
@@ -189,8 +190,8 @@ export class IdentityManager {
     return new Promise(async (resolve, reject) => {
       // 查看当前对象里面是否已经缓存了
       const existing = this.localCache.get(identity.metadata.did)
-      console.log(`existing=${JSON.stringify(existing)}, identity=${JSON.stringify(identity)}`)
       if (existing) {
+        console.log(`existing=${JSON.stringify(existing)}, identity=${JSON.stringify(identity)}`)
         return reject(new AlreadyExist(`Exist identity=${identity.name}`))
       }
 
@@ -221,17 +222,17 @@ export class IdentityManager {
   }
 
   async #signIdentity(identity, privateKey) {
-    identity.metadata.extend.signature = undefined
+    identity.signature = undefined
     const hashBytes = await computeHash(encodeString(JSON.stringify(sortKeys(identity))))
-    identity.metadata.extend.signature = sign(privateKey, hashBytes)
+    identity.signature = sign(privateKey, hashBytes)
   }
 
   async #verifyIdentity(identity) {
     // 从did身份中获取公钥
     const publicKey = convertDidToPublicKey(identity.metadata.did)
     const newIdentity = cloneObject(identity)
-    newIdentity.metadata.extend.signature = undefined
+    newIdentity.signature = undefined
     const hashBytes = await computeHash(encodeString(JSON.stringify(sortKeys(newIdentity))))
-    return verify(publicKey, hashBytes, identity.metadata.extend.signature)
+    return verify(publicKey, hashBytes, identity.signature)
   }
 }

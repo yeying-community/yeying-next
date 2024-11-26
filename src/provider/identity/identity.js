@@ -1,6 +1,6 @@
 import {IdentityClient} from '../../yeying/api/identity/identity_grpc_web_pb.cjs'
 import identity_pkg from '../../yeying/api/identity/identity_pb.cjs'
-import {doError, doStatus, isExisted, isDeleted} from '../../common/status.js'
+import {doError, doStatus, isExisted, isDeleted} from '../../tool/status.js'
 
 const {
   RegisterRequest, RegisterRequestBody, IdentityMetadata, UnregisterRequest, UnregisterRequestBody, SearchRequest, SearchRequestBody,
