@@ -83,20 +83,11 @@ describe('Identity', () => {
     const telephone = '1234567891'
     await manager.updateIdentityExtend(existing.metadata.did, {telephone: telephone}, password)
 
-    // 检查是否生效
+    // 检查是否生效，获取详情
     const identity = await manager.getIdentity(existing.metadata.did)
     expect(identity.metadata.name).toStrictEqual(name)
     expect(identity.metadata.avatar).toStrictEqual(avatar)
     expect(identity.extend.telephone).toStrictEqual(telephone)
-  })
-
-  // 登陆
-  it('Login', async () => {
-
-  })
-
-  it('Detail', async () => {
-
   })
 
 })

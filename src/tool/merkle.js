@@ -1,4 +1,4 @@
-import {Digest} from '../tool/crypto/digest.js'
+import {Digest} from '../tool/digest.js'
 
 export class MerkleTree {
   constructor(leaves) {

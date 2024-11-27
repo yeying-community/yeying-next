@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "a web3 application library for browser",
   "type": "module",
+  "main": "src/index.js",
   "scripts": {
     "build": "rollup -c",
     "test": "vitest",

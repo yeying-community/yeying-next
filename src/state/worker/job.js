@@ -1,5 +1,5 @@
-import {StateOperator, StatusCode, WorkerResult, WorkerStatus,} from '../worker/model.js'
-import {MerkleTree} from '../../state/merkle.js'
+import {StateResultOperator, StatusCode, WorkerResult, WorkerStatus,} from '../worker/model.js'
+import {MerkleTree} from '../../tool/merkle.js'
 import {sortKeys} from '../../tool/object.js'
 import {convertCryptoAlgorithmFromAlgorithm, deriveRawKeyFromBlockAddress} from '../../identity/model.js'
 import {IdentityCipher} from '../../identity/cipher.js'
@@ -46,23 +46,23 @@ async function process(message) {
     const extend = JSON.parse(asset.extend)
     if (currentMetadata.version === undefined) {
       // 首次在当前设备上使用，需要从后端store服务中加载状态数据，并初始化环境。
-      operator = StateOperator.OVERWRITE
+      operator = StateResultOperator.OVERWRITE
     } else if (currentMetadata.version < asset.version) {
-      operator = StateOperator.MERGE
+      operator = StateResultOperator.MERGE
     } else if (currentMetadata.version === asset.version) {
       if (extend.merkleRoot !== currentMerkleRoot) {
         self.postMessage(new WorkerResult(new WorkerStatus(StatusCode.FAILURE, "Mismatch content!")))
         return
       }
 
-      operator = StateOperator.CREATE
+      operator = StateResultOperator.CREATE
     } else {
       console.log(`change service, version=${currentMetadata.version}, store service latest version=${asset.version}`)
       self.postMessage(new WorkerResult(new WorkerStatus(StatusCode.FAILURE, "Invalid version!")))
       return
     }
 
-    if (operator === StateOperator.MERGE || operator === StateOperator.OVERWRITE) {
+    if (operator === StateResultOperator.MERGE || operator === StateResultOperator.OVERWRITE) {
       // 从服务器下载状态数据，在本地执行合并，对齐本地的基线和服务器的版本，并上传
       console.log(`The state baseline fall behind!`)
       const downloader = new Downloader(provider, assetId, asset.version)
@@ -94,7 +94,7 @@ async function process(message) {
       return
     }
   } else {
-    operator = StateOperator.MERGE
+    operator = StateResultOperator.MERGE
   }
 
   // 新增版本，要么服务器上没有版本，要么服务器上的版本和当前版本一致
@@ -105,7 +105,7 @@ async function process(message) {
   // 检查身份状态没有发生变化
   if (currentMerkleRoot === merkleTree.getRoot()) {
     console.log(`The state is unchanged.`)
-    self.postMessage(new WorkerResult(success(), StateOperator.SKIP))
+    self.postMessage(new WorkerResult(success(), StateResultOperator.SKIP))
     return
   }
 
