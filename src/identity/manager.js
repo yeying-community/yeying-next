@@ -7,6 +7,7 @@ import {decodeString, encodeString} from '../tool/string.js'
 import {decodeBase64, encodeBase64} from '../tool/codec.js'
 import {computeHash} from '../tool/digest.js'
 import {sign, verify} from '../tool/signature.js'
+import {Chain, NetworkType} from '@yeying-community/yeying-web3'
 
 
 export class IdentityManager {
@@ -15,8 +16,11 @@ export class IdentityManager {
     this.localCache = new LocalCache()
   }
 
-  createNewIdentity(metadata, blockAddress, extend, password) {
+  createNewIdentity(metadata, extend, password) {
     return new Promise(async (resolve, reject) => {
+      const blockAddress = Chain.createBlockAddress(NetworkType.YeYing)
+      metadata['did'] = blockAddress.identifier
+      metadata['address'] = blockAddress.address
       let identity = new Identity(metadata, blockAddress, extend)
       // 加密
       try {
