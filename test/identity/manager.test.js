@@ -1,3 +1,4 @@
+import {Chain, NetworkType} from '@yeying-community/yeying-web3'
 import {getAesGcmCipherType, getPersonalIdentityCode} from '../../src/tool/code.js'
 import {getCurrentUtcString} from '../../src/tool/date.js'
 import {IdentityManager} from '../../src/index.js'
@@ -7,9 +8,14 @@ import {encodeBase64} from '../../src/tool/codec.js'
 describe('Identity', () => {
   // 申请
   it('Apply', async () => {
+    const blockAddress = Chain.createBlockAddress(NetworkType.YeYing)
+    console.log(blockAddress)
+
     const metadata = {
       parent: '',
       network: 'YeYing',
+      did: blockAddress.identifier,
+      address: blockAddress.address,
       code: getPersonalIdentityCode(),
       version: 1,
       name: 'test',
@@ -31,7 +37,7 @@ describe('Identity', () => {
     console.log(extend)
     const manager = new IdentityManager()
     const password = '123456'
-    const identity1 = await manager.createNewIdentity(metadata, extend, password)
+    const identity1 = await manager.createNewIdentity(metadata, blockAddress, extend, password)
     console.log(JSON.stringify(identity1))
     const identity2 = await manager.decryptIdentity(identity1, password)
     console.log(JSON.stringify(identity2))

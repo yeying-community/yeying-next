@@ -13,7 +13,7 @@ export class ApplicationFactory {
   get(code) {
     code = typeof code === 'string' ? convertApplicationCodeFrom(code) : code
     switch (code) {
-      case ApplicationCodeEnum.APPLICATION_CODE_NODE:
+      case ApplicationCodeEnum.APPLICATION_CODE_STORE:
         return new NodeApplication()
       case ApplicationCodeEnum.APPLICATION_CODE_KNOWLEDGE:
         return new KnowledgeApplication()
