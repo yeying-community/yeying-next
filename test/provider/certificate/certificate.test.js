@@ -15,9 +15,8 @@ const identity = {
   }
 }
 
-const provider = {
-  metadata: {proxy: 'http://localhost:8441'},
-}
+const provider = {proxy: 'http://localhost:8441'}
+
 
 describe('Certificate', () => {
   it('sign', async () => {
@@ -51,7 +50,7 @@ describe('Certificate', () => {
       'ZOSAn++Qj5HxwSeLXqUsQ2MdNFzE/zps+W1PRSTLPPag/3wBERL2KX1/BevsCh0t\n' +
       'Vg==\n' +
       '-----END CERTIFICATE REQUEST-----'
-    const certificateProvider = new CertificateProvider(new Authenticate(identity), provider)
+    const certificateProvider = new CertificateProvider(new Authenticate(identity.blockAddress), provider)
     const result = await certificateProvider.sign(domain, csr)
     console.log(`Success to sign service=${identity.blockAddress.identifier}, domain=${domain}, cert=${result.getCrt()}`)
   })

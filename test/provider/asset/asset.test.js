@@ -29,7 +29,7 @@ const provider = {proxy: 'http://localhost:8641'}
 
 describe('Asset', () => {
   it('search', async () => {
-    const assetProvider = new AssetProvider(new Authenticate(identity), provider)
+    const assetProvider = new AssetProvider(new Authenticate(identity.blockAddress), provider)
     const assets = await assetProvider.search('DIGITAL_FORMAT_OTHER', 1, 10)
     console.log(`Success to search assets=${assets.length}`)
     assets.forEach(asset => {
@@ -38,7 +38,7 @@ describe('Asset', () => {
   })
 
   it('upload', async () => {
-    const assetProvider = new AssetProvider(new Authenticate(identity), provider)
+    const assetProvider = new AssetProvider(new Authenticate(identity.blockAddress), provider)
     const assetId = 'fbfe2701-3fc9-4e88-a1b5-e660d1bef159'
     const name = 'test'
     const blob = new Blob(['hello, yeying community!'], {type: 'text/plain'})
@@ -49,7 +49,7 @@ describe('Asset', () => {
   })
 
   it('download', async () => {
-    const assetProvider = new AssetProvider(new Authenticate(identity), provider)
+    const assetProvider = new AssetProvider(new Authenticate(identity.blockAddress), provider)
     const assetId = 'fbfe2701-3fc9-4e88-a1b5-e660d1bef159'
     const downloader = new Downloader(assetProvider, assetId)
     const blob = await downloader.download()
@@ -57,7 +57,7 @@ describe('Asset', () => {
   })
 
   it('del', async () => {
-    const assetProvider = new AssetProvider(new Authenticate(identity), provider)
+    const assetProvider = new AssetProvider(new Authenticate(identity.blockAddress), provider)
     const assetId ='fbfe2701-3fc9-4e88-a1b5-e660d1bef159'
     const version = 0
     await assetProvider.remove(assetId, version)

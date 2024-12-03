@@ -60,7 +60,7 @@ describe('Identity', () => {
   })
 
   it('whoami', async () => {
-    const serviceProvider = new ServiceProvider(new Authenticate(identity), provider)
+    const serviceProvider = new ServiceProvider(new Authenticate(identity.blockAddress), provider)
     const service = await serviceProvider.whoami()
     console.log(`whoami=${JSON.stringify(service)}`)
   })
@@ -72,7 +72,7 @@ describe('Identity', () => {
   })
 
   it('search', async () => {
-    const serviceProvider = new ServiceProvider(new Authenticate(identity), provider)
+    const serviceProvider = new ServiceProvider(new Authenticate(identity.blockAddress), provider)
     const identities1 = await serviceProvider.search(getServiceMessageBoxCode())
     identities1.forEach(i => console.log(`Success to get node identity=${i.getName()}, did=${i.getDid()}`))
     const identities2 = await serviceProvider.search(getServiceAgentCode())
@@ -82,7 +82,7 @@ describe('Identity', () => {
   })
 
   it('unregister', async () => {
-    const serviceProvider = new ServiceProvider(new Authenticate(identity), provider)
+    const serviceProvider = new ServiceProvider(new Authenticate(identity.blockAddress), provider)
     await serviceProvider.unregister(software.metadata.did)
     console.log(`Success to mod user=${identity.blockAddress.identifier}`)
   })

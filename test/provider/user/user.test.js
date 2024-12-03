@@ -38,7 +38,7 @@ describe('User', () => {
   })
 
   it('del', async () => {
-    const userProvider = new UserProvider(new Authenticate(identity), provider)
+    const userProvider = new UserProvider(new Authenticate(identity.blockAddress), provider)
     await userProvider.del(identity.blockAddress.identifier)
     console.log(`Success to del user=${identity.blockAddress.identifier}`)
   })
