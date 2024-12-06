@@ -79,7 +79,7 @@ export class AccountManager {
       this.identityMap[did] = identity
 
       // 添加到历史账号中
-      const account = this.#addAccount(identity.metadata.name, identity.metadata.did, identity.metadata.extend.avatar)
+      const account = this.#addAccount(identity.metadata.name, identity.metadata.did, identity.metadata.avatar)
 
       // 设置当前登陆帐户
       this.sessionCache.set(this.loginAccountKey, account)

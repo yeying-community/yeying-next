@@ -22,18 +22,18 @@ export function generateRandomString(length) {
   return randomString
 }
 
-export function generateShortUuid() {
-  const uuid = generateUuid()
-  const base62Characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  const hex = uuid.replace(/-/g, '') // Remove dashes
-  let num = BigInt('0x' + hex)
-  let result = ''
-  while (num > 0) {
-    result = base62Characters[num % 62n] + result
-    num /= 62n
-  }
-  return result
-}
+// export function generateShortUuid() {
+//   const uuid = generateUuid()
+//   const base62Characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+//   const hex = uuid.replace(/-/g, '') // Remove dashes
+//   let num = BigInt('0x' + hex)
+//   let result = ''
+//   while (num > 0) {
+//     result = base62Characters[num % 62n] + result
+//     num /= 62n
+//   }
+//   return result
+// }
 
 export function generateUuid() {
   // 创建一个 16 字节的随机数组缓冲区
@@ -56,25 +56,6 @@ export function trimLeft(str, trim = '0x') {
   }
 
   return str.startsWith(trim) ? str.substring(trim.length) : str
-}
-
-/**
- * 设计对话的消息id，每个消息id由三部分组成，且由'-'连接：
- * 第一部分表示会话id，每次开启或者重置一个新的会话都会生成一个新的id，生成方法参考{@link generateRandomString}
- * 第二部分表示提问或者应答，对应的英文是prompt和reply，每个消息包含一个提问，以及最多一个应答
- * 第三部分表示消息在会话中的索引，索引是从0开始按序增加，索引为-1是给本次会话设置参数使用，确保尽可能还原创作过程
- *
- * @param str
- * @returns {(string|number)[]|number[]}
- */
-export function parseMsgId(str) {
-  const regex = /(\w+)-(reply|prompt)-(\d+$)/g
-  const match = regex.exec(str)
-  if (match === null) {
-    return [null, null, parseInt(str)]
-  } else {
-    return [match[1], match[2], parseInt(match[3])]
-  }
 }
 
 export function createMsgId(sessionId, type, index) {
