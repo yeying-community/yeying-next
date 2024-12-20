@@ -29,13 +29,13 @@ while getopts ":d:" o; do
 done
 shift $((OPTIND - 1))
 
-language=javascript
+language=typescript
 app_type=browser
 
 output_dir=${idl_dir}/target/${app_type}/${language}
 tool=${idl_dir}/script/compiler.sh
 
-if ! sh "${tool}" -t ${app_type} -m common,llm,asset,user,identity,service,certificate,application,event,invitation,test -l ${language}; then
+if ! sh "${tool}" -t ${app_type} -m common,llm,asset,user,identity,service,certificate,application,event,invitation,bulletin,support -l ${language}; then
   echo "Fail to generate proto code!"
   exit 1
 fi
@@ -47,7 +47,7 @@ fi
 
 mkdir -p "${yeying_api_directory}"
 cp -rvf "${output_dir}"/yeying/api/* "${yeying_api_directory}"/
-find "${yeying_api_directory}" -type f | while read file; do
-  sed -i '' 's/\.js/\.cjs/g' "${file}"
-  mv -v "${file}" "${file%.js}.cjs"
-done
+#find "${yeying_api_directory}" -type f | while read file; do
+#  sed -i '' 's/\.js/\.cjs/g' "${file}"
+#  mv -v "${file}" "${file%.js}.cjs"
+#done

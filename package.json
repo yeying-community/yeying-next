@@ -2,17 +2,13 @@
   "name": "@yeying-community/yeying-next",
   "version": "0.0.1",
   "description": "a web3 application library for browser",
-  "type": "module",
-  "main": "src/index.js",
+  "main": "dist/my-sdk.cjs.js",
+  "module": "dist/my-sdk.esm.js",
   "scripts": {
     "build": "rollup -c",
+    "watch": "rollup -c -w",
     "test": "vitest",
-    "coverage": "vitest run --coverage",
-    "docs:api": "jsdoc2md --configure jsdoc.json --files src/**/*.js > docs/api.md",
-    "docs:init": "honkit init ./docs",
-    "docs:build": "npm run docs:api && honkit build",
-    "docs:serve": "npm run docs:api && honkit serve",
-    "docs:clean": "rimraf _book"
+    "coverage": "vitest run --coverage"
   },
   "keywords": [
     "web3",
@@ -21,29 +17,20 @@
   "author": "yeying.community@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "@yeying-community/yeying-web3": "^0.0.5",
-    "elliptic": "^6.5.7",
+    "@types/luxon": "^3.4.2",
+    "@yeying-community/yeying-web3": "^0.0.13",
     "google-protobuf": "^3.21.4",
     "grpc-web": "^1.5.0",
-    "luxon": "^3.5.0",
-    "uuid": "^10.0.0"
+    "luxon": "^3.5.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/preset-env": "^7.25.3",
-    "@babel/preset-typescript": "^7.24.7",
-    "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-commonjs": "^28.0.1",
-    "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-terser": "^0.4.4",
-    "honkit": "^6.0.2",
-    "jsdoc-babel": "^0.5.0",
-    "jsdoc-to-markdown": "^9.1.1",
-    "jsdom": "^25.0.0",
-    "rollup": "^4.26.0",
-    "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-globals": "^1.4.0",
-    "vitest": "^2.0.5"
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "jsdom": "^25.0.1",
+    "rollup": "^4.28.1",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
   }
 }
