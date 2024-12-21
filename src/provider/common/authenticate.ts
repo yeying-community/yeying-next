@@ -1,20 +1,12 @@
-// import code_pkg from '../yeying/api/common/code_pb.cjs'
-// import message_pkg, {BlockAddress} from '../yeying/api/common/message_pb.cjs'
-// import {getCurrentUtcString, isExpired, parseDateTime} from '../tool/date.js'
-// import {composite, concat} from '../tool/object.js'
-// import {generateUuid} from '../tool/string.js'
-// import {convertDidToPublicKey, sign, verify} from '../tool/signature.js'
-// import {convertAuthenticateTypeTo} from '../tool/code.js'
-// import {InvalidArgument, NoPermission} from '../tool/error.js'
-// import {computeHash} from '../tool/digest.js'
-
 import {getCurrentUtcString, isExpired, parseDateTime} from "../../common/date";
 import {generateUuid} from "../../common/string";
-import {BlockAddress, MessageHeader} from "../../yeying/api/common/message_pb";
+import {BlockAddress, MessageHeader, ResponseStatus} from "../../yeying/api/common/message_pb";
 import {AuthenticateTypeEnum} from "../../yeying/api/common/code_pb";
 import {Wallet} from "@yeying-community/yeying-web3";
-import {InvalidArgument, NoPermission} from "../../common/error";
+import {InvalidArgument, NetworkDown, NoPermission} from "../../common/error";
 import {composite} from "../../common/bytes";
+import {RpcError} from "grpc-web";
+import {convertResponseStatusToError} from "../../common/status";
 
 
 export class Authenticate {
@@ -71,6 +63,22 @@ export class Authenticate {
         const did = this.blockAddress.getIdentifier()
         const publicKey = did.slice(did.lastIndexOf(':') + 1)
         return publicKey.startsWith('0x') ? publicKey.substring(2) : publicKey
+    }
+
+    async doResponse(err: RpcError, header?: MessageHeader, status?: ResponseStatus, body?: Uint8Array) {
+        if (err !== null || header === undefined || body === undefined || status === undefined) {
+            console.error(err)
+            throw new NetworkDown("Fail to collect")
+        }
+
+        const error = convertResponseStatusToError(status)
+        if (error !== undefined) {
+            console.error(error)
+            throw error
+        }
+
+        await this.verifyHeader(header, body)
+        return body
     }
 }
 

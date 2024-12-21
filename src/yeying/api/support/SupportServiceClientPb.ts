@@ -39,47 +39,47 @@ export class SupportClient {
     this.options_ = options;
   }
 
-  methodDescriptorSaveFaq = new grpcWeb.MethodDescriptor(
-    '/yeying.api.support.Support/SaveFaq',
+  methodDescriptorCollect = new grpcWeb.MethodDescriptor(
+    '/yeying.api.support.Support/Collect',
     grpcWeb.MethodType.UNARY,
-    yeying_api_support_support_pb.SaveFaqRequest,
-    yeying_api_support_support_pb.SaveFaqResponse,
-    (request: yeying_api_support_support_pb.SaveFaqRequest) => {
+    yeying_api_support_support_pb.CollectRequest,
+    yeying_api_support_support_pb.CollectResponse,
+    (request: yeying_api_support_support_pb.CollectRequest) => {
       return request.serializeBinary();
     },
-    yeying_api_support_support_pb.SaveFaqResponse.deserializeBinary
+    yeying_api_support_support_pb.CollectResponse.deserializeBinary
   );
 
-  saveFaq(
-    request: yeying_api_support_support_pb.SaveFaqRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<yeying_api_support_support_pb.SaveFaqResponse>;
+  collect(
+    request: yeying_api_support_support_pb.CollectRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<yeying_api_support_support_pb.CollectResponse>;
 
-  saveFaq(
-    request: yeying_api_support_support_pb.SaveFaqRequest,
+  collect(
+    request: yeying_api_support_support_pb.CollectRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: yeying_api_support_support_pb.SaveFaqResponse) => void): grpcWeb.ClientReadableStream<yeying_api_support_support_pb.SaveFaqResponse>;
+               response: yeying_api_support_support_pb.CollectResponse) => void): grpcWeb.ClientReadableStream<yeying_api_support_support_pb.CollectResponse>;
 
-  saveFaq(
-    request: yeying_api_support_support_pb.SaveFaqRequest,
+  collect(
+    request: yeying_api_support_support_pb.CollectRequest,
     metadata?: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: yeying_api_support_support_pb.SaveFaqResponse) => void) {
+               response: yeying_api_support_support_pb.CollectResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
-          '/yeying.api.support.Support/SaveFaq',
+          '/yeying.api.support.Support/Collect',
         request,
         metadata || {},
-        this.methodDescriptorSaveFaq,
+        this.methodDescriptorCollect,
         callback);
     }
     return this.client_.unaryCall(
     this.hostname_ +
-      '/yeying.api.support.Support/SaveFaq',
+      '/yeying.api.support.Support/Collect',
     request,
     metadata || {},
-    this.methodDescriptorSaveFaq);
+    this.methodDescriptorCollect);
   }
 
 }

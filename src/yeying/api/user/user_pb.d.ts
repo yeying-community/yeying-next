@@ -13,14 +13,8 @@ export class UserMetadata extends jspb.Message {
   getDid(): string;
   setDid(value: string): UserMetadata;
 
-  getRole(): UserRoleEnum;
-  setRole(value: UserRoleEnum): UserMetadata;
-
   getExtend(): string;
   setExtend(value: string): UserMetadata;
-
-  getStatus(): UserStatusEnum;
-  setStatus(value: UserStatusEnum): UserMetadata;
 
   getCreated(): string;
   setCreated(value: string): UserMetadata;
@@ -44,9 +38,7 @@ export namespace UserMetadata {
     name: string,
     avatar: string,
     did: string,
-    role: UserRoleEnum,
     extend: string,
-    status: UserStatusEnum,
     created: string,
     checkpoint: string,
     signature: string,
@@ -80,23 +72,10 @@ export namespace AddRequest {
 }
 
 export class AddRequestBody extends jspb.Message {
-  getName(): string;
-  setName(value: string): AddRequestBody;
-
-  getAvatar(): string;
-  setAvatar(value: string): AddRequestBody;
-
-  getExtend(): string;
-  setExtend(value: string): AddRequestBody;
-
-  getCreated(): string;
-  setCreated(value: string): AddRequestBody;
-
-  getCheckpoint(): string;
-  setCheckpoint(value: string): AddRequestBody;
-
-  getSignature(): string;
-  setSignature(value: string): AddRequestBody;
+  getUser(): UserMetadata | undefined;
+  setUser(value?: UserMetadata): AddRequestBody;
+  hasUser(): boolean;
+  clearUser(): AddRequestBody;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AddRequestBody.AsObject;
@@ -108,12 +87,7 @@ export class AddRequestBody extends jspb.Message {
 
 export namespace AddRequestBody {
   export type AsObject = {
-    name: string,
-    avatar: string,
-    extend: string,
-    created: string,
-    checkpoint: string,
-    signature: string,
+    user?: UserMetadata.AsObject,
   }
 }
 
@@ -190,11 +164,10 @@ export namespace ModRequest {
 }
 
 export class ModRequestBody extends jspb.Message {
-  getName(): string;
-  setName(value: string): ModRequestBody;
-
-  getAvatar(): string;
-  setAvatar(value: string): ModRequestBody;
+  getUser(): UserMetadata | undefined;
+  setUser(value?: UserMetadata): ModRequestBody;
+  hasUser(): boolean;
+  clearUser(): ModRequestBody;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ModRequestBody.AsObject;
@@ -206,8 +179,7 @@ export class ModRequestBody extends jspb.Message {
 
 export namespace ModRequestBody {
   export type AsObject = {
-    name: string,
-    avatar: string,
+    user?: UserMetadata.AsObject,
   }
 }
 
@@ -380,6 +352,12 @@ export class GetResponseBody extends jspb.Message {
   hasUser(): boolean;
   clearUser(): GetResponseBody;
 
+  getUserrole(): UserRoleEnum;
+  setUserrole(value: UserRoleEnum): GetResponseBody;
+
+  getUserstatus(): UserStatusEnum;
+  setUserstatus(value: UserStatusEnum): GetResponseBody;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetResponseBody.AsObject;
   static toObject(includeInstance: boolean, msg: GetResponseBody): GetResponseBody.AsObject;
@@ -392,6 +370,8 @@ export namespace GetResponseBody {
   export type AsObject = {
     status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
     user?: UserMetadata.AsObject,
+    userrole: UserRoleEnum,
+    userstatus: UserStatusEnum,
   }
 }
 

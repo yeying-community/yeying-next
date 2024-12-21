@@ -781,9 +781,8 @@ proto.yeying.api.common.ResponsePage.prototype.toObject = function(opt_includeIn
  */
 proto.yeying.api.common.ResponsePage.toObject = function(includeInstance, msg) {
   var f, obj = {
-    totalcount: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    pagecount: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    currentpage: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    total: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    page: jspb.Message.getFieldWithDefault(msg, 3, 0),
     pagesize: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
@@ -822,16 +821,12 @@ proto.yeying.api.common.ResponsePage.deserializeBinaryFromReader = function(msg,
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setTotalcount(value);
-      break;
-    case 2:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setPagecount(value);
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setTotal(value);
       break;
     case 3:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setCurrentpage(value);
+      msg.setPage(value);
       break;
     case 4:
       var value = /** @type {number} */ (reader.readUint32());
@@ -866,21 +861,14 @@ proto.yeying.api.common.ResponsePage.prototype.serializeBinary = function() {
  */
 proto.yeying.api.common.ResponsePage.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getTotalcount();
+  f = message.getTotal();
   if (f !== 0) {
-    writer.writeInt32(
+    writer.writeUint32(
       1,
       f
     );
   }
-  f = message.getPagecount();
-  if (f !== 0) {
-    writer.writeInt32(
-      2,
-      f
-    );
-  }
-  f = message.getCurrentpage();
+  f = message.getPage();
   if (f !== 0) {
     writer.writeUint32(
       3,
@@ -898,10 +886,10 @@ proto.yeying.api.common.ResponsePage.serializeBinaryToWriter = function(message,
 
 
 /**
- * optional int32 totalCount = 1;
+ * optional uint32 total = 1;
  * @return {number}
  */
-proto.yeying.api.common.ResponsePage.prototype.getTotalcount = function() {
+proto.yeying.api.common.ResponsePage.prototype.getTotal = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
@@ -910,34 +898,16 @@ proto.yeying.api.common.ResponsePage.prototype.getTotalcount = function() {
  * @param {number} value
  * @return {!proto.yeying.api.common.ResponsePage} returns this
  */
-proto.yeying.api.common.ResponsePage.prototype.setTotalcount = function(value) {
+proto.yeying.api.common.ResponsePage.prototype.setTotal = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
 /**
- * optional int32 pageCount = 2;
+ * optional uint32 page = 3;
  * @return {number}
  */
-proto.yeying.api.common.ResponsePage.prototype.getPagecount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.yeying.api.common.ResponsePage} returns this
- */
-proto.yeying.api.common.ResponsePage.prototype.setPagecount = function(value) {
-  return jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-/**
- * optional uint32 currentPage = 3;
- * @return {number}
- */
-proto.yeying.api.common.ResponsePage.prototype.getCurrentpage = function() {
+proto.yeying.api.common.ResponsePage.prototype.getPage = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
@@ -946,7 +916,7 @@ proto.yeying.api.common.ResponsePage.prototype.getCurrentpage = function() {
  * @param {number} value
  * @return {!proto.yeying.api.common.ResponsePage} returns this
  */
-proto.yeying.api.common.ResponsePage.prototype.setCurrentpage = function(value) {
+proto.yeying.api.common.ResponsePage.prototype.setPage = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
 };
 
@@ -1001,7 +971,7 @@ proto.yeying.api.common.RequestPage.prototype.toObject = function(opt_includeIns
  */
 proto.yeying.api.common.RequestPage.toObject = function(includeInstance, msg) {
   var f, obj = {
-    pageindex: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    page: jspb.Message.getFieldWithDefault(msg, 1, 0),
     pagesize: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
@@ -1041,7 +1011,7 @@ proto.yeying.api.common.RequestPage.deserializeBinaryFromReader = function(msg, 
     switch (field) {
     case 1:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setPageindex(value);
+      msg.setPage(value);
       break;
     case 2:
       var value = /** @type {number} */ (reader.readUint32());
@@ -1076,7 +1046,7 @@ proto.yeying.api.common.RequestPage.prototype.serializeBinary = function() {
  */
 proto.yeying.api.common.RequestPage.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getPageindex();
+  f = message.getPage();
   if (f !== 0) {
     writer.writeUint32(
       1,
@@ -1094,10 +1064,10 @@ proto.yeying.api.common.RequestPage.serializeBinaryToWriter = function(message, 
 
 
 /**
- * optional uint32 pageIndex = 1;
+ * optional uint32 page = 1;
  * @return {number}
  */
-proto.yeying.api.common.RequestPage.prototype.getPageindex = function() {
+proto.yeying.api.common.RequestPage.prototype.getPage = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
@@ -1106,7 +1076,7 @@ proto.yeying.api.common.RequestPage.prototype.getPageindex = function() {
  * @param {number} value
  * @return {!proto.yeying.api.common.RequestPage} returns this
  */
-proto.yeying.api.common.RequestPage.prototype.setPageindex = function(value) {
+proto.yeying.api.common.RequestPage.prototype.setPage = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
 };
 

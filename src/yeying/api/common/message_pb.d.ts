@@ -64,14 +64,11 @@ export namespace ResponseStatus {
 }
 
 export class ResponsePage extends jspb.Message {
-  getTotalcount(): number;
-  setTotalcount(value: number): ResponsePage;
+  getTotal(): number;
+  setTotal(value: number): ResponsePage;
 
-  getPagecount(): number;
-  setPagecount(value: number): ResponsePage;
-
-  getCurrentpage(): number;
-  setCurrentpage(value: number): ResponsePage;
+  getPage(): number;
+  setPage(value: number): ResponsePage;
 
   getPagesize(): number;
   setPagesize(value: number): ResponsePage;
@@ -86,16 +83,15 @@ export class ResponsePage extends jspb.Message {
 
 export namespace ResponsePage {
   export type AsObject = {
-    totalcount: number,
-    pagecount: number,
-    currentpage: number,
+    total: number,
+    page: number,
     pagesize: number,
   }
 }
 
 export class RequestPage extends jspb.Message {
-  getPageindex(): number;
-  setPageindex(value: number): RequestPage;
+  getPage(): number;
+  setPage(value: number): RequestPage;
 
   getPagesize(): number;
   setPagesize(value: number): RequestPage;
@@ -110,7 +106,7 @@ export class RequestPage extends jspb.Message {
 
 export namespace RequestPage {
   export type AsObject = {
-    pageindex: number,
+    page: number,
     pagesize: number,
   }
 }

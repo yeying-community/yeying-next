@@ -31,11 +31,16 @@ export namespace ListRequest {
 }
 
 export class ListRequestBody extends jspb.Message {
-  getBulletincode(): BulletinCodeEnum;
-  setBulletincode(value: BulletinCodeEnum): ListRequestBody;
+  getCode(): BulletinCodeEnum;
+  setCode(value: BulletinCodeEnum): ListRequestBody;
 
-  getLanguagecode(): yeying_api_common_code_pb.LanguageCodeEnum;
-  setLanguagecode(value: yeying_api_common_code_pb.LanguageCodeEnum): ListRequestBody;
+  getLanguage(): yeying_api_common_code_pb.LanguageCodeEnum;
+  setLanguage(value: yeying_api_common_code_pb.LanguageCodeEnum): ListRequestBody;
+
+  getPage(): yeying_api_common_message_pb.RequestPage | undefined;
+  setPage(value?: yeying_api_common_message_pb.RequestPage): ListRequestBody;
+  hasPage(): boolean;
+  clearPage(): ListRequestBody;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ListRequestBody.AsObject;
@@ -47,8 +52,9 @@ export class ListRequestBody extends jspb.Message {
 
 export namespace ListRequestBody {
   export type AsObject = {
-    bulletincode: BulletinCodeEnum,
-    languagecode: yeying_api_common_code_pb.LanguageCodeEnum,
+    code: BulletinCodeEnum,
+    language: yeying_api_common_code_pb.LanguageCodeEnum,
+    page?: yeying_api_common_message_pb.RequestPage.AsObject,
   }
 }
 
@@ -79,10 +85,20 @@ export namespace ListResponse {
 }
 
 export class ListResponseBody extends jspb.Message {
+  getStatus(): yeying_api_common_message_pb.ResponseStatus | undefined;
+  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): ListResponseBody;
+  hasStatus(): boolean;
+  clearStatus(): ListResponseBody;
+
   getSolutionsList(): Array<SolutionMetadata>;
   setSolutionsList(value: Array<SolutionMetadata>): ListResponseBody;
   clearSolutionsList(): ListResponseBody;
   addSolutions(value?: SolutionMetadata, index?: number): SolutionMetadata;
+
+  getPage(): yeying_api_common_message_pb.ResponsePage | undefined;
+  setPage(value?: yeying_api_common_message_pb.ResponsePage): ListResponseBody;
+  hasPage(): boolean;
+  clearPage(): ListResponseBody;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ListResponseBody.AsObject;
@@ -94,21 +110,26 @@ export class ListResponseBody extends jspb.Message {
 
 export namespace ListResponseBody {
   export type AsObject = {
+    status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
     solutionsList: Array<SolutionMetadata.AsObject>,
+    page?: yeying_api_common_message_pb.ResponsePage.AsObject,
   }
 }
 
 export class SolutionMetadata extends jspb.Message {
+  getLanguage(): yeying_api_common_code_pb.LanguageCodeEnum;
+  setLanguage(value: yeying_api_common_code_pb.LanguageCodeEnum): SolutionMetadata;
+
   getName(): string;
   setName(value: string): SolutionMetadata;
 
   getDescription(): string;
   setDescription(value: string): SolutionMetadata;
 
-  getCardsList(): Array<string>;
-  setCardsList(value: Array<string>): SolutionMetadata;
+  getCardsList(): Array<SolutionCard>;
+  setCardsList(value: Array<SolutionCard>): SolutionMetadata;
   clearCardsList(): SolutionMetadata;
-  addCards(value: string, index?: number): SolutionMetadata;
+  addCards(value?: SolutionCard, index?: number): SolutionCard;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SolutionMetadata.AsObject;
@@ -120,9 +141,36 @@ export class SolutionMetadata extends jspb.Message {
 
 export namespace SolutionMetadata {
   export type AsObject = {
+    language: yeying_api_common_code_pb.LanguageCodeEnum,
     name: string,
     description: string,
-    cardsList: Array<string>,
+    cardsList: Array<SolutionCard.AsObject>,
+  }
+}
+
+export class SolutionCard extends jspb.Message {
+  getName(): string;
+  setName(value: string): SolutionCard;
+
+  getPrice(): string;
+  setPrice(value: string): SolutionCard;
+
+  getVariables(): string;
+  setVariables(value: string): SolutionCard;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): SolutionCard.AsObject;
+  static toObject(includeInstance: boolean, msg: SolutionCard): SolutionCard.AsObject;
+  static serializeBinaryToWriter(message: SolutionCard, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): SolutionCard;
+  static deserializeBinaryFromReader(message: SolutionCard, reader: jspb.BinaryReader): SolutionCard;
+}
+
+export namespace SolutionCard {
+  export type AsObject = {
+    name: string,
+    price: string,
+    variables: string,
   }
 }
 
