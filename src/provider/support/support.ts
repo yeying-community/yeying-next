@@ -2,12 +2,8 @@ import {Provider} from "../common/model";
 import {Authenticate} from "../common/authenticate";
 import {SupportClient} from "../../yeying/api/support/SupportServiceClientPb";
 import {CollectRequest, CollectRequestBody, FaqMetadata, SupportCodeEnum} from "../../yeying/api/support/support_pb";
-import {AddResponse} from "../../yeying/api/user/user_pb";
 import {MessageHeader} from "../../yeying/api/common/message_pb";
 import {getCurrentUtcString} from "../../common/date";
-import {RpcError} from "grpc-web";
-import {NetworkDown} from "../../common/error";
-import {convertResponseStatusToError} from "../../common/status";
 
 export class SupportProvider {
     private authenticate: Authenticate
@@ -21,6 +17,7 @@ export class SupportProvider {
     async collectFaq(type: string, email: string, description: string) {
         return new Promise<void>(async (resolve, reject) => {
             const faq = new FaqMetadata()
+            faq.setDid(this.authenticate.getDid())
             faq.setType(type)
             faq.setEmail(email)
             faq.setDescription(description)
@@ -28,10 +25,11 @@ export class SupportProvider {
 
             const body = new CollectRequestBody()
             body.setCode(SupportCodeEnum.SUPPORT_CODE_FAQ)
-            body.setFaq(faq)
 
             let header: MessageHeader
             try {
+                faq.setSignature(await this.authenticate.sign(faq.serializeBinary()))
+                body.setFaq(faq)
                 header = await this.authenticate.createHeader(body.serializeBinary())
             } catch (err) {
                 console.error('Fail to create header for collecting faq', err)
@@ -49,21 +47,5 @@ export class SupportProvider {
                     .catch(err => reject(err))
             })
         })
-    }
-
-    async doCollectResponse(err: RpcError, res: AddResponse) {
-        const header = res.getHeader()
-        const body = res.getBody()
-        const status = body?.getStatus()
-        if (err === undefined || header === undefined || body === undefined || status === undefined) {
-            throw new NetworkDown("Fail to collect")
-        }
-
-        const error = convertResponseStatusToError(status)
-        if (error !== undefined) {
-            throw error
-        }
-
-        await this.authenticate.verifyHeader(header, body.serializeBinary())
     }
 }

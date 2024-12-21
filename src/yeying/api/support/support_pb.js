@@ -575,10 +575,12 @@ proto.yeying.api.support.FaqMetadata.prototype.toObject = function(opt_includeIn
  */
 proto.yeying.api.support.FaqMetadata.toObject = function(includeInstance, msg) {
   var f, obj = {
-    email: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    type: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    description: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    created: jspb.Message.getFieldWithDefault(msg, 4, "")
+    did: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    email: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    type: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    description: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    created: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    signature: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -617,19 +619,27 @@ proto.yeying.api.support.FaqMetadata.deserializeBinaryFromReader = function(msg,
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setEmail(value);
+      msg.setDid(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setType(value);
+      msg.setEmail(value);
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setDescription(value);
+      msg.setType(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
+      msg.setDescription(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
       msg.setCreated(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSignature(value);
       break;
     default:
       reader.skipField();
@@ -660,31 +670,45 @@ proto.yeying.api.support.FaqMetadata.prototype.serializeBinary = function() {
  */
 proto.yeying.api.support.FaqMetadata.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getEmail();
+  f = message.getDid();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = message.getType();
+  f = message.getEmail();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getDescription();
+  f = message.getType();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getCreated();
+  f = message.getDescription();
   if (f.length > 0) {
     writer.writeString(
       4,
+      f
+    );
+  }
+  f = message.getCreated();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getSignature();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
       f
     );
   }
@@ -692,10 +716,10 @@ proto.yeying.api.support.FaqMetadata.serializeBinaryToWriter = function(message,
 
 
 /**
- * optional string email = 1;
+ * optional string did = 1;
  * @return {string}
  */
-proto.yeying.api.support.FaqMetadata.prototype.getEmail = function() {
+proto.yeying.api.support.FaqMetadata.prototype.getDid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -704,16 +728,16 @@ proto.yeying.api.support.FaqMetadata.prototype.getEmail = function() {
  * @param {string} value
  * @return {!proto.yeying.api.support.FaqMetadata} returns this
  */
-proto.yeying.api.support.FaqMetadata.prototype.setEmail = function(value) {
+proto.yeying.api.support.FaqMetadata.prototype.setDid = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
- * optional string type = 2;
+ * optional string email = 2;
  * @return {string}
  */
-proto.yeying.api.support.FaqMetadata.prototype.getType = function() {
+proto.yeying.api.support.FaqMetadata.prototype.getEmail = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -722,16 +746,16 @@ proto.yeying.api.support.FaqMetadata.prototype.getType = function() {
  * @param {string} value
  * @return {!proto.yeying.api.support.FaqMetadata} returns this
  */
-proto.yeying.api.support.FaqMetadata.prototype.setType = function(value) {
+proto.yeying.api.support.FaqMetadata.prototype.setEmail = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional string description = 3;
+ * optional string type = 3;
  * @return {string}
  */
-proto.yeying.api.support.FaqMetadata.prototype.getDescription = function() {
+proto.yeying.api.support.FaqMetadata.prototype.getType = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -740,16 +764,16 @@ proto.yeying.api.support.FaqMetadata.prototype.getDescription = function() {
  * @param {string} value
  * @return {!proto.yeying.api.support.FaqMetadata} returns this
  */
-proto.yeying.api.support.FaqMetadata.prototype.setDescription = function(value) {
+proto.yeying.api.support.FaqMetadata.prototype.setType = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional string created = 4;
+ * optional string description = 4;
  * @return {string}
  */
-proto.yeying.api.support.FaqMetadata.prototype.getCreated = function() {
+proto.yeying.api.support.FaqMetadata.prototype.getDescription = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -758,8 +782,44 @@ proto.yeying.api.support.FaqMetadata.prototype.getCreated = function() {
  * @param {string} value
  * @return {!proto.yeying.api.support.FaqMetadata} returns this
  */
-proto.yeying.api.support.FaqMetadata.prototype.setCreated = function(value) {
+proto.yeying.api.support.FaqMetadata.prototype.setDescription = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string created = 5;
+ * @return {string}
+ */
+proto.yeying.api.support.FaqMetadata.prototype.getCreated = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.support.FaqMetadata} returns this
+ */
+proto.yeying.api.support.FaqMetadata.prototype.setCreated = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string signature = 6;
+ * @return {string}
+ */
+proto.yeying.api.support.FaqMetadata.prototype.getSignature = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.support.FaqMetadata} returns this
+ */
+proto.yeying.api.support.FaqMetadata.prototype.setSignature = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 

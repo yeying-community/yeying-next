@@ -61,6 +61,9 @@ export namespace CollectRequestBody {
 }
 
 export class FaqMetadata extends jspb.Message {
+  getDid(): string;
+  setDid(value: string): FaqMetadata;
+
   getEmail(): string;
   setEmail(value: string): FaqMetadata;
 
@@ -73,6 +76,9 @@ export class FaqMetadata extends jspb.Message {
   getCreated(): string;
   setCreated(value: string): FaqMetadata;
 
+  getSignature(): string;
+  setSignature(value: string): FaqMetadata;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): FaqMetadata.AsObject;
   static toObject(includeInstance: boolean, msg: FaqMetadata): FaqMetadata.AsObject;
@@ -83,10 +89,12 @@ export class FaqMetadata extends jspb.Message {
 
 export namespace FaqMetadata {
   export type AsObject = {
+    did: string,
     email: string,
     type: string,
     description: string,
     created: string,
+    signature: string,
   }
 }
 

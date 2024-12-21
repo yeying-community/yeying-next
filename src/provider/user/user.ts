@@ -32,12 +32,12 @@ export class UserProvider {
     add(name: string, telephone: string, email: string, avatar: string) {
         return new Promise(async (resolve, reject) => {
             const user = new UserMetadata()
+            user.setDid(this.authenticate.getDid())
             user.setName(name)
             user.setAvatar(avatar)
             user.setExtend(JSON.stringify({telephone: telephone, email: email}))
             user.setCreated(getCurrentUtcString())
             user.setCheckpoint(getCurrentUtcString())
-            user.setDid(this.authenticate.getDid())
             const body = new AddRequestBody()
             let header: MessageHeader
             try {
