@@ -126,10 +126,16 @@ export class SolutionMetadata extends jspb.Message {
   getDescription(): string;
   setDescription(value: string): SolutionMetadata;
 
+  getCreated(): string;
+  setCreated(value: string): SolutionMetadata;
+
   getCardsList(): Array<SolutionCard>;
   setCardsList(value: Array<SolutionCard>): SolutionMetadata;
   clearCardsList(): SolutionMetadata;
   addCards(value?: SolutionCard, index?: number): SolutionCard;
+
+  getSignature(): string;
+  setSignature(value: string): SolutionMetadata;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SolutionMetadata.AsObject;
@@ -144,7 +150,9 @@ export namespace SolutionMetadata {
     language: yeying_api_common_code_pb.LanguageCodeEnum,
     name: string,
     description: string,
+    created: string,
     cardsList: Array<SolutionCard.AsObject>,
+    signature: string,
   }
 }
 
