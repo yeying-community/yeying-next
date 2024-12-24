@@ -1,4 +1,4 @@
-import {DateTime, Duration} from 'luxon'
+import { DateTime, Duration } from 'luxon'
 
 export function isExpired(datetime: DateTime, durationSecond: number) {
     return DateTime.now().diff(datetime).valueOf() > durationSecond * 1000
@@ -22,7 +22,7 @@ export function convertToUtcDateTime(datetime: DateTime) {
 
 export function formatDateTime(datetime: DateTime) {
     const s = datetime.toISO()
-    return s === null ? "" : s
+    return s === null ? '' : s
 }
 
 export function parseDateTime(s: string) {
@@ -42,5 +42,5 @@ export function convertDateTimeToLocal(datetime: DateTime) {
 }
 
 export function plusSecond(datetime: DateTime, seconds: number) {
-    return datetime.plus(Duration.fromObject({seconds: seconds}))
+    return datetime.plus(Duration.fromObject({ seconds: seconds }))
 }

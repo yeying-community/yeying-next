@@ -1,13 +1,12 @@
-import {getCurrentUtcString, isExpired, parseDateTime} from "../../common/date";
-import {generateUuid} from "../../common/string";
-import {BlockAddress, MessageHeader, ResponseStatus} from "../../yeying/api/common/message_pb";
-import {AuthenticateTypeEnum} from "../../yeying/api/common/code_pb";
-import {Wallet} from "@yeying-community/yeying-web3";
-import {InvalidArgument, NetworkDown, NoPermission} from "../../common/error";
-import {composite} from "../../common/bytes";
-import {RpcError} from "grpc-web";
-import {convertResponseStatusToError} from "../../common/status";
-
+import { getCurrentUtcString, isExpired, parseDateTime } from '../../common/date'
+import { generateUuid } from '../../common/string'
+import { BlockAddress, MessageHeader, ResponseStatus } from '../../yeying/api/common/message_pb'
+import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
+import { Wallet } from '@yeying-community/yeying-web3'
+import { InvalidArgument, NetworkDown, NoPermission } from '../../common/error'
+import { composite } from '../../common/bytes'
+import { RpcError } from 'grpc-web'
+import { convertResponseStatusToError } from '../../common/status'
 
 export class Authenticate {
     private blockAddress: BlockAddress
@@ -27,7 +26,7 @@ export class Authenticate {
         header.setNonce(generateUuid())
         header.setVersion(0)
         header.setTimestamp(getCurrentUtcString())
-        console.log(`${JSON.stringify(header)}`);
+        console.log(`${JSON.stringify(header)}`)
         const data = body === undefined ? header.serializeBinary() : composite(header.serializeBinary(), body)
         const signature = await this.sign(data)
         header.setAuthcontent(signature)
@@ -50,7 +49,7 @@ export class Authenticate {
         }
 
         const signature = header.getAuthcontent()
-        header.setAuthcontent("")
+        header.setAuthcontent('')
 
         const data = body === undefined ? header.serializeBinary() : composite(header.serializeBinary(), body)
         const success = this.verify(data, signature)
@@ -60,25 +59,24 @@ export class Authenticate {
     }
 
     getPublicKey() {
-        const did = this.blockAddress.getIdentifier()
-        const publicKey = did.slice(did.lastIndexOf(':') + 1)
+        const publicKey = this.blockAddress
+            .getIdentifier()
+            .slice(this.blockAddress.getIdentifier().lastIndexOf(':') + 1)
         return publicKey.startsWith('0x') ? publicKey.substring(2) : publicKey
     }
 
     async doResponse(err: RpcError, header?: MessageHeader, status?: ResponseStatus, body?: Uint8Array) {
         if (err !== null || header === undefined || body === undefined || status === undefined) {
             console.error(err)
-            throw new NetworkDown("Fail to collect")
+            throw new NetworkDown('Fail to collect')
         }
 
+        await this.verifyHeader(header, body)
         const error = convertResponseStatusToError(status)
         if (error !== undefined) {
             console.error(error)
             throw error
         }
-
-        await this.verifyHeader(header, body)
         return body
     }
 }
-

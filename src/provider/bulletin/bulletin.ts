@@ -1,9 +1,9 @@
-import {Authenticate} from "../common/authenticate";
-import {BulletinClient} from "../../yeying/api/bulletin/BulletinServiceClientPb";
-import {Provider} from "../common/model";
-import {LanguageCodeEnum} from "../../yeying/api/common/code_pb";
-import {BulletinCodeEnum, ListRequest, ListRequestBody, ListResponseBody} from "../../yeying/api/bulletin/bulletin_pb";
-import {MessageHeader, RequestPage} from "../../yeying/api/common/message_pb";
+import { Authenticate } from '../common/authenticate'
+import { BulletinClient } from '../../yeying/api/bulletin/BulletinServiceClientPb'
+import { Provider } from '../common/model'
+import { LanguageCodeEnum } from '../../yeying/api/common/code_pb'
+import { BulletinCodeEnum, ListRequest, ListRequestBody, ListResponseBody } from '../../yeying/api/bulletin/bulletin_pb'
+import { MessageHeader, RequestPage } from '../../yeying/api/common/message_pb'
 
 export class BulletinProvider {
     private authenticate: Authenticate
@@ -39,11 +39,11 @@ export class BulletinProvider {
 
             this.client.list(request, null, (err, res) => {
                 const body = res.getBody()
-                this.authenticate.doResponse(err, res.getHeader(), body?.getStatus(), body?.serializeBinary())
+                this.authenticate
+                    .doResponse(err, res.getHeader(), body?.getStatus(), body?.serializeBinary())
                     .then(() => resolve(res.getBody() as ListResponseBody))
-                    .catch(err => reject(err))
+                    .catch((err) => reject(err))
             })
         })
     }
-
 }

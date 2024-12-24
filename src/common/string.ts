@@ -1,5 +1,5 @@
 export function isValidString(s: any) {
-    return s !== undefined && s !== null && typeof s === 'string';
+    return s !== undefined && s !== null && typeof s === 'string'
 }
 
 // export function isBlank(str) {
@@ -49,7 +49,9 @@ export function generateUuid() {
     buffer[8] &= 0x3f
     buffer[8] |= 0x80
 
-    const hex = Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('')
+    const hex = Array.from(new Uint8Array(buffer))
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('')
     return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`
 }
 

@@ -1,11 +1,11 @@
-import {AuthenticateTypeEnum} from "../../yeying/api/common/code_pb";
+import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
 
 export interface Provider {
     proxy: string
 }
 
 export function convertAuthenticateTypeFrom(type: string) {
-    const v = AuthenticateTypeEnum[type as keyof typeof AuthenticateTypeEnum];
+    const v = AuthenticateTypeEnum[type as keyof typeof AuthenticateTypeEnum]
     return v !== undefined ? v : AuthenticateTypeEnum.AUTHENTICATE_TYPE_UNKNOWN
 }
 
