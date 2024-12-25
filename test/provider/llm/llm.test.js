@@ -21,7 +21,7 @@ const provider = {proxy: 'http://localhost:8541'}
 
 describe('Llm', () => {
   it('add', async () => {
-    const llmProvider = new LlmProvider(new Authenticate(identity), provider)
+    const llmProvider = new LlmProvider(new Authenticate(identity.blockAddress), provider)
     const uuid = 'bc9805ba-4448-45cf-af13-109a225e1771'
     // 从环境变量里面获得
     const key = import.meta.env.ZHIPUAPI_API_KEY
@@ -30,7 +30,7 @@ describe('Llm', () => {
   })
 
   it('get', async () => {
-    const llmProvider = new LlmProvider(new Authenticate(identity), provider)
+    const llmProvider = new LlmProvider(new Authenticate(identity.blockAddress), provider)
     const uuid = 'bc9805ba-4448-45cf-af13-109a225e1771'
     const llms = await llmProvider.getLlm(uuid)
     llms.forEach(llm => {
@@ -39,14 +39,14 @@ describe('Llm', () => {
   })
 
   it('del', async () => {
-    const llmProvider = new LlmProvider(new Authenticate(identity), provider)
+    const llmProvider = new LlmProvider(new Authenticate(identity.blockAddress), provider)
     const uuid = 'bc9805ba-4448-45cf-af13-109a225e1771'
     await llmProvider.delLlm(uuid)
     console.log(`Success to del llm=${uuid}`)
   })
 
   it('complete', { timeout: 300000 }, async () => {
-    const llmProvider = new LlmProvider(new Authenticate(identity), provider)
+    const llmProvider = new LlmProvider(new Authenticate(identity.blockAddress), provider)
     const llmId = 'bc9805ba-4448-45cf-af13-109a225e1771'
     const model = 'glm-4-0520'
     let answer = ""
@@ -62,7 +62,7 @@ describe('Llm', () => {
   })
 
   it('generate', { timeout: 300000 }, async () => {
-    const llmProvider = new LlmProvider(new Authenticate(identity), provider)
+    const llmProvider = new LlmProvider(new Authenticate(identity.blockAddress), provider)
     const llmId = 'bc9805ba-4448-45cf-af13-109a225e1771'
     const model = 'cogview-3-plus'
     const imageList = []

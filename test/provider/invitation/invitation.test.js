@@ -21,14 +21,14 @@ const provider = {proxy: 'http://localhost:8441'}
 
 describe('Invitation', () => {
   it('generate', async () => {
-    const invitationProvider = new InvitationProvider(new Authenticate(identity), provider)
+    const invitationProvider = new InvitationProvider(new Authenticate(identity.blockAddress), provider)
     const invitations = await invitationProvider.generate(getRegisterScene(), 2)
     console.log(`Success to generate invitation with owner=${identity.blockAddress.identifier}`)
     invitations.map(i => console.log(`code=${i.getCode()}`))
   })
 
   it('input', async () => {
-    const invitationProvider = new InvitationProvider(new Authenticate(identity), provider)
+    const invitationProvider = new InvitationProvider(new Authenticate(identity.blockAddress), provider)
     const code = 'pVYJCN5ly78Brjv46PbMFGor6UNkpXtx'
     const user = await invitationProvider.input(code)
     console.log(`Success to input invitation for user=${JSON.stringify(user)}`)

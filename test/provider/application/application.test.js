@@ -1,6 +1,6 @@
 import {Authenticate} from '../../../src/identity/authenticate.js'
 import {ApplicationProvider} from '../../../src/provider/application/application.js'
-import {getAppIdentityCode} from '../../../src/common/helper.js'
+import {getAppIdentityCode} from '../../../src/tool/code.js'
 
 const identity = {
   blockAddress: {
@@ -16,13 +16,12 @@ const identity = {
   }
 }
 
-const provider = {
-  metadata: {proxy: 'http://localhost:8441'},
-}
+const provider = {proxy: 'http://localhost:8441'}
+
 
 describe('Application', () => {
   it('search', async () => {
-    const applicationProvider = new ApplicationProvider(new Authenticate(identity), provider)
+    const applicationProvider = new ApplicationProvider(new Authenticate(identity.blockAddress), provider)
     const applications = await applicationProvider.search(getAppIdentityCode(), 1, 10)
     console.log(`Success to search application with owner=${identity.blockAddress.identifier}`)
     applications.map(i => console.log(`application, name=${i.getName()}, code=${i.getCode()}`))
