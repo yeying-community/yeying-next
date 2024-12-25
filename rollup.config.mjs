@@ -16,7 +16,7 @@ export default {
     warn(warning)
   },
   plugins: [
-    resolve({browser: true,}),
+    resolve({browser: true, preferBuiltins: false}),
     commonjs(),
     typescript()
   ]

@@ -1,9 +1,8 @@
 {
   "name": "@yeying-community/yeying-next",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "a web3 application library for browser",
-  "main": "dist/my-sdk.cjs.js",
-  "module": "dist/my-sdk.esm.js",
+  "module": "dist/yeying-next.esm.js",
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -c -w",
