@@ -1,10 +1,10 @@
-import {Authenticate} from "../common/authenticate";
-import {Provider} from "../common/model";
-import {ServiceClient} from "../../yeying/api/service/ServiceServiceClientPb";
-import {MessageHeader} from "../../yeying/api/common/message_pb";
-import {ServiceMetadata, WhoamiRequest} from "../../yeying/api/service/service_pb";
-import {Wallet} from "@yeying-community/yeying-web3";
-import {DataForgery} from "../../common/error";
+import { Authenticate } from '../common/authenticate'
+import { Provider } from '../common/model'
+import { ServiceClient } from '../../yeying/api/service/ServiceServiceClientPb'
+import { MessageHeader } from '../../yeying/api/common/message_pb'
+import { ServiceMetadata, WhoamiRequest } from '../../yeying/api/service/service_pb'
+import { Wallet } from '@yeying-community/yeying-web3'
+import { DataForgery } from '../../common/error'
 
 export class ServiceProvider {
     private authenticate: Authenticate
@@ -34,12 +34,16 @@ export class ServiceProvider {
                     .then(async () => {
                         const serviceMetadata = res.getBody()?.getService() as ServiceMetadata
                         const signature = serviceMetadata.getSignature()
-                        serviceMetadata.setSignature("")
-                        const passed = await Wallet.verifyData(serviceMetadata.getDid(), serviceMetadata.serializeBinary(), signature)
+                        serviceMetadata.setSignature('')
+                        const passed = await Wallet.verifyData(
+                            serviceMetadata.getDid(),
+                            serviceMetadata.serializeBinary(),
+                            signature
+                        )
                         if (passed) {
                             resolve(res.getBody()?.getService() as ServiceMetadata)
                         } else {
-                            reject(new DataForgery("invalid signature!"))
+                            reject(new DataForgery('invalid signature!'))
                         }
                     })
             })

@@ -1,3 +1,1 @@
-export function getNode() {
-
-}
+export function getNode() {}
