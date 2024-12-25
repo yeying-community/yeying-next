@@ -3,7 +3,6 @@ import {Authenticate} from "../../../src/provider/common/authenticate";
 import {getBlockAddress, getProvider} from "../common/common";
 import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
 import {Provider} from "../../../src/provider/common/model";
-import {UserMetadata} from "../../../src/yeying/api/user/user_pb";
 
 const blockAddress = getBlockAddress()
 const provider: Provider = getProvider(ServiceCodeEnum.SERVICE_CODE_NODE)

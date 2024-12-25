@@ -79,7 +79,7 @@ export class DataTampering extends Error {
 
 // 数据伪造
 export class DataForgery extends Error {
-    constructor(message: string, options: ErrorOptions) {
+    constructor(message: string, options?: ErrorOptions) {
         super(message, options)
     }
 }

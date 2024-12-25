@@ -26,7 +26,6 @@ export class Authenticate {
         header.setNonce(generateUuid())
         header.setVersion(0)
         header.setTimestamp(getCurrentUtcString())
-        console.log(`${JSON.stringify(header)}`)
         const data = body === undefined ? header.serializeBinary() : composite(header.serializeBinary(), body)
         const signature = await this.sign(data)
         header.setAuthcontent(signature)
