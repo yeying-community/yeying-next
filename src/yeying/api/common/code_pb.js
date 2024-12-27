@@ -29,10 +29,8 @@ goog.exportSymbol('proto.yeying.api.common.CipherTypeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ContentFormatEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ContractStatusEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.DigitalFormatEnum', null, global);
-goog.exportSymbol('proto.yeying.api.common.IdentityCodeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ImageFormatEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.LanguageCodeEnum', null, global);
-goog.exportSymbol('proto.yeying.api.common.NetworkTypeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ParticipantTypeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ResponseCodeEnum', null, global);
 goog.exportSymbol('proto.yeying.api.common.ServiceCodeEnum', null, global);
@@ -103,18 +101,6 @@ proto.yeying.api.common.ServiceCodeEnum = {
   SERVICE_CODE_NODE: 1,
   SERVICE_CODE_WAREHOUSE: 2,
   SERVICE_CODE_AGENT: 3
-};
-
-/**
- * @enum {number}
- */
-proto.yeying.api.common.IdentityCodeEnum = {
-  IDENTITY_CODE_UNKNOWN: 0,
-  IDENTITY_CODE_PERSONAL: 1,
-  IDENTITY_CODE_ORGANIZATION: 2,
-  IDENTITY_CODE_SERVICE: 3,
-  IDENTITY_CODE_APPLICATION: 4,
-  IDENTITY_CODE_ASSET: 5
 };
 
 /**
@@ -223,14 +209,6 @@ proto.yeying.api.common.StreamDataTagEnum = {
   STREAM_DATA_TAG_HEAD: 0,
   STREAM_DATA_TAG_BODY: 1,
   STREAM_DATA_TAG_TAIL: 2
-};
-
-/**
- * @enum {number}
- */
-proto.yeying.api.common.NetworkTypeEnum = {
-  NETWORK_TYPE_UNKNOWN: 0,
-  NETWORK_TYPE_YEYING: 2020
 };
 
 goog.object.extend(exports, proto.yeying.api.common);

@@ -190,8 +190,8 @@ proto.yeying.api.bulletin.ListRequest.prototype.toObject = function(opt_includeI
  */
 proto.yeying.api.bulletin.ListRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.bulletin.ListRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.bulletin.ListRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -392,9 +392,9 @@ proto.yeying.api.bulletin.ListRequestBody.prototype.toObject = function(opt_incl
  */
 proto.yeying.api.bulletin.ListRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    code: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    language: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    page: (f = msg.getPage()) && yeying_api_common_message_pb.RequestPage.toObject(includeInstance, f)
+code: jspb.Message.getFieldWithDefault(msg, 1, 0),
+language: jspb.Message.getFieldWithDefault(msg, 2, 0),
+page: (f = msg.getPage()) && yeying_api_common_message_pb.RequestPage.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -603,8 +603,8 @@ proto.yeying.api.bulletin.ListResponse.prototype.toObject = function(opt_include
  */
 proto.yeying.api.bulletin.ListResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.bulletin.ListResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.bulletin.ListResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -812,10 +812,10 @@ proto.yeying.api.bulletin.ListResponseBody.prototype.toObject = function(opt_inc
  */
 proto.yeying.api.bulletin.ListResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
-    solutionsList: jspb.Message.toObjectList(msg.getSolutionsList(),
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
+solutionsList: jspb.Message.toObjectList(msg.getSolutionsList(),
     proto.yeying.api.bulletin.SolutionMetadata.toObject, includeInstance),
-    page: (f = msg.getPage()) && yeying_api_common_message_pb.ResponsePage.toObject(includeInstance, f)
+page: (f = msg.getPage()) && yeying_api_common_message_pb.ResponsePage.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1074,13 +1074,13 @@ proto.yeying.api.bulletin.SolutionMetadata.prototype.toObject = function(opt_inc
  */
 proto.yeying.api.bulletin.SolutionMetadata.toObject = function(includeInstance, msg) {
   var f, obj = {
-    language: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    name: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    description: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    created: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    cardsList: jspb.Message.toObjectList(msg.getCardsList(),
+language: jspb.Message.getFieldWithDefault(msg, 1, 0),
+name: jspb.Message.getFieldWithDefault(msg, 2, ""),
+description: jspb.Message.getFieldWithDefault(msg, 3, ""),
+created: jspb.Message.getFieldWithDefault(msg, 4, ""),
+cardsList: jspb.Message.toObjectList(msg.getCardsList(),
     proto.yeying.api.bulletin.SolutionCard.toObject, includeInstance),
-    signature: jspb.Message.getFieldWithDefault(msg, 6, "")
+signature: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -1377,9 +1377,9 @@ proto.yeying.api.bulletin.SolutionCard.prototype.toObject = function(opt_include
  */
 proto.yeying.api.bulletin.SolutionCard.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    price: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    variables: jspb.Message.getFieldWithDefault(msg, 3, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+price: jspb.Message.getFieldWithDefault(msg, 2, ""),
+variables: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {

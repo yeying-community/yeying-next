@@ -1,7 +1,8 @@
 {
   "name": "@yeying-community/yeying-next",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "a web3 application library for browser",
+  "main": "dist/yeying-next.cjs.js",
   "module": "dist/yeying-next.esm.js",
   "scripts": {
     "build": "rollup -c",
@@ -17,8 +18,9 @@
   "author": "yeying.community@gmail.com",
   "license": "MIT",
   "dependencies": {
+    "@bufbuild/protobuf": "^2.2.3",
     "@types/luxon": "^3.4.2",
-    "@yeying-community/yeying-web3": "^0.0.15",
+    "@yeying-community/yeying-web3": "^0.0.21",
     "google-protobuf": "^3.21.4",
     "grpc-web": "^1.5.0",
     "luxon": "^3.5.0"

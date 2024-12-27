@@ -4,23 +4,37 @@
 // 2、所有的密码的管理都是在端上完成，不会和后台服务器有任何交互，也就是密码完全由用户负责；
 // 3、一个端上多个身份切换，任何时刻只有一个身份在起作用
 // 4、对于不再端上使用的身份，能够一键清理不留痕迹；
-import { SessionCache } from '../cache/session'
-import { LocalCache } from '../cache/local'
-import { InvalidPassword, NotFound } from '../common/error'
-import { Account, IdentityEntry } from './model'
+import {SessionCache} from '../cache/session'
+import {LocalCache} from '../cache/local'
+import {InvalidPassword, NotFound} from '../common/error'
+import {Account} from './model'
 import {
-    CipherTypeEnum,
-    Crypto,
+    BlockAddress,
+    createBlockAddress,
+    createIdentity,
     Identity,
     IdentityCodeEnum,
+    IdentityMetadata,
     IdentityPersonalExtend,
     IdentityTemplate,
     NetworkTypeEnum,
     SecurityAlgorithm,
     SecurityConfig,
-    Wallet
+    verifyIdentity,
 } from '@yeying-community/yeying-web3'
-import { CookieCache } from '../cache/cookie'
+import {CookieCache} from '../cache/cookie'
+import {
+    convertToAlgorithmName,
+    decrypt,
+    decryptBlockAddress,
+    deriveRawKeyFromString,
+    encrypt,
+    encryptBlockAddress,
+    generateIv,
+    generateSecurityAlgorithm
+} from "../common/crypto";
+import {convertCipherTypeFrom, convertLanguageCodeTo, decodeBase64, encodeBase64} from "../common/codec";
+import {LanguageCodeEnum} from "../yeying/api/common/code_pb";
 
 export class AccountManager {
     private historyKey: string = 'yeying.history.accounts'
@@ -29,7 +43,8 @@ export class AccountManager {
     private sessionCache: SessionCache
     private accountCache: LocalCache
     private identityCache: LocalCache
-    private identityMap: Map<string, IdentityEntry>
+    private blockAddressMap: Map<string, BlockAddress>
+    private identityMap: Map<string, Identity>
     private readonly durationDays: number
 
     constructor() {
@@ -39,15 +54,17 @@ export class AccountManager {
         this.accountCache = new LocalCache()
         // 历史身份信息
         this.identityCache = new LocalCache()
-        // 临死缓存
+        // 临时缓存
         this.cookieCache = new CookieCache()
+        // 缓存区块链地址信息
+        this.blockAddressMap = new Map<string, BlockAddress>()
         // 缓存身份信息
-        this.identityMap = new Map<string, IdentityEntry>()
+        this.identityMap = new Map<string, Identity>()
         // 默认密码保存有效期是30天，也就是临时身份有效期是30天
         this.durationDays = 30
     }
 
-    // 当前浏览器中曾经登陆过的所有账号
+    // 当前浏览器中曾经登陆过的所有账号，加密缓存在local storage中
     getHistoryAccounts() {
         const accounts = this.accountCache.get(this.historyKey)
         if (accounts === null) {
@@ -71,29 +88,34 @@ export class AccountManager {
     getActiveIdentity() {
         const activeAccount = this.getActiveAccount()
         if (activeAccount !== undefined) {
-            return this.identityMap.get(activeAccount.did)?.identity
+            return this.identityMap.get(activeAccount.did)
         } else {
             return undefined
         }
+    }
+
+    getBlockAddress(did: string) {
+        return this.blockAddressMap.get(did)
     }
 
     // 注销，清理登陆信息
     logout() {
         const activeAccount = this.getActiveAccount()
         if (activeAccount) {
-            this.identityMap.delete(activeAccount.did)
+            this.blockAddressMap.delete(activeAccount.did)
         }
     }
 
     // 清理缓存，清理当前浏览器中所有和这个身份相关信息
-    clear(did: string) {}
+    clear(did: string) {
+    }
 
     // 登陆，解密身份信息
     login(did: string, password?: string) {
         return new Promise(async (resolve, reject) => {
-            let entry = this.identityMap.get(did)
-            if (entry !== undefined) {
-                return resolve(entry.identity)
+            let blockAddress = this.blockAddressMap.get(did)
+            if (blockAddress !== undefined) {
+                return resolve(blockAddress)
             }
 
             const identity = await this.exportIdentity(did)
@@ -101,47 +123,44 @@ export class AccountManager {
                 return resolve(new NotFound('Not found identity!'))
             }
 
+            const metadata = identity.metadata as IdentityMetadata
             if (password === undefined) {
-                const token = this.cookieCache.get(identity.metadata.did)
+                const token = this.cookieCache.get(did)
                 if (token === null) {
                     return reject(new InvalidPassword(`Invalid password!`))
                 }
 
-                const encryptedPassword = this.sessionCache.get(identity.metadata.did)
+                const encryptedPassword = this.sessionCache.get(did)
                 if (encryptedPassword === null) {
                     return reject(new InvalidPassword(`Invalid password!`))
                 }
 
-                const securityConfig = identity.extend.securityConfig as SecurityConfig
-                const securityAlgorithm = securityConfig.algorithm as SecurityAlgorithm
-                const algorithmName = Crypto.convertCipherTypeTo(securityAlgorithm.type)
-                const cryptoKey = await Crypto.deriveRawKeyFromString(algorithmName, token)
-                const iv = Crypto.decodeBase64(securityAlgorithm.iv)
-
-                password = Crypto.encodeBase64(
-                    await Crypto.decrypt(algorithmName, cryptoKey, iv, Crypto.decodeBase64(encryptedPassword))
-                )
+                const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
+                const algorithmName = convertToAlgorithmName(convertCipherTypeFrom(securityAlgorithm.name))
+                const cryptoKey = await deriveRawKeyFromString(algorithmName, token)
+                const iv = decodeBase64(securityAlgorithm.iv)
+                password = encodeBase64(await decrypt(algorithmName, cryptoKey, iv, decodeBase64(encryptedPassword)))
             }
 
             // 加载身份信息
             try {
-                const blockAddress = await Wallet.decryptBlockAddress(
+                // 解密身份
+                const blockAddress = await decryptBlockAddress(
                     identity.blockAddress,
-                    identity.extend.securityConfig?.algorithm as SecurityAlgorithm,
+                    identity.securityConfig?.algorithm as SecurityAlgorithm,
                     password
                 )
-                const entry: IdentityEntry = {
-                    blockAddress: blockAddress,
-                    identity: identity
-                }
-                this.identityMap.set(did, entry)
+
+                this.blockAddressMap.set(did, blockAddress)
+                this.identityMap.set(did, identity)
             } catch (err) {
                 console.error(`Fail to decrypt identity=${did}`, err)
                 return reject(new InvalidPassword(`Invalid password!`))
             }
 
             // 添加到历史账号中
-            const account = this.addAccount(identity.metadata.did, identity.metadata.name, identity.metadata.avatar)
+            const account = this.addAccount(metadata.did, metadata.name, metadata.avatar)
+
             // 设置当前登陆帐户
             this.sessionCache.set(this.loginKey, JSON.stringify(account))
             resolve(account)
@@ -153,52 +172,69 @@ export class AccountManager {
      * 1、自动过期被遗忘，这个身份再也无法使用，与这个身份相关信息也不再被认为有效；
      * 2、临时身份转正同时token失效，身份信息将被继续保留，用户自己的密码加密身份信息
      */
-    async createGuest() {
-        const iv = Crypto.encodeBase64(Crypto.generateIv())
-        const type = CipherTypeEnum.CIPHER_TYPE_AES_GCM_256
-        const extend: IdentityPersonalExtend = {
-            email: '',
-            telephone: '',
-            securityConfig: {
-                algorithm: { type: type, iv: iv }
-            }
-        }
+    async createGuest(language: LanguageCodeEnum = LanguageCodeEnum.LANGUAGE_CODE_ZH_CH) {
+        // 创建区块链地址
+        const blockAddress = createBlockAddress()
+
+        // 生成访客的模版
+        const extend = IdentityPersonalExtend.create({})
+        const algorithm = generateSecurityAlgorithm()
+        const securityConfig = SecurityConfig.create({algorithm: algorithm,})
 
         const template: IdentityTemplate = {
+            language: convertLanguageCodeTo(language),
             network: NetworkTypeEnum.NETWORK_TYPE_YEYING,
             parent: '',
             code: IdentityCodeEnum.IDENTITY_CODE_PERSONAL,
             name: 'Guest',
             description: '',
             avatar: '',
+            securityConfig: securityConfig,
             extend: extend
         }
 
-        // 生成token和密码，token存放在cookie中，然后用token加密密码，密码保存在session中
-        const token = Crypto.encodeBase64(Crypto.generateIv(32))
-        const algorithmName = Crypto.convertCipherTypeTo(type)
-        const password = Crypto.generateIv(16)
-        const cryptoKey = await Crypto.deriveRawKeyFromString(algorithmName, token)
-        const encryptedPassword = await Crypto.encrypt(algorithmName, cryptoKey, Crypto.decodeBase64(iv), password)
-        const identity = await Wallet.createIdentity(Crypto.encodeBase64(password), template)
-        this.cookieCache.set(identity.metadata.did, token, this.durationDays)
-        this.sessionCache.set(identity.metadata.did, encryptedPassword)
+        // 生成令牌，令牌存放在cookie中，令牌用来加密身份的密码，令牌一旦过期，那么身份将会失效。
+        const token = encodeBase64(generateIv(32))
+        const algorithmName = convertToAlgorithmName(convertCipherTypeFrom(algorithm.name))
+
+        // 生成身份密码，密码保存在session中，需要使用cookie中的token加密和解密，保证其安全性
+        const password = encodeBase64(generateIv(16))
+        const encryptedBlockAddress = await encryptBlockAddress(blockAddress, algorithm, password)
+
+        // 用令牌加密身份密码
+        const cryptoKey = await deriveRawKeyFromString(algorithmName, token)
+        const encryptedPassword = await encrypt(algorithmName, cryptoKey, decodeBase64(algorithm.iv), decodeBase64(password))
+
+        const identity = await createIdentity(blockAddress, encryptedBlockAddress, template)
+        const metadata = identity.metadata as IdentityMetadata
+        const did = metadata.did
+
+        // 缓存密码
+        this.sessionCache.set(did, encryptedPassword)
+        // 缓存令牌
+        this.cookieCache.set(did, token, this.durationDays)
+        // 保存为历史身份
+        this.identityCache.set(did, encodeBase64(Identity.encode(identity).finish()))
+        // 缓存身份
+        this.identityMap.set(did, identity)
+        // 缓存区块链地址
+        this.blockAddressMap.set(did, blockAddress)
         return identity
     }
 
     async createIdentity(password: string, template: IdentityTemplate) {
-        const identity = await Wallet.createIdentity(password, template)
-        const blockAddress = await Wallet.decryptBlockAddress(
-            identity.blockAddress,
-            identity.extend.securityConfig?.algorithm as SecurityAlgorithm,
-            password
-        )
-        const entry: IdentityEntry = {
-            blockAddress: blockAddress,
-            identity: identity
-        }
-        this.identityMap.set(identity.metadata.did, entry)
-        this.identityCache.set(identity.metadata.did, JSON.stringify(identity))
+        // 创建区块链地址
+        const blockAddress = createBlockAddress()
+        const securityAlgorithm = generateSecurityAlgorithm()
+        const encryptedBlockAddress = await encryptBlockAddress(blockAddress, securityAlgorithm, password)
+
+        const identity = await createIdentity(blockAddress, encryptedBlockAddress, template)
+        const metadata = identity.metadata as IdentityMetadata
+        const did = metadata.did
+
+        this.identityCache.set(did, encodeBase64(Identity.encode(identity).finish()))
+        this.identityMap.set(did, identity)
+        this.blockAddressMap.set(did, blockAddress)
     }
 
     async exportIdentity(did: string) {
@@ -207,8 +243,8 @@ export class AccountManager {
             return
         }
 
-        const identity = JSON.parse(s) as Identity
-        const passed = await Wallet.verifyIdentity(identity)
+        const identity = Identity.decode(decodeBase64(s))
+        const passed = await verifyIdentity(identity)
         if (passed) {
             return identity
         }
@@ -216,14 +252,15 @@ export class AccountManager {
 
     // 导入用户身份
     async importIdentity(content: string) {
-        const identity = JSON.parse(content) as Identity
-        await Wallet.verifyIdentity(identity)
-        this.identityCache.set(identity.metadata.did, content)
+        const identity = Identity.decode(decodeBase64(content))
+        const metadata = identity.metadata as IdentityMetadata
+        await verifyIdentity(identity)
+        this.identityCache.set(metadata.did, content)
     }
 
     private addAccount(did: string, name: string, avatar: string): Account {
         const historyAccounts = this.getHistoryAccounts()
-        const account: Account = { name: name, did: did, avatar: avatar, timestamp: Date.now() }
+        const account: Account = {name: name, did: did, avatar: avatar, timestamp: Date.now()}
         const index = historyAccounts.findIndex((i) => i.did === did)
         if (index !== -1) {
             historyAccounts[index] = account

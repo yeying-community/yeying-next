@@ -12,7 +12,7 @@ describe('User', () => {
     it('add', async () => {
         const userProvider = new UserProvider(new Authenticate(blockAddress), provider)
         await userProvider.add('test1', '13584001111', 'yeying.community@gmail.com', "avatar1")
-        console.log(`Success to add new user=${blockAddress.getIdentifier()}`)
+        console.log(`Success to add new user=${blockAddress.identifier}`)
     })
 
     it('get', async () => {
@@ -24,12 +24,12 @@ describe('User', () => {
     it('mod', async () => {
         const userProvider = new UserProvider(new Authenticate(blockAddress), provider)
         await userProvider.mod("test2")
-        console.log(`Success to mod user=${blockAddress.getIdentifier()}`)
+        console.log(`Success to mod user=${blockAddress.identifier}`)
     })
 
     it('del', async () => {
         const userProvider = new UserProvider(new Authenticate(blockAddress), provider)
         await userProvider.del()
-        console.log(`Success to del user=${blockAddress.getIdentifier()}`)
+        console.log(`Success to del user=${blockAddress.identifier}`)
     })
 })

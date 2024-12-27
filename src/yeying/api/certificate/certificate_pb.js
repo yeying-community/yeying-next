@@ -231,8 +231,8 @@ proto.yeying.api.certificate.SignRequest.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.certificate.SignRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.certificate.SignRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.certificate.SignRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -433,8 +433,8 @@ proto.yeying.api.certificate.SignRequestBody.prototype.toObject = function(opt_i
  */
 proto.yeying.api.certificate.SignRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    domain: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    csr: jspb.Message.getFieldWithDefault(msg, 2, "")
+domain: jspb.Message.getFieldWithDefault(msg, 1, ""),
+csr: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -593,8 +593,8 @@ proto.yeying.api.certificate.SignResponse.prototype.toObject = function(opt_incl
  */
 proto.yeying.api.certificate.SignResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.certificate.SignResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.certificate.SignResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -795,8 +795,8 @@ proto.yeying.api.certificate.CertificateMetadata.prototype.toObject = function(o
  */
 proto.yeying.api.certificate.CertificateMetadata.toObject = function(includeInstance, msg) {
   var f, obj = {
-    crt: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    ca: jspb.Message.getFieldWithDefault(msg, 2, "")
+crt: jspb.Message.getFieldWithDefault(msg, 1, ""),
+ca: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -955,8 +955,8 @@ proto.yeying.api.certificate.SignResponseBody.prototype.toObject = function(opt_
  */
 proto.yeying.api.certificate.SignResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
-    certificate: (f = msg.getCertificate()) && proto.yeying.api.certificate.CertificateMetadata.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
+certificate: (f = msg.getCertificate()) && proto.yeying.api.certificate.CertificateMetadata.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1157,7 +1157,7 @@ proto.yeying.api.certificate.GetRequest.prototype.toObject = function(opt_includ
  */
 proto.yeying.api.certificate.GetRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1308,8 +1308,8 @@ proto.yeying.api.certificate.GetResponse.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.certificate.GetResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.certificate.GetResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.certificate.GetResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1510,8 +1510,8 @@ proto.yeying.api.certificate.GetResponseBody.prototype.toObject = function(opt_i
  */
 proto.yeying.api.certificate.GetResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
-    certificate: (f = msg.getCertificate()) && proto.yeying.api.certificate.CertificateMetadata.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
+certificate: (f = msg.getCertificate()) && proto.yeying.api.certificate.CertificateMetadata.toObject(includeInstance, f)
   };
 
   if (includeInstance) {

@@ -985,8 +985,8 @@ proto.yeying.api.asset.SearchRequest.prototype.toObject = function(opt_includeIn
  */
 proto.yeying.api.asset.SearchRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.SearchRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.SearchRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1187,10 +1187,10 @@ proto.yeying.api.asset.SearchRequestBody.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.asset.SearchRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    format: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    assethash: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    page: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    pagesize: jspb.Message.getFieldWithDefault(msg, 4, 0)
+format: jspb.Message.getFieldWithDefault(msg, 1, 0),
+assethash: jspb.Message.getFieldWithDefault(msg, 2, ""),
+page: jspb.Message.getFieldWithDefault(msg, 3, 0),
+pagesize: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -1407,8 +1407,8 @@ proto.yeying.api.asset.SearchResponse.prototype.toObject = function(opt_includeI
  */
 proto.yeying.api.asset.SearchResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.SearchResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.SearchResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1616,8 +1616,8 @@ proto.yeying.api.asset.SearchResponseBody.prototype.toObject = function(opt_incl
  */
 proto.yeying.api.asset.SearchResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
-    assetsList: jspb.Message.toObjectList(msg.getAssetsList(),
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
+assetsList: jspb.Message.toObjectList(msg.getAssetsList(),
     proto.yeying.api.asset.AssetMetadata.toObject, includeInstance)
   };
 
@@ -1847,10 +1847,10 @@ proto.yeying.api.asset.StreamPutRequest.prototype.toObject = function(opt_includ
  */
 proto.yeying.api.asset.StreamPutRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    contenttag: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    head: (f = msg.getHead()) && proto.yeying.api.asset.StreamPutRequestHead.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.StreamPutRequestBody.toObject(includeInstance, f),
-    tail: (f = msg.getTail()) && proto.yeying.api.asset.StreamPutRequestTail.toObject(includeInstance, f)
+contenttag: jspb.Message.getFieldWithDefault(msg, 1, 0),
+head: (f = msg.getHead()) && proto.yeying.api.asset.StreamPutRequestHead.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.StreamPutRequestBody.toObject(includeInstance, f),
+tail: (f = msg.getTail()) && proto.yeying.api.asset.StreamPutRequestTail.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2130,8 +2130,8 @@ proto.yeying.api.asset.StreamPutRequestHead.prototype.toObject = function(opt_in
  */
 proto.yeying.api.asset.StreamPutRequestHead.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.StreamPutRequestHeadBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.StreamPutRequestHeadBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2332,10 +2332,10 @@ proto.yeying.api.asset.StreamPutRequestHeadBody.prototype.toObject = function(op
  */
 proto.yeying.api.asset.StreamPutRequestHeadBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    version: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    chunkhash: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    chunksize: jspb.Message.getFieldWithDefault(msg, 4, 0)
+assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+version: jspb.Message.getFieldWithDefault(msg, 2, 0),
+chunkhash: jspb.Message.getFieldWithDefault(msg, 3, ""),
+chunksize: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -2552,7 +2552,7 @@ proto.yeying.api.asset.StreamPutRequestBody.prototype.toObject = function(opt_in
  */
 proto.yeying.api.asset.StreamPutRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    data: msg.getData_asB64()
+data: msg.getData_asB64()
   };
 
   if (includeInstance) {
@@ -2706,8 +2706,8 @@ proto.yeying.api.asset.StreamPutRequestTail.prototype.toObject = function(opt_in
  */
 proto.yeying.api.asset.StreamPutRequestTail.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.StreamPutRequestTailBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.StreamPutRequestTailBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2908,7 +2908,7 @@ proto.yeying.api.asset.StreamPutRequestTailBody.prototype.toObject = function(op
  */
 proto.yeying.api.asset.StreamPutRequestTailBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    chunkhash: jspb.Message.getFieldWithDefault(msg, 1, "")
+chunkhash: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -3038,10 +3038,10 @@ proto.yeying.api.asset.PutRequestBody.prototype.toObject = function(opt_includeI
  */
 proto.yeying.api.asset.PutRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    version: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    chunkhash: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    chunksize: jspb.Message.getFieldWithDefault(msg, 4, 0)
+assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+version: jspb.Message.getFieldWithDefault(msg, 2, 0),
+chunkhash: jspb.Message.getFieldWithDefault(msg, 3, ""),
+chunksize: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -3258,9 +3258,9 @@ proto.yeying.api.asset.PutRequest.prototype.toObject = function(opt_includeInsta
  */
 proto.yeying.api.asset.PutRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.PutRequestBody.toObject(includeInstance, f),
-    data: msg.getData_asB64()
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.PutRequestBody.toObject(includeInstance, f),
+data: msg.getData_asB64()
   };
 
   if (includeInstance) {
@@ -3514,8 +3514,8 @@ proto.yeying.api.asset.PutResponse.prototype.toObject = function(opt_includeInst
  */
 proto.yeying.api.asset.PutResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.PutResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.PutResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3716,7 +3716,7 @@ proto.yeying.api.asset.PutResponseBody.prototype.toObject = function(opt_include
  */
 proto.yeying.api.asset.PutResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3867,8 +3867,8 @@ proto.yeying.api.asset.SignRequest.prototype.toObject = function(opt_includeInst
  */
 proto.yeying.api.asset.SignRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.SignRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.SignRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -4069,8 +4069,8 @@ proto.yeying.api.asset.SignRequestBody.prototype.toObject = function(opt_include
  */
 proto.yeying.api.asset.SignRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    action: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    asset: (f = msg.getAsset()) && proto.yeying.api.asset.AssetMetadata.toObject(includeInstance, f)
+action: jspb.Message.getFieldWithDefault(msg, 1, 0),
+asset: (f = msg.getAsset()) && proto.yeying.api.asset.AssetMetadata.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -4250,8 +4250,8 @@ proto.yeying.api.asset.SignResponse.prototype.toObject = function(opt_includeIns
  */
 proto.yeying.api.asset.SignResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.SignResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.SignResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -4452,7 +4452,7 @@ proto.yeying.api.asset.SignResponseBody.prototype.toObject = function(opt_includ
  */
 proto.yeying.api.asset.SignResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -4603,8 +4603,8 @@ proto.yeying.api.asset.VersionRequest.prototype.toObject = function(opt_includeI
  */
 proto.yeying.api.asset.VersionRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.VersionRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.VersionRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -4805,9 +4805,9 @@ proto.yeying.api.asset.VersionRequestBody.prototype.toObject = function(opt_incl
  */
 proto.yeying.api.asset.VersionRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    page: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    pagesize: jspb.Message.getFieldWithDefault(msg, 3, 0)
+assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+page: jspb.Message.getFieldWithDefault(msg, 2, 0),
+pagesize: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -4995,8 +4995,8 @@ proto.yeying.api.asset.VersionResponse.prototype.toObject = function(opt_include
  */
 proto.yeying.api.asset.VersionResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.VersionResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.VersionResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -5204,8 +5204,8 @@ proto.yeying.api.asset.VersionResponseBody.prototype.toObject = function(opt_inc
  */
 proto.yeying.api.asset.VersionResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
-    assetsList: jspb.Message.toObjectList(msg.getAssetsList(),
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
+assetsList: jspb.Message.toObjectList(msg.getAssetsList(),
     proto.yeying.api.asset.AssetMetadata.toObject, includeInstance)
   };
 
@@ -5408,8 +5408,8 @@ proto.yeying.api.asset.DetailRequest.prototype.toObject = function(opt_includeIn
  */
 proto.yeying.api.asset.DetailRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.DetailRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.DetailRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -5610,8 +5610,8 @@ proto.yeying.api.asset.DetailRequestBody.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.asset.DetailRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    version: jspb.Message.getFieldWithDefault(msg, 2, 0)
+assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+version: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -5770,8 +5770,8 @@ proto.yeying.api.asset.DetailResponse.prototype.toObject = function(opt_includeI
  */
 proto.yeying.api.asset.DetailResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.DetailResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.DetailResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -5972,8 +5972,8 @@ proto.yeying.api.asset.DetailResponseBody.prototype.toObject = function(opt_incl
  */
 proto.yeying.api.asset.DetailResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
-    asset: (f = msg.getAsset()) && proto.yeying.api.asset.AssetMetadata.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
+asset: (f = msg.getAsset()) && proto.yeying.api.asset.AssetMetadata.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -6174,8 +6174,8 @@ proto.yeying.api.asset.GetRequest.prototype.toObject = function(opt_includeInsta
  */
 proto.yeying.api.asset.GetRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.GetRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.GetRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -6402,10 +6402,10 @@ proto.yeying.api.asset.GetRequestBody.prototype.toObject = function(opt_includeI
  */
 proto.yeying.api.asset.GetRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    version: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    hash: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    index: jspb.Message.getFieldWithDefault(msg, 4, 0)
+assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+version: jspb.Message.getFieldWithDefault(msg, 2, 0),
+hash: (f = jspb.Message.getField(msg, 3)) == null ? undefined : f,
+index: (f = jspb.Message.getField(msg, 4)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -6685,10 +6685,10 @@ proto.yeying.api.asset.StreamGetResponse.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.asset.StreamGetResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    contenttag: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    head: (f = msg.getHead()) && proto.yeying.api.asset.StreamGetResponseHead.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.StreamGetResponseBody.toObject(includeInstance, f),
-    tail: (f = msg.getTail()) && proto.yeying.api.asset.StreamGetResponseTail.toObject(includeInstance, f)
+contenttag: jspb.Message.getFieldWithDefault(msg, 1, 0),
+head: (f = msg.getHead()) && proto.yeying.api.asset.StreamGetResponseHead.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.StreamGetResponseBody.toObject(includeInstance, f),
+tail: (f = msg.getTail()) && proto.yeying.api.asset.StreamGetResponseTail.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -6968,8 +6968,8 @@ proto.yeying.api.asset.StreamGetResponseHead.prototype.toObject = function(opt_i
  */
 proto.yeying.api.asset.StreamGetResponseHead.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.StreamGetResponseHeadBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.StreamGetResponseHeadBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -7170,8 +7170,8 @@ proto.yeying.api.asset.StreamGetResponseHeadBody.prototype.toObject = function(o
  */
 proto.yeying.api.asset.StreamGetResponseHeadBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
-    chunk: (f = msg.getChunk()) && proto.yeying.api.asset.ChunkMetadata.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
+chunk: (f = msg.getChunk()) && proto.yeying.api.asset.ChunkMetadata.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -7372,7 +7372,7 @@ proto.yeying.api.asset.StreamGetResponseBody.prototype.toObject = function(opt_i
  */
 proto.yeying.api.asset.StreamGetResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    data: msg.getData_asB64()
+data: msg.getData_asB64()
   };
 
   if (includeInstance) {
@@ -7526,8 +7526,8 @@ proto.yeying.api.asset.StreamGetResponseTail.prototype.toObject = function(opt_i
  */
 proto.yeying.api.asset.StreamGetResponseTail.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.StreamGetResponseTailBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.StreamGetResponseTailBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -7728,7 +7728,7 @@ proto.yeying.api.asset.StreamGetResponseTailBody.prototype.toObject = function(o
  */
 proto.yeying.api.asset.StreamGetResponseTailBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -7879,8 +7879,8 @@ proto.yeying.api.asset.GetResponseBody.prototype.toObject = function(opt_include
  */
 proto.yeying.api.asset.GetResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
-    chunk: (f = msg.getChunk()) && proto.yeying.api.asset.ChunkMetadata.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
+chunk: (f = msg.getChunk()) && proto.yeying.api.asset.ChunkMetadata.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -8081,9 +8081,9 @@ proto.yeying.api.asset.GetResponse.prototype.toObject = function(opt_includeInst
  */
 proto.yeying.api.asset.GetResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.GetResponseBody.toObject(includeInstance, f),
-    data: msg.getData_asB64()
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.GetResponseBody.toObject(includeInstance, f),
+data: msg.getData_asB64()
   };
 
   if (includeInstance) {
@@ -8337,8 +8337,8 @@ proto.yeying.api.asset.RemoveRequest.prototype.toObject = function(opt_includeIn
  */
 proto.yeying.api.asset.RemoveRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.RemoveRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.RemoveRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -8539,8 +8539,8 @@ proto.yeying.api.asset.RemoveRequestBody.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.asset.RemoveRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    version: jspb.Message.getFieldWithDefault(msg, 2, 0)
+assetid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+version: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -8699,8 +8699,8 @@ proto.yeying.api.asset.RemoveResponse.prototype.toObject = function(opt_includeI
  */
 proto.yeying.api.asset.RemoveResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.asset.RemoveResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.asset.RemoveResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -8901,7 +8901,7 @@ proto.yeying.api.asset.RemoveResponseBody.prototype.toObject = function(opt_incl
  */
 proto.yeying.api.asset.RemoveResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -9052,10 +9052,10 @@ proto.yeying.api.asset.ChunkMetadata.prototype.toObject = function(opt_includeIn
  */
 proto.yeying.api.asset.ChunkMetadata.toObject = function(includeInstance, msg) {
   var f, obj = {
-    index: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    hash: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    size: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    extend: jspb.Message.getFieldWithDefault(msg, 4, "")
+index: jspb.Message.getFieldWithDefault(msg, 1, 0),
+hash: jspb.Message.getFieldWithDefault(msg, 2, ""),
+size: jspb.Message.getFieldWithDefault(msg, 3, 0),
+extend: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -9279,25 +9279,25 @@ proto.yeying.api.asset.AssetMetadata.prototype.toObject = function(opt_includeIn
  */
 proto.yeying.api.asset.AssetMetadata.toObject = function(includeInstance, msg) {
   var f, obj = {
-    owner: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    version: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    uid: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    name: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    parenthash: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    hash: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    mergedhash: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    description: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    format: jspb.Message.getFieldWithDefault(msg, 9, 0),
-    size: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    created: jspb.Message.getFieldWithDefault(msg, 11, ""),
-    checkpoint: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    total: jspb.Message.getFieldWithDefault(msg, 13, 0),
-    block: jspb.Message.getFieldWithDefault(msg, 14, 0),
-    encrypted: jspb.Message.getBooleanFieldWithDefault(msg, 15, false),
-    extend: jspb.Message.getFieldWithDefault(msg, 16, ""),
-    chunksList: jspb.Message.toObjectList(msg.getChunksList(),
+owner: jspb.Message.getFieldWithDefault(msg, 1, ""),
+version: jspb.Message.getFieldWithDefault(msg, 2, 0),
+uid: jspb.Message.getFieldWithDefault(msg, 3, ""),
+name: jspb.Message.getFieldWithDefault(msg, 4, ""),
+parenthash: jspb.Message.getFieldWithDefault(msg, 5, ""),
+hash: jspb.Message.getFieldWithDefault(msg, 6, ""),
+mergedhash: jspb.Message.getFieldWithDefault(msg, 7, ""),
+description: jspb.Message.getFieldWithDefault(msg, 8, ""),
+format: jspb.Message.getFieldWithDefault(msg, 9, 0),
+size: jspb.Message.getFieldWithDefault(msg, 10, 0),
+created: jspb.Message.getFieldWithDefault(msg, 11, ""),
+checkpoint: jspb.Message.getFieldWithDefault(msg, 12, ""),
+total: jspb.Message.getFieldWithDefault(msg, 13, 0),
+block: jspb.Message.getFieldWithDefault(msg, 14, 0),
+encrypted: jspb.Message.getBooleanFieldWithDefault(msg, 15, false),
+extend: jspb.Message.getFieldWithDefault(msg, 16, ""),
+chunksList: jspb.Message.toObjectList(msg.getChunksList(),
     proto.yeying.api.asset.ChunkMetadata.toObject, includeInstance),
-    signature: jspb.Message.getFieldWithDefault(msg, 18, "")
+signature: jspb.Message.getFieldWithDefault(msg, 18, "")
   };
 
   if (includeInstance) {

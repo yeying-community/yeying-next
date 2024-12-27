@@ -48,14 +48,6 @@ export enum ServiceCodeEnum {
   SERVICE_CODE_WAREHOUSE = 2,
   SERVICE_CODE_AGENT = 3,
 }
-export enum IdentityCodeEnum { 
-  IDENTITY_CODE_UNKNOWN = 0,
-  IDENTITY_CODE_PERSONAL = 1,
-  IDENTITY_CODE_ORGANIZATION = 2,
-  IDENTITY_CODE_SERVICE = 3,
-  IDENTITY_CODE_APPLICATION = 4,
-  IDENTITY_CODE_ASSET = 5,
-}
 export enum ImageFormatEnum { 
   IMAGE_FORMAT_UNKNOWN = 0,
   IMAGE_FORMAT_PNG = 1,
@@ -119,8 +111,4 @@ export enum StreamDataTagEnum {
   STREAM_DATA_TAG_HEAD = 0,
   STREAM_DATA_TAG_BODY = 1,
   STREAM_DATA_TAG_TAIL = 2,
-}
-export enum NetworkTypeEnum { 
-  NETWORK_TYPE_UNKNOWN = 0,
-  NETWORK_TYPE_YEYING = 2020,
 }

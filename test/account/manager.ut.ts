@@ -6,6 +6,6 @@ describe('Account', () => {
         const accountManager = new AccountManager()
         const identity = await accountManager.createGuest()
         console.log(`${JSON.stringify(identity, null, 2)}`)
-        expect(identity.metadata.name).toEqual("Guest")
+        expect(identity.metadata?.name).toEqual("Guest")
     })
 })

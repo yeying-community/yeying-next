@@ -254,11 +254,11 @@ proto.yeying.api.invitation.InvitationMetadata.prototype.toObject = function(opt
  */
 proto.yeying.api.invitation.InvitationMetadata.toObject = function(includeInstance, msg) {
   var f, obj = {
-    scene: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    code: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    expiredtime: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    inviter: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    invitee: jspb.Message.getFieldWithDefault(msg, 5, "")
+scene: jspb.Message.getFieldWithDefault(msg, 1, ""),
+code: jspb.Message.getFieldWithDefault(msg, 2, ""),
+expiredtime: jspb.Message.getFieldWithDefault(msg, 3, ""),
+inviter: jspb.Message.getFieldWithDefault(msg, 4, ""),
+invitee: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -504,8 +504,8 @@ proto.yeying.api.invitation.GenerateRequest.prototype.toObject = function(opt_in
  */
 proto.yeying.api.invitation.GenerateRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.invitation.GenerateRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.invitation.GenerateRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -706,8 +706,8 @@ proto.yeying.api.invitation.GenerateRequestBody.prototype.toObject = function(op
  */
 proto.yeying.api.invitation.GenerateRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    scene: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    count: jspb.Message.getFieldWithDefault(msg, 2, 0)
+scene: jspb.Message.getFieldWithDefault(msg, 1, 0),
+count: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -866,8 +866,8 @@ proto.yeying.api.invitation.InputRequest.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.invitation.InputRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.invitation.InputRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.invitation.InputRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1068,7 +1068,7 @@ proto.yeying.api.invitation.InputRequestBody.prototype.toObject = function(opt_i
  */
 proto.yeying.api.invitation.InputRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    code: jspb.Message.getFieldWithDefault(msg, 1, "")
+code: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -1198,8 +1198,8 @@ proto.yeying.api.invitation.InputResponse.prototype.toObject = function(opt_incl
  */
 proto.yeying.api.invitation.InputResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.invitation.InputResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.invitation.InputResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1400,7 +1400,7 @@ proto.yeying.api.invitation.InputResponseBody.prototype.toObject = function(opt_
  */
 proto.yeying.api.invitation.InputResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1551,8 +1551,8 @@ proto.yeying.api.invitation.GenerateResponse.prototype.toObject = function(opt_i
  */
 proto.yeying.api.invitation.GenerateResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.invitation.GenerateResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.invitation.GenerateResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1760,8 +1760,8 @@ proto.yeying.api.invitation.GenerateResponseBody.prototype.toObject = function(o
  */
 proto.yeying.api.invitation.GenerateResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
-    invitationsList: jspb.Message.toObjectList(msg.getInvitationsList(),
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
+invitationsList: jspb.Message.toObjectList(msg.getInvitationsList(),
     proto.yeying.api.invitation.InvitationMetadata.toObject, includeInstance)
   };
 

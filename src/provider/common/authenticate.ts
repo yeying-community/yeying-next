@@ -1,12 +1,13 @@
-import { getCurrentUtcString, isExpired, parseDateTime } from '../../common/date'
-import { generateUuid } from '../../common/string'
-import { BlockAddress, MessageHeader, ResponseStatus } from '../../yeying/api/common/message_pb'
-import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
-import { Wallet } from '@yeying-community/yeying-web3'
-import { InvalidArgument, NetworkDown, NoPermission } from '../../common/error'
-import { composite } from '../../common/bytes'
-import { RpcError } from 'grpc-web'
-import { convertResponseStatusToError } from '../../common/status'
+import {getCurrentUtcString, isExpired, parseDateTime} from '../../common/date'
+import {generateUuid} from '../../common/string'
+import {MessageHeader, ResponseStatus} from '../../yeying/api/common/message_pb'
+import {AuthenticateTypeEnum} from '../../yeying/api/common/code_pb'
+import {BlockAddress, signHashBytes, verifyHashBytes} from '@yeying-community/yeying-web3'
+import {InvalidArgument, NetworkDown, NoPermission} from '../../common/error'
+import {composite} from '../../common/bytes'
+import {RpcError} from 'grpc-web'
+import {convertResponseStatusToError} from '../../common/status'
+import {computeHash} from "../../common/crypto";
 
 export class Authenticate {
     private blockAddress: BlockAddress
@@ -16,12 +17,12 @@ export class Authenticate {
     }
 
     getDid() {
-        return this.blockAddress.getIdentifier()
+        return this.blockAddress.identifier
     }
 
     async createHeader(body?: Uint8Array) {
         const header = new MessageHeader()
-        header.setDid(this.blockAddress.getIdentifier())
+        header.setDid(this.blockAddress.identifier)
         header.setAuthtype(AuthenticateTypeEnum.AUTHENTICATE_TYPE_CERT)
         header.setNonce(generateUuid())
         header.setVersion(0)
@@ -33,11 +34,13 @@ export class Authenticate {
     }
 
     async sign(data: Uint8Array) {
-        return await Wallet.signData(this.blockAddress.getPrivatekey(), data)
+        const hashBytes = await computeHash(data)
+        return await signHashBytes(this.blockAddress.privateKey, hashBytes)
     }
 
     async verify(data: Uint8Array, signature: string) {
-        return await Wallet.verifyData(this.getPublicKey(), data, signature)
+        const hashBytes = await computeHash(data)
+        return await verifyHashBytes(this.getPublicKey(), hashBytes, signature)
     }
 
     async verifyHeader(header: MessageHeader, body: Uint8Array | undefined) {
@@ -58,9 +61,7 @@ export class Authenticate {
     }
 
     getPublicKey() {
-        const publicKey = this.blockAddress
-            .getIdentifier()
-            .slice(this.blockAddress.getIdentifier().lastIndexOf(':') + 1)
+        const publicKey = this.blockAddress.identifier.slice(this.blockAddress.identifier.lastIndexOf(':') + 1)
         return publicKey.startsWith('0x') ? publicKey.substring(2) : publicKey
     }
 

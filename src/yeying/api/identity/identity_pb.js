@@ -409,8 +409,8 @@ proto.yeying.api.identity.DepositRequest.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.identity.DepositRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.identity.DepositRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.identity.DepositRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -611,8 +611,8 @@ proto.yeying.api.identity.DepositRequestBody.prototype.toObject = function(opt_i
  */
 proto.yeying.api.identity.DepositRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    cipher: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    protocol: jspb.Message.getFieldWithDefault(msg, 2, "")
+cipher: jspb.Message.getFieldWithDefault(msg, 1, ""),
+protocol: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -771,8 +771,8 @@ proto.yeying.api.identity.DepositResponse.prototype.toObject = function(opt_incl
  */
 proto.yeying.api.identity.DepositResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.identity.DepositResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.identity.DepositResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -973,7 +973,7 @@ proto.yeying.api.identity.DepositResponseBody.prototype.toObject = function(opt_
  */
 proto.yeying.api.identity.DepositResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1124,7 +1124,7 @@ proto.yeying.api.identity.RetrieveRequest.prototype.toObject = function(opt_incl
  */
 proto.yeying.api.identity.RetrieveRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1275,7 +1275,7 @@ proto.yeying.api.identity.RetrieveResponse.prototype.toObject = function(opt_inc
  */
 proto.yeying.api.identity.RetrieveResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1426,7 +1426,7 @@ proto.yeying.api.identity.ShareRequest.prototype.toObject = function(opt_include
  */
 proto.yeying.api.identity.ShareRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1577,7 +1577,7 @@ proto.yeying.api.identity.ShareResponse.prototype.toObject = function(opt_includ
  */
 proto.yeying.api.identity.ShareResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1728,8 +1728,8 @@ proto.yeying.api.identity.QueryRequest.prototype.toObject = function(opt_include
  */
 proto.yeying.api.identity.QueryRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.identity.QueryRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.identity.QueryRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1930,7 +1930,7 @@ proto.yeying.api.identity.QueryRequestBody.prototype.toObject = function(opt_inc
  */
 proto.yeying.api.identity.QueryRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    servicecode: jspb.Message.getFieldWithDefault(msg, 1, 0)
+servicecode: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
 
   if (includeInstance) {
@@ -2060,8 +2060,8 @@ proto.yeying.api.identity.QueryResponse.prototype.toObject = function(opt_includ
  */
 proto.yeying.api.identity.QueryResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.identity.QueryResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.identity.QueryResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2262,9 +2262,9 @@ proto.yeying.api.identity.QueryResponseBody.prototype.toObject = function(opt_in
  */
 proto.yeying.api.identity.QueryResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
-    cipher: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    protocol: jspb.Message.getFieldWithDefault(msg, 3, "")
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
+cipher: jspb.Message.getFieldWithDefault(msg, 2, ""),
+protocol: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -2473,8 +2473,8 @@ proto.yeying.api.identity.CancelRequest.prototype.toObject = function(opt_includ
  */
 proto.yeying.api.identity.CancelRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.identity.CancelRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.identity.CancelRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2675,7 +2675,7 @@ proto.yeying.api.identity.CancelRequestBody.prototype.toObject = function(opt_in
  */
 proto.yeying.api.identity.CancelRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    did: jspb.Message.getFieldWithDefault(msg, 1, "")
+did: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -2805,8 +2805,8 @@ proto.yeying.api.identity.CancelResponse.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.identity.CancelResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.identity.CancelResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.identity.CancelResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3007,7 +3007,7 @@ proto.yeying.api.identity.CancelResponseBody.prototype.toObject = function(opt_i
  */
 proto.yeying.api.identity.CancelResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
   };
 
   if (includeInstance) {

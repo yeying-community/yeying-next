@@ -1,10 +1,11 @@
-import { Authenticate } from '../common/authenticate'
-import { Provider } from '../common/model'
-import { ServiceClient } from '../../yeying/api/service/ServiceServiceClientPb'
-import { MessageHeader } from '../../yeying/api/common/message_pb'
-import { ServiceMetadata, WhoamiRequest } from '../../yeying/api/service/service_pb'
-import { Wallet } from '@yeying-community/yeying-web3'
-import { DataForgery } from '../../common/error'
+import {Authenticate} from '../common/authenticate'
+import {Provider} from '../common/model'
+import {ServiceClient} from '../../yeying/api/service/ServiceServiceClientPb'
+import {MessageHeader} from '../../yeying/api/common/message_pb'
+import {ServiceMetadata, WhoamiRequest} from '../../yeying/api/service/service_pb'
+import {DataForgery} from '../../common/error'
+import {verifyHashBytes} from "@yeying-community/yeying-web3";
+import {computeHash} from "../../common/crypto";
 
 export class ServiceProvider {
     private authenticate: Authenticate
@@ -35,11 +36,8 @@ export class ServiceProvider {
                         const serviceMetadata = res.getBody()?.getService() as ServiceMetadata
                         const signature = serviceMetadata.getSignature()
                         serviceMetadata.setSignature('')
-                        const passed = await Wallet.verifyData(
-                            serviceMetadata.getDid(),
-                            serviceMetadata.serializeBinary(),
-                            signature
-                        )
+                        const hashBytes = await computeHash(serviceMetadata.serializeBinary())
+                        const passed = await verifyHashBytes(serviceMetadata.getDid(), hashBytes, signature)
                         if (passed) {
                             resolve(res.getBody()?.getService() as ServiceMetadata)
                         } else {

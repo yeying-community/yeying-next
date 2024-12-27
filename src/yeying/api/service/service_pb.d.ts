@@ -362,8 +362,8 @@ export class ServiceMetadata extends jspb.Message {
   getOwner(): string;
   setOwner(value: string): ServiceMetadata;
 
-  getNetwork(): yeying_api_common_code_pb.NetworkTypeEnum;
-  setNetwork(value: yeying_api_common_code_pb.NetworkTypeEnum): ServiceMetadata;
+  getNetwork(): number;
+  setNetwork(value: number): ServiceMetadata;
 
   getAddress(): string;
   setAddress(value: string): ServiceMetadata;
@@ -417,7 +417,7 @@ export class ServiceMetadata extends jspb.Message {
 export namespace ServiceMetadata {
   export type AsObject = {
     owner: string,
-    network: yeying_api_common_code_pb.NetworkTypeEnum,
+    network: number,
     address: string,
     did: string,
     version: number,

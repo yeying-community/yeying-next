@@ -507,20 +507,20 @@ proto.yeying.api.event.EventMetadata.prototype.toObject = function(opt_includeIn
  */
 proto.yeying.api.event.EventMetadata.toObject = function(includeInstance, msg) {
   var f, obj = {
-    uid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    type: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    producersList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
-    consumersList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
-    signature: (f = msg.getSignature()) && proto.yeying.api.event.EventSignature.toObject(includeInstance, f),
-    extend: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    created: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    processed: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    notifycontent: (f = msg.getNotifycontent()) && proto.yeying.api.event.NotifyContent.toObject(includeInstance, f),
-    applycontent: (f = msg.getApplycontent()) && proto.yeying.api.event.ApplyContent.toObject(includeInstance, f),
-    customcontent: (f = msg.getCustomcontent()) && proto.yeying.api.event.CustomContent.toObject(includeInstance, f),
-    notifyopinion: (f = msg.getNotifyopinion()) && proto.yeying.api.event.NotifyOpinion.toObject(includeInstance, f),
-    applyopinion: (f = msg.getApplyopinion()) && proto.yeying.api.event.ApplyOpinion.toObject(includeInstance, f),
-    customopinion: (f = msg.getCustomopinion()) && proto.yeying.api.event.CustomOpinion.toObject(includeInstance, f)
+uid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+type: jspb.Message.getFieldWithDefault(msg, 2, 0),
+producersList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
+consumersList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
+signature: (f = msg.getSignature()) && proto.yeying.api.event.EventSignature.toObject(includeInstance, f),
+extend: jspb.Message.getFieldWithDefault(msg, 6, ""),
+created: jspb.Message.getFieldWithDefault(msg, 7, ""),
+processed: jspb.Message.getFieldWithDefault(msg, 8, ""),
+notifycontent: (f = msg.getNotifycontent()) && proto.yeying.api.event.NotifyContent.toObject(includeInstance, f),
+applycontent: (f = msg.getApplycontent()) && proto.yeying.api.event.ApplyContent.toObject(includeInstance, f),
+customcontent: (f = msg.getCustomcontent()) && proto.yeying.api.event.CustomContent.toObject(includeInstance, f),
+notifyopinion: (f = msg.getNotifyopinion()) && proto.yeying.api.event.NotifyOpinion.toObject(includeInstance, f),
+applyopinion: (f = msg.getApplyopinion()) && proto.yeying.api.event.ApplyOpinion.toObject(includeInstance, f),
+customopinion: (f = msg.getCustomopinion()) && proto.yeying.api.event.CustomOpinion.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1219,16 +1219,16 @@ proto.yeying.api.event.SignatureObject.prototype.toObject = function(opt_include
  */
 proto.yeying.api.event.SignatureObject.toObject = function(includeInstance, msg) {
   var f, obj = {
-    uid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    type: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    producersList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
-    consumersList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
-    signature: msg.getSignature_asB64(),
-    extend: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    created: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    processed: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    opinion: msg.getOpinion_asB64(),
-    content: msg.getContent_asB64()
+uid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+type: jspb.Message.getFieldWithDefault(msg, 2, 0),
+producersList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
+consumersList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
+signature: msg.getSignature_asB64(),
+extend: jspb.Message.getFieldWithDefault(msg, 6, ""),
+created: jspb.Message.getFieldWithDefault(msg, 7, ""),
+processed: jspb.Message.getFieldWithDefault(msg, 8, ""),
+opinion: msg.getOpinion_asB64(),
+content: msg.getContent_asB64()
   };
 
   if (includeInstance) {
@@ -1736,8 +1736,8 @@ proto.yeying.api.event.EventSignature.prototype.toObject = function(opt_includeI
  */
 proto.yeying.api.event.EventSignature.toObject = function(includeInstance, msg) {
   var f, obj = {
-    producersList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f,
-    consumersList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f
+producersList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f,
+consumersList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -1934,8 +1934,8 @@ proto.yeying.api.event.CustomContent.prototype.toObject = function(opt_includeIn
  */
 proto.yeying.api.event.CustomContent.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    object: jspb.Message.getFieldWithDefault(msg, 2, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+object: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -2094,7 +2094,7 @@ proto.yeying.api.event.ApplyContent.prototype.toObject = function(opt_includeIns
  */
 proto.yeying.api.event.ApplyContent.toObject = function(includeInstance, msg) {
   var f, obj = {
-    applier: jspb.Message.getFieldWithDefault(msg, 1, "")
+applier: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -2231,8 +2231,8 @@ proto.yeying.api.event.NotifyContent.prototype.toObject = function(opt_includeIn
  */
 proto.yeying.api.event.NotifyContent.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    itemsList: jspb.Message.toObjectList(msg.getItemsList(),
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+itemsList: jspb.Message.toObjectList(msg.getItemsList(),
     proto.yeying.api.event.NotifyItem.toObject, includeInstance)
   };
 
@@ -2414,8 +2414,8 @@ proto.yeying.api.event.NotifyItem.prototype.toObject = function(opt_includeInsta
  */
 proto.yeying.api.event.NotifyItem.toObject = function(includeInstance, msg) {
   var f, obj = {
-    uid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    action: jspb.Message.getFieldWithDefault(msg, 2, 0)
+uid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+action: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -2574,8 +2574,8 @@ proto.yeying.api.event.ProduceRequest.prototype.toObject = function(opt_includeI
  */
 proto.yeying.api.event.ProduceRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.event.ProduceRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.event.ProduceRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2776,7 +2776,7 @@ proto.yeying.api.event.ProduceRequestBody.prototype.toObject = function(opt_incl
  */
 proto.yeying.api.event.ProduceRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    event: (f = msg.getEvent()) && proto.yeying.api.event.EventMetadata.toObject(includeInstance, f)
+event: (f = msg.getEvent()) && proto.yeying.api.event.EventMetadata.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2927,8 +2927,8 @@ proto.yeying.api.event.ProduceResponse.prototype.toObject = function(opt_include
  */
 proto.yeying.api.event.ProduceResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.event.ProduceResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.event.ProduceResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3129,7 +3129,7 @@ proto.yeying.api.event.ProduceResponseBody.prototype.toObject = function(opt_inc
  */
 proto.yeying.api.event.ProduceResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3280,8 +3280,8 @@ proto.yeying.api.event.ConsumeRequest.prototype.toObject = function(opt_includeI
  */
 proto.yeying.api.event.ConsumeRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.event.ConsumeRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.event.ConsumeRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3482,7 +3482,7 @@ proto.yeying.api.event.ConsumeRequestBody.prototype.toObject = function(opt_incl
  */
 proto.yeying.api.event.ConsumeRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    metadata: (f = msg.getMetadata()) && proto.yeying.api.event.EventMetadata.toObject(includeInstance, f)
+metadata: (f = msg.getMetadata()) && proto.yeying.api.event.EventMetadata.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3633,7 +3633,7 @@ proto.yeying.api.event.NotifyOpinion.prototype.toObject = function(opt_includeIn
  */
 proto.yeying.api.event.NotifyOpinion.toObject = function(includeInstance, msg) {
   var f, obj = {
-    processed: jspb.Message.getFieldWithDefault(msg, 1, "")
+processed: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -3763,9 +3763,9 @@ proto.yeying.api.event.ApplyOpinion.prototype.toObject = function(opt_includeIns
  */
 proto.yeying.api.event.ApplyOpinion.toObject = function(includeInstance, msg) {
   var f, obj = {
-    action: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    cause: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    processed: jspb.Message.getFieldWithDefault(msg, 3, "")
+action: jspb.Message.getFieldWithDefault(msg, 1, 0),
+cause: jspb.Message.getFieldWithDefault(msg, 2, ""),
+processed: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -3953,8 +3953,8 @@ proto.yeying.api.event.CustomOpinion.prototype.toObject = function(opt_includeIn
  */
 proto.yeying.api.event.CustomOpinion.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    object: jspb.Message.getFieldWithDefault(msg, 2, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+object: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -4113,8 +4113,8 @@ proto.yeying.api.event.ConsumeResponse.prototype.toObject = function(opt_include
  */
 proto.yeying.api.event.ConsumeResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.event.ConsumeResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.event.ConsumeResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -4315,7 +4315,7 @@ proto.yeying.api.event.ConsumeResponseBody.prototype.toObject = function(opt_inc
  */
 proto.yeying.api.event.ConsumeResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
   };
 
   if (includeInstance) {

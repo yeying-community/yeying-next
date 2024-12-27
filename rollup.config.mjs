@@ -6,6 +6,11 @@ export default {
   input: 'src/index.ts',
   output: [
     {
+      file: 'dist/yeying-next.cjs.js',
+      format: 'cjs',
+      sourcemap: true,
+    },
+    {
       file: 'dist/yeying-next.esm.js',
       format: 'esm',
       sourcemap: true

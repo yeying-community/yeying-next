@@ -10,8 +10,3 @@ export interface Account {
     // 首次添加或者最近一次登陆的时间点
     timestamp: number
 }
-
-export interface IdentityEntry {
-    identity: Identity
-    blockAddress: BlockAddress
-}

@@ -409,7 +409,7 @@ proto.yeying.api.service.WhoamiRequest.prototype.toObject = function(opt_include
  */
 proto.yeying.api.service.WhoamiRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -560,8 +560,8 @@ proto.yeying.api.service.WhoamiResponse.prototype.toObject = function(opt_includ
  */
 proto.yeying.api.service.WhoamiResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.service.WhoamiResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.service.WhoamiResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -762,8 +762,8 @@ proto.yeying.api.service.WhoamiResponseBody.prototype.toObject = function(opt_in
  */
 proto.yeying.api.service.WhoamiResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
-    service: (f = msg.getService()) && proto.yeying.api.service.ServiceMetadata.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
+service: (f = msg.getService()) && proto.yeying.api.service.ServiceMetadata.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -964,8 +964,8 @@ proto.yeying.api.service.RegisterRequest.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.service.RegisterRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.service.RegisterRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.service.RegisterRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1166,7 +1166,7 @@ proto.yeying.api.service.RegisterRequestBody.prototype.toObject = function(opt_i
  */
 proto.yeying.api.service.RegisterRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    service: (f = msg.getService()) && proto.yeying.api.service.ServiceMetadata.toObject(includeInstance, f)
+service: (f = msg.getService()) && proto.yeying.api.service.ServiceMetadata.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1317,8 +1317,8 @@ proto.yeying.api.service.RegisterResponse.prototype.toObject = function(opt_incl
  */
 proto.yeying.api.service.RegisterResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.service.RegisterResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.service.RegisterResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1519,7 +1519,7 @@ proto.yeying.api.service.RegisterResponseBody.prototype.toObject = function(opt_
  */
 proto.yeying.api.service.RegisterResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1670,8 +1670,8 @@ proto.yeying.api.service.SearchRequest.prototype.toObject = function(opt_include
  */
 proto.yeying.api.service.SearchRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.service.SearchRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.service.SearchRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1872,8 +1872,8 @@ proto.yeying.api.service.SearchRequestBody.prototype.toObject = function(opt_inc
  */
 proto.yeying.api.service.SearchRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    code: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    owner: jspb.Message.getFieldWithDefault(msg, 2, "")
+code: jspb.Message.getFieldWithDefault(msg, 1, 0),
+owner: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -2032,8 +2032,8 @@ proto.yeying.api.service.SearchResponse.prototype.toObject = function(opt_includ
  */
 proto.yeying.api.service.SearchResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.service.SearchResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.service.SearchResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2241,8 +2241,8 @@ proto.yeying.api.service.SearchResponseBody.prototype.toObject = function(opt_in
  */
 proto.yeying.api.service.SearchResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
-    servicesList: jspb.Message.toObjectList(msg.getServicesList(),
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f),
+servicesList: jspb.Message.toObjectList(msg.getServicesList(),
     proto.yeying.api.service.ServiceMetadata.toObject, includeInstance)
   };
 
@@ -2445,8 +2445,8 @@ proto.yeying.api.service.UnregisterRequest.prototype.toObject = function(opt_inc
  */
 proto.yeying.api.service.UnregisterRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.service.UnregisterRequestBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.service.UnregisterRequestBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2647,7 +2647,7 @@ proto.yeying.api.service.UnregisterRequestBody.prototype.toObject = function(opt
  */
 proto.yeying.api.service.UnregisterRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    did: jspb.Message.getFieldWithDefault(msg, 1, "")
+did: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -2777,8 +2777,8 @@ proto.yeying.api.service.UnregisterResponse.prototype.toObject = function(opt_in
  */
 proto.yeying.api.service.UnregisterResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
-    body: (f = msg.getBody()) && proto.yeying.api.service.UnregisterResponseBody.toObject(includeInstance, f)
+header: (f = msg.getHeader()) && yeying_api_common_message_pb.MessageHeader.toObject(includeInstance, f),
+body: (f = msg.getBody()) && proto.yeying.api.service.UnregisterResponseBody.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2979,7 +2979,7 @@ proto.yeying.api.service.UnregisterResponseBody.prototype.toObject = function(op
  */
 proto.yeying.api.service.UnregisterResponseBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
+status: (f = msg.getStatus()) && yeying_api_common_message_pb.ResponseStatus.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3137,21 +3137,21 @@ proto.yeying.api.service.ServiceMetadata.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.service.ServiceMetadata.toObject = function(includeInstance, msg) {
   var f, obj = {
-    owner: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    network: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    address: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    did: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    version: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    name: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    code: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    apisList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
-    proxy: jspb.Message.getFieldWithDefault(msg, 9, ""),
-    grpc: jspb.Message.getFieldWithDefault(msg, 10, ""),
-    avatar: jspb.Message.getFieldWithDefault(msg, 11, ""),
-    extend: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    created: jspb.Message.getFieldWithDefault(msg, 13, ""),
-    checkpoint: jspb.Message.getFieldWithDefault(msg, 14, ""),
-    signature: jspb.Message.getFieldWithDefault(msg, 15, "")
+owner: jspb.Message.getFieldWithDefault(msg, 1, ""),
+network: jspb.Message.getFieldWithDefault(msg, 2, 0),
+address: jspb.Message.getFieldWithDefault(msg, 3, ""),
+did: jspb.Message.getFieldWithDefault(msg, 4, ""),
+version: jspb.Message.getFieldWithDefault(msg, 5, 0),
+name: jspb.Message.getFieldWithDefault(msg, 6, ""),
+code: jspb.Message.getFieldWithDefault(msg, 7, 0),
+apisList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
+proxy: jspb.Message.getFieldWithDefault(msg, 9, ""),
+grpc: jspb.Message.getFieldWithDefault(msg, 10, ""),
+avatar: jspb.Message.getFieldWithDefault(msg, 11, ""),
+extend: jspb.Message.getFieldWithDefault(msg, 12, ""),
+created: jspb.Message.getFieldWithDefault(msg, 13, ""),
+checkpoint: jspb.Message.getFieldWithDefault(msg, 14, ""),
+signature: jspb.Message.getFieldWithDefault(msg, 15, "")
   };
 
   if (includeInstance) {
@@ -3193,7 +3193,7 @@ proto.yeying.api.service.ServiceMetadata.deserializeBinaryFromReader = function(
       msg.setOwner(value);
       break;
     case 2:
-      var value = /** @type {!proto.yeying.api.common.NetworkTypeEnum} */ (reader.readEnum());
+      var value = /** @type {number} */ (reader.readUint32());
       msg.setNetwork(value);
       break;
     case 3:
@@ -3287,8 +3287,8 @@ proto.yeying.api.service.ServiceMetadata.serializeBinaryToWriter = function(mess
     );
   }
   f = message.getNetwork();
-  if (f !== 0.0) {
-    writer.writeEnum(
+  if (f !== 0) {
+    writer.writeUint32(
       2,
       f
     );
@@ -3406,20 +3406,20 @@ proto.yeying.api.service.ServiceMetadata.prototype.setOwner = function(value) {
 
 
 /**
- * optional yeying.api.common.NetworkTypeEnum network = 2;
- * @return {!proto.yeying.api.common.NetworkTypeEnum}
+ * optional uint32 network = 2;
+ * @return {number}
  */
 proto.yeying.api.service.ServiceMetadata.prototype.getNetwork = function() {
-  return /** @type {!proto.yeying.api.common.NetworkTypeEnum} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
 /**
- * @param {!proto.yeying.api.common.NetworkTypeEnum} value
+ * @param {number} value
  * @return {!proto.yeying.api.service.ServiceMetadata} returns this
  */
 proto.yeying.api.service.ServiceMetadata.prototype.setNetwork = function(value) {
-  return jspb.Message.setProto3EnumField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
