@@ -44,24 +44,24 @@ export class BulletinProvider {
 
             this.client.list(request, null, (err, res) => {
                 this.authenticate.doResponse(err, res).then(async (body) => {
-                        // 检查解决方案信息是否有效
-                        for (let solutionMetadata of body.getSolutionsList()) {
-                            const signature = solutionMetadata.getSignature()
-                            solutionMetadata.setSignature('')
-                            const passed = await this.authenticate.verify(
-                                solutionMetadata.getPublisher(),
-                                solutionMetadata.serializeBinary(),
-                                signature
-                            )
-                            if (passed) {
-                                solutionMetadata.setSignature(signature)
-                            } else {
-                                return reject(new DataForgery('invalid signature!'))
-                            }
+                    // 检查解决方案信息是否有效
+                    for (let solutionMetadata of body.getSolutionsList()) {
+                        const signature = solutionMetadata.getSignature()
+                        solutionMetadata.setSignature('')
+                        const passed = await this.authenticate.verify(
+                            solutionMetadata.getPublisher(),
+                            solutionMetadata.serializeBinary(),
+                            signature
+                        )
+                        if (passed) {
+                            solutionMetadata.setSignature(signature)
+                        } else {
+                            return reject(new DataForgery('invalid signature!'))
                         }
+                    }
 
-                        resolve(res.getBody() as ListResponseBody)
-                    }, reject)
+                    resolve(res.getBody() as ListResponseBody)
+                }, reject)
             })
         })
     }

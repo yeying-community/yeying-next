@@ -1,6 +1,13 @@
 import { CipherTypeEnum } from '../yeying/api/common/code_pb'
 import { BlockAddress, SecurityAlgorithm } from '@yeying-community/yeying-web3'
-import { convertCipherTypeFrom, convertCipherTypeTo, decodeBase64, encodeBase64 } from './codec'
+import {
+    convertCipherTypeFrom,
+    convertCipherTypeTo,
+    decodeBase64,
+    decodeString,
+    encodeBase64,
+    encodeString
+} from './codec'
 
 export function generateIv(len = 12): Uint8Array {
     return window.crypto.getRandomValues(new Uint8Array(len))
@@ -29,6 +36,20 @@ export function generateSecurityAlgorithm() {
         name: convertCipherTypeTo(CipherTypeEnum.CIPHER_TYPE_AES_GCM_256),
         iv: encodeBase64(generateIv())
     })
+}
+
+export async function encryptString(algorithm: SecurityAlgorithm, password: string, content: string) {
+    const algorithmName = convertToAlgorithmName(convertCipherTypeFrom(algorithm.name))
+    const cryptoKey = await deriveRawKeyFromString(algorithmName, password)
+    const cipher = await encrypt(algorithmName, cryptoKey, decodeBase64(algorithm.iv), encodeString(content))
+    return encodeBase64(cipher)
+}
+
+export async function decryptString(algorithm: SecurityAlgorithm, password: string, content: string) {
+    const algorithmName = convertToAlgorithmName(convertCipherTypeFrom(algorithm.name))
+    const cryptoKey = await deriveRawKeyFromString(algorithmName, password)
+    const plain = await decrypt(algorithmName, cryptoKey, decodeBase64(algorithm.iv), decodeBase64(content))
+    return decodeString(plain)
 }
 
 export async function encrypt(

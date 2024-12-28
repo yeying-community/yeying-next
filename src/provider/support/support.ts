@@ -1,9 +1,9 @@
-import {Provider} from '../common/model'
-import {Authenticate} from '../common/authenticate'
-import {SupportClient} from '../../yeying/api/support/SupportServiceClientPb'
-import {CollectRequest, CollectRequestBody, FaqMetadata, SupportCodeEnum} from '../../yeying/api/support/support_pb'
-import {MessageHeader} from '../../yeying/api/common/message_pb'
-import {getCurrentUtcString} from '../../common/date'
+import { Provider } from '../common/model'
+import { Authenticate } from '../common/authenticate'
+import { SupportClient } from '../../yeying/api/support/SupportServiceClientPb'
+import { CollectRequest, CollectRequestBody, FaqMetadata, SupportCodeEnum } from '../../yeying/api/support/support_pb'
+import { MessageHeader } from '../../yeying/api/common/message_pb'
+import { getCurrentUtcString } from '../../common/date'
 
 export class SupportProvider {
     private authenticate: Authenticate

@@ -4,39 +4,41 @@
 // 2、所有的密码的管理都是在端上完成，不会和后台服务器有任何交互，也就是密码完全由用户负责；
 // 3、一个端上多个身份切换，任何时刻只有一个身份在起作用
 // 4、对于不再端上使用的身份，能够一键清理不留痕迹；
-import {SessionCache} from '../cache/session'
-import {LocalCache} from '../cache/local'
-import {InvalidPassword, NotFound} from '../common/error'
-import {Account} from './model'
+import { SessionCache } from '../cache/session'
+import { LocalCache } from '../cache/local'
+import { InvalidPassword, NotFound } from '../common/error'
+import { Account } from './model'
 import {
     BlockAddress,
     createBlockAddress,
     createIdentity,
     Identity,
+    IdentityApplicationExtend,
     IdentityCodeEnum,
     IdentityMetadata,
+    IdentityOrganizationExtend,
     IdentityPersonalExtend,
+    IdentityServiceExtend,
     IdentityTemplate,
     NetworkTypeEnum,
     SecurityAlgorithm,
     SecurityConfig,
+    updateIdentity,
     verifyIdentity
 } from '@yeying-community/yeying-web3'
-import {CookieCache} from '../cache/cookie'
+import { CookieCache } from '../cache/cookie'
 import {
-    convertToAlgorithmName,
-    decrypt,
     decryptBlockAddress,
-    deriveRawKeyFromString,
-    encrypt,
+    decryptString,
     encryptBlockAddress,
+    encryptString,
     generateIv,
     generateSecurityAlgorithm
 } from '../common/crypto'
-import {convertCipherTypeFrom, convertLanguageCodeTo, decodeBase64, encodeBase64} from '../common/codec'
-import {LanguageCodeEnum} from '../yeying/api/common/code_pb'
-import {ServiceProvider} from "../provider/service/service";
-import {Authenticate} from "../provider/common/authenticate";
+import { convertLanguageCodeTo, decodeBase64, encodeBase64 } from '../common/codec'
+import { LanguageCodeEnum } from '../yeying/api/common/code_pb'
+import { ServiceProvider } from '../provider/service/service'
+import { Authenticate } from '../provider/common/authenticate'
 
 export class AccountManager {
     private historyKey: string = 'yeying.history.accounts'
@@ -66,7 +68,7 @@ export class AccountManager {
         this.durationDays = 30
     }
 
-    async getCurrentNode(domain?: string) {
+    async getNode(domain?: string) {
         const account = this.getActiveAccount()
         if (account === undefined) {
             return
@@ -81,7 +83,7 @@ export class AccountManager {
             domain = `${window.location.protocol}://${window.location.hostname}:${window.location.port}`
         }
 
-        const provider = new ServiceProvider(new Authenticate(blockAddress), {proxy: domain})
+        const provider = new ServiceProvider(new Authenticate(blockAddress), { proxy: domain })
         return await provider.whoami()
     }
 
@@ -128,8 +130,7 @@ export class AccountManager {
     }
 
     // 清理缓存，清理当前浏览器中所有和这个身份相关信息
-    clear(did: string) {
-    }
+    clear(did: string) {}
 
     // 判断是否已经登陆
     isLogin(did: string): boolean {
@@ -164,11 +165,11 @@ export class AccountManager {
                     return reject(new InvalidPassword(`Invalid password!`))
                 }
 
-                const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
-                const algorithmName = convertToAlgorithmName(convertCipherTypeFrom(securityAlgorithm.name))
-                const cryptoKey = await deriveRawKeyFromString(algorithmName, token)
-                const iv = decodeBase64(securityAlgorithm.iv)
-                password = encodeBase64(await decrypt(algorithmName, cryptoKey, iv, decodeBase64(encryptedPassword)))
+                password = await decryptString(
+                    identity.securityConfig?.algorithm as SecurityAlgorithm,
+                    token,
+                    encryptedPassword
+                )
             }
 
             // 加载身份信息
@@ -201,66 +202,77 @@ export class AccountManager {
      * 1、自动过期被遗忘，这个身份再也无法使用，与这个身份相关信息也不再被认为有效；
      * 2、临时身份转正同时token失效，身份信息将被继续保留，用户自己的密码加密身份信息
      */
-    async createGuest(language: LanguageCodeEnum = LanguageCodeEnum.LANGUAGE_CODE_ZH_CH) {
-        // 创建区块链地址
-        const blockAddress = createBlockAddress()
-
+    async createGuest(language: LanguageCodeEnum = LanguageCodeEnum.LANGUAGE_CODE_ZH_CH, template?: IdentityTemplate) {
         // 生成访客的模版
-        const extend = IdentityPersonalExtend.create({})
-        const algorithm = generateSecurityAlgorithm()
-        const securityConfig = SecurityConfig.create({algorithm: algorithm})
-
-        const template: IdentityTemplate = {
-            language: convertLanguageCodeTo(language),
-            network: NetworkTypeEnum.NETWORK_TYPE_YEYING,
-            parent: '',
-            code: IdentityCodeEnum.IDENTITY_CODE_PERSONAL,
-            name: 'Guest',
-            description: '',
-            avatar: '',
-            securityConfig: securityConfig,
-            extend: extend
+        if (template === undefined) {
+            template = {
+                language: convertLanguageCodeTo(language),
+                network: NetworkTypeEnum.NETWORK_TYPE_YEYING,
+                parent: '',
+                code: IdentityCodeEnum.IDENTITY_CODE_PERSONAL,
+                name: 'Guest',
+                description: '',
+                avatar: '',
+                securityConfig: SecurityConfig.create({}),
+                extend: IdentityPersonalExtend.create({})
+            }
         }
-
-        // 生成令牌，令牌存放在cookie中，令牌用来加密身份的密码，令牌一旦过期，那么身份将会失效。
-        const token = encodeBase64(generateIv(32))
-        const algorithmName = convertToAlgorithmName(convertCipherTypeFrom(algorithm.name))
 
         // 生成身份密码，密码保存在session中，需要使用cookie中的token加密和解密，保证其安全性
         const password = encodeBase64(generateIv(16))
-        const encryptedBlockAddress = await encryptBlockAddress(blockAddress, algorithm, password)
-
-        // 用令牌加密身份密码
-        const cryptoKey = await deriveRawKeyFromString(algorithmName, token)
-        const encryptedPassword = await encrypt(
-            algorithmName,
-            cryptoKey,
-            decodeBase64(algorithm.iv),
-            decodeBase64(password)
-        )
-
-        const identity = await createIdentity(blockAddress, encryptedBlockAddress, template)
+        const identity = await this.createIdentity(password, template)
         const metadata = identity.metadata as IdentityMetadata
         const did = metadata.did
 
-        // 缓存密码
+        // 生成令牌，令牌存放在cookie中，令牌用来加密身份的密码，令牌一旦过期，那么身份将会失效。
+        const token = encodeBase64(generateIv(32))
+        const encryptedPassword = await encryptString(
+            identity.securityConfig?.algorithm as SecurityAlgorithm,
+            token,
+            password
+        )
         this.sessionCache.set(did, encryptedPassword)
+
         // 缓存令牌
         this.cookieCache.set(did, token, this.durationDays)
-        // 保存为历史身份
-        this.identityCache.set(did, encodeBase64(Identity.encode(identity).finish()))
-        // 缓存身份
-        this.identityMap.set(did, identity)
-        // 缓存区块链地址
-        this.blockAddressMap.set(did, blockAddress)
         return identity
     }
 
     async createIdentity(password: string, template: IdentityTemplate) {
         // 创建区块链地址
         const blockAddress = createBlockAddress()
-        const securityAlgorithm = generateSecurityAlgorithm()
-        const encryptedBlockAddress = await encryptBlockAddress(blockAddress, securityAlgorithm, password)
+        if (template.securityConfig === undefined) {
+            template.securityConfig = SecurityConfig.create({})
+        }
+
+        if (template.securityConfig.algorithm === undefined) {
+            template.securityConfig.algorithm = generateSecurityAlgorithm()
+        }
+
+        if (template.extend === undefined) {
+            switch (template.code) {
+                case IdentityCodeEnum.IDENTITY_CODE_PERSONAL:
+                    template.extend = IdentityPersonalExtend.create({})
+                    break
+                case IdentityCodeEnum.IDENTITY_CODE_ORGANIZATION:
+                    template.extend = IdentityOrganizationExtend.create({})
+                    break
+                case IdentityCodeEnum.IDENTITY_CODE_SERVICE:
+                    template.extend = IdentityServiceExtend.create({})
+                    break
+                case IdentityCodeEnum.IDENTITY_CODE_APPLICATION:
+                    template.extend = IdentityApplicationExtend.create({})
+                    break
+                default:
+                    throw new Error(`Not support code=${template.code}`)
+            }
+        }
+
+        const encryptedBlockAddress = await encryptBlockAddress(
+            blockAddress,
+            template.securityConfig.algorithm,
+            password
+        )
 
         const identity = await createIdentity(blockAddress, encryptedBlockAddress, template)
         const metadata = identity.metadata as IdentityMetadata
@@ -270,6 +282,21 @@ export class AccountManager {
         this.identityMap.set(did, identity)
         this.blockAddressMap.set(did, blockAddress)
         return identity
+    }
+
+    async updateIdentity(template: IdentityTemplate, password: string, identity: Identity) {
+        const blockAddress = await decryptBlockAddress(
+            identity.blockAddress,
+            identity.securityConfig?.algorithm as SecurityAlgorithm,
+            password
+        )
+
+        const newIdentity = await updateIdentity(template, identity, blockAddress)
+        const did = (identity.metadata as IdentityMetadata).did
+        this.identityCache.set(did, encodeBase64(Identity.encode(newIdentity).finish()))
+        this.identityMap.set(did, newIdentity)
+        this.blockAddressMap.set(did, blockAddress)
+        return did
     }
 
     async exportIdentity(did: string) {
@@ -295,7 +322,7 @@ export class AccountManager {
 
     private addAccount(did: string, name: string, avatar: string): Account {
         const historyAccounts = this.getHistoryAccounts()
-        const account: Account = {name: name, did: did, avatar: avatar, timestamp: Date.now()}
+        const account: Account = { name: name, did: did, avatar: avatar, timestamp: Date.now() }
         const index = historyAccounts.findIndex((i) => i.did === did)
         if (index !== -1) {
             historyAccounts[index] = account

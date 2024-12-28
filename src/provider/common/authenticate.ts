@@ -1,13 +1,13 @@
-import {getCurrentUtcString, isExpired, parseDateTime} from '../../common/date'
-import {generateUuid} from '../../common/string'
-import {MessageHeader} from '../../yeying/api/common/message_pb'
-import {AuthenticateTypeEnum} from '../../yeying/api/common/code_pb'
-import {BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes} from '@yeying-community/yeying-web3'
-import {InvalidArgument, NetworkDown, NoPermission} from '../../common/error'
-import {composite} from '../../common/bytes'
-import {RpcError} from 'grpc-web'
-import {convertResponseStatusToError} from '../../common/status'
-import {computeHash} from '../../common/crypto'
+import { getCurrentUtcString, isExpired, parseDateTime } from '../../common/date'
+import { generateUuid } from '../../common/string'
+import { MessageHeader } from '../../yeying/api/common/message_pb'
+import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
+import { BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes } from '@yeying-community/yeying-web3'
+import { InvalidArgument, NetworkDown, NoPermission } from '../../common/error'
+import { composite } from '../../common/bytes'
+import { RpcError } from 'grpc-web'
+import { convertResponseStatusToError } from '../../common/status'
+import { computeHash } from '../../common/crypto'
 
 export class Authenticate {
     private blockAddress: BlockAddress
@@ -60,9 +60,15 @@ export class Authenticate {
         }
     }
 
-    doResponse(err: RpcError, response: any) :Promise<any> {
+    doResponse(err: RpcError, response: any): Promise<any> {
         return new Promise(async (resolve, reject) => {
-            if (err !== null || response === undefined || response.getHeader() === undefined || response.getBody() === undefined || response.getBody().getStatus() === undefined) {
+            if (
+                err !== null ||
+                response === undefined ||
+                response.getHeader() === undefined ||
+                response.getBody() === undefined ||
+                response.getBody().getStatus() === undefined
+            ) {
                 console.error(err)
                 return reject(new NetworkDown('protocol error!'))
             }

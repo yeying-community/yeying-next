@@ -1,9 +1,9 @@
-import {Authenticate} from '../common/authenticate'
-import {Provider} from '../common/model'
-import {ServiceClient} from '../../yeying/api/service/ServiceServiceClientPb'
-import {MessageHeader} from '../../yeying/api/common/message_pb'
-import {ServiceMetadata, WhoamiRequest} from '../../yeying/api/service/service_pb'
-import {DataForgery} from '../../common/error'
+import { Authenticate } from '../common/authenticate'
+import { Provider } from '../common/model'
+import { ServiceClient } from '../../yeying/api/service/ServiceServiceClientPb'
+import { MessageHeader } from '../../yeying/api/common/message_pb'
+import { ServiceMetadata, WhoamiRequest } from '../../yeying/api/service/service_pb'
+import { DataForgery } from '../../common/error'
 
 export class ServiceProvider {
     private authenticate: Authenticate

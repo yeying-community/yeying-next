@@ -9,3 +9,6 @@ A web3 application library for browser
 # How to compile package?
 npm run build
 
+# How to run integration test?
+npm run test -- tests/**/*.it.ts
+

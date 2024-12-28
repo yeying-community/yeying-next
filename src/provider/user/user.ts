@@ -8,12 +8,12 @@ import {
     ModRequestBody,
     UserMetadata
 } from '../../yeying/api/user/user_pb'
-import {getCurrentUtcString} from '../../common/date'
-import {Authenticate} from '../common/authenticate'
-import {UserClient} from '../../yeying/api/user/UserServiceClientPb'
-import {MessageHeader} from '../../yeying/api/common/message_pb'
-import {Provider} from '../common/model'
-import {isValidString} from '../../common/string'
+import { getCurrentUtcString } from '../../common/date'
+import { Authenticate } from '../common/authenticate'
+import { UserClient } from '../../yeying/api/user/UserServiceClientPb'
+import { MessageHeader } from '../../yeying/api/common/message_pb'
+import { Provider } from '../common/model'
+import { isValidString } from '../../common/string'
 
 /**
  * 代表了一个节点，夜莺社区提供了默认的节点，也可以选择其他社区的节点，以及使用该节点的生态应用
@@ -34,7 +34,7 @@ export class UserProvider {
             user.setDid(this.authenticate.getDid())
             user.setName(name)
             user.setAvatar(avatar)
-            user.setExtend(JSON.stringify({telephone: telephone, email: email}))
+            user.setExtend(JSON.stringify({ telephone: telephone, email: email }))
             user.setCreated(getCurrentUtcString())
             user.setCheckpoint(getCurrentUtcString())
             const body = new AddRequestBody()
