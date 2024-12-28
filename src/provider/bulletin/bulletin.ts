@@ -43,10 +43,7 @@ export class BulletinProvider {
             request.setBody(body)
 
             this.client.list(request, null, (err, res) => {
-                this.authenticate
-                    .doResponse(err, res)
-                    .catch((err) => reject(err))
-                    .then(async (body) => {
+                this.authenticate.doResponse(err, res).then(async (body) => {
                         // 检查解决方案信息是否有效
                         for (let solutionMetadata of body.getSolutionsList()) {
                             const signature = solutionMetadata.getSignature()
@@ -64,7 +61,7 @@ export class BulletinProvider {
                         }
 
                         resolve(res.getBody() as ListResponseBody)
-                    })
+                    }, reject)
             })
         })
     }

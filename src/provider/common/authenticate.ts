@@ -1,13 +1,13 @@
-import { getCurrentUtcString, isExpired, parseDateTime } from '../../common/date'
-import { generateUuid } from '../../common/string'
-import { MessageHeader, ResponseStatus } from '../../yeying/api/common/message_pb'
-import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
-import { BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes } from '@yeying-community/yeying-web3'
-import { InvalidArgument, NetworkDown, NoPermission } from '../../common/error'
-import { composite } from '../../common/bytes'
-import { RpcError } from 'grpc-web'
-import { convertResponseStatusToError } from '../../common/status'
-import { computeHash } from '../../common/crypto'
+import {getCurrentUtcString, isExpired, parseDateTime} from '../../common/date'
+import {generateUuid} from '../../common/string'
+import {MessageHeader} from '../../yeying/api/common/message_pb'
+import {AuthenticateTypeEnum} from '../../yeying/api/common/code_pb'
+import {BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes} from '@yeying-community/yeying-web3'
+import {InvalidArgument, NetworkDown, NoPermission} from '../../common/error'
+import {composite} from '../../common/bytes'
+import {RpcError} from 'grpc-web'
+import {convertResponseStatusToError} from '../../common/status'
+import {computeHash} from '../../common/crypto'
 
 export class Authenticate {
     private blockAddress: BlockAddress
@@ -60,21 +60,28 @@ export class Authenticate {
         }
     }
 
-    async doResponse(err: RpcError, response: any) {
-        const header = response.getHeader()
-        const body = response.getBody()
-        if (err !== null || header === undefined || body === undefined || body.getStatus() === undefined) {
-            console.error(err)
-            throw new NetworkDown('Fail to collect')
-        }
+    doResponse(err: RpcError, response: any) :Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            if (err !== null || response === undefined || response.getHeader() === undefined || response.getBody() === undefined || response.getBody().getStatus() === undefined) {
+                console.error(err)
+                return reject(new NetworkDown('protocol error!'))
+            }
 
-        await this.verifyHeader(header, body.serializeBinary())
-        const error = convertResponseStatusToError(body.getStatus())
-        if (error !== undefined) {
-            console.error(error)
-            throw error
-        } else {
-            return body
-        }
+            const body = response.getBody()
+            try {
+                await this.verifyHeader(response.getHeader(), body.serializeBinary())
+            } catch (err) {
+                console.error(err)
+                return reject(err)
+            }
+
+            const error = convertResponseStatusToError(body.getStatus())
+            if (error !== undefined) {
+                console.error(error)
+                return reject(error)
+            } else {
+                resolve(body)
+            }
+        })
     }
 }
