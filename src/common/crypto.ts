@@ -1,6 +1,6 @@
-import {CipherTypeEnum} from '../yeying/api/common/code_pb'
-import {BlockAddress, SecurityAlgorithm} from "@yeying-community/yeying-web3";
-import {convertCipherTypeFrom, convertCipherTypeTo, decodeBase64, encodeBase64} from "./codec";
+import { CipherTypeEnum } from '../yeying/api/common/code_pb'
+import { BlockAddress, SecurityAlgorithm } from '@yeying-community/yeying-web3'
+import { convertCipherTypeFrom, convertCipherTypeTo, decodeBase64, encodeBase64 } from './codec'
 
 export function generateIv(len = 12): Uint8Array {
     return window.crypto.getRandomValues(new Uint8Array(len))
@@ -27,7 +27,7 @@ export async function deriveRawKeyFromString(algorithmName: string, content: str
 export function generateSecurityAlgorithm() {
     return SecurityAlgorithm.create({
         name: convertCipherTypeTo(CipherTypeEnum.CIPHER_TYPE_AES_GCM_256),
-        iv: encodeBase64(generateIv()),
+        iv: encodeBase64(generateIv())
     })
 }
 
@@ -37,7 +37,7 @@ export async function encrypt(
     iv: Uint8Array,
     content: ArrayBuffer
 ): Promise<ArrayBuffer> {
-    return await window.crypto.subtle.encrypt({name: algorithmName, iv: iv}, key, content)
+    return await window.crypto.subtle.encrypt({ name: algorithmName, iv: iv }, key, content)
 }
 
 export async function decrypt(
@@ -46,19 +46,37 @@ export async function decrypt(
     iv: Uint8Array,
     content: ArrayBuffer
 ): Promise<ArrayBuffer> {
-    return await window.crypto.subtle.decrypt({name: algorithmName, iv: iv}, key, content)
+    return await window.crypto.subtle.decrypt({ name: algorithmName, iv: iv }, key, content)
 }
 
-export async function encryptBlockAddress(blockAddress: BlockAddress, securityAlgorithm: SecurityAlgorithm, password: string) {
+export async function encryptBlockAddress(
+    blockAddress: BlockAddress,
+    securityAlgorithm: SecurityAlgorithm,
+    password: string
+) {
     const algorithmName = convertToAlgorithmName(convertCipherTypeFrom(securityAlgorithm.name))
     const cryptoKey = await deriveRawKeyFromString(algorithmName, password)
-    const cipher = await encrypt(algorithmName, cryptoKey, decodeBase64(securityAlgorithm.iv), BlockAddress.encode(blockAddress).finish())
+    const cipher = await encrypt(
+        algorithmName,
+        cryptoKey,
+        decodeBase64(securityAlgorithm.iv),
+        BlockAddress.encode(blockAddress).finish()
+    )
     return encodeBase64(cipher)
 }
 
-export async function decryptBlockAddress(blockAddress: string, securityAlgorithm: SecurityAlgorithm, password: string) {
+export async function decryptBlockAddress(
+    blockAddress: string,
+    securityAlgorithm: SecurityAlgorithm,
+    password: string
+) {
     const algorithmName = convertToAlgorithmName(convertCipherTypeFrom(securityAlgorithm.name))
     const cryptoKey = await deriveRawKeyFromString(algorithmName, password)
-    const plain = await decrypt(algorithmName, cryptoKey, decodeBase64(securityAlgorithm.iv), decodeBase64(blockAddress))
+    const plain = await decrypt(
+        algorithmName,
+        cryptoKey,
+        decodeBase64(securityAlgorithm.iv),
+        decodeBase64(blockAddress)
+    )
     return BlockAddress.decode(new Uint8Array(plain))
 }

@@ -4,11 +4,11 @@ import { Provider } from '../common/model'
 import { LanguageCodeEnum } from '../../yeying/api/common/code_pb'
 import { BulletinCodeEnum, ListRequest, ListRequestBody, ListResponseBody } from '../../yeying/api/bulletin/bulletin_pb'
 import { MessageHeader, RequestPage } from '../../yeying/api/common/message_pb'
-import {ServiceMetadata} from "../../yeying/api/service/service_pb";
-import {computeHash} from "../../common/crypto";
-import {fromDidToPublicKey, verifyHashBytes} from "@yeying-community/yeying-web3";
-import {DataForgery} from "../../common/error";
-import {FaqMetadata} from "../../yeying/api/support/support_pb";
+import { ServiceMetadata } from '../../yeying/api/service/service_pb'
+import { computeHash } from '../../common/crypto'
+import { fromDidToPublicKey, verifyHashBytes } from '@yeying-community/yeying-web3'
+import { DataForgery } from '../../common/error'
+import { FaqMetadata } from '../../yeying/api/support/support_pb'
 
 export class BulletinProvider {
     private authenticate: Authenticate
@@ -43,14 +43,19 @@ export class BulletinProvider {
             request.setBody(body)
 
             this.client.list(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res)
+                this.authenticate
+                    .doResponse(err, res)
                     .catch((err) => reject(err))
                     .then(async (body) => {
                         // 检查解决方案信息是否有效
                         for (let solutionMetadata of body.getSolutionsList()) {
                             const signature = solutionMetadata.getSignature()
                             solutionMetadata.setSignature('')
-                            const passed = await this.authenticate.verify(solutionMetadata.getPublisher(), solutionMetadata.serializeBinary(), signature)
+                            const passed = await this.authenticate.verify(
+                                solutionMetadata.getPublisher(),
+                                solutionMetadata.serializeBinary(),
+                                signature
+                            )
                             if (passed) {
                                 solutionMetadata.setSignature(signature)
                             } else {

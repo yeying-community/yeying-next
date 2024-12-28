@@ -1,4 +1,4 @@
-import {CipherTypeEnum, LanguageCodeEnum} from "../yeying/api/common/code_pb";
+import { CipherTypeEnum, LanguageCodeEnum } from '../yeying/api/common/code_pb'
 
 export function encodeString(s: string) {
     return new TextEncoder().encode(s)

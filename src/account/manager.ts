@@ -4,10 +4,10 @@
 // 2、所有的密码的管理都是在端上完成，不会和后台服务器有任何交互，也就是密码完全由用户负责；
 // 3、一个端上多个身份切换，任何时刻只有一个身份在起作用
 // 4、对于不再端上使用的身份，能够一键清理不留痕迹；
-import {SessionCache} from '../cache/session'
-import {LocalCache} from '../cache/local'
-import {InvalidPassword, NotFound} from '../common/error'
-import {Account} from './model'
+import { SessionCache } from '../cache/session'
+import { LocalCache } from '../cache/local'
+import { InvalidPassword, NotFound } from '../common/error'
+import { Account } from './model'
 import {
     BlockAddress,
     createBlockAddress,
@@ -20,9 +20,9 @@ import {
     NetworkTypeEnum,
     SecurityAlgorithm,
     SecurityConfig,
-    verifyIdentity,
+    verifyIdentity
 } from '@yeying-community/yeying-web3'
-import {CookieCache} from '../cache/cookie'
+import { CookieCache } from '../cache/cookie'
 import {
     convertToAlgorithmName,
     decrypt,
@@ -32,9 +32,9 @@ import {
     encryptBlockAddress,
     generateIv,
     generateSecurityAlgorithm
-} from "../common/crypto";
-import {convertCipherTypeFrom, convertLanguageCodeTo, decodeBase64, encodeBase64} from "../common/codec";
-import {LanguageCodeEnum} from "../yeying/api/common/code_pb";
+} from '../common/crypto'
+import { convertCipherTypeFrom, convertLanguageCodeTo, decodeBase64, encodeBase64 } from '../common/codec'
+import { LanguageCodeEnum } from '../yeying/api/common/code_pb'
 
 export class AccountManager {
     private historyKey: string = 'yeying.history.accounts'
@@ -107,20 +107,27 @@ export class AccountManager {
     }
 
     // 清理缓存，清理当前浏览器中所有和这个身份相关信息
-    clear(did: string) {
+    clear(did: string) {}
+
+    // 判断是否已经登陆
+    isLogin(did: string): boolean {
+        return this.blockAddressMap.get(did) !== undefined
     }
 
     // 登陆，解密身份信息
-    login(did: string, password?: string) {
+    login(did: string, password?: string): Promise<Account> {
         return new Promise(async (resolve, reject) => {
-            let blockAddress = this.blockAddressMap.get(did)
-            if (blockAddress !== undefined) {
-                return resolve(blockAddress)
+            if (this.isLogin(did)) {
+                // 检查当前激活的账户是否发生了变化，如果发生了变化，则自动注销当前账户，切换当前激活的账号
+                const account = this.getActiveAccount()
+                if (account !== undefined && account.did === did) {
+                    return resolve(account)
+                }
             }
 
             const identity = await this.exportIdentity(did)
             if (identity === undefined) {
-                return resolve(new NotFound('Not found identity!'))
+                return reject(new NotFound('Not found identity!'))
             }
 
             const metadata = identity.metadata as IdentityMetadata
@@ -179,7 +186,7 @@ export class AccountManager {
         // 生成访客的模版
         const extend = IdentityPersonalExtend.create({})
         const algorithm = generateSecurityAlgorithm()
-        const securityConfig = SecurityConfig.create({algorithm: algorithm,})
+        const securityConfig = SecurityConfig.create({ algorithm: algorithm })
 
         const template: IdentityTemplate = {
             language: convertLanguageCodeTo(language),
@@ -203,7 +210,12 @@ export class AccountManager {
 
         // 用令牌加密身份密码
         const cryptoKey = await deriveRawKeyFromString(algorithmName, token)
-        const encryptedPassword = await encrypt(algorithmName, cryptoKey, decodeBase64(algorithm.iv), decodeBase64(password))
+        const encryptedPassword = await encrypt(
+            algorithmName,
+            cryptoKey,
+            decodeBase64(algorithm.iv),
+            decodeBase64(password)
+        )
 
         const identity = await createIdentity(blockAddress, encryptedBlockAddress, template)
         const metadata = identity.metadata as IdentityMetadata
@@ -235,6 +247,7 @@ export class AccountManager {
         this.identityCache.set(did, encodeBase64(Identity.encode(identity).finish()))
         this.identityMap.set(did, identity)
         this.blockAddressMap.set(did, blockAddress)
+        return identity
     }
 
     async exportIdentity(did: string) {
@@ -260,7 +273,7 @@ export class AccountManager {
 
     private addAccount(did: string, name: string, avatar: string): Account {
         const historyAccounts = this.getHistoryAccounts()
-        const account: Account = {name: name, did: did, avatar: avatar, timestamp: Date.now()}
+        const account: Account = { name: name, did: did, avatar: avatar, timestamp: Date.now() }
         const index = historyAccounts.findIndex((i) => i.did === did)
         if (index !== -1) {
             historyAccounts[index] = account

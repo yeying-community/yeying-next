@@ -1,13 +1,13 @@
-import {getCurrentUtcString, isExpired, parseDateTime} from '../../common/date'
-import {generateUuid} from '../../common/string'
-import {MessageHeader, ResponseStatus} from '../../yeying/api/common/message_pb'
-import {AuthenticateTypeEnum} from '../../yeying/api/common/code_pb'
-import {BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes} from '@yeying-community/yeying-web3'
-import {InvalidArgument, NetworkDown, NoPermission} from '../../common/error'
-import {composite} from '../../common/bytes'
-import {RpcError} from 'grpc-web'
-import {convertResponseStatusToError} from '../../common/status'
-import {computeHash} from "../../common/crypto";
+import { getCurrentUtcString, isExpired, parseDateTime } from '../../common/date'
+import { generateUuid } from '../../common/string'
+import { MessageHeader, ResponseStatus } from '../../yeying/api/common/message_pb'
+import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
+import { BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes } from '@yeying-community/yeying-web3'
+import { InvalidArgument, NetworkDown, NoPermission } from '../../common/error'
+import { composite } from '../../common/bytes'
+import { RpcError } from 'grpc-web'
+import { convertResponseStatusToError } from '../../common/status'
+import { computeHash } from '../../common/crypto'
 
 export class Authenticate {
     private blockAddress: BlockAddress
@@ -63,7 +63,7 @@ export class Authenticate {
     async doResponse(err: RpcError, response: any) {
         const header = response.getHeader()
         const body = response.getBody()
-        if (err !== null || header === undefined ||  body === undefined || body.getStatus() === undefined) {
+        if (err !== null || header === undefined || body === undefined || body.getStatus() === undefined) {
             console.error(err)
             throw new NetworkDown('Fail to collect')
         }
