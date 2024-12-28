@@ -4,10 +4,10 @@
 // 2、所有的密码的管理都是在端上完成，不会和后台服务器有任何交互，也就是密码完全由用户负责；
 // 3、一个端上多个身份切换，任何时刻只有一个身份在起作用
 // 4、对于不再端上使用的身份，能够一键清理不留痕迹；
-import { SessionCache } from '../cache/session'
-import { LocalCache } from '../cache/local'
-import { InvalidPassword, NotFound } from '../common/error'
-import { Account } from './model'
+import {SessionCache} from '../cache/session'
+import {LocalCache} from '../cache/local'
+import {InvalidPassword, NotFound} from '../common/error'
+import {Account} from './model'
 import {
     BlockAddress,
     createBlockAddress,
@@ -22,7 +22,7 @@ import {
     SecurityConfig,
     verifyIdentity
 } from '@yeying-community/yeying-web3'
-import { CookieCache } from '../cache/cookie'
+import {CookieCache} from '../cache/cookie'
 import {
     convertToAlgorithmName,
     decrypt,
@@ -33,8 +33,10 @@ import {
     generateIv,
     generateSecurityAlgorithm
 } from '../common/crypto'
-import { convertCipherTypeFrom, convertLanguageCodeTo, decodeBase64, encodeBase64 } from '../common/codec'
-import { LanguageCodeEnum } from '../yeying/api/common/code_pb'
+import {convertCipherTypeFrom, convertLanguageCodeTo, decodeBase64, encodeBase64} from '../common/codec'
+import {LanguageCodeEnum} from '../yeying/api/common/code_pb'
+import {ServiceProvider} from "../provider/service/service";
+import {Authenticate} from "../provider/common/authenticate";
 
 export class AccountManager {
     private historyKey: string = 'yeying.history.accounts'
@@ -62,6 +64,25 @@ export class AccountManager {
         this.identityMap = new Map<string, Identity>()
         // 默认密码保存有效期是30天，也就是临时身份有效期是30天
         this.durationDays = 30
+    }
+
+    async getCurrentNode(domain?: string) {
+        const account = this.getActiveAccount()
+        if (account === undefined) {
+            return
+        }
+
+        const blockAddress = this.getBlockAddress(account.did)
+        if (blockAddress === undefined) {
+            return
+        }
+
+        if (domain === undefined) {
+            domain = `${window.location.protocol}://${window.location.hostname}:${window.location.port}`
+        }
+
+        const provider = new ServiceProvider(new Authenticate(blockAddress), {proxy: domain})
+        return await provider.whoami()
     }
 
     // 当前浏览器中曾经登陆过的所有账号，加密缓存在local storage中
@@ -107,7 +128,8 @@ export class AccountManager {
     }
 
     // 清理缓存，清理当前浏览器中所有和这个身份相关信息
-    clear(did: string) {}
+    clear(did: string) {
+    }
 
     // 判断是否已经登陆
     isLogin(did: string): boolean {
@@ -186,7 +208,7 @@ export class AccountManager {
         // 生成访客的模版
         const extend = IdentityPersonalExtend.create({})
         const algorithm = generateSecurityAlgorithm()
-        const securityConfig = SecurityConfig.create({ algorithm: algorithm })
+        const securityConfig = SecurityConfig.create({algorithm: algorithm})
 
         const template: IdentityTemplate = {
             language: convertLanguageCodeTo(language),
@@ -273,7 +295,7 @@ export class AccountManager {
 
     private addAccount(did: string, name: string, avatar: string): Account {
         const historyAccounts = this.getHistoryAccounts()
-        const account: Account = { name: name, did: did, avatar: avatar, timestamp: Date.now() }
+        const account: Account = {name: name, did: did, avatar: avatar, timestamp: Date.now()}
         const index = historyAccounts.findIndex((i) => i.did === did)
         if (index !== -1) {
             historyAccounts[index] = account
