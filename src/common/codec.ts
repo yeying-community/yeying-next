@@ -16,20 +16,30 @@ export function decodeBase64(str: string) {
     return Buffer.from(str, 'base64')
 }
 
-export function convertLanguageCodeFrom(type: string) {
-    const v = LanguageCodeEnum[type as keyof typeof LanguageCodeEnum]
-    return v !== undefined ? v : LanguageCodeEnum.LANGUAGE_CODE_UNKNOWN
+export function convertLanguageCodeFrom(s: string) {
+    // @ts-ignore
+    return CipherTypeEnum[s.toUpperCase()]
+    // const v = LanguageCodeEnum[type as keyof typeof LanguageCodeEnum]
+    // return v !== undefined ? v : LanguageCodeEnum.LANGUAGE_CODE_UNKNOWN
 }
 
-export function convertLanguageCodeTo(code: LanguageCodeEnum) {
-    return LanguageCodeEnum[code] || LanguageCodeEnum[LanguageCodeEnum.LANGUAGE_CODE_UNKNOWN]
+export function convertLanguageCodeTo(code: LanguageCodeEnum): string {
+    // @ts-ignore
+    return Object.keys(LanguageCodeEnum).find((s) => LanguageCodeEnum[s] === code)
+    //return LanguageCodeEnum[code] || LanguageCodeEnum[LanguageCodeEnum.LANGUAGE_CODE_UNKNOWN]
 }
 
-export function convertCipherTypeFrom(type: string) {
-    const v = CipherTypeEnum[type as keyof typeof CipherTypeEnum]
-    return v !== undefined ? v : CipherTypeEnum.CIPHER_TYPE_UNKNOWN
+export function convertCipherTypeFrom(s: string): CipherTypeEnum {
+    // @ts-ignore
+    return CipherTypeEnum[s.toUpperCase()]
+    // TODO : not fully support typescript for grpc-web
+    // const v = CipherTypeEnum[type as keyof typeof CipherTypeEnum]
+    // return v !== undefined ? v : CipherTypeEnum.CIPHER_TYPE_UNKNOWN
 }
 
 export function convertCipherTypeTo(code: CipherTypeEnum) {
-    return CipherTypeEnum[code] || CipherTypeEnum[CipherTypeEnum.CIPHER_TYPE_UNKNOWN]
+    // @ts-ignore
+    return Object.keys(CipherTypeEnum).find((s) => CipherTypeEnum[s] === code)
+    // TODO : not fully support typescript for grpc-web
+    // return CipherTypeEnum[code] || CipherTypeEnum[CipherTypeEnum.CIPHER_TYPE_UNKNOWN]
 }
