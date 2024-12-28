@@ -117,8 +117,14 @@ export namespace ListResponseBody {
 }
 
 export class SolutionMetadata extends jspb.Message {
+  getPublisher(): string;
+  setPublisher(value: string): SolutionMetadata;
+
   getLanguage(): yeying_api_common_code_pb.LanguageCodeEnum;
   setLanguage(value: yeying_api_common_code_pb.LanguageCodeEnum): SolutionMetadata;
+
+  getUid(): string;
+  setUid(value: string): SolutionMetadata;
 
   getName(): string;
   setName(value: string): SolutionMetadata;
@@ -147,7 +153,9 @@ export class SolutionMetadata extends jspb.Message {
 
 export namespace SolutionMetadata {
   export type AsObject = {
+    publisher: string,
     language: yeying_api_common_code_pb.LanguageCodeEnum,
+    uid: string,
     name: string,
     description: string,
     created: string,

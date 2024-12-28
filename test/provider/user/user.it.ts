@@ -9,6 +9,12 @@ const provider: Provider = getProvider(ServiceCodeEnum.SERVICE_CODE_NODE)
 
 
 describe('User', () => {
+    it('del', async () => {
+        const userProvider = new UserProvider(new Authenticate(blockAddress), provider)
+        await userProvider.del()
+        console.log(`Success to del user=${blockAddress.identifier}`)
+    })
+
     it('add', async () => {
         const userProvider = new UserProvider(new Authenticate(blockAddress), provider)
         await userProvider.add('test1', '13584001111', 'yeying.community@gmail.com', "avatar1")
@@ -25,11 +31,5 @@ describe('User', () => {
         const userProvider = new UserProvider(new Authenticate(blockAddress), provider)
         await userProvider.mod("test2")
         console.log(`Success to mod user=${blockAddress.identifier}`)
-    })
-
-    it('del', async () => {
-        const userProvider = new UserProvider(new Authenticate(blockAddress), provider)
-        await userProvider.del()
-        console.log(`Success to del user=${blockAddress.identifier}`)
     })
 })

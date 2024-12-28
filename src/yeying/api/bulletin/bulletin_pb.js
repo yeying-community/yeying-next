@@ -1041,7 +1041,7 @@ proto.yeying.api.bulletin.ListResponseBody.prototype.hasPage = function() {
  * @private {!Array<number>}
  * @const
  */
-proto.yeying.api.bulletin.SolutionMetadata.repeatedFields_ = [5];
+proto.yeying.api.bulletin.SolutionMetadata.repeatedFields_ = [7];
 
 
 
@@ -1074,13 +1074,15 @@ proto.yeying.api.bulletin.SolutionMetadata.prototype.toObject = function(opt_inc
  */
 proto.yeying.api.bulletin.SolutionMetadata.toObject = function(includeInstance, msg) {
   var f, obj = {
-language: jspb.Message.getFieldWithDefault(msg, 1, 0),
-name: jspb.Message.getFieldWithDefault(msg, 2, ""),
-description: jspb.Message.getFieldWithDefault(msg, 3, ""),
-created: jspb.Message.getFieldWithDefault(msg, 4, ""),
+publisher: jspb.Message.getFieldWithDefault(msg, 1, ""),
+language: jspb.Message.getFieldWithDefault(msg, 2, 0),
+uid: jspb.Message.getFieldWithDefault(msg, 3, ""),
+name: jspb.Message.getFieldWithDefault(msg, 4, ""),
+description: jspb.Message.getFieldWithDefault(msg, 5, ""),
+created: jspb.Message.getFieldWithDefault(msg, 6, ""),
 cardsList: jspb.Message.toObjectList(msg.getCardsList(),
     proto.yeying.api.bulletin.SolutionCard.toObject, includeInstance),
-signature: jspb.Message.getFieldWithDefault(msg, 6, "")
+signature: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -1118,27 +1120,35 @@ proto.yeying.api.bulletin.SolutionMetadata.deserializeBinaryFromReader = functio
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPublisher(value);
+      break;
+    case 2:
       var value = /** @type {!proto.yeying.api.common.LanguageCodeEnum} */ (reader.readEnum());
       msg.setLanguage(value);
       break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setName(value);
-      break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setDescription(value);
+      msg.setUid(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCreated(value);
+      msg.setName(value);
       break;
     case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDescription(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCreated(value);
+      break;
+    case 7:
       var value = new proto.yeying.api.bulletin.SolutionCard;
       reader.readMessage(value,proto.yeying.api.bulletin.SolutionCard.deserializeBinaryFromReader);
       msg.addCards(value);
       break;
-    case 6:
+    case 8:
       var value = /** @type {string} */ (reader.readString());
       msg.setSignature(value);
       break;
@@ -1171,38 +1181,52 @@ proto.yeying.api.bulletin.SolutionMetadata.prototype.serializeBinary = function(
  */
 proto.yeying.api.bulletin.SolutionMetadata.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getLanguage();
-  if (f !== 0.0) {
-    writer.writeEnum(
+  f = message.getPublisher();
+  if (f.length > 0) {
+    writer.writeString(
       1,
       f
     );
   }
-  f = message.getName();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getLanguage();
+  if (f !== 0.0) {
+    writer.writeEnum(
       2,
       f
     );
   }
-  f = message.getDescription();
+  f = message.getUid();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getCreated();
+  f = message.getName();
   if (f.length > 0) {
     writer.writeString(
       4,
       f
     );
   }
+  f = message.getDescription();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getCreated();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
   f = message.getCardsList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
-      5,
+      7,
       f,
       proto.yeying.api.bulletin.SolutionCard.serializeBinaryToWriter
     );
@@ -1210,7 +1234,7 @@ proto.yeying.api.bulletin.SolutionMetadata.serializeBinaryToWriter = function(me
   f = message.getSignature();
   if (f.length > 0) {
     writer.writeString(
-      6,
+      8,
       f
     );
   }
@@ -1218,11 +1242,29 @@ proto.yeying.api.bulletin.SolutionMetadata.serializeBinaryToWriter = function(me
 
 
 /**
- * optional yeying.api.common.LanguageCodeEnum language = 1;
+ * optional string publisher = 1;
+ * @return {string}
+ */
+proto.yeying.api.bulletin.SolutionMetadata.prototype.getPublisher = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.bulletin.SolutionMetadata} returns this
+ */
+proto.yeying.api.bulletin.SolutionMetadata.prototype.setPublisher = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional yeying.api.common.LanguageCodeEnum language = 2;
  * @return {!proto.yeying.api.common.LanguageCodeEnum}
  */
 proto.yeying.api.bulletin.SolutionMetadata.prototype.getLanguage = function() {
-  return /** @type {!proto.yeying.api.common.LanguageCodeEnum} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {!proto.yeying.api.common.LanguageCodeEnum} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
@@ -1231,33 +1273,15 @@ proto.yeying.api.bulletin.SolutionMetadata.prototype.getLanguage = function() {
  * @return {!proto.yeying.api.bulletin.SolutionMetadata} returns this
  */
 proto.yeying.api.bulletin.SolutionMetadata.prototype.setLanguage = function(value) {
-  return jspb.Message.setProto3EnumField(this, 1, value);
+  return jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
 /**
- * optional string name = 2;
+ * optional string uid = 3;
  * @return {string}
  */
-proto.yeying.api.bulletin.SolutionMetadata.prototype.getName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.yeying.api.bulletin.SolutionMetadata} returns this
- */
-proto.yeying.api.bulletin.SolutionMetadata.prototype.setName = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional string description = 3;
- * @return {string}
- */
-proto.yeying.api.bulletin.SolutionMetadata.prototype.getDescription = function() {
+proto.yeying.api.bulletin.SolutionMetadata.prototype.getUid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -1266,16 +1290,16 @@ proto.yeying.api.bulletin.SolutionMetadata.prototype.getDescription = function()
  * @param {string} value
  * @return {!proto.yeying.api.bulletin.SolutionMetadata} returns this
  */
-proto.yeying.api.bulletin.SolutionMetadata.prototype.setDescription = function(value) {
+proto.yeying.api.bulletin.SolutionMetadata.prototype.setUid = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional string created = 4;
+ * optional string name = 4;
  * @return {string}
  */
-proto.yeying.api.bulletin.SolutionMetadata.prototype.getCreated = function() {
+proto.yeying.api.bulletin.SolutionMetadata.prototype.getName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -1284,18 +1308,54 @@ proto.yeying.api.bulletin.SolutionMetadata.prototype.getCreated = function() {
  * @param {string} value
  * @return {!proto.yeying.api.bulletin.SolutionMetadata} returns this
  */
-proto.yeying.api.bulletin.SolutionMetadata.prototype.setCreated = function(value) {
+proto.yeying.api.bulletin.SolutionMetadata.prototype.setName = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
 /**
- * repeated SolutionCard cards = 5;
+ * optional string description = 5;
+ * @return {string}
+ */
+proto.yeying.api.bulletin.SolutionMetadata.prototype.getDescription = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.bulletin.SolutionMetadata} returns this
+ */
+proto.yeying.api.bulletin.SolutionMetadata.prototype.setDescription = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string created = 6;
+ * @return {string}
+ */
+proto.yeying.api.bulletin.SolutionMetadata.prototype.getCreated = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.bulletin.SolutionMetadata} returns this
+ */
+proto.yeying.api.bulletin.SolutionMetadata.prototype.setCreated = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * repeated SolutionCard cards = 7;
  * @return {!Array<!proto.yeying.api.bulletin.SolutionCard>}
  */
 proto.yeying.api.bulletin.SolutionMetadata.prototype.getCardsList = function() {
   return /** @type{!Array<!proto.yeying.api.bulletin.SolutionCard>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.yeying.api.bulletin.SolutionCard, 5));
+    jspb.Message.getRepeatedWrapperField(this, proto.yeying.api.bulletin.SolutionCard, 7));
 };
 
 
@@ -1304,7 +1364,7 @@ proto.yeying.api.bulletin.SolutionMetadata.prototype.getCardsList = function() {
  * @return {!proto.yeying.api.bulletin.SolutionMetadata} returns this
 */
 proto.yeying.api.bulletin.SolutionMetadata.prototype.setCardsList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 5, value);
+  return jspb.Message.setRepeatedWrapperField(this, 7, value);
 };
 
 
@@ -1314,7 +1374,7 @@ proto.yeying.api.bulletin.SolutionMetadata.prototype.setCardsList = function(val
  * @return {!proto.yeying.api.bulletin.SolutionCard}
  */
 proto.yeying.api.bulletin.SolutionMetadata.prototype.addCards = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 5, opt_value, proto.yeying.api.bulletin.SolutionCard, opt_index);
+  return jspb.Message.addToRepeatedWrapperField(this, 7, opt_value, proto.yeying.api.bulletin.SolutionCard, opt_index);
 };
 
 
@@ -1328,11 +1388,11 @@ proto.yeying.api.bulletin.SolutionMetadata.prototype.clearCardsList = function()
 
 
 /**
- * optional string signature = 6;
+ * optional string signature = 8;
  * @return {string}
  */
 proto.yeying.api.bulletin.SolutionMetadata.prototype.getSignature = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
 };
 
 
@@ -1341,7 +1401,7 @@ proto.yeying.api.bulletin.SolutionMetadata.prototype.getSignature = function() {
  * @return {!proto.yeying.api.bulletin.SolutionMetadata} returns this
  */
 proto.yeying.api.bulletin.SolutionMetadata.prototype.setSignature = function(value) {
-  return jspb.Message.setProto3StringField(this, 6, value);
+  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
