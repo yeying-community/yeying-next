@@ -14,7 +14,7 @@ export function getBlockAddress(): BlockAddress {
 export function getProvider(code: ServiceCodeEnum) {
     switch (code) {
         case ServiceCodeEnum.SERVICE_CODE_NODE:
-            return {proxy: 'http://localhost:8441'}
+            return {proxy: process.env.YEYING_NODE_URL}
         case ServiceCodeEnum.SERVICE_CODE_AGENT:
             return {proxy: 'http://localhost:8541'}
         case ServiceCodeEnum.SERVICE_CODE_WAREHOUSE:
