@@ -1,5 +1,5 @@
 import { Authenticate } from '../common/authenticate'
-import { Provider } from '../common/model'
+import { ProviderOption } from '../common/model'
 import { ServiceClient } from '../../yeying/api/service/ServiceServiceClientPb'
 import { MessageHeader } from '../../yeying/api/common/message_pb'
 import { ServiceMetadata, WhoamiRequest } from '../../yeying/api/service/service_pb'
@@ -9,9 +9,9 @@ export class ServiceProvider {
     private authenticate: Authenticate
     private client: ServiceClient
 
-    constructor(authenticate: Authenticate, provider: Provider) {
+    constructor(authenticate: Authenticate, option: ProviderOption) {
         this.authenticate = authenticate
-        this.client = new ServiceClient(provider.proxy)
+        this.client = new ServiceClient(option.proxy)
     }
 
     whoami(): Promise<ServiceMetadata> {

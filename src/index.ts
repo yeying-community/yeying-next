@@ -1,5 +1,5 @@
 export { Authenticate } from './provider/common/authenticate'
-export { Provider } from './provider/common/model'
+export { ProviderOption } from './provider/common/model'
 export { UserProvider } from './provider/user/user'
 export { BulletinProvider } from './provider/bulletin/bulletin'
 export { SupportProvider } from './provider/support/support'

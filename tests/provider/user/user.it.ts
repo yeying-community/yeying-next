@@ -2,10 +2,10 @@ import {UserProvider} from '../../../src/provider/user/user'
 import {Authenticate} from "../../../src/provider/common/authenticate";
 import {getBlockAddress, getProvider} from "../common/common";
 import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
-import {Provider} from "../../../src/provider/common/model";
+import {ProviderOption} from "../../../src/provider/common/model";
 
 const blockAddress = getBlockAddress()
-const provider: Provider = getProvider(ServiceCodeEnum.SERVICE_CODE_NODE)
+const provider: ProviderOption = getProvider(ServiceCodeEnum.SERVICE_CODE_NODE)
 
 
 describe('User', () => {

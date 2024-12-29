@@ -1,6 +1,6 @@
 import { Authenticate } from '../common/authenticate'
 import { BulletinClient } from '../../yeying/api/bulletin/BulletinServiceClientPb'
-import { Provider } from '../common/model'
+import { ProviderOption } from '../common/model'
 import { LanguageCodeEnum } from '../../yeying/api/common/code_pb'
 import { BulletinCodeEnum, ListRequest, ListRequestBody, ListResponseBody } from '../../yeying/api/bulletin/bulletin_pb'
 import { MessageHeader, RequestPage } from '../../yeying/api/common/message_pb'
@@ -14,9 +14,9 @@ export class BulletinProvider {
     private authenticate: Authenticate
     private client: BulletinClient
 
-    constructor(authenticate: Authenticate, provider: Provider) {
+    constructor(authenticate: Authenticate, option: ProviderOption) {
         this.authenticate = authenticate
-        this.client = new BulletinClient(provider.proxy)
+        this.client = new BulletinClient(option.proxy)
     }
 
     async list(language: LanguageCodeEnum, page: number, pageSize: number) {

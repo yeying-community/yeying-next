@@ -1,11 +1,11 @@
 import {Authenticate} from "../../../src/provider/common/authenticate";
 import {getBlockAddress, getProvider} from "../common/common";
-import {Provider} from "../../../src/provider/common/model";
+import {ProviderOption} from "../../../src/provider/common/model";
 import {LanguageCodeEnum, ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
 import {BulletinProvider} from "../../../src/provider/bulletin/bulletin";
 
 const blockAddress = getBlockAddress()
-const provider: Provider = getProvider(ServiceCodeEnum.SERVICE_CODE_NODE)
+const provider: ProviderOption = getProvider(ServiceCodeEnum.SERVICE_CODE_NODE)
 
 describe('Bulletin', () => {
     it('solution list', async () => {

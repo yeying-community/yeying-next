@@ -9,6 +9,10 @@ import { RpcError } from 'grpc-web'
 import { convertResponseStatusToError } from '../../common/status'
 import { computeHash } from '../../common/crypto'
 
+/**
+ * 这是一个基于区块链地址的认证类，用于签名要发送的数据，以及验证接受到的数据，确保数据传输双方识别数据是否被被篡改。
+ *
+ */
 export class Authenticate {
     private blockAddress: BlockAddress
 

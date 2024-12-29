@@ -12,7 +12,7 @@ import { getCurrentUtcString } from '../../common/date'
 import { Authenticate } from '../common/authenticate'
 import { UserClient } from '../../yeying/api/user/UserServiceClientPb'
 import { MessageHeader } from '../../yeying/api/common/message_pb'
-import { Provider } from '../common/model'
+import { ProviderOption } from '../common/model'
 import { isValidString } from '../../common/string'
 
 /**
@@ -23,9 +23,9 @@ export class UserProvider {
     private authenticate: Authenticate
     private client: UserClient
 
-    constructor(authenticate: Authenticate, provider: Provider) {
+    constructor(authenticate: Authenticate, option: ProviderOption) {
         this.authenticate = authenticate
-        this.client = new UserClient(provider.proxy)
+        this.client = new UserClient(option.proxy)
     }
 
     add(name: string, telephone: string, email: string, avatar: string) {

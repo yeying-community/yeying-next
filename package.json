@@ -9,7 +9,8 @@
     "watch": "rollup -c -w",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "format": "prettier --write \"src/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\"",
+    "docs": "typedoc --out docs src"
   },
   "keywords": [
     "web3",
@@ -34,6 +35,7 @@
     "prettier": "^3.4.2",
     "rollup": "^4.28.1",
     "rollup-plugin-typescript2": "^0.36.0",
+    "typedoc": "^0.27.6",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   }

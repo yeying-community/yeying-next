@@ -12,3 +12,6 @@ npm run build
 # How to run integration test?
 npm run test -- tests/**/*.it.ts
 
+# How to format the code before pushing code?
+npm run format
+

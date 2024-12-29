@@ -1,6 +1,6 @@
 import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
 
-export interface Provider {
+export interface ProviderOption {
     proxy: string
 }
 

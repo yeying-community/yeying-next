@@ -5,4 +5,5 @@ dist
 coverage/
 output/
 _book
+docs
 package-lock.json 

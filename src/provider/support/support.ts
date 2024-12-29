@@ -1,4 +1,4 @@
-import { Provider } from '../common/model'
+import { ProviderOption } from '../common/model'
 import { Authenticate } from '../common/authenticate'
 import { SupportClient } from '../../yeying/api/support/SupportServiceClientPb'
 import { CollectRequest, CollectRequestBody, FaqMetadata, SupportCodeEnum } from '../../yeying/api/support/support_pb'
@@ -9,9 +9,9 @@ export class SupportProvider {
     private authenticate: Authenticate
     private client: SupportClient
 
-    constructor(authenticate: Authenticate, provider: Provider) {
+    constructor(authenticate: Authenticate, option: ProviderOption) {
         this.authenticate = authenticate
-        this.client = new SupportClient(provider.proxy)
+        this.client = new SupportClient(option.proxy)
     }
 
     async collectFaq(type: string, email: string, description: string) {
