@@ -1,0 +1,48 @@
+name: run ut and it
+
+# 触发条件：当有push事件发生到main分支时
+on:
+  push:
+    branches:
+      - haiqinma
+  pull_request:
+    branches:
+      - haiqinma
+
+permissions:
+  contents: read
+
+jobs:
+  #
+  install-dependencies:
+    runs-on: [ubuntu-24.04,macos-15]  # 选择操作系统
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@haiqinma  # 使用actions/checkout 仓库的 main 分支的最新提交
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3  # 选择Node.js环境
+        with:
+          node-version: '20'  # 配置Node.js版本
+
+      - name: Install dependencies
+        run: npm install  # 针对Node.js项目安装依赖
+
+  # 单元测试任务
+  unit-test:
+    needs: install-dependencies
+    runs-on: [ubuntu-24.04,macos-15]  
+
+    steps:
+      - name: Run unit tests
+        run: echo "run unit-test"  # 运行单元测试
+
+  # 集成测试任务
+  integration-test:
+    needs: install-dependencies
+    runs-on: [ubuntu-24.04,macos-15]
+
+    steps:
+      - name: Run integration tests
+        run: echo "run integration-test"  # 在package.json中定义integration-test脚本
