@@ -1,6 +1,6 @@
 {
   "name": "@yeying-community/yeying-next",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "a web3 application library for browser",
   "main": "dist/yeying-next.cjs.js",
   "module": "dist/yeying-next.esm.js",
@@ -21,7 +21,7 @@
   "dependencies": {
     "@bufbuild/protobuf": "^2.2.3",
     "@types/luxon": "^3.4.2",
-    "@yeying-community/yeying-web3": "^0.0.22",
+    "@yeying-community/yeying-web3": "^0.0.24",
     "google-protobuf": "^3.21.4",
     "grpc-web": "^1.5.0",
     "luxon": "^3.5.0"
