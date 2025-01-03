@@ -6,7 +6,7 @@ export default defineConfig({
   test: {
     include: ["**/*.{it,ut}.?(c|m)[jt]s?(x)"],
     globals: true,
-    environment: "jsdom",
+    environment: "happy-dom",
     setupFiles: './vitest.setup.ts',
   },
 })
