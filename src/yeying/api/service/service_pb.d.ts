@@ -377,6 +377,9 @@ export class ServiceMetadata extends jspb.Message {
   getName(): string;
   setName(value: string): ServiceMetadata;
 
+  getDescription(): string;
+  setDescription(value: string): ServiceMetadata;
+
   getCode(): yeying_api_common_code_pb.ServiceCodeEnum;
   setCode(value: yeying_api_common_code_pb.ServiceCodeEnum): ServiceMetadata;
 
@@ -393,9 +396,6 @@ export class ServiceMetadata extends jspb.Message {
 
   getAvatar(): string;
   setAvatar(value: string): ServiceMetadata;
-
-  getExtend(): string;
-  setExtend(value: string): ServiceMetadata;
 
   getCreated(): string;
   setCreated(value: string): ServiceMetadata;
@@ -422,12 +422,12 @@ export namespace ServiceMetadata {
     did: string,
     version: number,
     name: string,
+    description: string,
     code: yeying_api_common_code_pb.ServiceCodeEnum,
     apisList: Array<yeying_api_common_code_pb.ApiCodeEnum>,
     proxy: string,
     grpc: string,
     avatar: string,
-    extend: string,
     created: string,
     checkpoint: string,
     signature: string,

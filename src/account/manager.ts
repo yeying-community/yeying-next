@@ -213,7 +213,6 @@ export class AccountManager {
                 name: 'Guest',
                 description: '',
                 avatar: '',
-                securityConfig: SecurityConfig.create({}),
                 extend: IdentityPersonalExtend.create({})
             }
         }
