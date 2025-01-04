@@ -4,10 +4,10 @@ name: run ut and it
 on:
   push:
     branches:
-      - haiqinma
+      - main
   pull_request:
     branches:
-      - haiqinma
+      - main
 
 permissions:
   contents: read
