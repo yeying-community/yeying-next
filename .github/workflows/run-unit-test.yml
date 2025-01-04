@@ -31,7 +31,7 @@ jobs:
 
   # 单元测试任务
   unit-test:
-    needs: install-dependencies
+    needs: prepare
     runs-on: ubuntu-24.04
 
     steps:
