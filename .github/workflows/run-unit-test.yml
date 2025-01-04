@@ -23,16 +23,13 @@ jobs:
 
       - name: debug paths
         run: |
-          ls -la
-          ls -la ./yeying-next
+          pwd
+          ls -l
 
       - name: Set up Node.js
         uses: actions/setup-node@main  # 选择Node.js环境
         with:
           node-version: '20'  # 配置Node.js版本
-
-      - name: Navigate to project directory
-        run: cd yeying-next
 
       - name: Install dependencies
         run: npm install  # 针对Node.js项目安装依赖
