@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 base_name="${0##*/}"
 current_directory=$(
