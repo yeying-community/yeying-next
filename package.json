@@ -24,7 +24,8 @@
     "@yeying-community/yeying-web3": "^0.0.25",
     "google-protobuf": "^3.21.4",
     "grpc-web": "^1.5.0",
-    "luxon": "^3.5.0"
+    "luxon": "^3.5.0",
+    "protoc-gen-grpc-web": "^1.5.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.2",

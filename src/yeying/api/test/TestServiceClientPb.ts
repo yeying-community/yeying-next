@@ -1,5 +1,5 @@
 /**
- * @fileoverview gRPC-Web generated client stub for yeying.api.bulletin
+ * @fileoverview gRPC-Web generated client stub for yeying.api.test
  * @enhanceable
  * @public
  */
@@ -8,7 +8,7 @@
 // versions:
 // 	protoc-gen-grpc-web v1.5.0
 // 	protoc              v5.29.2
-// source: yeying/api/bulletin/bulletin.proto
+// source: yeying/api/test/test.proto
 
 
 /* eslint-disable */
@@ -17,10 +17,10 @@
 
 import * as grpcWeb from 'grpc-web';
 
-import * as yeying_api_bulletin_bulletin_pb from '../../../yeying/api/bulletin/bulletin_pb'; // proto import: "yeying/api/bulletin/bulletin.proto"
+import * as yeying_api_test_test_pb from '../../../yeying/api/test/test_pb'; // proto import: "yeying/api/test/test.proto"
 
 
-export class BulletinClient {
+export class TestClient {
   client_: grpcWeb.AbstractClientBase;
   hostname_: string;
   credentials_: null | { [index: string]: string; };
@@ -39,47 +39,47 @@ export class BulletinClient {
     this.options_ = options;
   }
 
-  methodDescriptorList = new grpcWeb.MethodDescriptor(
-    '/yeying.api.bulletin.Bulletin/List',
+  methodDescriptorEcho = new grpcWeb.MethodDescriptor(
+    '/yeying.api.test.Test/Echo',
     grpcWeb.MethodType.UNARY,
-    yeying_api_bulletin_bulletin_pb.ListRequest,
-    yeying_api_bulletin_bulletin_pb.ListResponse,
-    (request: yeying_api_bulletin_bulletin_pb.ListRequest) => {
+    yeying_api_test_test_pb.EchoRequest,
+    yeying_api_test_test_pb.EchoResponse,
+    (request: yeying_api_test_test_pb.EchoRequest) => {
       return request.serializeBinary();
     },
-    yeying_api_bulletin_bulletin_pb.ListResponse.deserializeBinary
+    yeying_api_test_test_pb.EchoResponse.deserializeBinary
   );
 
-  list(
-    request: yeying_api_bulletin_bulletin_pb.ListRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<yeying_api_bulletin_bulletin_pb.ListResponse>;
+  echo(
+    request: yeying_api_test_test_pb.EchoRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<yeying_api_test_test_pb.EchoResponse>;
 
-  list(
-    request: yeying_api_bulletin_bulletin_pb.ListRequest,
+  echo(
+    request: yeying_api_test_test_pb.EchoRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: yeying_api_bulletin_bulletin_pb.ListResponse) => void): grpcWeb.ClientReadableStream<yeying_api_bulletin_bulletin_pb.ListResponse>;
+               response: yeying_api_test_test_pb.EchoResponse) => void): grpcWeb.ClientReadableStream<yeying_api_test_test_pb.EchoResponse>;
 
-  list(
-    request: yeying_api_bulletin_bulletin_pb.ListRequest,
+  echo(
+    request: yeying_api_test_test_pb.EchoRequest,
     metadata?: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: yeying_api_bulletin_bulletin_pb.ListResponse) => void) {
+               response: yeying_api_test_test_pb.EchoResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
-          '/yeying.api.bulletin.Bulletin/List',
+          '/yeying.api.test.Test/Echo',
         request,
         metadata || {},
-        this.methodDescriptorList,
+        this.methodDescriptorEcho,
         callback);
     }
     return this.client_.unaryCall(
     this.hostname_ +
-      '/yeying.api.bulletin.Bulletin/List',
+      '/yeying.api.test.Test/Echo',
     request,
     metadata || {},
-    this.methodDescriptorList);
+    this.methodDescriptorEcho);
   }
 
 }

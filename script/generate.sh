@@ -35,7 +35,7 @@ app_type=browser
 output_dir=${idl_dir}/target/${app_type}/${language}
 tool=${idl_dir}/script/compiler.sh
 
-if ! sh "${tool}" -t ${app_type} -m common,llm,asset,user,identity,service,certificate,application,event,invitation,bulletin,support -l ${language}; then
+if ! sh "${tool}" -t ${app_type} -m common,llm,asset,user,identity,service,certificate,application,event,invitation,bulletin,support,test -l ${language}; then
   echo "Fail to generate proto code!"
   exit 1
 fi
