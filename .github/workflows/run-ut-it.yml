@@ -15,7 +15,7 @@ permissions:
 jobs:
   #
   install-dependencies:
-    runs-on: [ubuntu-24.04,macos-15]  # 选择操作系统
+    runs-on: ubuntu-24.04  # 选择操作系统
 
     steps:
       - name: Checkout branch
@@ -32,7 +32,7 @@ jobs:
   # 单元测试任务
   unit-test:
     needs: install-dependencies
-    runs-on: [ubuntu-24.04,macos-15]  
+    runs-on: ubuntu-24.04  
 
     steps:
       - name: Run unit tests
@@ -41,7 +41,7 @@ jobs:
   # 集成测试任务
   integration-test:
     needs: install-dependencies
-    runs-on: [ubuntu-24.04,macos-15]
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Run integration tests
