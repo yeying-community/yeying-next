@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   #
-  install-dependencies:
+  prepare:
     runs-on: ubuntu-24.04
 
     steps:
@@ -35,7 +35,9 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Run unit tests
+      - name: prepare to run unit tests
         run: echo "run unit-test"  # 运行单元测试
-      - run: shopt -s globstar
-      - run: npm run test -- tests/**/*.it.ts
+      - name: set environment
+        run: shopt -s globstar
+      - name: start to run ts
+        run: npm run test -- tests/**/*.ut.ts
