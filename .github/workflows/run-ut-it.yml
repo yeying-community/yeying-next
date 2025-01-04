@@ -15,14 +15,14 @@ permissions:
 jobs:
   #
   install-dependencies:
-    runs-on: ubuntu-24.04  # 选择操作系统
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout branch
-        uses: actions/checkout@haiqinma  # 使用actions/checkout 仓库的 main 分支的最新提交
+        uses: actions/checkout@main  # 使用actions/checkout 仓库的 main 分支的最新提交
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3  # 选择Node.js环境
+        uses: actions/setup-node@main  # 选择Node.js环境
         with:
           node-version: '20'  # 配置Node.js版本
 
@@ -32,7 +32,7 @@ jobs:
   # 单元测试任务
   unit-test:
     needs: install-dependencies
-    runs-on: ubuntu-24.04  
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Run unit tests
