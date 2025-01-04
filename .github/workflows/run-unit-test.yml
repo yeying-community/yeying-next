@@ -37,12 +37,5 @@ jobs:
     steps:
       - name: Run unit tests
         run: echo "run unit-test"  # 运行单元测试
-
-  # 集成测试任务
-  integration-test:
-    needs: install-dependencies
-    runs-on: ubuntu-24.04
-
-    steps:
-      - name: Run integration tests
-        run: echo "run integration-test"  # 在package.json中定义integration-test脚本
+      - run: shopt -s globstar
+      - run: npm run test -- tests/**/*.it.ts
