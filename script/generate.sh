@@ -51,3 +51,4 @@ cp -rvf "${output_dir}"/yeying/api/* "${yeying_api_directory}"/
 #  sed -i '' 's/\.js/\.cjs/g' "${file}"
 #  mv -v "${file}" "${file%.js}.cjs"
 #done
+echo -e "\nThis is the end.$(date)"
