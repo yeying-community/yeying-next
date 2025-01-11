@@ -51,4 +51,4 @@ jobs:
         run: shopt -s globstar
 
       - name: start to run it
-        run: npm run test -- tests/**/*.it.ts
+        run: npm run test -- "tests/**/*.it.ts"
