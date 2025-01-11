@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Checkout branch
-        uses: actions/checkout@main  # 使用actions/checkout 仓库的 main 分支的最新提交
+        uses: actions/checkout@v3  # 使用actions/checkout 仓库的 main 分支的最新提交
 
       - name: debug paths
         run: |
@@ -27,7 +27,7 @@ jobs:
           ls -l
 
       - name: Set up Node.js
-        uses: actions/setup-node@main  # 选择Node.js环境
+        uses: actions/setup-node@v3  # 选择Node.js环境
         with:
           node-version: '20'  # 配置Node.js版本
 
