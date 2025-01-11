@@ -39,3 +39,6 @@ jobs:
 
       - name: start to run ts
         run: npm run test -- tests/**/*.ut.ts
+
+      - name: start to run is
+        run: npm run test -- tests/**/*.it.ts
