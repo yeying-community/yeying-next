@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: npm install  # 针对Node.js项目安装依赖
 
-      - name: check ut.ts file
+      - name: check ut.ts file exists
         run: |
           pwd
           ls -l
@@ -36,7 +36,7 @@ jobs:
       - name: start to run ut test
         run: shopt -s globstar; npm run test -- tests/**/*.ut.ts
 
-      - name: check it.ts file
+      - name: check it.ts file exists
         run: |
           pwd
           ls -l
