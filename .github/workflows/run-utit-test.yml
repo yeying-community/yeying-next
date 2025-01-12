@@ -39,7 +39,7 @@ jobs:
         run: shopt -s globstar
 
       - name: start to run is
-        run: npm run test -- tests/**/*.it.ts
+        run: shopt -s globstar; npm run test -- tests/**/*.it.ts
 
       - name: check ut.ts file
         run: |
