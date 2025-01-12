@@ -21,12 +21,6 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v3  # 使用actions/checkout 仓库的 main 分支的最新提交
 
-      - name: check it.ts file
-        run: |
-          pwd
-          ls -l
-          find tests -iname "*.it.ts"
-
       - name: Set up Node.js
         uses: actions/setup-node@v3  # 选择Node.js环境
         with:
@@ -35,20 +29,21 @@ jobs:
       - name: Install dependencies
         run: npm install  # 针对Node.js项目安装依赖
 
-      - name: set environment fo it
-        run: shopt -s globstar
-
-      - name: start to run is
-        run: shopt -s globstar; npm run test -- tests/**/*.it.ts
-
       - name: check ut.ts file
         run: |
           pwd
           ls -l
           find tests -iname "*.ut.ts"
 
-      - name: set environment for it
-        run: shopt -s globstar
 
-      - name: start to run ut
-        run: npm run test -- "tests/**/*.ut.ts"
+      - name: start to run ut test
+        run: shopt -s globstar; npm run test -- tests/**/*.ut.ts
+
+      - name: check it.ts file
+        run: |
+          pwd
+          ls -l
+          find tests -iname "*.ut.ts"
+
+      - name: start to run it
+        run: shopt -s globstar; npm run test -- tests/**/*.it.ts
