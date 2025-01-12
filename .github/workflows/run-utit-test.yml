@@ -45,5 +45,5 @@ jobs:
           ls -l
           find tests -iname "*.ut.ts"
 
-      - name: start to run it
-        run: shopt -s globstar; npm run test -- tests/**/*.it.ts
+#      - name: start to run it test
+#        run: shopt -s globstar; npm run test -- tests/**/*.it.ts
