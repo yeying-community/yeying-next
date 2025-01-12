@@ -2,9 +2,6 @@ name: run ut and it
 
 # 触发条件：当有push事件发生到main分支时
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
