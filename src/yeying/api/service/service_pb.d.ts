@@ -195,11 +195,10 @@ export namespace SearchRequest {
 }
 
 export class SearchRequestBody extends jspb.Message {
-  getCode(): yeying_api_common_code_pb.ServiceCodeEnum;
-  setCode(value: yeying_api_common_code_pb.ServiceCodeEnum): SearchRequestBody;
-
-  getOwner(): string;
-  setOwner(value: string): SearchRequestBody;
+  getCondition(): SearchCondition | undefined;
+  setCondition(value?: SearchCondition): SearchRequestBody;
+  hasCondition(): boolean;
+  clearCondition(): SearchRequestBody;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SearchRequestBody.AsObject;
@@ -211,8 +210,25 @@ export class SearchRequestBody extends jspb.Message {
 
 export namespace SearchRequestBody {
   export type AsObject = {
+    condition?: SearchCondition.AsObject,
+  }
+}
+
+export class SearchCondition extends jspb.Message {
+  getCode(): yeying_api_common_code_pb.ServiceCodeEnum;
+  setCode(value: yeying_api_common_code_pb.ServiceCodeEnum): SearchCondition;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): SearchCondition.AsObject;
+  static toObject(includeInstance: boolean, msg: SearchCondition): SearchCondition.AsObject;
+  static serializeBinaryToWriter(message: SearchCondition, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): SearchCondition;
+  static deserializeBinaryFromReader(message: SearchCondition, reader: jspb.BinaryReader): SearchCondition;
+}
+
+export namespace SearchCondition {
+  export type AsObject = {
     code: yeying_api_common_code_pb.ServiceCodeEnum,
-    owner: string,
   }
 }
 

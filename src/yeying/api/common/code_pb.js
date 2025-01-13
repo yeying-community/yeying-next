@@ -53,7 +53,8 @@ proto.yeying.api.common.ResponseCodeEnum = {
   UNKNOWN_ERROR: 9,
   NETWORK_ERROR: 10,
   INVALID_CERT: 11,
-  NOT_SUPPORTED: 12
+  NOT_SUPPORTED: 12,
+  DATA_CORRUPTED: 13
 };
 
 /**
