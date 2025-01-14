@@ -60,7 +60,7 @@ export class BulletinProvider {
                         }
                     }
 
-                    resolve(res.getBody() as ListResponseBody)
+                    resolve(body as ListResponseBody)
                 }, reject)
             })
         })
