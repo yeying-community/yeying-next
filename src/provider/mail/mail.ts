@@ -5,18 +5,36 @@ import { MailClient } from '../../yeying/api/mail/MailServiceClientPb'
 import { VerifyRequest, VerifyRequestBody, SendRequest, SendRequestBody } from '../../yeying/api/mail/mail_pb'
 
 /**
- * 邮件验证码实现
+ * 这是一个邮箱验证码的服务提供者，用于前端页面直接调用
  */
-
 export class MailProvider {
+    /**
+     * authenticate 服务认证
+     * @private
+     */
     private authenticate: Authenticate
-    private client: MailClient
 
+    /**
+     * mailClient
+     * @private
+     */
+    private mailClient: MailClient
+
+    /**
+     * 构造函数：初始化
+     * @param authenticate
+     * @param option
+     */
     constructor(authenticate: Authenticate, option: ProviderOption) {
         this.authenticate = authenticate
-        this.client = new MailClient(option.proxy)
+        this.mailClient = new MailClient(option.proxy)
     }
 
+    /**
+     * 发送验证码
+     * @param toMail
+     * @returns Promise
+     */
     send(toMail: string) {
         return new Promise(async (resolve, reject) => {
             const body = new SendRequestBody()
@@ -33,12 +51,18 @@ export class MailProvider {
             request.setHeader(header)
             request.setBody(body)
 
-            this.client.send(request, null, (err, res) => {
+            this.mailClient.send(request, null, (err, res) => {
                 this.authenticate.doResponse(err, res).then((body) => resolve(body), reject)
             })
         })
     }
 
+    /**
+     * 邮箱验证码校验
+     * @param toMail 邮箱账号
+     * @param code 验证码
+     * @returns Promise
+     */
     verify(toMail: string, code: string) {
         return new Promise(async (resolve, reject) => {
             const body = new VerifyRequestBody()
@@ -56,7 +80,7 @@ export class MailProvider {
             request.setHeader(header)
             request.setBody(body)
 
-            this.client.verify(request, null, (err, res) => {
+            this.mailClient.verify(request, null, (err, res) => {
                 this.authenticate.doResponse(err, res).then((body) => resolve(body), reject)
             })
         })
