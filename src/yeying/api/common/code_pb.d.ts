@@ -16,6 +16,7 @@ export enum ResponseCodeEnum {
   NETWORK_ERROR = 10,
   INVALID_CERT = 11,
   NOT_SUPPORTED = 12,
+  DATA_CORRUPTED = 13,
 }
 export enum ContractStatusEnum { 
   CONTRACT_STATUS_UNKNOWN = 0,

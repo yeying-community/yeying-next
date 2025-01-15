@@ -1,13 +1,7 @@
 import { CipherTypeEnum } from '../yeying/api/common/code_pb'
 import { BlockAddress, SecurityAlgorithm } from '@yeying-community/yeying-web3'
-import {
-    convertCipherTypeFrom,
-    convertCipherTypeTo,
-    decodeBase64,
-    decodeString,
-    encodeBase64,
-    encodeString
-} from './codec'
+import { decodeBase64, decodeString, encodeBase64, encodeString } from './codec'
+import { convertCipherTypeFrom, convertCipherTypeTo } from './message'
 
 export function generateIv(len = 12): Uint8Array {
     return window.crypto.getRandomValues(new Uint8Array(len))

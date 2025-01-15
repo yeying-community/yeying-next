@@ -31,17 +31,15 @@ export namespace SearchRequest {
 }
 
 export class SearchRequestBody extends jspb.Message {
-  getFormat(): yeying_api_common_code_pb.DigitalFormatEnum;
-  setFormat(value: yeying_api_common_code_pb.DigitalFormatEnum): SearchRequestBody;
+  getCondition(): SearchCondition | undefined;
+  setCondition(value?: SearchCondition): SearchRequestBody;
+  hasCondition(): boolean;
+  clearCondition(): SearchRequestBody;
 
-  getAssethash(): string;
-  setAssethash(value: string): SearchRequestBody;
-
-  getPage(): number;
-  setPage(value: number): SearchRequestBody;
-
-  getPagesize(): number;
-  setPagesize(value: number): SearchRequestBody;
+  getPage(): yeying_api_common_message_pb.RequestPage | undefined;
+  setPage(value?: yeying_api_common_message_pb.RequestPage): SearchRequestBody;
+  hasPage(): boolean;
+  clearPage(): SearchRequestBody;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SearchRequestBody.AsObject;
@@ -53,10 +51,34 @@ export class SearchRequestBody extends jspb.Message {
 
 export namespace SearchRequestBody {
   export type AsObject = {
+    condition?: SearchCondition.AsObject,
+    page?: yeying_api_common_message_pb.RequestPage.AsObject,
+  }
+}
+
+export class SearchCondition extends jspb.Message {
+  getFormat(): yeying_api_common_code_pb.DigitalFormatEnum;
+  setFormat(value: yeying_api_common_code_pb.DigitalFormatEnum): SearchCondition;
+
+  getContenthash(): string;
+  setContenthash(value: string): SearchCondition;
+
+  getTrash(): boolean;
+  setTrash(value: boolean): SearchCondition;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): SearchCondition.AsObject;
+  static toObject(includeInstance: boolean, msg: SearchCondition): SearchCondition.AsObject;
+  static serializeBinaryToWriter(message: SearchCondition, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): SearchCondition;
+  static deserializeBinaryFromReader(message: SearchCondition, reader: jspb.BinaryReader): SearchCondition;
+}
+
+export namespace SearchCondition {
+  export type AsObject = {
     format: yeying_api_common_code_pb.DigitalFormatEnum,
-    assethash: string,
-    page: number,
-    pagesize: number,
+    contenthash: string,
+    trash: boolean,
   }
 }
 
@@ -112,279 +134,6 @@ export namespace SearchResponseBody {
   }
 }
 
-export class StreamPutRequest extends jspb.Message {
-  getContenttag(): yeying_api_common_code_pb.StreamDataTagEnum;
-  setContenttag(value: yeying_api_common_code_pb.StreamDataTagEnum): StreamPutRequest;
-
-  getHead(): StreamPutRequestHead | undefined;
-  setHead(value?: StreamPutRequestHead): StreamPutRequest;
-  hasHead(): boolean;
-  clearHead(): StreamPutRequest;
-
-  getBody(): StreamPutRequestBody | undefined;
-  setBody(value?: StreamPutRequestBody): StreamPutRequest;
-  hasBody(): boolean;
-  clearBody(): StreamPutRequest;
-
-  getTail(): StreamPutRequestTail | undefined;
-  setTail(value?: StreamPutRequestTail): StreamPutRequest;
-  hasTail(): boolean;
-  clearTail(): StreamPutRequest;
-
-  getDataCase(): StreamPutRequest.DataCase;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StreamPutRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: StreamPutRequest): StreamPutRequest.AsObject;
-  static serializeBinaryToWriter(message: StreamPutRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StreamPutRequest;
-  static deserializeBinaryFromReader(message: StreamPutRequest, reader: jspb.BinaryReader): StreamPutRequest;
-}
-
-export namespace StreamPutRequest {
-  export type AsObject = {
-    contenttag: yeying_api_common_code_pb.StreamDataTagEnum,
-    head?: StreamPutRequestHead.AsObject,
-    body?: StreamPutRequestBody.AsObject,
-    tail?: StreamPutRequestTail.AsObject,
-  }
-
-  export enum DataCase { 
-    DATA_NOT_SET = 0,
-    HEAD = 2,
-    BODY = 3,
-    TAIL = 4,
-  }
-}
-
-export class StreamPutRequestHead extends jspb.Message {
-  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): StreamPutRequestHead;
-  hasHeader(): boolean;
-  clearHeader(): StreamPutRequestHead;
-
-  getBody(): StreamPutRequestHeadBody | undefined;
-  setBody(value?: StreamPutRequestHeadBody): StreamPutRequestHead;
-  hasBody(): boolean;
-  clearBody(): StreamPutRequestHead;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StreamPutRequestHead.AsObject;
-  static toObject(includeInstance: boolean, msg: StreamPutRequestHead): StreamPutRequestHead.AsObject;
-  static serializeBinaryToWriter(message: StreamPutRequestHead, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StreamPutRequestHead;
-  static deserializeBinaryFromReader(message: StreamPutRequestHead, reader: jspb.BinaryReader): StreamPutRequestHead;
-}
-
-export namespace StreamPutRequestHead {
-  export type AsObject = {
-    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: StreamPutRequestHeadBody.AsObject,
-  }
-}
-
-export class StreamPutRequestHeadBody extends jspb.Message {
-  getAssetid(): string;
-  setAssetid(value: string): StreamPutRequestHeadBody;
-
-  getVersion(): number;
-  setVersion(value: number): StreamPutRequestHeadBody;
-
-  getChunkhash(): string;
-  setChunkhash(value: string): StreamPutRequestHeadBody;
-
-  getChunksize(): number;
-  setChunksize(value: number): StreamPutRequestHeadBody;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StreamPutRequestHeadBody.AsObject;
-  static toObject(includeInstance: boolean, msg: StreamPutRequestHeadBody): StreamPutRequestHeadBody.AsObject;
-  static serializeBinaryToWriter(message: StreamPutRequestHeadBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StreamPutRequestHeadBody;
-  static deserializeBinaryFromReader(message: StreamPutRequestHeadBody, reader: jspb.BinaryReader): StreamPutRequestHeadBody;
-}
-
-export namespace StreamPutRequestHeadBody {
-  export type AsObject = {
-    assetid: string,
-    version: number,
-    chunkhash: string,
-    chunksize: number,
-  }
-}
-
-export class StreamPutRequestBody extends jspb.Message {
-  getData(): Uint8Array | string;
-  getData_asU8(): Uint8Array;
-  getData_asB64(): string;
-  setData(value: Uint8Array | string): StreamPutRequestBody;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StreamPutRequestBody.AsObject;
-  static toObject(includeInstance: boolean, msg: StreamPutRequestBody): StreamPutRequestBody.AsObject;
-  static serializeBinaryToWriter(message: StreamPutRequestBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StreamPutRequestBody;
-  static deserializeBinaryFromReader(message: StreamPutRequestBody, reader: jspb.BinaryReader): StreamPutRequestBody;
-}
-
-export namespace StreamPutRequestBody {
-  export type AsObject = {
-    data: Uint8Array | string,
-  }
-}
-
-export class StreamPutRequestTail extends jspb.Message {
-  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): StreamPutRequestTail;
-  hasHeader(): boolean;
-  clearHeader(): StreamPutRequestTail;
-
-  getBody(): StreamPutRequestTailBody | undefined;
-  setBody(value?: StreamPutRequestTailBody): StreamPutRequestTail;
-  hasBody(): boolean;
-  clearBody(): StreamPutRequestTail;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StreamPutRequestTail.AsObject;
-  static toObject(includeInstance: boolean, msg: StreamPutRequestTail): StreamPutRequestTail.AsObject;
-  static serializeBinaryToWriter(message: StreamPutRequestTail, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StreamPutRequestTail;
-  static deserializeBinaryFromReader(message: StreamPutRequestTail, reader: jspb.BinaryReader): StreamPutRequestTail;
-}
-
-export namespace StreamPutRequestTail {
-  export type AsObject = {
-    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: StreamPutRequestTailBody.AsObject,
-  }
-}
-
-export class StreamPutRequestTailBody extends jspb.Message {
-  getChunkhash(): string;
-  setChunkhash(value: string): StreamPutRequestTailBody;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StreamPutRequestTailBody.AsObject;
-  static toObject(includeInstance: boolean, msg: StreamPutRequestTailBody): StreamPutRequestTailBody.AsObject;
-  static serializeBinaryToWriter(message: StreamPutRequestTailBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StreamPutRequestTailBody;
-  static deserializeBinaryFromReader(message: StreamPutRequestTailBody, reader: jspb.BinaryReader): StreamPutRequestTailBody;
-}
-
-export namespace StreamPutRequestTailBody {
-  export type AsObject = {
-    chunkhash: string,
-  }
-}
-
-export class PutRequestBody extends jspb.Message {
-  getAssetid(): string;
-  setAssetid(value: string): PutRequestBody;
-
-  getVersion(): number;
-  setVersion(value: number): PutRequestBody;
-
-  getChunkhash(): string;
-  setChunkhash(value: string): PutRequestBody;
-
-  getChunksize(): number;
-  setChunksize(value: number): PutRequestBody;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): PutRequestBody.AsObject;
-  static toObject(includeInstance: boolean, msg: PutRequestBody): PutRequestBody.AsObject;
-  static serializeBinaryToWriter(message: PutRequestBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): PutRequestBody;
-  static deserializeBinaryFromReader(message: PutRequestBody, reader: jspb.BinaryReader): PutRequestBody;
-}
-
-export namespace PutRequestBody {
-  export type AsObject = {
-    assetid: string,
-    version: number,
-    chunkhash: string,
-    chunksize: number,
-  }
-}
-
-export class PutRequest extends jspb.Message {
-  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): PutRequest;
-  hasHeader(): boolean;
-  clearHeader(): PutRequest;
-
-  getBody(): PutRequestBody | undefined;
-  setBody(value?: PutRequestBody): PutRequest;
-  hasBody(): boolean;
-  clearBody(): PutRequest;
-
-  getData(): Uint8Array | string;
-  getData_asU8(): Uint8Array;
-  getData_asB64(): string;
-  setData(value: Uint8Array | string): PutRequest;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): PutRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: PutRequest): PutRequest.AsObject;
-  static serializeBinaryToWriter(message: PutRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): PutRequest;
-  static deserializeBinaryFromReader(message: PutRequest, reader: jspb.BinaryReader): PutRequest;
-}
-
-export namespace PutRequest {
-  export type AsObject = {
-    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: PutRequestBody.AsObject,
-    data: Uint8Array | string,
-  }
-}
-
-export class PutResponse extends jspb.Message {
-  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): PutResponse;
-  hasHeader(): boolean;
-  clearHeader(): PutResponse;
-
-  getBody(): PutResponseBody | undefined;
-  setBody(value?: PutResponseBody): PutResponse;
-  hasBody(): boolean;
-  clearBody(): PutResponse;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): PutResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: PutResponse): PutResponse.AsObject;
-  static serializeBinaryToWriter(message: PutResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): PutResponse;
-  static deserializeBinaryFromReader(message: PutResponse, reader: jspb.BinaryReader): PutResponse;
-}
-
-export namespace PutResponse {
-  export type AsObject = {
-    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: PutResponseBody.AsObject,
-  }
-}
-
-export class PutResponseBody extends jspb.Message {
-  getStatus(): yeying_api_common_message_pb.ResponseStatus | undefined;
-  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): PutResponseBody;
-  hasStatus(): boolean;
-  clearStatus(): PutResponseBody;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): PutResponseBody.AsObject;
-  static toObject(includeInstance: boolean, msg: PutResponseBody): PutResponseBody.AsObject;
-  static serializeBinaryToWriter(message: PutResponseBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): PutResponseBody;
-  static deserializeBinaryFromReader(message: PutResponseBody, reader: jspb.BinaryReader): PutResponseBody;
-}
-
-export namespace PutResponseBody {
-  export type AsObject = {
-    status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
-  }
-}
-
 export class SignRequest extends jspb.Message {
   getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
   setHeader(value?: yeying_api_common_message_pb.MessageHeader): SignRequest;
@@ -412,9 +161,6 @@ export namespace SignRequest {
 }
 
 export class SignRequestBody extends jspb.Message {
-  getAction(): AssetActionEnum;
-  setAction(value: AssetActionEnum): SignRequestBody;
-
   getAsset(): AssetMetadata | undefined;
   setAsset(value?: AssetMetadata): SignRequestBody;
   hasAsset(): boolean;
@@ -430,7 +176,6 @@ export class SignRequestBody extends jspb.Message {
 
 export namespace SignRequestBody {
   export type AsObject = {
-    action: AssetActionEnum,
     asset?: AssetMetadata.AsObject,
   }
 }
@@ -508,8 +253,8 @@ export namespace VersionRequest {
 }
 
 export class VersionRequestBody extends jspb.Message {
-  getAssetid(): string;
-  setAssetid(value: string): VersionRequestBody;
+  getUid(): string;
+  setUid(value: string): VersionRequestBody;
 
   getPage(): number;
   setPage(value: number): VersionRequestBody;
@@ -527,7 +272,7 @@ export class VersionRequestBody extends jspb.Message {
 
 export namespace VersionRequestBody {
   export type AsObject = {
-    assetid: string,
+    uid: string,
     page: number,
     pagesize: number,
   }
@@ -612,11 +357,14 @@ export namespace DetailRequest {
 }
 
 export class DetailRequestBody extends jspb.Message {
-  getAssetid(): string;
-  setAssetid(value: string): DetailRequestBody;
+  getUid(): string;
+  setUid(value: string): DetailRequestBody;
 
   getVersion(): number;
   setVersion(value: number): DetailRequestBody;
+
+  getTrash(): boolean;
+  setTrash(value: boolean): DetailRequestBody;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DetailRequestBody.AsObject;
@@ -628,8 +376,9 @@ export class DetailRequestBody extends jspb.Message {
 
 export namespace DetailRequestBody {
   export type AsObject = {
-    assetid: string,
+    uid: string,
     version: number,
+    trash: boolean,
   }
 }
 
@@ -685,291 +434,6 @@ export namespace DetailResponseBody {
   }
 }
 
-export class GetRequest extends jspb.Message {
-  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): GetRequest;
-  hasHeader(): boolean;
-  clearHeader(): GetRequest;
-
-  getBody(): GetRequestBody | undefined;
-  setBody(value?: GetRequestBody): GetRequest;
-  hasBody(): boolean;
-  clearBody(): GetRequest;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GetRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: GetRequest): GetRequest.AsObject;
-  static serializeBinaryToWriter(message: GetRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GetRequest;
-  static deserializeBinaryFromReader(message: GetRequest, reader: jspb.BinaryReader): GetRequest;
-}
-
-export namespace GetRequest {
-  export type AsObject = {
-    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: GetRequestBody.AsObject,
-  }
-}
-
-export class GetRequestBody extends jspb.Message {
-  getAssetid(): string;
-  setAssetid(value: string): GetRequestBody;
-
-  getVersion(): number;
-  setVersion(value: number): GetRequestBody;
-
-  getHash(): string;
-  setHash(value: string): GetRequestBody;
-
-  getIndex(): number;
-  setIndex(value: number): GetRequestBody;
-
-  getChunkCase(): GetRequestBody.ChunkCase;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GetRequestBody.AsObject;
-  static toObject(includeInstance: boolean, msg: GetRequestBody): GetRequestBody.AsObject;
-  static serializeBinaryToWriter(message: GetRequestBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GetRequestBody;
-  static deserializeBinaryFromReader(message: GetRequestBody, reader: jspb.BinaryReader): GetRequestBody;
-}
-
-export namespace GetRequestBody {
-  export type AsObject = {
-    assetid: string,
-    version: number,
-    hash: string,
-    index: number,
-  }
-
-  export enum ChunkCase { 
-    CHUNK_NOT_SET = 0,
-    HASH = 3,
-    INDEX = 4,
-  }
-}
-
-export class StreamGetResponse extends jspb.Message {
-  getContenttag(): yeying_api_common_code_pb.StreamDataTagEnum;
-  setContenttag(value: yeying_api_common_code_pb.StreamDataTagEnum): StreamGetResponse;
-
-  getHead(): StreamGetResponseHead | undefined;
-  setHead(value?: StreamGetResponseHead): StreamGetResponse;
-  hasHead(): boolean;
-  clearHead(): StreamGetResponse;
-
-  getBody(): StreamGetResponseBody | undefined;
-  setBody(value?: StreamGetResponseBody): StreamGetResponse;
-  hasBody(): boolean;
-  clearBody(): StreamGetResponse;
-
-  getTail(): StreamGetResponseTail | undefined;
-  setTail(value?: StreamGetResponseTail): StreamGetResponse;
-  hasTail(): boolean;
-  clearTail(): StreamGetResponse;
-
-  getDataCase(): StreamGetResponse.DataCase;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StreamGetResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: StreamGetResponse): StreamGetResponse.AsObject;
-  static serializeBinaryToWriter(message: StreamGetResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StreamGetResponse;
-  static deserializeBinaryFromReader(message: StreamGetResponse, reader: jspb.BinaryReader): StreamGetResponse;
-}
-
-export namespace StreamGetResponse {
-  export type AsObject = {
-    contenttag: yeying_api_common_code_pb.StreamDataTagEnum,
-    head?: StreamGetResponseHead.AsObject,
-    body?: StreamGetResponseBody.AsObject,
-    tail?: StreamGetResponseTail.AsObject,
-  }
-
-  export enum DataCase { 
-    DATA_NOT_SET = 0,
-    HEAD = 2,
-    BODY = 3,
-    TAIL = 4,
-  }
-}
-
-export class StreamGetResponseHead extends jspb.Message {
-  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): StreamGetResponseHead;
-  hasHeader(): boolean;
-  clearHeader(): StreamGetResponseHead;
-
-  getBody(): StreamGetResponseHeadBody | undefined;
-  setBody(value?: StreamGetResponseHeadBody): StreamGetResponseHead;
-  hasBody(): boolean;
-  clearBody(): StreamGetResponseHead;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StreamGetResponseHead.AsObject;
-  static toObject(includeInstance: boolean, msg: StreamGetResponseHead): StreamGetResponseHead.AsObject;
-  static serializeBinaryToWriter(message: StreamGetResponseHead, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StreamGetResponseHead;
-  static deserializeBinaryFromReader(message: StreamGetResponseHead, reader: jspb.BinaryReader): StreamGetResponseHead;
-}
-
-export namespace StreamGetResponseHead {
-  export type AsObject = {
-    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: StreamGetResponseHeadBody.AsObject,
-  }
-}
-
-export class StreamGetResponseHeadBody extends jspb.Message {
-  getStatus(): yeying_api_common_message_pb.ResponseStatus | undefined;
-  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): StreamGetResponseHeadBody;
-  hasStatus(): boolean;
-  clearStatus(): StreamGetResponseHeadBody;
-
-  getChunk(): ChunkMetadata | undefined;
-  setChunk(value?: ChunkMetadata): StreamGetResponseHeadBody;
-  hasChunk(): boolean;
-  clearChunk(): StreamGetResponseHeadBody;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StreamGetResponseHeadBody.AsObject;
-  static toObject(includeInstance: boolean, msg: StreamGetResponseHeadBody): StreamGetResponseHeadBody.AsObject;
-  static serializeBinaryToWriter(message: StreamGetResponseHeadBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StreamGetResponseHeadBody;
-  static deserializeBinaryFromReader(message: StreamGetResponseHeadBody, reader: jspb.BinaryReader): StreamGetResponseHeadBody;
-}
-
-export namespace StreamGetResponseHeadBody {
-  export type AsObject = {
-    status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
-    chunk?: ChunkMetadata.AsObject,
-  }
-}
-
-export class StreamGetResponseBody extends jspb.Message {
-  getData(): Uint8Array | string;
-  getData_asU8(): Uint8Array;
-  getData_asB64(): string;
-  setData(value: Uint8Array | string): StreamGetResponseBody;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StreamGetResponseBody.AsObject;
-  static toObject(includeInstance: boolean, msg: StreamGetResponseBody): StreamGetResponseBody.AsObject;
-  static serializeBinaryToWriter(message: StreamGetResponseBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StreamGetResponseBody;
-  static deserializeBinaryFromReader(message: StreamGetResponseBody, reader: jspb.BinaryReader): StreamGetResponseBody;
-}
-
-export namespace StreamGetResponseBody {
-  export type AsObject = {
-    data: Uint8Array | string,
-  }
-}
-
-export class StreamGetResponseTail extends jspb.Message {
-  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): StreamGetResponseTail;
-  hasHeader(): boolean;
-  clearHeader(): StreamGetResponseTail;
-
-  getBody(): StreamGetResponseTailBody | undefined;
-  setBody(value?: StreamGetResponseTailBody): StreamGetResponseTail;
-  hasBody(): boolean;
-  clearBody(): StreamGetResponseTail;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StreamGetResponseTail.AsObject;
-  static toObject(includeInstance: boolean, msg: StreamGetResponseTail): StreamGetResponseTail.AsObject;
-  static serializeBinaryToWriter(message: StreamGetResponseTail, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StreamGetResponseTail;
-  static deserializeBinaryFromReader(message: StreamGetResponseTail, reader: jspb.BinaryReader): StreamGetResponseTail;
-}
-
-export namespace StreamGetResponseTail {
-  export type AsObject = {
-    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: StreamGetResponseTailBody.AsObject,
-  }
-}
-
-export class StreamGetResponseTailBody extends jspb.Message {
-  getStatus(): yeying_api_common_message_pb.ResponseStatus | undefined;
-  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): StreamGetResponseTailBody;
-  hasStatus(): boolean;
-  clearStatus(): StreamGetResponseTailBody;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StreamGetResponseTailBody.AsObject;
-  static toObject(includeInstance: boolean, msg: StreamGetResponseTailBody): StreamGetResponseTailBody.AsObject;
-  static serializeBinaryToWriter(message: StreamGetResponseTailBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StreamGetResponseTailBody;
-  static deserializeBinaryFromReader(message: StreamGetResponseTailBody, reader: jspb.BinaryReader): StreamGetResponseTailBody;
-}
-
-export namespace StreamGetResponseTailBody {
-  export type AsObject = {
-    status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
-  }
-}
-
-export class GetResponseBody extends jspb.Message {
-  getStatus(): yeying_api_common_message_pb.ResponseStatus | undefined;
-  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): GetResponseBody;
-  hasStatus(): boolean;
-  clearStatus(): GetResponseBody;
-
-  getChunk(): ChunkMetadata | undefined;
-  setChunk(value?: ChunkMetadata): GetResponseBody;
-  hasChunk(): boolean;
-  clearChunk(): GetResponseBody;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GetResponseBody.AsObject;
-  static toObject(includeInstance: boolean, msg: GetResponseBody): GetResponseBody.AsObject;
-  static serializeBinaryToWriter(message: GetResponseBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GetResponseBody;
-  static deserializeBinaryFromReader(message: GetResponseBody, reader: jspb.BinaryReader): GetResponseBody;
-}
-
-export namespace GetResponseBody {
-  export type AsObject = {
-    status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
-    chunk?: ChunkMetadata.AsObject,
-  }
-}
-
-export class GetResponse extends jspb.Message {
-  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): GetResponse;
-  hasHeader(): boolean;
-  clearHeader(): GetResponse;
-
-  getBody(): GetResponseBody | undefined;
-  setBody(value?: GetResponseBody): GetResponse;
-  hasBody(): boolean;
-  clearBody(): GetResponse;
-
-  getData(): Uint8Array | string;
-  getData_asU8(): Uint8Array;
-  getData_asB64(): string;
-  setData(value: Uint8Array | string): GetResponse;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GetResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: GetResponse): GetResponse.AsObject;
-  static serializeBinaryToWriter(message: GetResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GetResponse;
-  static deserializeBinaryFromReader(message: GetResponse, reader: jspb.BinaryReader): GetResponse;
-}
-
-export namespace GetResponse {
-  export type AsObject = {
-    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: GetResponseBody.AsObject,
-    data: Uint8Array | string,
-  }
-}
-
 export class RemoveRequest extends jspb.Message {
   getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
   setHeader(value?: yeying_api_common_message_pb.MessageHeader): RemoveRequest;
@@ -997,11 +461,14 @@ export namespace RemoveRequest {
 }
 
 export class RemoveRequestBody extends jspb.Message {
-  getAssetid(): string;
-  setAssetid(value: string): RemoveRequestBody;
+  getUid(): string;
+  setUid(value: string): RemoveRequestBody;
 
   getVersion(): number;
   setVersion(value: number): RemoveRequestBody;
+
+  getHard(): boolean;
+  setHard(value: boolean): RemoveRequestBody;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): RemoveRequestBody.AsObject;
@@ -1013,8 +480,9 @@ export class RemoveRequestBody extends jspb.Message {
 
 export namespace RemoveRequestBody {
   export type AsObject = {
-    assetid: string,
+    uid: string,
     version: number,
+    hard: boolean,
   }
 }
 
@@ -1074,9 +542,6 @@ export class ChunkMetadata extends jspb.Message {
   getSize(): number;
   setSize(value: number): ChunkMetadata;
 
-  getExtend(): string;
-  setExtend(value: string): ChunkMetadata;
-
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ChunkMetadata.AsObject;
   static toObject(includeInstance: boolean, msg: ChunkMetadata): ChunkMetadata.AsObject;
@@ -1090,7 +555,6 @@ export namespace ChunkMetadata {
     index: number,
     hash: string,
     size: number,
-    extend: string,
   }
 }
 
@@ -1110,8 +574,8 @@ export class AssetMetadata extends jspb.Message {
   getParenthash(): string;
   setParenthash(value: string): AssetMetadata;
 
-  getHash(): string;
-  setHash(value: string): AssetMetadata;
+  getContenthash(): string;
+  setContenthash(value: string): AssetMetadata;
 
   getMergedhash(): string;
   setMergedhash(value: string): AssetMetadata;
@@ -1130,6 +594,9 @@ export class AssetMetadata extends jspb.Message {
 
   getCheckpoint(): string;
   setCheckpoint(value: string): AssetMetadata;
+
+  getDeleted(): string;
+  setDeleted(value: string): AssetMetadata;
 
   getTotal(): number;
   setTotal(value: number): AssetMetadata;
@@ -1166,13 +633,14 @@ export namespace AssetMetadata {
     uid: string,
     name: string,
     parenthash: string,
-    hash: string,
+    contenthash: string,
     mergedhash: string,
     description: string,
     format: yeying_api_common_code_pb.DigitalFormatEnum,
     size: number,
     created: string,
     checkpoint: string,
+    deleted: string,
     total: number,
     block: number,
     encrypted: boolean,
@@ -1182,8 +650,3 @@ export namespace AssetMetadata {
   }
 }
 
-export enum AssetActionEnum { 
-  ASSET_ACTION_UNKNOWN = 0,
-  ASSET_ACTION_OVERWRITE = 1,
-  ASSET_ACTION_APPEND = 2,
-}

@@ -35,10 +35,11 @@ import {
     generateIv,
     generateSecurityAlgorithm
 } from '../common/crypto'
-import { convertLanguageCodeTo, decodeBase64, encodeBase64 } from '../common/codec'
+import { decodeBase64, encodeBase64 } from '../common/codec'
 import { LanguageCodeEnum } from '../yeying/api/common/code_pb'
 import { ServiceProvider } from '../provider/service/service'
 import { Authenticate } from '../provider/common/authenticate'
+import { convertLanguageCodeTo } from '../common/message'
 
 export class AccountManager {
     private historyKey: string = 'yeying.history.accounts'

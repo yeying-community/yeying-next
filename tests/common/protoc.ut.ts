@@ -1,5 +1,5 @@
 import {CipherTypeEnum} from "../../src/yeying/api/common/code_pb";
-import {convertCipherTypeFrom, convertCipherTypeTo} from "../../src/common/codec";
+import {convertCipherTypeFrom, convertCipherTypeTo} from "../../src/common/message";
 import {expect} from "vitest";
 
 describe('Protoc', () => {
