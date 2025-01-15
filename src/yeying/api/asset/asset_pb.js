@@ -968,7 +968,8 @@ proto.yeying.api.asset.SearchCondition.prototype.toObject = function(opt_include
 proto.yeying.api.asset.SearchCondition.toObject = function(includeInstance, msg) {
   var f, obj = {
 format: jspb.Message.getFieldWithDefault(msg, 1, 0),
-contenthash: jspb.Message.getFieldWithDefault(msg, 2, "")
+contenthash: jspb.Message.getFieldWithDefault(msg, 2, ""),
+trash: jspb.Message.getBooleanFieldWithDefault(msg, 3, false)
   };
 
   if (includeInstance) {
@@ -1013,6 +1014,10 @@ proto.yeying.api.asset.SearchCondition.deserializeBinaryFromReader = function(ms
       var value = /** @type {string} */ (reader.readString());
       msg.setContenthash(value);
       break;
+    case 3:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setTrash(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1056,6 +1061,13 @@ proto.yeying.api.asset.SearchCondition.serializeBinaryToWriter = function(messag
       f
     );
   }
+  f = message.getTrash();
+  if (f) {
+    writer.writeBool(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -1092,6 +1104,24 @@ proto.yeying.api.asset.SearchCondition.prototype.getContenthash = function() {
  */
 proto.yeying.api.asset.SearchCondition.prototype.setContenthash = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional bool trash = 3;
+ * @return {boolean}
+ */
+proto.yeying.api.asset.SearchCondition.prototype.getTrash = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.yeying.api.asset.SearchCondition} returns this
+ */
+proto.yeying.api.asset.SearchCondition.prototype.setTrash = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -3254,7 +3284,8 @@ proto.yeying.api.asset.DetailRequestBody.prototype.toObject = function(opt_inclu
 proto.yeying.api.asset.DetailRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
 uid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-version: jspb.Message.getFieldWithDefault(msg, 2, 0)
+version: jspb.Message.getFieldWithDefault(msg, 2, 0),
+trash: jspb.Message.getBooleanFieldWithDefault(msg, 3, false)
   };
 
   if (includeInstance) {
@@ -3299,6 +3330,10 @@ proto.yeying.api.asset.DetailRequestBody.deserializeBinaryFromReader = function(
       var value = /** @type {number} */ (reader.readUint32());
       msg.setVersion(value);
       break;
+    case 3:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setTrash(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -3342,6 +3377,13 @@ proto.yeying.api.asset.DetailRequestBody.serializeBinaryToWriter = function(mess
       f
     );
   }
+  f = message.getTrash();
+  if (f) {
+    writer.writeBool(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -3378,6 +3420,24 @@ proto.yeying.api.asset.DetailRequestBody.prototype.getVersion = function() {
  */
 proto.yeying.api.asset.DetailRequestBody.prototype.setVersion = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional bool trash = 3;
+ * @return {boolean}
+ */
+proto.yeying.api.asset.DetailRequestBody.prototype.getTrash = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.yeying.api.asset.DetailRequestBody} returns this
+ */
+proto.yeying.api.asset.DetailRequestBody.prototype.setTrash = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 

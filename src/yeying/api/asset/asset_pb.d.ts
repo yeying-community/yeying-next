@@ -63,6 +63,9 @@ export class SearchCondition extends jspb.Message {
   getContenthash(): string;
   setContenthash(value: string): SearchCondition;
 
+  getTrash(): boolean;
+  setTrash(value: boolean): SearchCondition;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SearchCondition.AsObject;
   static toObject(includeInstance: boolean, msg: SearchCondition): SearchCondition.AsObject;
@@ -75,6 +78,7 @@ export namespace SearchCondition {
   export type AsObject = {
     format: yeying_api_common_code_pb.DigitalFormatEnum,
     contenthash: string,
+    trash: boolean,
   }
 }
 
@@ -359,6 +363,9 @@ export class DetailRequestBody extends jspb.Message {
   getVersion(): number;
   setVersion(value: number): DetailRequestBody;
 
+  getTrash(): boolean;
+  setTrash(value: boolean): DetailRequestBody;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DetailRequestBody.AsObject;
   static toObject(includeInstance: boolean, msg: DetailRequestBody): DetailRequestBody.AsObject;
@@ -371,6 +378,7 @@ export namespace DetailRequestBody {
   export type AsObject = {
     uid: string,
     version: number,
+    trash: boolean,
   }
 }
 

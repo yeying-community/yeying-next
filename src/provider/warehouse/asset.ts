@@ -31,10 +31,9 @@ export class AssetProvider {
         this.client = new AssetClient(option.proxy)
     }
 
-    search(format: DigitalFormatEnum, page: number, pageSize: number) {
+    search(condition: SearchCondition, page: number, pageSize: number) {
         return new Promise<SearchResponseBody>(async (resolve, reject) => {
-            const condition = new SearchCondition()
-            condition.setFormat(format)
+
 
             const requestPage = new RequestPage()
             requestPage.setPage(page)
@@ -88,12 +87,12 @@ export class AssetProvider {
         })
     }
 
-    detail(uid: string, version: number) {
+    detail(uid: string, version: number, trash: boolean) {
         return new Promise<AssetMetadata>(async (resolve, reject) => {
             const body = new DetailRequestBody()
             body.setUid(uid)
             body.setVersion(version)
-
+            body.setTrash(trash)
             let header
             try {
                 header = await this.authenticate.createHeader(body.serializeBinary())
