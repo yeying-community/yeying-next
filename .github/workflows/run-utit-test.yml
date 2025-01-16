@@ -13,6 +13,7 @@ jobs:
   #
   operation_before_merge:
     runs-on: ubuntu-24.04
+    environment: cicd
 
     steps:
       - name: Checkout branch
@@ -34,7 +35,15 @@ jobs:
 
 
       - name: start to run ut test
-        run: shopt -s globstar; npm run test -- tests/**/*.ut.ts
+        env:
+          YEYING_NODE_URL: ${{ var.YEYING_NODE_URL }}
+          YEYING_AGENT_URL: ${{ var.YEYING_AGENT_URL }}
+          YEYING_WAREHOUSE_URL: ${{ var.YEYING_WAREHOUSE_URL }}
+        run: |
+          echo "Using Yeying Node URL: $YEYING_NODE_URL"
+          echo "Using Yeying Agent URL: $YEYING_AGENT_URL"
+          echo "Using Yeying Warehouse URL: $YEYING_WAREHOUSE_URL"
+          shopt -s globstar; npm run test -- tests/**/*.ut.ts
 
       - name: check it.ts file exists
         run: |
@@ -43,4 +52,12 @@ jobs:
           find tests -iname "*.ut.ts"
 
       - name: start to run it test
-        run: shopt -s globstar; npm run test -- tests/**/*.it.ts
+        env:
+          YEYING_NODE_URL: ${{ var.YEYING_NODE_URL }}
+          YEYING_AGENT_URL: ${{ var.YEYING_AGENT_URL }}
+          YEYING_WAREHOUSE_URL: ${{ var.YEYING_WAREHOUSE_URL }}
+        run: |
+          echo "Using Yeying Node URL: $YEYING_NODE_URL"
+          echo "Using Yeying Agent URL: $YEYING_AGENT_URL"
+          echo "Using Yeying Warehouse URL: $YEYING_WAREHOUSE_URL"
+          shopt -s globstar; npm run test -- tests/**/*.it.ts
