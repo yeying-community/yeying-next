@@ -36,9 +36,9 @@ jobs:
 
       - name: start to run ut test
         env:
-          YEYING_NODE_URL: ${{ var.YEYING_NODE_URL }}
-          YEYING_AGENT_URL: ${{ var.YEYING_AGENT_URL }}
-          YEYING_WAREHOUSE_URL: ${{ var.YEYING_WAREHOUSE_URL }}
+          YEYING_NODE_URL: ${{ vars.YEYING_NODE_URL }}
+          YEYING_AGENT_URL: ${{ vars.YEYING_AGENT_URL }}
+          YEYING_WAREHOUSE_URL: ${{ vars.YEYING_WAREHOUSE_URL }}
         run: |
           echo "Using Yeying Node URL: $YEYING_NODE_URL"
           echo "Using Yeying Agent URL: $YEYING_AGENT_URL"
@@ -53,9 +53,9 @@ jobs:
 
       - name: start to run it test
         env:
-          YEYING_NODE_URL: ${{ var.YEYING_NODE_URL }}
-          YEYING_AGENT_URL: ${{ var.YEYING_AGENT_URL }}
-          YEYING_WAREHOUSE_URL: ${{ var.YEYING_WAREHOUSE_URL }}
+          YEYING_NODE_URL: ${{ vars.YEYING_NODE_URL }}
+          YEYING_AGENT_URL: ${{ vars.YEYING_AGENT_URL }}
+          YEYING_WAREHOUSE_URL: ${{ vars.YEYING_WAREHOUSE_URL }}
         run: |
           echo "Using Yeying Node URL: $YEYING_NODE_URL"
           echo "Using Yeying Agent URL: $YEYING_AGENT_URL"
