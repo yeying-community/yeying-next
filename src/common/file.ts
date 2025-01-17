@@ -50,6 +50,7 @@ export function readFile(file: Blob, type: ResultDataType = ResultDataType.Array
     })
 }
 
-export function readBlock(file: File, start: number, end: number) {
-    return readFile(file.slice(start, end), ResultDataType.ArrayBuffer)
+export async function readBlock(file: File, start: number, end: number) {
+    const data = await readFile(file.slice(start, end), ResultDataType.ArrayBuffer)
+    return data as Uint8Array
 }
