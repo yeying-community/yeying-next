@@ -8,11 +8,12 @@ const blockAddress = getBlockAddress()
 const provider: ProviderOption = getProvider(ServiceCodeEnum.SERVICE_CODE_NODE)
 
 describe('Service', () => {
-    // it('register', async () => {
-    //     const serviceProvider = new ServiceProvider(new Authenticate(identity), provider)
-    //     await serviceProvider.register(software)
-    //     console.log(`Success to register identity=${software.blockAddress.identifier}`)
-    // })
+
+    it('register', async () => {
+        const serviceProvider = new ServiceProvider(new Authenticate(blockAddress), provider)
+        // await serviceProvider.register(software)
+        // console.log(`Success to register identity=${software.blockAddress.identifier}`)
+    })
     //
     // it('search', async () => {
     //     const serviceProvider = new ServiceProvider(new Authenticate(identity.blockAddress), provider)
