@@ -10,15 +10,51 @@ import { fromDidToPublicKey, verifyHashBytes } from '@yeying-community/yeying-we
 import { DataForgery } from '../../common/error'
 import { FaqMetadata } from '../../yeying/api/support/support_pb'
 
+/**
+ * BulletinProvider 类，用于提供公告相关的操作，包括获取公告列表等。
+ * 
+ * @example
+ * ```ts
+ * const bulletinProvider = new BulletinProvider(authenticate, option);
+ * const response = await bulletinProvider.list(LanguageCodeEnum.EN, 1, 10);
+ * console.log(response); 
+ * ```
+ */
 export class BulletinProvider {
     private authenticate: Authenticate
     private client: BulletinClient
 
+    /**
+     * 构造 BulletinProvider 实例。
+     * 
+     * @param authenticate - 用于认证的 Authenticate 实例。
+     * @param option - 提供的选项配置，如代理设置等。
+     * @example
+     * ```ts
+     * const authenticate = new Authenticate(blockAddress);
+     * const providerOption = { proxy: 'proxy_url' };
+     * const bulletinProvider = new BulletinProvider(authenticate, providerOption);
+     * ```
+     */
     constructor(authenticate: Authenticate, option: ProviderOption) {
         this.authenticate = authenticate
         this.client = new BulletinClient(option.proxy)
     }
 
+    /**
+     * 获取公告列表。
+     * 
+     * @param language - 公告的语言。
+     * @param page - 页码。
+     * @param pageSize - 每页显示的公告数量。
+     * @returns 一个 Promise，解析为公告列表的响应。
+     * @throws {DataForgery} 如果验证公告数据的签名无效，则抛出错误。
+     * @example
+     * ```ts
+     * const response = await bulletinProvider.list(LanguageCodeEnum.EN, 1, 10);
+     * console.log(response); // 输出公告列表
+     * ```
+     */
     async list(language: LanguageCodeEnum, page: number, pageSize: number) {
         return new Promise<ListResponseBody>(async (resolve, reject) => {
             const requestPage = new RequestPage()
@@ -32,9 +68,10 @@ export class BulletinProvider {
 
             let header: MessageHeader
             try {
+                // 创建消息头
                 header = await this.authenticate.createHeader(body.serializeBinary())
             } catch (err) {
-                console.error('Fail to create header for listing solutions', err)
+                console.error('创建列表解决方案的消息头失败', err)
                 return err
             }
 
@@ -42,9 +79,11 @@ export class BulletinProvider {
             request.setHeader(header)
             request.setBody(body)
 
+            // 向客户端发送请求
             this.client.list(request, null, (err, res) => {
+                // 处理响应并验证数据
                 this.authenticate.doResponse(err, res).then(async (body) => {
-                    // 检查解决方案信息是否有效
+                    // 验证解决方案信息的签名
                     for (let solutionMetadata of body.getSolutionsList()) {
                         const signature = solutionMetadata.getSignature()
                         solutionMetadata.setSignature('')
@@ -56,7 +95,8 @@ export class BulletinProvider {
                         if (passed) {
                             solutionMetadata.setSignature(signature)
                         } else {
-                            return reject(new DataForgery('invalid signature!'))
+                            // 如果签名无效，抛出数据伪造错误
+                            return reject(new DataForgery('无效的签名！'))
                         }
                     }
 

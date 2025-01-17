@@ -16,18 +16,51 @@ import { ProviderOption } from '../common/model'
 import { isValidString } from '../../common/string'
 
 /**
- * 代表了一个节点，夜莺社区提供了默认的节点，也可以选择其他社区的节点，以及使用该节点的生态应用
+ * 代表了一个用户节点提供商，提供对用户的增、删、改、查操作。
+ *
+ * @class
+ * @example
+ * ```ts
+ * const authenticate = new Authenticate(blockAddress);
+ * const providerOption: ProviderOption = { proxy: 'http://example.com' };
+ * const userProvider = new UserProvider(authenticate, providerOption);
+ * ```
  */
-
 export class UserProvider {
     private authenticate: Authenticate
     private client: UserClient
 
+    /**
+     * 构造函数，用于初始化 `UserProvider` 类。
+     *
+     * @param authenticate - 认证实例，用于进行身份验证。
+     * @param option - 提供商配置，包括代理设置。
+     * @example
+     * ```ts
+     * const userProvider = new UserProvider(authenticate, { proxy: 'http://example.com' });
+     * ```
+     */
     constructor(authenticate: Authenticate, option: ProviderOption) {
         this.authenticate = authenticate
         this.client = new UserClient(option.proxy)
     }
 
+    /**
+     * 添加新用户。
+     *
+     * @param name - 用户名称。
+     * @param telephone - 用户电话。
+     * @param email - 用户电子邮件。
+     * @param avatar - 用户头像。
+     * @returns 返回添加用户的结果。
+     * @throws 错误时抛出 `Error`。
+     * @example
+     * ```ts
+     * userProvider.add('John Doe', '1234567890', 'john.doe@example.com', 'avatar.png')
+     *   .then(result => console.log(result))
+     *   .catch(err => console.error(err));
+     * ```
+     */
     add(name: string, telephone: string, email: string, avatar: string) {
         return new Promise(async (resolve, reject) => {
             const user = new UserMetadata()
@@ -58,6 +91,21 @@ export class UserProvider {
         })
     }
 
+    /**
+     * 修改用户信息。
+     *
+     * @param name - 新的用户名称（可选）。
+     * @param avatar - 新的用户头像（可选）。
+     * @param extend - 新的扩展信息（可选）。
+     * @returns 返回修改用户信息的结果。
+     * @throws 错误时抛出 `Error`。
+     * @example
+     * ```ts
+     * userProvider.mod('Jane Doe', 'avatar2.png', '{"email": "jane.doe@example.com"}')
+     *   .then(result => console.log(result))
+     *   .catch(err => console.error(err));
+     * ```
+     */
     mod(name?: string, avatar?: string, extend?: string) {
         return new Promise(async (resolve, reject) => {
             const isValidAvatar = isValidString(avatar)
@@ -109,6 +157,18 @@ export class UserProvider {
         })
     }
 
+    /**
+     * 获取用户信息。
+     *
+     * @returns 返回用户信息。
+     * @throws 错误时抛出 `Error`。
+     * @example
+     * ```ts
+     * userProvider.get()
+     *   .then(user => console.log(user))
+     *   .catch(err => console.error(err));
+     * ```
+     */
     get() {
         return new Promise<GetResponseBody>(async (resolve, reject) => {
             let header
@@ -127,6 +187,18 @@ export class UserProvider {
         })
     }
 
+    /**
+     * 删除用户。
+     *
+     * @returns 返回删除用户的结果。
+     * @throws 错误时抛出 `Error`。
+     * @example
+     * ```ts
+     * userProvider.del()
+     *   .then(result => console.log(result))
+     *   .catch(err => console.error(err));
+     * ```
+     */
     del() {
         return new Promise(async (resolve, reject) => {
             let header
