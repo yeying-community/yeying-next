@@ -23,8 +23,6 @@ var global =
 
 var yeying_api_common_message_pb = require('../../../yeying/api/common/message_pb.js');
 goog.object.extend(proto, yeying_api_common_message_pb);
-var yeying_api_common_code_pb = require('../../../yeying/api/common/code_pb.js');
-goog.object.extend(proto, yeying_api_common_code_pb);
 goog.exportSymbol('proto.yeying.api.mail.SendRequest', null, global);
 goog.exportSymbol('proto.yeying.api.mail.SendRequestBody', null, global);
 goog.exportSymbol('proto.yeying.api.mail.SendResponse', null, global);

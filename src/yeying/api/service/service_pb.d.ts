@@ -4,78 +4,6 @@ import * as yeying_api_common_message_pb from '../../../yeying/api/common/messag
 import * as yeying_api_common_code_pb from '../../../yeying/api/common/code_pb'; // proto import: "yeying/api/common/code.proto"
 
 
-export class WhoamiRequest extends jspb.Message {
-  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): WhoamiRequest;
-  hasHeader(): boolean;
-  clearHeader(): WhoamiRequest;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): WhoamiRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: WhoamiRequest): WhoamiRequest.AsObject;
-  static serializeBinaryToWriter(message: WhoamiRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): WhoamiRequest;
-  static deserializeBinaryFromReader(message: WhoamiRequest, reader: jspb.BinaryReader): WhoamiRequest;
-}
-
-export namespace WhoamiRequest {
-  export type AsObject = {
-    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-  }
-}
-
-export class WhoamiResponse extends jspb.Message {
-  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): WhoamiResponse;
-  hasHeader(): boolean;
-  clearHeader(): WhoamiResponse;
-
-  getBody(): WhoamiResponseBody | undefined;
-  setBody(value?: WhoamiResponseBody): WhoamiResponse;
-  hasBody(): boolean;
-  clearBody(): WhoamiResponse;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): WhoamiResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: WhoamiResponse): WhoamiResponse.AsObject;
-  static serializeBinaryToWriter(message: WhoamiResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): WhoamiResponse;
-  static deserializeBinaryFromReader(message: WhoamiResponse, reader: jspb.BinaryReader): WhoamiResponse;
-}
-
-export namespace WhoamiResponse {
-  export type AsObject = {
-    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: WhoamiResponseBody.AsObject,
-  }
-}
-
-export class WhoamiResponseBody extends jspb.Message {
-  getStatus(): yeying_api_common_message_pb.ResponseStatus | undefined;
-  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): WhoamiResponseBody;
-  hasStatus(): boolean;
-  clearStatus(): WhoamiResponseBody;
-
-  getService(): ServiceMetadata | undefined;
-  setService(value?: ServiceMetadata): WhoamiResponseBody;
-  hasService(): boolean;
-  clearService(): WhoamiResponseBody;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): WhoamiResponseBody.AsObject;
-  static toObject(includeInstance: boolean, msg: WhoamiResponseBody): WhoamiResponseBody.AsObject;
-  static serializeBinaryToWriter(message: WhoamiResponseBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): WhoamiResponseBody;
-  static deserializeBinaryFromReader(message: WhoamiResponseBody, reader: jspb.BinaryReader): WhoamiResponseBody;
-}
-
-export namespace WhoamiResponseBody {
-  export type AsObject = {
-    status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
-    service?: ServiceMetadata.AsObject,
-  }
-}
-
 export class RegisterRequest extends jspb.Message {
   getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
   setHeader(value?: yeying_api_common_message_pb.MessageHeader): RegisterRequest;
@@ -103,8 +31,8 @@ export namespace RegisterRequest {
 }
 
 export class RegisterRequestBody extends jspb.Message {
-  getService(): ServiceMetadata | undefined;
-  setService(value?: ServiceMetadata): RegisterRequestBody;
+  getService(): yeying_api_common_message_pb.ServiceMetadata | undefined;
+  setService(value?: yeying_api_common_message_pb.ServiceMetadata): RegisterRequestBody;
   hasService(): boolean;
   clearService(): RegisterRequestBody;
 
@@ -118,7 +46,7 @@ export class RegisterRequestBody extends jspb.Message {
 
 export namespace RegisterRequestBody {
   export type AsObject = {
-    service?: ServiceMetadata.AsObject,
+    service?: yeying_api_common_message_pb.ServiceMetadata.AsObject,
   }
 }
 
@@ -264,10 +192,10 @@ export class SearchResponseBody extends jspb.Message {
   hasStatus(): boolean;
   clearStatus(): SearchResponseBody;
 
-  getServicesList(): Array<ServiceMetadata>;
-  setServicesList(value: Array<ServiceMetadata>): SearchResponseBody;
+  getServicesList(): Array<yeying_api_common_message_pb.ServiceMetadata>;
+  setServicesList(value: Array<yeying_api_common_message_pb.ServiceMetadata>): SearchResponseBody;
   clearServicesList(): SearchResponseBody;
-  addServices(value?: ServiceMetadata, index?: number): ServiceMetadata;
+  addServices(value?: yeying_api_common_message_pb.ServiceMetadata, index?: number): yeying_api_common_message_pb.ServiceMetadata;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SearchResponseBody.AsObject;
@@ -280,7 +208,7 @@ export class SearchResponseBody extends jspb.Message {
 export namespace SearchResponseBody {
   export type AsObject = {
     status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
-    servicesList: Array<ServiceMetadata.AsObject>,
+    servicesList: Array<yeying_api_common_message_pb.ServiceMetadata.AsObject>,
   }
 }
 
@@ -371,82 +299,6 @@ export class UnregisterResponseBody extends jspb.Message {
 export namespace UnregisterResponseBody {
   export type AsObject = {
     status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
-  }
-}
-
-export class ServiceMetadata extends jspb.Message {
-  getOwner(): string;
-  setOwner(value: string): ServiceMetadata;
-
-  getNetwork(): number;
-  setNetwork(value: number): ServiceMetadata;
-
-  getAddress(): string;
-  setAddress(value: string): ServiceMetadata;
-
-  getDid(): string;
-  setDid(value: string): ServiceMetadata;
-
-  getVersion(): number;
-  setVersion(value: number): ServiceMetadata;
-
-  getName(): string;
-  setName(value: string): ServiceMetadata;
-
-  getDescription(): string;
-  setDescription(value: string): ServiceMetadata;
-
-  getCode(): yeying_api_common_code_pb.ServiceCodeEnum;
-  setCode(value: yeying_api_common_code_pb.ServiceCodeEnum): ServiceMetadata;
-
-  getApisList(): Array<yeying_api_common_code_pb.ApiCodeEnum>;
-  setApisList(value: Array<yeying_api_common_code_pb.ApiCodeEnum>): ServiceMetadata;
-  clearApisList(): ServiceMetadata;
-  addApis(value: yeying_api_common_code_pb.ApiCodeEnum, index?: number): ServiceMetadata;
-
-  getProxy(): string;
-  setProxy(value: string): ServiceMetadata;
-
-  getGrpc(): string;
-  setGrpc(value: string): ServiceMetadata;
-
-  getAvatar(): string;
-  setAvatar(value: string): ServiceMetadata;
-
-  getCreated(): string;
-  setCreated(value: string): ServiceMetadata;
-
-  getCheckpoint(): string;
-  setCheckpoint(value: string): ServiceMetadata;
-
-  getSignature(): string;
-  setSignature(value: string): ServiceMetadata;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): ServiceMetadata.AsObject;
-  static toObject(includeInstance: boolean, msg: ServiceMetadata): ServiceMetadata.AsObject;
-  static serializeBinaryToWriter(message: ServiceMetadata, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): ServiceMetadata;
-  static deserializeBinaryFromReader(message: ServiceMetadata, reader: jspb.BinaryReader): ServiceMetadata;
-}
-
-export namespace ServiceMetadata {
-  export type AsObject = {
-    owner: string,
-    network: number,
-    address: string,
-    did: string,
-    version: number,
-    name: string,
-    description: string,
-    code: yeying_api_common_code_pb.ServiceCodeEnum,
-    apisList: Array<yeying_api_common_code_pb.ApiCodeEnum>,
-    proxy: string,
-    grpc: string,
-    avatar: string,
-    created: string,
-    checkpoint: string,
-    signature: string,
   }
 }
 

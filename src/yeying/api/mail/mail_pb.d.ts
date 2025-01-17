@@ -1,7 +1,6 @@
 import * as jspb from 'google-protobuf'
 
 import * as yeying_api_common_message_pb from '../../../yeying/api/common/message_pb'; // proto import: "yeying/api/common/message.proto"
-import * as yeying_api_common_code_pb from '../../../yeying/api/common/code_pb'; // proto import: "yeying/api/common/code.proto"
 
 
 export class SendRequest extends jspb.Message {

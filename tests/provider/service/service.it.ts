@@ -1,24 +1,19 @@
 import {ServiceProvider} from '../../../src/provider/service/service.js'
 import {getBlockAddress, getProvider} from "../common/common";
 import {ProviderOption} from "../../../src/provider/common/model";
-import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
+import {ResponseCodeEnum, ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
 import {Authenticate} from "../../../src/provider/common/authenticate";
 
 const blockAddress = getBlockAddress()
 const provider: ProviderOption = getProvider(ServiceCodeEnum.SERVICE_CODE_NODE)
 
-describe('Identity', () => {
-    it('whoami', async () => {
-        const serviceProvider = new ServiceProvider(new Authenticate(blockAddress), provider)
-        const service = await serviceProvider.whoami()
-        console.log(`whoami=${JSON.stringify(service)}`)
-    })
+describe('Service', () => {
 
-    // it('register', async () => {
-    //     const serviceProvider = new ServiceProvider(new Authenticate(identity), provider)
-    //     await serviceProvider.register(software)
-    //     console.log(`Success to register identity=${software.blockAddress.identifier}`)
-    // })
+    it('register', async () => {
+        const serviceProvider = new ServiceProvider(new Authenticate(blockAddress), provider)
+        // await serviceProvider.register(software)
+        // console.log(`Success to register identity=${software.blockAddress.identifier}`)
+    })
     //
     // it('search', async () => {
     //     const serviceProvider = new ServiceProvider(new Authenticate(identity.blockAddress), provider)
