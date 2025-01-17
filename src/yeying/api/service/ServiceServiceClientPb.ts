@@ -39,49 +39,6 @@ export class ServiceClient {
     this.options_ = options;
   }
 
-  methodDescriptorWhoami = new grpcWeb.MethodDescriptor(
-    '/yeying.api.service.Service/Whoami',
-    grpcWeb.MethodType.UNARY,
-    yeying_api_service_service_pb.WhoamiRequest,
-    yeying_api_service_service_pb.WhoamiResponse,
-    (request: yeying_api_service_service_pb.WhoamiRequest) => {
-      return request.serializeBinary();
-    },
-    yeying_api_service_service_pb.WhoamiResponse.deserializeBinary
-  );
-
-  whoami(
-    request: yeying_api_service_service_pb.WhoamiRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<yeying_api_service_service_pb.WhoamiResponse>;
-
-  whoami(
-    request: yeying_api_service_service_pb.WhoamiRequest,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.RpcError,
-               response: yeying_api_service_service_pb.WhoamiResponse) => void): grpcWeb.ClientReadableStream<yeying_api_service_service_pb.WhoamiResponse>;
-
-  whoami(
-    request: yeying_api_service_service_pb.WhoamiRequest,
-    metadata?: grpcWeb.Metadata | null,
-    callback?: (err: grpcWeb.RpcError,
-               response: yeying_api_service_service_pb.WhoamiResponse) => void) {
-    if (callback !== undefined) {
-      return this.client_.rpcCall(
-        this.hostname_ +
-          '/yeying.api.service.Service/Whoami',
-        request,
-        metadata || {},
-        this.methodDescriptorWhoami,
-        callback);
-    }
-    return this.client_.unaryCall(
-    this.hostname_ +
-      '/yeying.api.service.Service/Whoami',
-    request,
-    metadata || {},
-    this.methodDescriptorWhoami);
-  }
-
   methodDescriptorRegister = new grpcWeb.MethodDescriptor(
     '/yeying.api.service.Service/Register',
     grpcWeb.MethodType.UNARY,

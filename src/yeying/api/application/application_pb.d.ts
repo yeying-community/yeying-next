@@ -31,20 +31,15 @@ export namespace SearchRequest {
 }
 
 export class SearchRequestBody extends jspb.Message {
-  getCode(): yeying_api_common_code_pb.ApplicationCodeEnum;
-  setCode(value: yeying_api_common_code_pb.ApplicationCodeEnum): SearchRequestBody;
+  getCondition(): SearchCondition | undefined;
+  setCondition(value?: SearchCondition): SearchRequestBody;
+  hasCondition(): boolean;
+  clearCondition(): SearchRequestBody;
 
-  getStatus(): yeying_api_common_code_pb.ApplicationStatusEnum;
-  setStatus(value: yeying_api_common_code_pb.ApplicationStatusEnum): SearchRequestBody;
-
-  getOwner(): string;
-  setOwner(value: string): SearchRequestBody;
-
-  getPage(): number;
-  setPage(value: number): SearchRequestBody;
-
-  getPagesize(): number;
-  setPagesize(value: number): SearchRequestBody;
+  getPage(): yeying_api_common_message_pb.RequestPage | undefined;
+  setPage(value?: yeying_api_common_message_pb.RequestPage): SearchRequestBody;
+  hasPage(): boolean;
+  clearPage(): SearchRequestBody;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SearchRequestBody.AsObject;
@@ -56,11 +51,34 @@ export class SearchRequestBody extends jspb.Message {
 
 export namespace SearchRequestBody {
   export type AsObject = {
+    condition?: SearchCondition.AsObject,
+    page?: yeying_api_common_message_pb.RequestPage.AsObject,
+  }
+}
+
+export class SearchCondition extends jspb.Message {
+  getCode(): yeying_api_common_code_pb.ApplicationCodeEnum;
+  setCode(value: yeying_api_common_code_pb.ApplicationCodeEnum): SearchCondition;
+
+  getStatus(): yeying_api_common_code_pb.ApplicationStatusEnum;
+  setStatus(value: yeying_api_common_code_pb.ApplicationStatusEnum): SearchCondition;
+
+  getOwner(): string;
+  setOwner(value: string): SearchCondition;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): SearchCondition.AsObject;
+  static toObject(includeInstance: boolean, msg: SearchCondition): SearchCondition.AsObject;
+  static serializeBinaryToWriter(message: SearchCondition, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): SearchCondition;
+  static deserializeBinaryFromReader(message: SearchCondition, reader: jspb.BinaryReader): SearchCondition;
+}
+
+export namespace SearchCondition {
+  export type AsObject = {
     code: yeying_api_common_code_pb.ApplicationCodeEnum,
     status: yeying_api_common_code_pb.ApplicationStatusEnum,
     owner: string,
-    page: number,
-    pagesize: number,
   }
 }
 
@@ -229,11 +247,16 @@ export namespace ApplicationExtend {
 }
 
 export class ApplicationComment extends jspb.Message {
-  getAuditor(): string;
-  setAuditor(value: string): ApplicationComment;
+  getAuditorList(): Array<string>;
+  setAuditorList(value: Array<string>): ApplicationComment;
+  clearAuditorList(): ApplicationComment;
+  addAuditor(value: string, index?: number): ApplicationComment;
 
   getComment(): string;
   setComment(value: string): ApplicationComment;
+
+  getPassed(): boolean;
+  setPassed(value: boolean): ApplicationComment;
 
   getSignature(): string;
   setSignature(value: string): ApplicationComment;
@@ -248,8 +271,9 @@ export class ApplicationComment extends jspb.Message {
 
 export namespace ApplicationComment {
   export type AsObject = {
-    auditor: string,
+    auditorList: Array<string>,
     comment: string,
+    passed: boolean,
     signature: string,
   }
 }
@@ -269,9 +293,6 @@ export class ApplicationMetadata extends jspb.Message {
 
   getHash(): string;
   setHash(value: string): ApplicationMetadata;
-
-  getUid(): string;
-  setUid(value: string): ApplicationMetadata;
 
   getVersion(): number;
   setVersion(value: number): ApplicationMetadata;
@@ -327,7 +348,6 @@ export namespace ApplicationMetadata {
     address: string,
     did: string,
     hash: string,
-    uid: string,
     version: number,
     name: string,
     code: yeying_api_common_code_pb.ApplicationCodeEnum,

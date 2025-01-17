@@ -111,3 +111,79 @@ export namespace RequestPage {
   }
 }
 
+export class ServiceMetadata extends jspb.Message {
+  getOwner(): string;
+  setOwner(value: string): ServiceMetadata;
+
+  getNetwork(): number;
+  setNetwork(value: number): ServiceMetadata;
+
+  getAddress(): string;
+  setAddress(value: string): ServiceMetadata;
+
+  getDid(): string;
+  setDid(value: string): ServiceMetadata;
+
+  getVersion(): number;
+  setVersion(value: number): ServiceMetadata;
+
+  getName(): string;
+  setName(value: string): ServiceMetadata;
+
+  getDescription(): string;
+  setDescription(value: string): ServiceMetadata;
+
+  getCode(): yeying_api_common_code_pb.ServiceCodeEnum;
+  setCode(value: yeying_api_common_code_pb.ServiceCodeEnum): ServiceMetadata;
+
+  getApisList(): Array<yeying_api_common_code_pb.ApiCodeEnum>;
+  setApisList(value: Array<yeying_api_common_code_pb.ApiCodeEnum>): ServiceMetadata;
+  clearApisList(): ServiceMetadata;
+  addApis(value: yeying_api_common_code_pb.ApiCodeEnum, index?: number): ServiceMetadata;
+
+  getProxy(): string;
+  setProxy(value: string): ServiceMetadata;
+
+  getGrpc(): string;
+  setGrpc(value: string): ServiceMetadata;
+
+  getAvatar(): string;
+  setAvatar(value: string): ServiceMetadata;
+
+  getCreated(): string;
+  setCreated(value: string): ServiceMetadata;
+
+  getCheckpoint(): string;
+  setCheckpoint(value: string): ServiceMetadata;
+
+  getSignature(): string;
+  setSignature(value: string): ServiceMetadata;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ServiceMetadata.AsObject;
+  static toObject(includeInstance: boolean, msg: ServiceMetadata): ServiceMetadata.AsObject;
+  static serializeBinaryToWriter(message: ServiceMetadata, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ServiceMetadata;
+  static deserializeBinaryFromReader(message: ServiceMetadata, reader: jspb.BinaryReader): ServiceMetadata;
+}
+
+export namespace ServiceMetadata {
+  export type AsObject = {
+    owner: string,
+    network: number,
+    address: string,
+    did: string,
+    version: number,
+    name: string,
+    description: string,
+    code: yeying_api_common_code_pb.ServiceCodeEnum,
+    apisList: Array<yeying_api_common_code_pb.ApiCodeEnum>,
+    proxy: string,
+    grpc: string,
+    avatar: string,
+    created: string,
+    checkpoint: string,
+    signature: string,
+  }
+}
+
