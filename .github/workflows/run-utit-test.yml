@@ -82,6 +82,11 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: check docs directory exists
+        run: |
+          pwd
+          ls -l
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
