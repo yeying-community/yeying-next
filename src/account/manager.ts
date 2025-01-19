@@ -42,7 +42,7 @@ import {convertLanguageCodeTo} from '../common/message'
 import {NodeProvider} from "../provider/node/node";
 
 /**
- * 账号管理类，用于管理用户账号、身份以及缓存数据。update 20250119_001
+ * 账号管理类，用于管理用户账号、身份以及缓存数据。
  */
 export class AccountManager {
     private historyKey: string = 'yeying.history.accounts' // 历史账号存储的键名
