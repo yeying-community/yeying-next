@@ -68,8 +68,6 @@ jobs:
           echo "Using Yeying Warehouse URL: $YEYING_WAREHOUSE_URL"
           shopt -s globstar; npm run test -- tests/**/*.it.ts
 
-      - name: Generate docs
-        run: npm run docs
 
   # Single deploy job since we're just deploying
   deploy:
@@ -79,13 +77,27 @@ jobs:
 
     runs-on: ubuntu-24.04
     steps:
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate docs
+        run: npm run docs
 
       - name: check docs directory exists
         run: |
           pwd
           ls -l
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
