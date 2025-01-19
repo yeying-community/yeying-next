@@ -1251,7 +1251,8 @@ proto.yeying.api.service.SearchRequestBody.prototype.toObject = function(opt_inc
  */
 proto.yeying.api.service.SearchRequestBody.toObject = function(includeInstance, msg) {
   var f, obj = {
-condition: (f = msg.getCondition()) && proto.yeying.api.service.SearchCondition.toObject(includeInstance, f)
+condition: (f = msg.getCondition()) && proto.yeying.api.service.SearchCondition.toObject(includeInstance, f),
+page: (f = msg.getPage()) && yeying_api_common_message_pb.RequestPage.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1293,6 +1294,11 @@ proto.yeying.api.service.SearchRequestBody.deserializeBinaryFromReader = functio
       reader.readMessage(value,proto.yeying.api.service.SearchCondition.deserializeBinaryFromReader);
       msg.setCondition(value);
       break;
+    case 2:
+      var value = new yeying_api_common_message_pb.RequestPage;
+      reader.readMessage(value,yeying_api_common_message_pb.RequestPage.deserializeBinaryFromReader);
+      msg.setPage(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1328,6 +1334,14 @@ proto.yeying.api.service.SearchRequestBody.serializeBinaryToWriter = function(me
       1,
       f,
       proto.yeying.api.service.SearchCondition.serializeBinaryToWriter
+    );
+  }
+  f = message.getPage();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      yeying_api_common_message_pb.RequestPage.serializeBinaryToWriter
     );
   }
 };
@@ -1370,6 +1384,43 @@ proto.yeying.api.service.SearchRequestBody.prototype.hasCondition = function() {
 };
 
 
+/**
+ * optional yeying.api.common.RequestPage page = 2;
+ * @return {?proto.yeying.api.common.RequestPage}
+ */
+proto.yeying.api.service.SearchRequestBody.prototype.getPage = function() {
+  return /** @type{?proto.yeying.api.common.RequestPage} */ (
+    jspb.Message.getWrapperField(this, yeying_api_common_message_pb.RequestPage, 2));
+};
+
+
+/**
+ * @param {?proto.yeying.api.common.RequestPage|undefined} value
+ * @return {!proto.yeying.api.service.SearchRequestBody} returns this
+*/
+proto.yeying.api.service.SearchRequestBody.prototype.setPage = function(value) {
+  return jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.yeying.api.service.SearchRequestBody} returns this
+ */
+proto.yeying.api.service.SearchRequestBody.prototype.clearPage = function() {
+  return this.setPage(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.yeying.api.service.SearchRequestBody.prototype.hasPage = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
 
 
 
@@ -1402,7 +1453,8 @@ proto.yeying.api.service.SearchCondition.prototype.toObject = function(opt_inclu
  */
 proto.yeying.api.service.SearchCondition.toObject = function(includeInstance, msg) {
   var f, obj = {
-code: jspb.Message.getFieldWithDefault(msg, 1, 0)
+code: jspb.Message.getFieldWithDefault(msg, 1, 0),
+owner: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -1443,6 +1495,10 @@ proto.yeying.api.service.SearchCondition.deserializeBinaryFromReader = function(
       var value = /** @type {!proto.yeying.api.common.ServiceCodeEnum} */ (reader.readEnum());
       msg.setCode(value);
       break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOwner(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1479,6 +1535,13 @@ proto.yeying.api.service.SearchCondition.serializeBinaryToWriter = function(mess
       f
     );
   }
+  f = message.getOwner();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
 };
 
 
@@ -1497,6 +1560,24 @@ proto.yeying.api.service.SearchCondition.prototype.getCode = function() {
  */
 proto.yeying.api.service.SearchCondition.prototype.setCode = function(value) {
   return jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional string owner = 2;
+ * @return {string}
+ */
+proto.yeying.api.service.SearchCondition.prototype.getOwner = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.yeying.api.service.SearchCondition} returns this
+ */
+proto.yeying.api.service.SearchCondition.prototype.setOwner = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 

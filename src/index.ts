@@ -1,3 +1,4 @@
+export {NodeProvider} from './provider/node/node'
 export {Authenticate} from './provider/common/authenticate'
 export {ProviderOption} from './provider/common/model'
 export {UserProvider} from './provider/user/user'
@@ -12,3 +13,4 @@ export {AccountManager} from './account/manager'
 export * from './yeying/api/common/code_pb'
 export * from './yeying/api/common/message_pb'
 export { MailProvider } from './provider/mail/mail'
+

@@ -128,6 +128,11 @@ export class SearchRequestBody extends jspb.Message {
   hasCondition(): boolean;
   clearCondition(): SearchRequestBody;
 
+  getPage(): yeying_api_common_message_pb.RequestPage | undefined;
+  setPage(value?: yeying_api_common_message_pb.RequestPage): SearchRequestBody;
+  hasPage(): boolean;
+  clearPage(): SearchRequestBody;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SearchRequestBody.AsObject;
   static toObject(includeInstance: boolean, msg: SearchRequestBody): SearchRequestBody.AsObject;
@@ -139,12 +144,16 @@ export class SearchRequestBody extends jspb.Message {
 export namespace SearchRequestBody {
   export type AsObject = {
     condition?: SearchCondition.AsObject,
+    page?: yeying_api_common_message_pb.RequestPage.AsObject,
   }
 }
 
 export class SearchCondition extends jspb.Message {
   getCode(): yeying_api_common_code_pb.ServiceCodeEnum;
   setCode(value: yeying_api_common_code_pb.ServiceCodeEnum): SearchCondition;
+
+  getOwner(): string;
+  setOwner(value: string): SearchCondition;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SearchCondition.AsObject;
@@ -157,6 +166,7 @@ export class SearchCondition extends jspb.Message {
 export namespace SearchCondition {
   export type AsObject = {
     code: yeying_api_common_code_pb.ServiceCodeEnum,
+    owner: string,
   }
 }
 

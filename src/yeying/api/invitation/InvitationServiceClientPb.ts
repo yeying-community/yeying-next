@@ -39,49 +39,6 @@ export class InvitationClient {
     this.options_ = options;
   }
 
-  methodDescriptorInput = new grpcWeb.MethodDescriptor(
-    '/yeying.api.invitation.Invitation/Input',
-    grpcWeb.MethodType.UNARY,
-    yeying_api_invitation_invitation_pb.InputRequest,
-    yeying_api_invitation_invitation_pb.InputResponse,
-    (request: yeying_api_invitation_invitation_pb.InputRequest) => {
-      return request.serializeBinary();
-    },
-    yeying_api_invitation_invitation_pb.InputResponse.deserializeBinary
-  );
-
-  input(
-    request: yeying_api_invitation_invitation_pb.InputRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<yeying_api_invitation_invitation_pb.InputResponse>;
-
-  input(
-    request: yeying_api_invitation_invitation_pb.InputRequest,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.RpcError,
-               response: yeying_api_invitation_invitation_pb.InputResponse) => void): grpcWeb.ClientReadableStream<yeying_api_invitation_invitation_pb.InputResponse>;
-
-  input(
-    request: yeying_api_invitation_invitation_pb.InputRequest,
-    metadata?: grpcWeb.Metadata | null,
-    callback?: (err: grpcWeb.RpcError,
-               response: yeying_api_invitation_invitation_pb.InputResponse) => void) {
-    if (callback !== undefined) {
-      return this.client_.rpcCall(
-        this.hostname_ +
-          '/yeying.api.invitation.Invitation/Input',
-        request,
-        metadata || {},
-        this.methodDescriptorInput,
-        callback);
-    }
-    return this.client_.unaryCall(
-    this.hostname_ +
-      '/yeying.api.invitation.Invitation/Input',
-    request,
-    metadata || {},
-    this.methodDescriptorInput);
-  }
-
   methodDescriptorGenerate = new grpcWeb.MethodDescriptor(
     '/yeying.api.invitation.Invitation/Generate',
     grpcWeb.MethodType.UNARY,
@@ -123,6 +80,49 @@ export class InvitationClient {
     request,
     metadata || {},
     this.methodDescriptorGenerate);
+  }
+
+  methodDescriptorVerify = new grpcWeb.MethodDescriptor(
+    '/yeying.api.invitation.Invitation/Verify',
+    grpcWeb.MethodType.UNARY,
+    yeying_api_invitation_invitation_pb.VerifyRequest,
+    yeying_api_invitation_invitation_pb.VerifyResponse,
+    (request: yeying_api_invitation_invitation_pb.VerifyRequest) => {
+      return request.serializeBinary();
+    },
+    yeying_api_invitation_invitation_pb.VerifyResponse.deserializeBinary
+  );
+
+  verify(
+    request: yeying_api_invitation_invitation_pb.VerifyRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<yeying_api_invitation_invitation_pb.VerifyResponse>;
+
+  verify(
+    request: yeying_api_invitation_invitation_pb.VerifyRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: yeying_api_invitation_invitation_pb.VerifyResponse) => void): grpcWeb.ClientReadableStream<yeying_api_invitation_invitation_pb.VerifyResponse>;
+
+  verify(
+    request: yeying_api_invitation_invitation_pb.VerifyRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: yeying_api_invitation_invitation_pb.VerifyResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/yeying.api.invitation.Invitation/Verify',
+        request,
+        metadata || {},
+        this.methodDescriptorVerify,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/yeying.api.invitation.Invitation/Verify',
+    request,
+    metadata || {},
+    this.methodDescriptorVerify);
   }
 
 }

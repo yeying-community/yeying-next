@@ -125,90 +125,133 @@ export class UserClient {
     this.methodDescriptorGet);
   }
 
-  methodDescriptorDel = new grpcWeb.MethodDescriptor(
-    '/yeying.api.user.User/Del',
+  methodDescriptorDelete = new grpcWeb.MethodDescriptor(
+    '/yeying.api.user.User/Delete',
     grpcWeb.MethodType.UNARY,
-    yeying_api_user_user_pb.DelRequest,
-    yeying_api_user_user_pb.DelResponse,
-    (request: yeying_api_user_user_pb.DelRequest) => {
+    yeying_api_user_user_pb.DeleteRequest,
+    yeying_api_user_user_pb.DeleteResponse,
+    (request: yeying_api_user_user_pb.DeleteRequest) => {
       return request.serializeBinary();
     },
-    yeying_api_user_user_pb.DelResponse.deserializeBinary
+    yeying_api_user_user_pb.DeleteResponse.deserializeBinary
   );
 
-  del(
-    request: yeying_api_user_user_pb.DelRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<yeying_api_user_user_pb.DelResponse>;
+  delete(
+    request: yeying_api_user_user_pb.DeleteRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<yeying_api_user_user_pb.DeleteResponse>;
 
-  del(
-    request: yeying_api_user_user_pb.DelRequest,
+  delete(
+    request: yeying_api_user_user_pb.DeleteRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: yeying_api_user_user_pb.DelResponse) => void): grpcWeb.ClientReadableStream<yeying_api_user_user_pb.DelResponse>;
+               response: yeying_api_user_user_pb.DeleteResponse) => void): grpcWeb.ClientReadableStream<yeying_api_user_user_pb.DeleteResponse>;
 
-  del(
-    request: yeying_api_user_user_pb.DelRequest,
+  delete(
+    request: yeying_api_user_user_pb.DeleteRequest,
     metadata?: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: yeying_api_user_user_pb.DelResponse) => void) {
+               response: yeying_api_user_user_pb.DeleteResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
-          '/yeying.api.user.User/Del',
+          '/yeying.api.user.User/Delete',
         request,
         metadata || {},
-        this.methodDescriptorDel,
+        this.methodDescriptorDelete,
         callback);
     }
     return this.client_.unaryCall(
     this.hostname_ +
-      '/yeying.api.user.User/Del',
+      '/yeying.api.user.User/Delete',
     request,
     metadata || {},
-    this.methodDescriptorDel);
+    this.methodDescriptorDelete);
   }
 
-  methodDescriptorMod = new grpcWeb.MethodDescriptor(
-    '/yeying.api.user.User/Mod',
+  methodDescriptorUpdate = new grpcWeb.MethodDescriptor(
+    '/yeying.api.user.User/Update',
     grpcWeb.MethodType.UNARY,
-    yeying_api_user_user_pb.ModRequest,
-    yeying_api_user_user_pb.ModResponse,
-    (request: yeying_api_user_user_pb.ModRequest) => {
+    yeying_api_user_user_pb.UpdateRequest,
+    yeying_api_user_user_pb.UpdateResponse,
+    (request: yeying_api_user_user_pb.UpdateRequest) => {
       return request.serializeBinary();
     },
-    yeying_api_user_user_pb.ModResponse.deserializeBinary
+    yeying_api_user_user_pb.UpdateResponse.deserializeBinary
   );
 
-  mod(
-    request: yeying_api_user_user_pb.ModRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<yeying_api_user_user_pb.ModResponse>;
+  update(
+    request: yeying_api_user_user_pb.UpdateRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<yeying_api_user_user_pb.UpdateResponse>;
 
-  mod(
-    request: yeying_api_user_user_pb.ModRequest,
+  update(
+    request: yeying_api_user_user_pb.UpdateRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: yeying_api_user_user_pb.ModResponse) => void): grpcWeb.ClientReadableStream<yeying_api_user_user_pb.ModResponse>;
+               response: yeying_api_user_user_pb.UpdateResponse) => void): grpcWeb.ClientReadableStream<yeying_api_user_user_pb.UpdateResponse>;
 
-  mod(
-    request: yeying_api_user_user_pb.ModRequest,
+  update(
+    request: yeying_api_user_user_pb.UpdateRequest,
     metadata?: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: yeying_api_user_user_pb.ModResponse) => void) {
+               response: yeying_api_user_user_pb.UpdateResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
-          '/yeying.api.user.User/Mod',
+          '/yeying.api.user.User/Update',
         request,
         metadata || {},
-        this.methodDescriptorMod,
+        this.methodDescriptorUpdate,
         callback);
     }
     return this.client_.unaryCall(
     this.hostname_ +
-      '/yeying.api.user.User/Mod',
+      '/yeying.api.user.User/Update',
     request,
     metadata || {},
-    this.methodDescriptorMod);
+    this.methodDescriptorUpdate);
+  }
+
+  methodDescriptorState = new grpcWeb.MethodDescriptor(
+    '/yeying.api.user.User/State',
+    grpcWeb.MethodType.UNARY,
+    yeying_api_user_user_pb.StateRequest,
+    yeying_api_user_user_pb.StateResponse,
+    (request: yeying_api_user_user_pb.StateRequest) => {
+      return request.serializeBinary();
+    },
+    yeying_api_user_user_pb.StateResponse.deserializeBinary
+  );
+
+  state(
+    request: yeying_api_user_user_pb.StateRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<yeying_api_user_user_pb.StateResponse>;
+
+  state(
+    request: yeying_api_user_user_pb.StateRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: yeying_api_user_user_pb.StateResponse) => void): grpcWeb.ClientReadableStream<yeying_api_user_user_pb.StateResponse>;
+
+  state(
+    request: yeying_api_user_user_pb.StateRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: yeying_api_user_user_pb.StateResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/yeying.api.user.User/State',
+        request,
+        metadata || {},
+        this.methodDescriptorState,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/yeying.api.user.User/State',
+    request,
+    metadata || {},
+    this.methodDescriptorState);
   }
 
 }

@@ -4,17 +4,14 @@ import * as yeying_api_common_message_pb from '../../../yeying/api/common/messag
 
 
 export class UserMetadata extends jspb.Message {
+  getDid(): string;
+  setDid(value: string): UserMetadata;
+
   getName(): string;
   setName(value: string): UserMetadata;
 
   getAvatar(): string;
   setAvatar(value: string): UserMetadata;
-
-  getDid(): string;
-  setDid(value: string): UserMetadata;
-
-  getExtend(): string;
-  setExtend(value: string): UserMetadata;
 
   getCreated(): string;
   setCreated(value: string): UserMetadata;
@@ -35,10 +32,47 @@ export class UserMetadata extends jspb.Message {
 
 export namespace UserMetadata {
   export type AsObject = {
+    did: string,
     name: string,
     avatar: string,
+    created: string,
+    checkpoint: string,
+    signature: string,
+  }
+}
+
+export class StateMetadata extends jspb.Message {
+  getDid(): string;
+  setDid(value: string): StateMetadata;
+
+  getRole(): UserRoleEnum;
+  setRole(value: UserRoleEnum): StateMetadata;
+
+  getStatus(): UserStatusEnum;
+  setStatus(value: UserStatusEnum): StateMetadata;
+
+  getCreated(): string;
+  setCreated(value: string): StateMetadata;
+
+  getCheckpoint(): string;
+  setCheckpoint(value: string): StateMetadata;
+
+  getSignature(): string;
+  setSignature(value: string): StateMetadata;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): StateMetadata.AsObject;
+  static toObject(includeInstance: boolean, msg: StateMetadata): StateMetadata.AsObject;
+  static serializeBinaryToWriter(message: StateMetadata, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): StateMetadata;
+  static deserializeBinaryFromReader(message: StateMetadata, reader: jspb.BinaryReader): StateMetadata;
+}
+
+export namespace StateMetadata {
+  export type AsObject = {
     did: string,
-    extend: string,
+    role: UserRoleEnum,
+    status: UserStatusEnum,
     created: string,
     checkpoint: string,
     signature: string,
@@ -137,138 +171,138 @@ export namespace AddResponseBody {
   }
 }
 
-export class ModRequest extends jspb.Message {
+export class UpdateRequest extends jspb.Message {
   getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): ModRequest;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): UpdateRequest;
   hasHeader(): boolean;
-  clearHeader(): ModRequest;
+  clearHeader(): UpdateRequest;
 
-  getBody(): ModRequestBody | undefined;
-  setBody(value?: ModRequestBody): ModRequest;
+  getBody(): UpdateRequestBody | undefined;
+  setBody(value?: UpdateRequestBody): UpdateRequest;
   hasBody(): boolean;
-  clearBody(): ModRequest;
+  clearBody(): UpdateRequest;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): ModRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: ModRequest): ModRequest.AsObject;
-  static serializeBinaryToWriter(message: ModRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): ModRequest;
-  static deserializeBinaryFromReader(message: ModRequest, reader: jspb.BinaryReader): ModRequest;
+  toObject(includeInstance?: boolean): UpdateRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateRequest): UpdateRequest.AsObject;
+  static serializeBinaryToWriter(message: UpdateRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateRequest;
+  static deserializeBinaryFromReader(message: UpdateRequest, reader: jspb.BinaryReader): UpdateRequest;
 }
 
-export namespace ModRequest {
+export namespace UpdateRequest {
   export type AsObject = {
     header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: ModRequestBody.AsObject,
+    body?: UpdateRequestBody.AsObject,
   }
 }
 
-export class ModRequestBody extends jspb.Message {
+export class UpdateRequestBody extends jspb.Message {
   getUser(): UserMetadata | undefined;
-  setUser(value?: UserMetadata): ModRequestBody;
+  setUser(value?: UserMetadata): UpdateRequestBody;
   hasUser(): boolean;
-  clearUser(): ModRequestBody;
+  clearUser(): UpdateRequestBody;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): ModRequestBody.AsObject;
-  static toObject(includeInstance: boolean, msg: ModRequestBody): ModRequestBody.AsObject;
-  static serializeBinaryToWriter(message: ModRequestBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): ModRequestBody;
-  static deserializeBinaryFromReader(message: ModRequestBody, reader: jspb.BinaryReader): ModRequestBody;
+  toObject(includeInstance?: boolean): UpdateRequestBody.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateRequestBody): UpdateRequestBody.AsObject;
+  static serializeBinaryToWriter(message: UpdateRequestBody, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateRequestBody;
+  static deserializeBinaryFromReader(message: UpdateRequestBody, reader: jspb.BinaryReader): UpdateRequestBody;
 }
 
-export namespace ModRequestBody {
+export namespace UpdateRequestBody {
   export type AsObject = {
     user?: UserMetadata.AsObject,
   }
 }
 
-export class ModResponse extends jspb.Message {
+export class UpdateResponse extends jspb.Message {
   getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): ModResponse;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): UpdateResponse;
   hasHeader(): boolean;
-  clearHeader(): ModResponse;
+  clearHeader(): UpdateResponse;
 
-  getBody(): ModResponseBody | undefined;
-  setBody(value?: ModResponseBody): ModResponse;
+  getBody(): UpdateResponseBody | undefined;
+  setBody(value?: UpdateResponseBody): UpdateResponse;
   hasBody(): boolean;
-  clearBody(): ModResponse;
+  clearBody(): UpdateResponse;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): ModResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: ModResponse): ModResponse.AsObject;
-  static serializeBinaryToWriter(message: ModResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): ModResponse;
-  static deserializeBinaryFromReader(message: ModResponse, reader: jspb.BinaryReader): ModResponse;
+  toObject(includeInstance?: boolean): UpdateResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateResponse): UpdateResponse.AsObject;
+  static serializeBinaryToWriter(message: UpdateResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateResponse;
+  static deserializeBinaryFromReader(message: UpdateResponse, reader: jspb.BinaryReader): UpdateResponse;
 }
 
-export namespace ModResponse {
+export namespace UpdateResponse {
   export type AsObject = {
     header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: ModResponseBody.AsObject,
+    body?: UpdateResponseBody.AsObject,
   }
 }
 
-export class ModResponseBody extends jspb.Message {
+export class UpdateResponseBody extends jspb.Message {
   getStatus(): yeying_api_common_message_pb.ResponseStatus | undefined;
-  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): ModResponseBody;
+  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): UpdateResponseBody;
   hasStatus(): boolean;
-  clearStatus(): ModResponseBody;
+  clearStatus(): UpdateResponseBody;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): ModResponseBody.AsObject;
-  static toObject(includeInstance: boolean, msg: ModResponseBody): ModResponseBody.AsObject;
-  static serializeBinaryToWriter(message: ModResponseBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): ModResponseBody;
-  static deserializeBinaryFromReader(message: ModResponseBody, reader: jspb.BinaryReader): ModResponseBody;
+  toObject(includeInstance?: boolean): UpdateResponseBody.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateResponseBody): UpdateResponseBody.AsObject;
+  static serializeBinaryToWriter(message: UpdateResponseBody, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateResponseBody;
+  static deserializeBinaryFromReader(message: UpdateResponseBody, reader: jspb.BinaryReader): UpdateResponseBody;
 }
 
-export namespace ModResponseBody {
+export namespace UpdateResponseBody {
   export type AsObject = {
     status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
   }
 }
 
-export class DelRequest extends jspb.Message {
+export class DeleteRequest extends jspb.Message {
   getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): DelRequest;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): DeleteRequest;
   hasHeader(): boolean;
-  clearHeader(): DelRequest;
+  clearHeader(): DeleteRequest;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): DelRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: DelRequest): DelRequest.AsObject;
-  static serializeBinaryToWriter(message: DelRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): DelRequest;
-  static deserializeBinaryFromReader(message: DelRequest, reader: jspb.BinaryReader): DelRequest;
+  toObject(includeInstance?: boolean): DeleteRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteRequest): DeleteRequest.AsObject;
+  static serializeBinaryToWriter(message: DeleteRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteRequest;
+  static deserializeBinaryFromReader(message: DeleteRequest, reader: jspb.BinaryReader): DeleteRequest;
 }
 
-export namespace DelRequest {
+export namespace DeleteRequest {
   export type AsObject = {
     header?: yeying_api_common_message_pb.MessageHeader.AsObject,
   }
 }
 
-export class DelResponse extends jspb.Message {
+export class DeleteResponse extends jspb.Message {
   getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): DelResponse;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): DeleteResponse;
   hasHeader(): boolean;
-  clearHeader(): DelResponse;
+  clearHeader(): DeleteResponse;
 
   getBody(): DelResponseBody | undefined;
-  setBody(value?: DelResponseBody): DelResponse;
+  setBody(value?: DelResponseBody): DeleteResponse;
   hasBody(): boolean;
-  clearBody(): DelResponse;
+  clearBody(): DeleteResponse;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): DelResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: DelResponse): DelResponse.AsObject;
-  static serializeBinaryToWriter(message: DelResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): DelResponse;
-  static deserializeBinaryFromReader(message: DelResponse, reader: jspb.BinaryReader): DelResponse;
+  toObject(includeInstance?: boolean): DeleteResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteResponse): DeleteResponse.AsObject;
+  static serializeBinaryToWriter(message: DeleteResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteResponse;
+  static deserializeBinaryFromReader(message: DeleteResponse, reader: jspb.BinaryReader): DeleteResponse;
 }
 
-export namespace DelResponse {
+export namespace DeleteResponse {
   export type AsObject = {
     header?: yeying_api_common_message_pb.MessageHeader.AsObject,
     body?: DelResponseBody.AsObject,
@@ -352,12 +386,6 @@ export class GetResponseBody extends jspb.Message {
   hasUser(): boolean;
   clearUser(): GetResponseBody;
 
-  getUserrole(): UserRoleEnum;
-  setUserrole(value: UserRoleEnum): GetResponseBody;
-
-  getUserstatus(): UserStatusEnum;
-  setUserstatus(value: UserStatusEnum): GetResponseBody;
-
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetResponseBody.AsObject;
   static toObject(includeInstance: boolean, msg: GetResponseBody): GetResponseBody.AsObject;
@@ -370,8 +398,78 @@ export namespace GetResponseBody {
   export type AsObject = {
     status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
     user?: UserMetadata.AsObject,
-    userrole: UserRoleEnum,
-    userstatus: UserStatusEnum,
+  }
+}
+
+export class StateRequest extends jspb.Message {
+  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): StateRequest;
+  hasHeader(): boolean;
+  clearHeader(): StateRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): StateRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: StateRequest): StateRequest.AsObject;
+  static serializeBinaryToWriter(message: StateRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): StateRequest;
+  static deserializeBinaryFromReader(message: StateRequest, reader: jspb.BinaryReader): StateRequest;
+}
+
+export namespace StateRequest {
+  export type AsObject = {
+    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
+  }
+}
+
+export class StateResponse extends jspb.Message {
+  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): StateResponse;
+  hasHeader(): boolean;
+  clearHeader(): StateResponse;
+
+  getBody(): StateResponseBody | undefined;
+  setBody(value?: StateResponseBody): StateResponse;
+  hasBody(): boolean;
+  clearBody(): StateResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): StateResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: StateResponse): StateResponse.AsObject;
+  static serializeBinaryToWriter(message: StateResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): StateResponse;
+  static deserializeBinaryFromReader(message: StateResponse, reader: jspb.BinaryReader): StateResponse;
+}
+
+export namespace StateResponse {
+  export type AsObject = {
+    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
+    body?: StateResponseBody.AsObject,
+  }
+}
+
+export class StateResponseBody extends jspb.Message {
+  getStatus(): yeying_api_common_message_pb.ResponseStatus | undefined;
+  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): StateResponseBody;
+  hasStatus(): boolean;
+  clearStatus(): StateResponseBody;
+
+  getState(): StateMetadata | undefined;
+  setState(value?: StateMetadata): StateResponseBody;
+  hasState(): boolean;
+  clearState(): StateResponseBody;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): StateResponseBody.AsObject;
+  static toObject(includeInstance: boolean, msg: StateResponseBody): StateResponseBody.AsObject;
+  static serializeBinaryToWriter(message: StateResponseBody, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): StateResponseBody;
+  static deserializeBinaryFromReader(message: StateResponseBody, reader: jspb.BinaryReader): StateResponseBody;
+}
+
+export namespace StateResponseBody {
+  export type AsObject = {
+    status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
+    state?: StateMetadata.AsObject,
   }
 }
 

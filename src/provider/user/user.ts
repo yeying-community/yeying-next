@@ -1,11 +1,8 @@
 import {
     AddRequest,
-    AddRequestBody,
-    DelRequest,
+    AddRequestBody, DeleteRequest,
     GetRequest,
-    GetResponseBody,
-    ModRequest,
-    ModRequestBody,
+    GetResponseBody, StateResponseBody, UpdateRequest, UpdateRequestBody,
     UserMetadata
 } from '../../yeying/api/user/user_pb'
 import { getCurrentUtcString } from '../../common/date'
@@ -46,28 +43,25 @@ export class UserProvider {
     }
 
     /**
-     * 添加新用户。
+     * 成为用户。
      *
      * @param name - 用户名称。
-     * @param telephone - 用户电话。
-     * @param email - 用户电子邮件。
      * @param avatar - 用户头像。
      * @returns 返回添加用户的结果。
      * @throws 错误时抛出 `Error`。
      * @example
      * ```ts
-     * userProvider.add('John Doe', '1234567890', 'john.doe@example.com', 'avatar.png')
+     * userProvider.add('John Doe', 'avatar.png')
      *   .then(result => console.log(result))
      *   .catch(err => console.error(err));
      * ```
      */
-    add(name: string, telephone: string, email: string, avatar: string) {
+    add(name: string, avatar: string) {
         return new Promise(async (resolve, reject) => {
             const user = new UserMetadata()
             user.setDid(this.authenticate.getDid())
             user.setName(name)
             user.setAvatar(avatar)
-            user.setExtend(JSON.stringify({ telephone: telephone, email: email }))
             user.setCreated(getCurrentUtcString())
             user.setCheckpoint(getCurrentUtcString())
             const body = new AddRequestBody()
@@ -94,50 +88,42 @@ export class UserProvider {
     /**
      * 修改用户信息。
      *
-     * @param name - 新的用户名称（可选）。
-     * @param avatar - 新的用户头像（可选）。
-     * @param extend - 新的扩展信息（可选）。
+     * @param dict - 需要修改的用户信息，目前支持修改avatar、name等。
      * @returns 返回修改用户信息的结果。
      * @throws 错误时抛出 `Error`。
      * @example
      * ```ts
-     * userProvider.mod('Jane Doe', 'avatar2.png', '{"email": "jane.doe@example.com"}')
+     * userProvider.update({name: 'Jane Doe', avatar: 'avatar2.png'})
      *   .then(result => console.log(result))
      *   .catch(err => console.error(err));
      * ```
      */
-    mod(name?: string, avatar?: string, extend?: string) {
+    update(dict: { [key: string]: any }) {
         return new Promise(async (resolve, reject) => {
-            const isValidAvatar = isValidString(avatar)
-            const isValidExtend = isValidString(extend)
-            const isValidName = isValidString(name)
-
-            if (!isValidName && !isValidAvatar && !isValidExtend) {
-                return reject(new Error('invalid parameter'))
-            }
-
             const responseBody = await this.get()
             const user = responseBody.getUser()
             if (user === undefined) {
                 return
             }
-
-            if (isValidName) {
-                user.setName(name)
+            let changed = false
+            if (dict.name) {
+                user.setName(dict.name)
+                changed = true
             }
 
-            if (isValidAvatar) {
-                user.setAvatar(avatar)
+            if (dict.avatar) {
+                user.setAvatar(dict.avatar)
+                changed = true
             }
 
-            if (isValidExtend) {
-                user.setExtend(extend)
+            if (!changed) {
+                return
             }
 
             user.setCheckpoint(getCurrentUtcString())
             user.setSignature('')
 
-            const body = new ModRequestBody()
+            const body = new UpdateRequestBody()
             let header
             try {
                 user.setSignature(await this.authenticate.sign(user.serializeBinary()))
@@ -148,10 +134,10 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = new ModRequest()
+            const request = new UpdateRequest()
             request.setHeader(header)
             request.setBody(body)
-            this.client.mod(request, null, (err, res) => {
+            this.client.update(request, null, (err, res) => {
                 this.authenticate.doResponse(err, res).then((body) => resolve(body), reject)
             })
         })
@@ -188,18 +174,48 @@ export class UserProvider {
     }
 
     /**
+     * 获取用户状态。
+     *
+     * @returns 返回用户状态。
+     * @throws 错误时抛出 `Error`。
+     * @example
+     * ```ts
+     * userProvider.state()
+     *   .then(user => console.log(user))
+     *   .catch(err => console.error(err));
+     * ```
+     */
+    state() {
+        return new Promise<StateResponseBody>(async (resolve, reject) => {
+            let header
+            try {
+                header = await this.authenticate.createHeader()
+            } catch (err) {
+                console.error('Fail to create header for getting user state.', err)
+                return reject(err)
+            }
+
+            const request = new GetRequest()
+            request.setHeader(header)
+            this.client.state(request, null, (err, res) => {
+                this.authenticate.doResponse(err, res).then((body) => resolve(body), reject)
+            })
+        })
+    }
+
+    /**
      * 删除用户。
      *
      * @returns 返回删除用户的结果。
      * @throws 错误时抛出 `Error`。
      * @example
      * ```ts
-     * userProvider.del()
+     * userProvider.delete()
      *   .then(result => console.log(result))
      *   .catch(err => console.error(err));
      * ```
      */
-    del() {
+    delete() {
         return new Promise(async (resolve, reject) => {
             let header
             try {
@@ -209,9 +225,9 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = new DelRequest()
+            const request = new DeleteRequest()
             request.setHeader(header)
-            this.client.del(request, null, (err, res) => {
+            this.client.delete(request, null, (err, res) => {
                 this.authenticate.doResponse(err, res).then((body) => resolve(body), reject)
             })
         })

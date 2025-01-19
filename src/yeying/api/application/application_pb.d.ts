@@ -119,6 +119,11 @@ export class SearchResponseBody extends jspb.Message {
   clearApplicationsList(): SearchResponseBody;
   addApplications(value?: ApplicationMetadata, index?: number): ApplicationMetadata;
 
+  getPage(): yeying_api_common_message_pb.ResponsePage | undefined;
+  setPage(value?: yeying_api_common_message_pb.ResponsePage): SearchResponseBody;
+  hasPage(): boolean;
+  clearPage(): SearchResponseBody;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SearchResponseBody.AsObject;
   static toObject(includeInstance: boolean, msg: SearchResponseBody): SearchResponseBody.AsObject;
@@ -131,6 +136,7 @@ export namespace SearchResponseBody {
   export type AsObject = {
     status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
     applicationsList: Array<ApplicationMetadata.AsObject>,
+    page?: yeying_api_common_message_pb.ResponsePage.AsObject,
   }
 }
 
@@ -226,6 +232,298 @@ export namespace CreateResponseBody {
   }
 }
 
+export class DetailRequest extends jspb.Message {
+  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): DetailRequest;
+  hasHeader(): boolean;
+  clearHeader(): DetailRequest;
+
+  getBody(): DetailRequestBody | undefined;
+  setBody(value?: DetailRequestBody): DetailRequest;
+  hasBody(): boolean;
+  clearBody(): DetailRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DetailRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: DetailRequest): DetailRequest.AsObject;
+  static serializeBinaryToWriter(message: DetailRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DetailRequest;
+  static deserializeBinaryFromReader(message: DetailRequest, reader: jspb.BinaryReader): DetailRequest;
+}
+
+export namespace DetailRequest {
+  export type AsObject = {
+    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
+    body?: DetailRequestBody.AsObject,
+  }
+}
+
+export class DetailRequestBody extends jspb.Message {
+  getDid(): string;
+  setDid(value: string): DetailRequestBody;
+
+  getVersion(): number;
+  setVersion(value: number): DetailRequestBody;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DetailRequestBody.AsObject;
+  static toObject(includeInstance: boolean, msg: DetailRequestBody): DetailRequestBody.AsObject;
+  static serializeBinaryToWriter(message: DetailRequestBody, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DetailRequestBody;
+  static deserializeBinaryFromReader(message: DetailRequestBody, reader: jspb.BinaryReader): DetailRequestBody;
+}
+
+export namespace DetailRequestBody {
+  export type AsObject = {
+    did: string,
+    version: number,
+  }
+}
+
+export class DetailResponse extends jspb.Message {
+  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): DetailResponse;
+  hasHeader(): boolean;
+  clearHeader(): DetailResponse;
+
+  getBody(): DetailResponseBody | undefined;
+  setBody(value?: DetailResponseBody): DetailResponse;
+  hasBody(): boolean;
+  clearBody(): DetailResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DetailResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: DetailResponse): DetailResponse.AsObject;
+  static serializeBinaryToWriter(message: DetailResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DetailResponse;
+  static deserializeBinaryFromReader(message: DetailResponse, reader: jspb.BinaryReader): DetailResponse;
+}
+
+export namespace DetailResponse {
+  export type AsObject = {
+    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
+    body?: DetailResponseBody.AsObject,
+  }
+}
+
+export class DetailResponseBody extends jspb.Message {
+  getStatus(): yeying_api_common_message_pb.ResponseStatus | undefined;
+  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): DetailResponseBody;
+  hasStatus(): boolean;
+  clearStatus(): DetailResponseBody;
+
+  getAppstatus(): yeying_api_common_code_pb.ApplicationStatusEnum;
+  setAppstatus(value: yeying_api_common_code_pb.ApplicationStatusEnum): DetailResponseBody;
+
+  getApplication(): ApplicationMetadata | undefined;
+  setApplication(value?: ApplicationMetadata): DetailResponseBody;
+  hasApplication(): boolean;
+  clearApplication(): DetailResponseBody;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DetailResponseBody.AsObject;
+  static toObject(includeInstance: boolean, msg: DetailResponseBody): DetailResponseBody.AsObject;
+  static serializeBinaryToWriter(message: DetailResponseBody, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DetailResponseBody;
+  static deserializeBinaryFromReader(message: DetailResponseBody, reader: jspb.BinaryReader): DetailResponseBody;
+}
+
+export namespace DetailResponseBody {
+  export type AsObject = {
+    status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
+    appstatus: yeying_api_common_code_pb.ApplicationStatusEnum,
+    application?: ApplicationMetadata.AsObject,
+  }
+}
+
+export class OfflineRequest extends jspb.Message {
+  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): OfflineRequest;
+  hasHeader(): boolean;
+  clearHeader(): OfflineRequest;
+
+  getBody(): OfflineRequestBody | undefined;
+  setBody(value?: OfflineRequestBody): OfflineRequest;
+  hasBody(): boolean;
+  clearBody(): OfflineRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): OfflineRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: OfflineRequest): OfflineRequest.AsObject;
+  static serializeBinaryToWriter(message: OfflineRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): OfflineRequest;
+  static deserializeBinaryFromReader(message: OfflineRequest, reader: jspb.BinaryReader): OfflineRequest;
+}
+
+export namespace OfflineRequest {
+  export type AsObject = {
+    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
+    body?: OfflineRequestBody.AsObject,
+  }
+}
+
+export class OfflineRequestBody extends jspb.Message {
+  getDid(): string;
+  setDid(value: string): OfflineRequestBody;
+
+  getVersion(): number;
+  setVersion(value: number): OfflineRequestBody;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): OfflineRequestBody.AsObject;
+  static toObject(includeInstance: boolean, msg: OfflineRequestBody): OfflineRequestBody.AsObject;
+  static serializeBinaryToWriter(message: OfflineRequestBody, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): OfflineRequestBody;
+  static deserializeBinaryFromReader(message: OfflineRequestBody, reader: jspb.BinaryReader): OfflineRequestBody;
+}
+
+export namespace OfflineRequestBody {
+  export type AsObject = {
+    did: string,
+    version: number,
+  }
+}
+
+export class OfflineResponse extends jspb.Message {
+  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): OfflineResponse;
+  hasHeader(): boolean;
+  clearHeader(): OfflineResponse;
+
+  getBody(): OfflineResponseBody | undefined;
+  setBody(value?: OfflineResponseBody): OfflineResponse;
+  hasBody(): boolean;
+  clearBody(): OfflineResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): OfflineResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: OfflineResponse): OfflineResponse.AsObject;
+  static serializeBinaryToWriter(message: OfflineResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): OfflineResponse;
+  static deserializeBinaryFromReader(message: OfflineResponse, reader: jspb.BinaryReader): OfflineResponse;
+}
+
+export namespace OfflineResponse {
+  export type AsObject = {
+    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
+    body?: OfflineResponseBody.AsObject,
+  }
+}
+
+export class OfflineResponseBody extends jspb.Message {
+  getStatus(): yeying_api_common_message_pb.ResponseStatus | undefined;
+  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): OfflineResponseBody;
+  hasStatus(): boolean;
+  clearStatus(): OfflineResponseBody;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): OfflineResponseBody.AsObject;
+  static toObject(includeInstance: boolean, msg: OfflineResponseBody): OfflineResponseBody.AsObject;
+  static serializeBinaryToWriter(message: OfflineResponseBody, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): OfflineResponseBody;
+  static deserializeBinaryFromReader(message: OfflineResponseBody, reader: jspb.BinaryReader): OfflineResponseBody;
+}
+
+export namespace OfflineResponseBody {
+  export type AsObject = {
+    status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
+  }
+}
+
+export class OnlineRequest extends jspb.Message {
+  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): OnlineRequest;
+  hasHeader(): boolean;
+  clearHeader(): OnlineRequest;
+
+  getBody(): OnlineRequestBody | undefined;
+  setBody(value?: OnlineRequestBody): OnlineRequest;
+  hasBody(): boolean;
+  clearBody(): OnlineRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): OnlineRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: OnlineRequest): OnlineRequest.AsObject;
+  static serializeBinaryToWriter(message: OnlineRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): OnlineRequest;
+  static deserializeBinaryFromReader(message: OnlineRequest, reader: jspb.BinaryReader): OnlineRequest;
+}
+
+export namespace OnlineRequest {
+  export type AsObject = {
+    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
+    body?: OnlineRequestBody.AsObject,
+  }
+}
+
+export class OnlineRequestBody extends jspb.Message {
+  getDid(): string;
+  setDid(value: string): OnlineRequestBody;
+
+  getVersion(): number;
+  setVersion(value: number): OnlineRequestBody;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): OnlineRequestBody.AsObject;
+  static toObject(includeInstance: boolean, msg: OnlineRequestBody): OnlineRequestBody.AsObject;
+  static serializeBinaryToWriter(message: OnlineRequestBody, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): OnlineRequestBody;
+  static deserializeBinaryFromReader(message: OnlineRequestBody, reader: jspb.BinaryReader): OnlineRequestBody;
+}
+
+export namespace OnlineRequestBody {
+  export type AsObject = {
+    did: string,
+    version: number,
+  }
+}
+
+export class OnlineResponse extends jspb.Message {
+  getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): OnlineResponse;
+  hasHeader(): boolean;
+  clearHeader(): OnlineResponse;
+
+  getBody(): OnlineResponseBody | undefined;
+  setBody(value?: OnlineResponseBody): OnlineResponse;
+  hasBody(): boolean;
+  clearBody(): OnlineResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): OnlineResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: OnlineResponse): OnlineResponse.AsObject;
+  static serializeBinaryToWriter(message: OnlineResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): OnlineResponse;
+  static deserializeBinaryFromReader(message: OnlineResponse, reader: jspb.BinaryReader): OnlineResponse;
+}
+
+export namespace OnlineResponse {
+  export type AsObject = {
+    header?: yeying_api_common_message_pb.MessageHeader.AsObject,
+    body?: OnlineResponseBody.AsObject,
+  }
+}
+
+export class OnlineResponseBody extends jspb.Message {
+  getStatus(): yeying_api_common_message_pb.ResponseStatus | undefined;
+  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): OnlineResponseBody;
+  hasStatus(): boolean;
+  clearStatus(): OnlineResponseBody;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): OnlineResponseBody.AsObject;
+  static toObject(includeInstance: boolean, msg: OnlineResponseBody): OnlineResponseBody.AsObject;
+  static serializeBinaryToWriter(message: OnlineResponseBody, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): OnlineResponseBody;
+  static deserializeBinaryFromReader(message: OnlineResponseBody, reader: jspb.BinaryReader): OnlineResponseBody;
+}
+
+export namespace OnlineResponseBody {
+  export type AsObject = {
+    status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
+  }
+}
+
 export class ApplicationExtend extends jspb.Message {
   getCommentsList(): Array<ApplicationComment>;
   setCommentsList(value: Array<ApplicationComment>): ApplicationExtend;
@@ -247,10 +545,8 @@ export namespace ApplicationExtend {
 }
 
 export class ApplicationComment extends jspb.Message {
-  getAuditorList(): Array<string>;
-  setAuditorList(value: Array<string>): ApplicationComment;
-  clearAuditorList(): ApplicationComment;
-  addAuditor(value: string, index?: number): ApplicationComment;
+  getAuditor(): string;
+  setAuditor(value: string): ApplicationComment;
 
   getComment(): string;
   setComment(value: string): ApplicationComment;
@@ -271,7 +567,7 @@ export class ApplicationComment extends jspb.Message {
 
 export namespace ApplicationComment {
   export type AsObject = {
-    auditorList: Array<string>,
+    auditor: string,
     comment: string,
     passed: boolean,
     signature: string,
@@ -291,11 +587,11 @@ export class ApplicationMetadata extends jspb.Message {
   getDid(): string;
   setDid(value: string): ApplicationMetadata;
 
-  getHash(): string;
-  setHash(value: string): ApplicationMetadata;
-
   getVersion(): number;
   setVersion(value: number): ApplicationMetadata;
+
+  getHash(): string;
+  setHash(value: string): ApplicationMetadata;
 
   getName(): string;
   setName(value: string): ApplicationMetadata;
@@ -306,17 +602,11 @@ export class ApplicationMetadata extends jspb.Message {
   getDescription(): string;
   setDescription(value: string): ApplicationMetadata;
 
-  getStatus(): yeying_api_common_code_pb.ApplicationStatusEnum;
-  setStatus(value: yeying_api_common_code_pb.ApplicationStatusEnum): ApplicationMetadata;
-
   getLocation(): string;
   setLocation(value: string): ApplicationMetadata;
 
-  getPath(): string;
-  setPath(value: string): ApplicationMetadata;
-
-  getServices(): string;
-  setServices(value: string): ApplicationMetadata;
+  getServicecodes(): string;
+  setServicecodes(value: string): ApplicationMetadata;
 
   getAvatar(): string;
   setAvatar(value: string): ApplicationMetadata;
@@ -347,15 +637,13 @@ export namespace ApplicationMetadata {
     network: string,
     address: string,
     did: string,
-    hash: string,
     version: number,
+    hash: string,
     name: string,
     code: yeying_api_common_code_pb.ApplicationCodeEnum,
     description: string,
-    status: yeying_api_common_code_pb.ApplicationStatusEnum,
     location: string,
-    path: string,
-    services: string,
+    servicecodes: string,
     avatar: string,
     extend: string,
     created: string,
@@ -391,8 +679,8 @@ export namespace DeleteRequest {
 }
 
 export class DeleteRequestBody extends jspb.Message {
-  getAppid(): string;
-  setAppid(value: string): DeleteRequestBody;
+  getDid(): string;
+  setDid(value: string): DeleteRequestBody;
 
   getVersion(): number;
   setVersion(value: number): DeleteRequestBody;
@@ -407,7 +695,7 @@ export class DeleteRequestBody extends jspb.Message {
 
 export namespace DeleteRequestBody {
   export type AsObject = {
-    appid: string,
+    did: string,
     version: number,
   }
 }
@@ -485,14 +773,10 @@ export namespace AuditRequest {
 }
 
 export class AuditRequestBody extends jspb.Message {
-  getAppid(): string;
-  setAppid(value: string): AuditRequestBody;
-
-  getVersion(): number;
-  setVersion(value: number): AuditRequestBody;
-
-  getComment(): string;
-  setComment(value: string): AuditRequestBody;
+  getComment(): ApplicationComment | undefined;
+  setComment(value?: ApplicationComment): AuditRequestBody;
+  hasComment(): boolean;
+  clearComment(): AuditRequestBody;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AuditRequestBody.AsObject;
@@ -504,9 +788,7 @@ export class AuditRequestBody extends jspb.Message {
 
 export namespace AuditRequestBody {
   export type AsObject = {
-    appid: string,
-    version: number,
-    comment: string,
+    comment?: ApplicationComment.AsObject,
   }
 }
 

@@ -4,20 +4,29 @@ import * as yeying_api_common_message_pb from '../../../yeying/api/common/messag
 
 
 export class InvitationMetadata extends jspb.Message {
-  getScene(): string;
-  setScene(value: string): InvitationMetadata;
+  getScene(): InvitationSceneEnum;
+  setScene(value: InvitationSceneEnum): InvitationMetadata;
 
   getCode(): string;
   setCode(value: string): InvitationMetadata;
 
-  getExpiredtime(): string;
-  setExpiredtime(value: string): InvitationMetadata;
+  getCreated(): string;
+  setCreated(value: string): InvitationMetadata;
+
+  getExpired(): string;
+  setExpired(value: string): InvitationMetadata;
+
+  getUsed(): string;
+  setUsed(value: string): InvitationMetadata;
 
   getInviter(): string;
   setInviter(value: string): InvitationMetadata;
 
   getInvitee(): string;
   setInvitee(value: string): InvitationMetadata;
+
+  getSignature(): string;
+  setSignature(value: string): InvitationMetadata;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): InvitationMetadata.AsObject;
@@ -29,11 +38,14 @@ export class InvitationMetadata extends jspb.Message {
 
 export namespace InvitationMetadata {
   export type AsObject = {
-    scene: string,
+    scene: InvitationSceneEnum,
     code: string,
-    expiredtime: string,
+    created: string,
+    expired: string,
+    used: string,
     inviter: string,
     invitee: string,
+    signature: string,
   }
 }
 
@@ -85,91 +97,91 @@ export namespace GenerateRequestBody {
   }
 }
 
-export class InputRequest extends jspb.Message {
+export class VerifyRequest extends jspb.Message {
   getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): InputRequest;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): VerifyRequest;
   hasHeader(): boolean;
-  clearHeader(): InputRequest;
+  clearHeader(): VerifyRequest;
 
-  getBody(): InputRequestBody | undefined;
-  setBody(value?: InputRequestBody): InputRequest;
+  getBody(): VerifyRequestBody | undefined;
+  setBody(value?: VerifyRequestBody): VerifyRequest;
   hasBody(): boolean;
-  clearBody(): InputRequest;
+  clearBody(): VerifyRequest;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): InputRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: InputRequest): InputRequest.AsObject;
-  static serializeBinaryToWriter(message: InputRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): InputRequest;
-  static deserializeBinaryFromReader(message: InputRequest, reader: jspb.BinaryReader): InputRequest;
+  toObject(includeInstance?: boolean): VerifyRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: VerifyRequest): VerifyRequest.AsObject;
+  static serializeBinaryToWriter(message: VerifyRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): VerifyRequest;
+  static deserializeBinaryFromReader(message: VerifyRequest, reader: jspb.BinaryReader): VerifyRequest;
 }
 
-export namespace InputRequest {
+export namespace VerifyRequest {
   export type AsObject = {
     header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: InputRequestBody.AsObject,
+    body?: VerifyRequestBody.AsObject,
   }
 }
 
-export class InputRequestBody extends jspb.Message {
+export class VerifyRequestBody extends jspb.Message {
   getCode(): string;
-  setCode(value: string): InputRequestBody;
+  setCode(value: string): VerifyRequestBody;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): InputRequestBody.AsObject;
-  static toObject(includeInstance: boolean, msg: InputRequestBody): InputRequestBody.AsObject;
-  static serializeBinaryToWriter(message: InputRequestBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): InputRequestBody;
-  static deserializeBinaryFromReader(message: InputRequestBody, reader: jspb.BinaryReader): InputRequestBody;
+  toObject(includeInstance?: boolean): VerifyRequestBody.AsObject;
+  static toObject(includeInstance: boolean, msg: VerifyRequestBody): VerifyRequestBody.AsObject;
+  static serializeBinaryToWriter(message: VerifyRequestBody, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): VerifyRequestBody;
+  static deserializeBinaryFromReader(message: VerifyRequestBody, reader: jspb.BinaryReader): VerifyRequestBody;
 }
 
-export namespace InputRequestBody {
+export namespace VerifyRequestBody {
   export type AsObject = {
     code: string,
   }
 }
 
-export class InputResponse extends jspb.Message {
+export class VerifyResponse extends jspb.Message {
   getHeader(): yeying_api_common_message_pb.MessageHeader | undefined;
-  setHeader(value?: yeying_api_common_message_pb.MessageHeader): InputResponse;
+  setHeader(value?: yeying_api_common_message_pb.MessageHeader): VerifyResponse;
   hasHeader(): boolean;
-  clearHeader(): InputResponse;
+  clearHeader(): VerifyResponse;
 
-  getBody(): InputResponseBody | undefined;
-  setBody(value?: InputResponseBody): InputResponse;
+  getBody(): VerifyResponseBody | undefined;
+  setBody(value?: VerifyResponseBody): VerifyResponse;
   hasBody(): boolean;
-  clearBody(): InputResponse;
+  clearBody(): VerifyResponse;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): InputResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: InputResponse): InputResponse.AsObject;
-  static serializeBinaryToWriter(message: InputResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): InputResponse;
-  static deserializeBinaryFromReader(message: InputResponse, reader: jspb.BinaryReader): InputResponse;
+  toObject(includeInstance?: boolean): VerifyResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: VerifyResponse): VerifyResponse.AsObject;
+  static serializeBinaryToWriter(message: VerifyResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): VerifyResponse;
+  static deserializeBinaryFromReader(message: VerifyResponse, reader: jspb.BinaryReader): VerifyResponse;
 }
 
-export namespace InputResponse {
+export namespace VerifyResponse {
   export type AsObject = {
     header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: InputResponseBody.AsObject,
+    body?: VerifyResponseBody.AsObject,
   }
 }
 
-export class InputResponseBody extends jspb.Message {
+export class VerifyResponseBody extends jspb.Message {
   getStatus(): yeying_api_common_message_pb.ResponseStatus | undefined;
-  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): InputResponseBody;
+  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): VerifyResponseBody;
   hasStatus(): boolean;
-  clearStatus(): InputResponseBody;
+  clearStatus(): VerifyResponseBody;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): InputResponseBody.AsObject;
-  static toObject(includeInstance: boolean, msg: InputResponseBody): InputResponseBody.AsObject;
-  static serializeBinaryToWriter(message: InputResponseBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): InputResponseBody;
-  static deserializeBinaryFromReader(message: InputResponseBody, reader: jspb.BinaryReader): InputResponseBody;
+  toObject(includeInstance?: boolean): VerifyResponseBody.AsObject;
+  static toObject(includeInstance: boolean, msg: VerifyResponseBody): VerifyResponseBody.AsObject;
+  static serializeBinaryToWriter(message: VerifyResponseBody, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): VerifyResponseBody;
+  static deserializeBinaryFromReader(message: VerifyResponseBody, reader: jspb.BinaryReader): VerifyResponseBody;
 }
 
-export namespace InputResponseBody {
+export namespace VerifyResponseBody {
   export type AsObject = {
     status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
   }
@@ -229,5 +241,5 @@ export namespace GenerateResponseBody {
 
 export enum InvitationSceneEnum { 
   INVITATION_SCENE_UNKNOWN = 0,
-  INVITATION_SCENE_REGISTER = 1,
+  INVITATION_SCENE_USER = 1,
 }
