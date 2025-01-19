@@ -182,13 +182,7 @@ export class Authenticate {
                 return reject(err)
             }
 
-            const error = convertResponseStatusToError(body.getStatus())
-            if (error !== undefined) {
-                console.error(error)
-                return reject(error)
-            } else {
-                resolve(body)
-            }
+            resolve(body)
         })
     }
 }

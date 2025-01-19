@@ -4,10 +4,10 @@
 // 2、所有的密码的管理都是在端上完成，不会和后台服务器有任何交互，也就是密码完全由用户负责；
 // 3、一个端上多个身份切换，任何时刻只有一个身份在起作用
 // 4、对于不再端上使用的身份，能够一键清理不留痕迹；
-import { SessionCache } from '../cache/session'
-import { LocalCache } from '../cache/local'
-import { InvalidPassword, NotFound } from '../common/error'
-import { Account } from './model'
+import {SessionCache} from '../cache/session'
+import {LocalCache} from '../cache/local'
+import {InvalidPassword, NotFound} from '../common/error'
+import {Account} from './model'
 import {
     BlockAddress,
     createBlockAddress,
@@ -26,7 +26,7 @@ import {
     updateIdentity,
     verifyIdentity
 } from '@yeying-community/yeying-web3'
-import { CookieCache } from '../cache/cookie'
+import {CookieCache} from '../cache/cookie'
 import {
     decryptBlockAddress,
     decryptString,
@@ -35,11 +35,11 @@ import {
     generateIv,
     generateSecurityAlgorithm
 } from '../common/crypto'
-import { decodeBase64, encodeBase64 } from '../common/codec'
-import { LanguageCodeEnum } from '../yeying/api/common/code_pb'
-import { ServiceProvider } from '../provider/service/service'
-import { Authenticate } from '../provider/common/authenticate'
-import { convertLanguageCodeTo } from '../common/message'
+import {decodeBase64, encodeBase64} from '../common/codec'
+import {LanguageCodeEnum} from '../yeying/api/common/code_pb'
+import {Authenticate} from '../provider/common/authenticate'
+import {convertLanguageCodeTo} from '../common/message'
+import {NodeProvider} from "../provider/node/node";
 
 /**
  * 账号管理类，用于管理用户账号、身份以及缓存数据。
@@ -98,7 +98,7 @@ export class AccountManager {
             domain = `${window.location.protocol}://${window.location.hostname}:${window.location.port}`
         }
 
-        const provider = new ServiceProvider(new Authenticate(blockAddress), { proxy: domain })
+        const provider = new NodeProvider(new Authenticate(blockAddress), { proxy: domain })
         return await provider.whoami()
     }
 

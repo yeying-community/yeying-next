@@ -1,14 +1,10 @@
-import { Authenticate } from '../common/authenticate'
-import { BulletinClient } from '../../yeying/api/bulletin/BulletinServiceClientPb'
-import { ProviderOption } from '../common/model'
-import { LanguageCodeEnum } from '../../yeying/api/common/code_pb'
-import { BulletinCodeEnum, ListRequest, ListRequestBody, ListResponseBody } from '../../yeying/api/bulletin/bulletin_pb'
-import { MessageHeader, RequestPage } from '../../yeying/api/common/message_pb'
-import { ServiceMetadata } from '../../yeying/api/service/service_pb'
-import { computeHash } from '../../common/crypto'
-import { fromDidToPublicKey, verifyHashBytes } from '@yeying-community/yeying-web3'
-import { DataForgery } from '../../common/error'
-import { FaqMetadata } from '../../yeying/api/support/support_pb'
+import {Authenticate} from '../common/authenticate'
+import {BulletinClient} from '../../yeying/api/bulletin/BulletinServiceClientPb'
+import {ProviderOption} from '../common/model'
+import {LanguageCodeEnum} from '../../yeying/api/common/code_pb'
+import {BulletinCodeEnum, ListRequest, ListRequestBody, ListResponseBody} from '../../yeying/api/bulletin/bulletin_pb'
+import {MessageHeader, RequestPage} from '../../yeying/api/common/message_pb'
+import {DataForgery} from '../../common/error'
 
 /**
  * BulletinProvider 类，用于提供公告相关的操作，包括获取公告列表等。

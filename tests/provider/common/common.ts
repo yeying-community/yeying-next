@@ -16,9 +16,9 @@ export function getProvider(code: ServiceCodeEnum) {
         case ServiceCodeEnum.SERVICE_CODE_NODE:
             return {proxy: process.env.YEYING_NODE_URL ? process.env.YEYING_NODE_URL as string : "http://localhost:8441"}
         case ServiceCodeEnum.SERVICE_CODE_AGENT:
-            return {proxy: process.env.YEYING_NODE_URL ? process.env.YEYING_AGENT_URL as string : "http://localhost:8541"}
+            return {proxy: process.env.YEYING_AGENT_URL ? process.env.YEYING_AGENT_URL as string : "http://localhost:8541"}
         case ServiceCodeEnum.SERVICE_CODE_WAREHOUSE:
-            return {proxy: process.env.YEYING_NODE_URL ? process.env.YEYING_WAREHOUSE_URL as string : "http://localhost:8641"}
+            return {proxy: process.env.YEYING_WAREHOUSE_URL ? process.env.YEYING_WAREHOUSE_URL as string : "http://localhost:8641"}
         default:
             throw new Error(`Unknown provider=${code}`)
     }

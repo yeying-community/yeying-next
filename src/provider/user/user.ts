@@ -1,16 +1,20 @@
 import {
     AddRequest,
-    AddRequestBody, DeleteRequest,
+    AddRequestBody,
+    DeleteRequest,
+    DeleteResponseBody,
     GetRequest,
-    GetResponseBody, StateResponseBody, UpdateRequest, UpdateRequestBody,
+    GetResponseBody,
+    StateResponseBody,
+    UpdateRequest,
+    UpdateRequestBody,
     UserMetadata
 } from '../../yeying/api/user/user_pb'
-import { getCurrentUtcString } from '../../common/date'
-import { Authenticate } from '../common/authenticate'
-import { UserClient } from '../../yeying/api/user/UserServiceClientPb'
-import { MessageHeader } from '../../yeying/api/common/message_pb'
-import { ProviderOption } from '../common/model'
-import { isValidString } from '../../common/string'
+import {getCurrentUtcString} from '../../common/date'
+import {Authenticate} from '../common/authenticate'
+import {UserClient} from '../../yeying/api/user/UserServiceClientPb'
+import {MessageHeader} from '../../yeying/api/common/message_pb'
+import {ProviderOption} from '../common/model'
 
 /**
  * 代表了一个用户节点提供商，提供对用户的增、删、改、查操作。
@@ -216,7 +220,7 @@ export class UserProvider {
      * ```
      */
     delete() {
-        return new Promise(async (resolve, reject) => {
+        return new Promise<DeleteResponseBody>(async (resolve, reject) => {
             let header
             try {
                 header = await this.authenticate.createHeader()

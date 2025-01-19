@@ -289,8 +289,8 @@ export class DeleteResponse extends jspb.Message {
   hasHeader(): boolean;
   clearHeader(): DeleteResponse;
 
-  getBody(): DelResponseBody | undefined;
-  setBody(value?: DelResponseBody): DeleteResponse;
+  getBody(): DeleteResponseBody | undefined;
+  setBody(value?: DeleteResponseBody): DeleteResponse;
   hasBody(): boolean;
   clearBody(): DeleteResponse;
 
@@ -305,25 +305,25 @@ export class DeleteResponse extends jspb.Message {
 export namespace DeleteResponse {
   export type AsObject = {
     header?: yeying_api_common_message_pb.MessageHeader.AsObject,
-    body?: DelResponseBody.AsObject,
+    body?: DeleteResponseBody.AsObject,
   }
 }
 
-export class DelResponseBody extends jspb.Message {
+export class DeleteResponseBody extends jspb.Message {
   getStatus(): yeying_api_common_message_pb.ResponseStatus | undefined;
-  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): DelResponseBody;
+  setStatus(value?: yeying_api_common_message_pb.ResponseStatus): DeleteResponseBody;
   hasStatus(): boolean;
-  clearStatus(): DelResponseBody;
+  clearStatus(): DeleteResponseBody;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): DelResponseBody.AsObject;
-  static toObject(includeInstance: boolean, msg: DelResponseBody): DelResponseBody.AsObject;
-  static serializeBinaryToWriter(message: DelResponseBody, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): DelResponseBody;
-  static deserializeBinaryFromReader(message: DelResponseBody, reader: jspb.BinaryReader): DelResponseBody;
+  toObject(includeInstance?: boolean): DeleteResponseBody.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteResponseBody): DeleteResponseBody.AsObject;
+  static serializeBinaryToWriter(message: DeleteResponseBody, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteResponseBody;
+  static deserializeBinaryFromReader(message: DeleteResponseBody, reader: jspb.BinaryReader): DeleteResponseBody;
 }
 
-export namespace DelResponseBody {
+export namespace DeleteResponseBody {
   export type AsObject = {
     status?: yeying_api_common_message_pb.ResponseStatus.AsObject,
   }
