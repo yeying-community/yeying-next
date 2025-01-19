@@ -7,5 +7,5 @@ dist
 coverage/
 output/
 _book
-docs
+/docs
 package-lock.json 
