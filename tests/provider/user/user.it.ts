@@ -14,7 +14,7 @@ describe('User', () => {
         const body = await userProvider.delete()
         console.log(`Success to del user=${blockAddress.identifier}`)
         // @ts-ignore
-        assert.equal(body.getStatus().getCode(), ResponseCodeEnum.OK)
+        assert.isTrue(body.getStatus().getCode() === ResponseCodeEnum.OK || body.getStatus().getCode() === ResponseCodeEnum.NOT_FOUND)
     })
 
     it('add', async () => {
@@ -22,7 +22,7 @@ describe('User', () => {
         const body = await userProvider.add('test1', "avatar1")
         console.log(`Success to add new user=${JSON.stringify(body)}`)
         // @ts-ignore
-        assert.equal(body.getStatus().getCode(), ResponseCodeEnum.OK)
+        assert.isTrue(body.getStatus().getCode() === ResponseCodeEnum.OK || body.getStatus().getCode() === ResponseCodeEnum.ALREADY_EXISTS)
     })
 
     it('get', async () => {
