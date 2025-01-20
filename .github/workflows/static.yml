@@ -22,7 +22,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-24.04
-    needs: jekyll-build
     steps:
       - name: Checkout branch
         uses: actions/checkout@v4
