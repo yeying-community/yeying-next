@@ -2,7 +2,7 @@ name: Deploy docs content to Pages
 
 # 触发条件：当有pull_request事件发生到main分支时
 on:
-  pull_request:
+  push:
     branches:
       - main
 
@@ -22,6 +22,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-24.04
+    needs: jekyll-build
     steps:
       - name: Checkout branch
         uses: actions/checkout@v4
