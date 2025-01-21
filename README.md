@@ -18,3 +18,6 @@ npm run test -- tests/**/*.it.ts
 # How to format the code before pushing code?
 npm run format
 
+# How to generate docs with [typedoc](https://typedoc.org/documents/Overview.html)?
+npm run docs
+

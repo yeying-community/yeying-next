@@ -3,5 +3,7 @@
   "out": "docs",
   "exclude": ["**/*.it.ts", "**/*.ut.ts"],
   "tsconfig": "tsconfig.json",
+  "hideGenerator": true,
+  "theme": "default",
   "readme": "introduce.md"
 }
