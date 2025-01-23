@@ -11,7 +11,17 @@ export {AssetCipher} from './provider/warehouse/cipher'
 export {Uploader} from './provider/warehouse/uploader'
 export {Downloader} from './provider/warehouse/downloader'
 export {AccountManager} from './account/manager'
+export {Account} from './account/model'
+export { MailProvider } from './provider/mail/mail'
+
 export * from './yeying/api/common/code_pb'
 export * from './yeying/api/common/message_pb'
-export { MailProvider } from './provider/mail/mail'
+export * from './yeying/api/asset/asset_pb'
+export * from './yeying/api/asset/block_pb'
+export * from './yeying/api/bulletin/bulletin_pb'
+export * from './yeying/api/node/node_pb'
+export * from './yeying/api/user/user_pb'
+export * from './yeying/api/support/support_pb'
+export * from './yeying/api/mail/mail_pb'
+
 

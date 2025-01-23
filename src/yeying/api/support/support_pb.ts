@@ -12,41 +12,41 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/support/support.proto.
  */
 export const file_yeying_api_support_support: GenFile = /*@__PURE__*/
-  fileDesc("CiB5ZXlpbmcvYXBpL3N1cHBvcnQvc3VwcG9ydC5wcm90bxISeWV5aW5nLmFwaS5zdXBwb3J0IngKDkNvbGxlY3RSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNAoEYm9keRgCIAEoCzImLnlleWluZy5hcGkuc3VwcG9ydC5Db2xsZWN0UmVxdWVzdEJvZHkifwoSQ29sbGVjdFJlcXVlc3RCb2R5EjEKBGNvZGUYASABKA4yIy55ZXlpbmcuYXBpLnN1cHBvcnQuU3VwcG9ydENvZGVFbnVtEi4KA2ZhcRgDIAEoCzIfLnlleWluZy5hcGkuc3VwcG9ydC5GYXFNZXRhZGF0YUgAQgYKBGRhdGEicAoLRmFxTWV0YWRhdGESCwoDZGlkGAEgASgJEg0KBWVtYWlsGAIgASgJEgwKBHR5cGUYAyABKAkSEwoLZGVzY3JpcHRpb24YBCABKAkSDwoHY3JlYXRlZBgFIAEoCRIRCglzaWduYXR1cmUYBiABKAkiegoPQ29sbGVjdFJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkuc3VwcG9ydC5Db2xsZWN0UmVzcG9uc2VCb2R5IkgKE0NvbGxlY3RSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMqUwoPU3VwcG9ydENvZGVFbnVtEhQKEFNVUFBPUlRfQ09ERV9GQVEQABIUChBTVVBQT1JUX0NPREVfQ1NSEAESFAoQU1VQUE9SVF9DT0RFX0lWUhACMl8KB1N1cHBvcnQSVAoHQ29sbGVjdBIiLnlleWluZy5hcGkuc3VwcG9ydC5Db2xsZWN0UmVxdWVzdBojLnlleWluZy5hcGkuc3VwcG9ydC5Db2xsZWN0UmVzcG9uc2UiAEIUWhJ5ZXlpbmcvYXBpL3N1cHBvcnRiBnByb3RvMw", [file_yeying_api_common_message]);
+  fileDesc("CiB5ZXlpbmcvYXBpL3N1cHBvcnQvc3VwcG9ydC5wcm90bxISeWV5aW5nLmFwaS5zdXBwb3J0IoYBChVDb2xsZWN0U3VwcG9ydFJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI7CgRib2R5GAIgASgLMi0ueWV5aW5nLmFwaS5zdXBwb3J0LkNvbGxlY3RTdXBwb3J0UmVxdWVzdEJvZHkihgEKGUNvbGxlY3RTdXBwb3J0UmVxdWVzdEJvZHkSMQoEY29kZRgBIAEoDjIjLnlleWluZy5hcGkuc3VwcG9ydC5TdXBwb3J0Q29kZUVudW0SLgoDZmFxGAMgASgLMh8ueWV5aW5nLmFwaS5zdXBwb3J0LkZhcU1ldGFkYXRhSABCBgoEZGF0YSJwCgtGYXFNZXRhZGF0YRILCgNkaWQYASABKAkSDQoFZW1haWwYAiABKAkSDAoEdHlwZRgDIAEoCRITCgtkZXNjcmlwdGlvbhgEIAEoCRIPCgdjcmVhdGVkGAUgASgJEhEKCXNpZ25hdHVyZRgGIAEoCSKIAQoWQ29sbGVjdFN1cHBvcnRSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjwKBGJvZHkYAiABKAsyLi55ZXlpbmcuYXBpLnN1cHBvcnQuQ29sbGVjdFN1cHBvcnRSZXNwb25zZUJvZHkiTwoaQ29sbGVjdFN1cHBvcnRSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMqUwoPU3VwcG9ydENvZGVFbnVtEhQKEFNVUFBPUlRfQ09ERV9GQVEQABIUChBTVVBQT1JUX0NPREVfQ1NSEAESFAoQU1VQUE9SVF9DT0RFX0lWUhACMm0KB1N1cHBvcnQSYgoHQ29sbGVjdBIpLnlleWluZy5hcGkuc3VwcG9ydC5Db2xsZWN0U3VwcG9ydFJlcXVlc3QaKi55ZXlpbmcuYXBpLnN1cHBvcnQuQ29sbGVjdFN1cHBvcnRSZXNwb25zZSIAQhRaEnlleWluZy9hcGkvc3VwcG9ydGIGcHJvdG8z", [file_yeying_api_common_message]);
 
 /**
- * @generated from message yeying.api.support.CollectRequest
+ * @generated from message yeying.api.support.CollectSupportRequest
  */
-export type CollectRequest = Message<"yeying.api.support.CollectRequest"> & {
+export type CollectSupportRequest = Message<"yeying.api.support.CollectSupportRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.support.CollectRequestBody body = 2;
+   * @generated from field: yeying.api.support.CollectSupportRequestBody body = 2;
    */
-  body?: CollectRequestBody;
+  body?: CollectSupportRequestBody;
 };
 
 /**
- * Describes the message yeying.api.support.CollectRequest.
- * Use `create(CollectRequestSchema)` to create a new message.
+ * Describes the message yeying.api.support.CollectSupportRequest.
+ * Use `create(CollectSupportRequestSchema)` to create a new message.
  */
-export const CollectRequestSchema: GenMessage<CollectRequest> = /*@__PURE__*/
+export const CollectSupportRequestSchema: GenMessage<CollectSupportRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_support_support, 0);
 
 /**
- * @generated from message yeying.api.support.CollectRequestBody
+ * @generated from message yeying.api.support.CollectSupportRequestBody
  */
-export type CollectRequestBody = Message<"yeying.api.support.CollectRequestBody"> & {
+export type CollectSupportRequestBody = Message<"yeying.api.support.CollectSupportRequestBody"> & {
   /**
    * @generated from field: yeying.api.support.SupportCodeEnum code = 1;
    */
   code: SupportCodeEnum;
 
   /**
-   * @generated from oneof yeying.api.support.CollectRequestBody.data
+   * @generated from oneof yeying.api.support.CollectSupportRequestBody.data
    */
   data: {
     /**
@@ -58,10 +58,10 @@ export type CollectRequestBody = Message<"yeying.api.support.CollectRequestBody"
 };
 
 /**
- * Describes the message yeying.api.support.CollectRequestBody.
- * Use `create(CollectRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.support.CollectSupportRequestBody.
+ * Use `create(CollectSupportRequestBodySchema)` to create a new message.
  */
-export const CollectRequestBodySchema: GenMessage<CollectRequestBody> = /*@__PURE__*/
+export const CollectSupportRequestBodySchema: GenMessage<CollectSupportRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_support_support, 1);
 
 /**
@@ -107,31 +107,31 @@ export const FaqMetadataSchema: GenMessage<FaqMetadata> = /*@__PURE__*/
   messageDesc(file_yeying_api_support_support, 2);
 
 /**
- * @generated from message yeying.api.support.CollectResponse
+ * @generated from message yeying.api.support.CollectSupportResponse
  */
-export type CollectResponse = Message<"yeying.api.support.CollectResponse"> & {
+export type CollectSupportResponse = Message<"yeying.api.support.CollectSupportResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.support.CollectResponseBody body = 2;
+   * @generated from field: yeying.api.support.CollectSupportResponseBody body = 2;
    */
-  body?: CollectResponseBody;
+  body?: CollectSupportResponseBody;
 };
 
 /**
- * Describes the message yeying.api.support.CollectResponse.
- * Use `create(CollectResponseSchema)` to create a new message.
+ * Describes the message yeying.api.support.CollectSupportResponse.
+ * Use `create(CollectSupportResponseSchema)` to create a new message.
  */
-export const CollectResponseSchema: GenMessage<CollectResponse> = /*@__PURE__*/
+export const CollectSupportResponseSchema: GenMessage<CollectSupportResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_support_support, 3);
 
 /**
- * @generated from message yeying.api.support.CollectResponseBody
+ * @generated from message yeying.api.support.CollectSupportResponseBody
  */
-export type CollectResponseBody = Message<"yeying.api.support.CollectResponseBody"> & {
+export type CollectSupportResponseBody = Message<"yeying.api.support.CollectSupportResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -139,10 +139,10 @@ export type CollectResponseBody = Message<"yeying.api.support.CollectResponseBod
 };
 
 /**
- * Describes the message yeying.api.support.CollectResponseBody.
- * Use `create(CollectResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.support.CollectSupportResponseBody.
+ * Use `create(CollectSupportResponseBodySchema)` to create a new message.
  */
-export const CollectResponseBodySchema: GenMessage<CollectResponseBody> = /*@__PURE__*/
+export const CollectSupportResponseBodySchema: GenMessage<CollectSupportResponseBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_support_support, 4);
 
 /**
@@ -186,8 +186,8 @@ export const Support: GenService<{
    */
   collect: {
     methodKind: "unary";
-    input: typeof CollectRequestSchema;
-    output: typeof CollectResponseSchema;
+    input: typeof CollectSupportRequestSchema;
+    output: typeof CollectSupportResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_yeying_api_support_support, 0);

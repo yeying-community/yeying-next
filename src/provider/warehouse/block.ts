@@ -4,12 +4,12 @@ import {
     Block,
     BlockMetadata,
     BlockMetadataSchema,
-    GetRequestBodySchema,
-    GetRequestSchema,
-    GetResponseBodySchema,
-    PutRequestBodySchema,
-    PutRequestSchema,
-    PutResponseBodySchema
+    GetBlockRequestBodySchema,
+    GetBlockRequestSchema,
+    GetBlockResponseBodySchema,
+    PutBlockRequestBodySchema,
+    PutBlockRequestSchema,
+    PutBlockResponseBodySchema
 } from '../../yeying/api/asset/block_pb'
 import {getCurrentUtcString} from '../../common/date'
 import {Client, createClient} from "@connectrpc/connect";
@@ -77,19 +77,19 @@ export class BlockProvider {
      */
     get(hash: string) {
         return new Promise<Uint8Array>(async (resolve, reject) => {
-            const body = create(GetRequestBodySchema, {hash: hash})
+            const body = create(GetBlockRequestBodySchema, {hash: hash})
             let header
             try {
-                header = await this.authenticate.createHeader(toBinary(GetRequestBodySchema, body))
+                header = await this.authenticate.createHeader(toBinary(GetBlockRequestBodySchema, body))
             } catch (err) {
                 console.error(`Fail to create header when getting chunk content, hash=${hash}`, err)
                 return reject(err)
             }
 
-            const request = create(GetRequestSchema, {header: header, body: body})
+            const request = create(GetBlockRequestSchema, {header: header, body: body})
             try {
                 const res = await this.client.get(request)
-                await this.authenticate.doResponse(res, GetResponseBodySchema)
+                await this.authenticate.doResponse(res, GetBlockResponseBodySchema)
                 resolve(res.data)
             } catch (err) {
                 console.error('Fail to get block', err)
@@ -120,21 +120,21 @@ export class BlockProvider {
                 size: size,
             })
 
-            const body = create(PutRequestBodySchema, {block: block})
+            const body = create(PutBlockRequestBodySchema, {block: block})
 
             let header
             try {
                 block.signature = await this.authenticate.sign(toBinary(BlockMetadataSchema, block))
-                header = await this.authenticate.createHeader(toBinary(PutRequestBodySchema, body))
+                header = await this.authenticate.createHeader(toBinary(PutBlockRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header when putting chunk content', err)
                 return reject(err)
             }
 
-            const request = create(PutRequestSchema, {header: header, body: body, data: data})
+            const request = create(PutBlockRequestSchema, {header: header, body: body, data: data})
             try {
                 const res = await this.client.put(request)
-                await this.authenticate.doResponse(res, PutResponseBodySchema)
+                await this.authenticate.doResponse(res, PutBlockResponseBodySchema)
                 if (isOk(res?.body?.status)) {
                     resolve(block)
                 } else {

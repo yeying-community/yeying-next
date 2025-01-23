@@ -8,7 +8,7 @@ import {SecurityAlgorithm} from "@yeying-community/yeying-web3";
 import {convertCipherTypeTo} from "../../../src/common/message";
 import {BlockProvider} from "../../../src/provider/warehouse/block";
 import {readFile, ResultDataType} from "../../../src/common/file";
-import {AssetMetadata, AssetMetadataSchema, SearchCondition} from "../../../src/yeying/api/asset/asset_pb";
+import {AssetMetadata, AssetMetadataSchema, SearchAssetCondition} from "../../../src/yeying/api/asset/asset_pb";
 import {ProviderOption} from "../../../src";
 import {toJson} from "@bufbuild/protobuf";
 import {isOk} from "../../../src/common/status";
@@ -42,7 +42,7 @@ describe('Asset', () => {
 
     it('search', async () => {
         const assetProvider = new AssetProvider(provider)
-        const condition: Partial<SearchCondition> = {
+        const condition: Partial<SearchAssetCondition> = {
             format: DigitalFormatEnum.DIGITAL_FORMAT_OTHER,
             trash: false,
         }
@@ -90,7 +90,7 @@ describe('Asset', () => {
 
     it('search from trash', async () => {
         const assetProvider = new AssetProvider(provider)
-        const condition: Partial<SearchCondition> = {
+        const condition: Partial<SearchAssetCondition> = {
             format: DigitalFormatEnum.DIGITAL_FORMAT_OTHER,
             trash: true,
         }

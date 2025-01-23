@@ -1,20 +1,20 @@
 import {
-    AddRequestBodySchema,
-    AddRequestSchema,
-    AddResponseBody,
-    AddResponseBodySchema,
-    DeleteRequestSchema,
-    DeleteResponseBody,
-    DeleteResponseBodySchema,
-    GetRequestSchema,
-    GetResponseBody,
-    GetResponseBodySchema,
-    StateRequestSchema,
-    StateResponseBody,
-    StateResponseBodySchema,
-    UpdateRequestBodySchema,
-    UpdateRequestSchema,
-    UpdateResponseBodySchema,
+    AddUserRequestBodySchema,
+    AddUserRequestSchema,
+    AddUserResponseBody,
+    AddUserResponseBodySchema,
+    DeleteUserRequestSchema,
+    DeleteUserResponseBody,
+    DeleteUserResponseBodySchema,
+    GetUserRequestSchema,
+    GetUserResponseBody,
+    GetUserResponseBodySchema,
+    UserStateRequestSchema,
+    UserStateResponseBody,
+    UserStateResponseBodySchema,
+    UpdateUserRequestBodySchema,
+    UpdateUserRequestSchema,
+    UpdateUserResponseBodySchema,
     User,
     UserMetadata,
     UserMetadataSchema
@@ -34,7 +34,7 @@ import {NotFound} from "../../common/error";
  * @class
  * @example
  * ```ts
- * const authenticate = new Authenticate(blockAddress);
+ * const authenticate = new Authenticate(blockAddUserress);
  * const providerOption: ProviderOption = { proxy: 'http://example.com' };
  * const userProvider = new UserProvider(authenticate, providerOption);
  * ```
@@ -54,7 +54,7 @@ export class UserProvider {
      * @param option - 提供商配置，包括代理设置。
      * @example
      * ```ts
-     * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
+     * const providerOption = { proxy: <proxy url>, blockAddUserress: <your block address> };
      * const userProvider = new UserProvider(providerOption);
      * ```
      */
@@ -81,7 +81,7 @@ export class UserProvider {
      * ```
      */
     add(name: string, avatar: string) {
-        return new Promise<AddResponseBody>(async (resolve, reject) => {
+        return new Promise<AddUserResponseBody>(async (resolve, reject) => {
             const user: UserMetadata = create(UserMetadataSchema, {
                 did: this.authenticate.getDid(),
                 name: name,
@@ -90,21 +90,21 @@ export class UserProvider {
                 checkpoint: getCurrentUtcString(),
             });
 
-            const body = create(AddRequestBodySchema, {user: user})
+            const body = create(AddUserRequestBodySchema, {user: user})
             let header: MessageHeader
             try {
                 user.signature = await this.authenticate.sign(toBinary(UserMetadataSchema, user))
-                header = await this.authenticate.createHeader(toBinary(AddRequestBodySchema, body))
+                header = await this.authenticate.createHeader(toBinary(AddUserRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header for adding user', err)
                 return reject(err)
             }
 
-            const request = create(AddRequestSchema, {header: header, body: body})
+            const request = create(AddUserRequestSchema, {header: header, body: body})
             try {
                 const res = await this.client.add(request)
-                await this.authenticate.doResponse(res, AddResponseBodySchema)
-                resolve(res.body as AddResponseBody)
+                await this.authenticate.doResponse(res, AddUserResponseBodySchema)
+                resolve(res.body as AddUserResponseBody)
             } catch (err) {
                 console.error('Fail to add user', err)
                 return reject(err)
@@ -126,7 +126,7 @@ export class UserProvider {
      * ```
      */
     get() {
-        return new Promise<GetResponseBody>(async (resolve, reject) => {
+        return new Promise<GetUserResponseBody>(async (resolve, reject) => {
             let header
             try {
                 header = await this.authenticate.createHeader()
@@ -135,11 +135,11 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = create(GetRequestSchema, {header: header})
+            const request = create(GetUserRequestSchema, {header: header})
             try {
                 const res = await this.client.get(request)
-                await this.authenticate.doResponse(res, GetResponseBodySchema)
-                resolve(res.body as GetResponseBody)
+                await this.authenticate.doResponse(res, GetUserResponseBodySchema)
+                resolve(res.body as GetUserResponseBody)
             } catch (err) {
                 console.error('Fail to get user', err)
                 return reject(err)
@@ -186,21 +186,21 @@ export class UserProvider {
             user.checkpoint = getCurrentUtcString()
             user.signature = ''
 
-            const body = create(UpdateRequestBodySchema, {})
+            const body = create(UpdateUserRequestBodySchema, {})
             let header
             try {
                 user.signature = await this.authenticate.sign(toBinary(UserMetadataSchema, user))
                 body.user = user
-                header = await this.authenticate.createHeader(toBinary(UpdateRequestBodySchema, body))
+                header = await this.authenticate.createHeader(toBinary(UpdateUserRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header for modifying user', err)
                 return reject(err)
             }
 
-            const request = create(UpdateRequestSchema, {header: header, body: body})
+            const request = create(UpdateUserRequestSchema, {header: header, body: body})
             try {
                 const res = await this.client.update(request)
-                await this.authenticate.doResponse(res, UpdateResponseBodySchema)
+                await this.authenticate.doResponse(res, UpdateUserResponseBodySchema)
                 resolve(user)
             } catch (err) {
                 console.error('Fail to update user', err)
@@ -223,7 +223,7 @@ export class UserProvider {
      * ```
      */
     state() {
-        return new Promise<StateResponseBody>(async (resolve, reject) => {
+        return new Promise<UserStateResponseBody>(async (resolve, reject) => {
             let header
             try {
                 header = await this.authenticate.createHeader()
@@ -232,11 +232,11 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = create(StateRequestSchema, {header: header})
+            const request = create(UserStateRequestSchema, {header: header})
             try {
                 const res = await this.client.state(request)
-                await this.authenticate.doResponse(res, StateResponseBodySchema)
-                resolve(res.body as StateResponseBody)
+                await this.authenticate.doResponse(res, UserStateResponseBodySchema)
+                resolve(res.body as UserStateResponseBody)
             } catch (err) {
                 console.error('Fail to get user state', err)
                 return reject(err)
@@ -257,7 +257,7 @@ export class UserProvider {
      * ```
      */
     delete() {
-        return new Promise<DeleteResponseBody>(async (resolve, reject) => {
+        return new Promise<DeleteUserResponseBody>(async (resolve, reject) => {
             let header
             try {
                 header = await this.authenticate.createHeader()
@@ -266,11 +266,11 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = create(DeleteRequestSchema, {header: header})
+            const request = create(DeleteUserRequestSchema, {header: header})
             try {
                 const res = await this.client.delete(request)
-                await this.authenticate.doResponse(res, DeleteResponseBodySchema)
-                resolve(res.body as DeleteResponseBody)
+                await this.authenticate.doResponse(res, DeleteUserResponseBodySchema)
+                resolve(res.body as DeleteUserResponseBody)
             } catch (err) {
                 console.error('Fail to get user state', err)
                 return reject(err)
