@@ -3,9 +3,10 @@ import {Authenticate} from '../common/authenticate'
 import {MessageHeader} from '../../yeying/api/common/message_pb'
 import {getCurrentUtcString} from '../../common/date'
 import {
-    CollectRequestBodySchema,
-    CollectRequestSchema, CollectResponseBody,
-    CollectResponseBodySchema,
+    CollectSupportRequestBodySchema,
+    CollectSupportRequestSchema, 
+    CollectSupportResponseBody,
+    CollectSupportResponseBodySchema,
     FaqMetadataSchema,
     Support,
     SupportCodeEnum
@@ -65,7 +66,7 @@ export class SupportProvider {
      * ```
      */
     async collectFaq(type: string, email: string, description: string) {
-        return new Promise<CollectResponseBody>(async (resolve, reject) => {
+        return new Promise<CollectSupportResponseBody>(async (resolve, reject) => {
             const faq = create(FaqMetadataSchema, {
                 did: this.authenticate.getDid(),
                 type: type,
@@ -74,7 +75,7 @@ export class SupportProvider {
                 created: getCurrentUtcString(),
             })
 
-            const body = create(CollectRequestBodySchema, {
+            const body = create(CollectSupportRequestBodySchema, {
                 code: SupportCodeEnum.SUPPORT_CODE_FAQ,
             })
 
@@ -83,17 +84,17 @@ export class SupportProvider {
                 faq.signature = await this.authenticate.sign(toBinary(FaqMetadataSchema, faq))
                 body.data.value = faq
                 body.data.case = 'faq'
-                header = await this.authenticate.createHeader(toBinary(CollectRequestBodySchema, body))
+                header = await this.authenticate.createHeader(toBinary(CollectSupportRequestBodySchema, body))
             } catch (err) {
                 console.error('Failed to create header for collecting faq', err)
                 return reject(err)
             }
 
-            const request = create(CollectRequestSchema, {header: header, body: body})
+            const request = create(CollectSupportRequestSchema, {header: header, body: body})
             try {
                 const res = await this.client.collect(request)
-                await this.authenticate.doResponse(res, CollectResponseBodySchema)
-                resolve(res.body as CollectResponseBody)
+                await this.authenticate.doResponse(res, CollectSupportResponseBodySchema)
+                resolve(res.body as CollectSupportResponseBody)
             } catch (err) {
                 console.error('Fail to collect faq', err)
                 return reject(err)

@@ -4,9 +4,10 @@ import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
 import {ProviderOption} from "../../../src/provider/common/model";
 import {toJson} from "@bufbuild/protobuf";
 import {
-    AddResponseBodySchema,
-    GetResponseBodySchema,
-    StateResponseBodySchema, UserMetadataSchema
+    AddUserResponseBodySchema,
+    GetUserResponseBodySchema,
+    UserMetadataSchema,
+    UserStateResponseBodySchema
 } from "../../../src/yeying/api/user/user_pb";
 import {isDeleted, isExisted, isOk} from "../../../src/common/status";
 
@@ -26,21 +27,21 @@ describe('User', () => {
     it('add', async () => {
         const userProvider = new UserProvider(provider)
         const body = await userProvider.add('test1', "avatar1")
-        console.log(`Success to add new user=${JSON.stringify(toJson(AddResponseBodySchema, body))}`)
+        console.log(`Success to add new user=${JSON.stringify(toJson(AddUserResponseBodySchema, body))}`)
         assert.isTrue(isExisted(body.status))
     })
 
     it('get', async () => {
         const userProvider = new UserProvider(provider)
         const body = await userProvider.get()
-        console.log(`Success to get user=${JSON.stringify(toJson(GetResponseBodySchema, body))}`)
+        console.log(`Success to get user=${JSON.stringify(toJson(GetUserResponseBodySchema, body))}`)
         assert.isTrue(isOk(body.status))
     })
 
     it('state', async () => {
         const userProvider = new UserProvider(provider)
         const body = await userProvider.state()
-        console.log(`Success to get user=${JSON.stringify(toJson(StateResponseBodySchema, body))}`)
+        console.log(`Success to get user=${JSON.stringify(toJson(UserStateResponseBodySchema, body))}`)
         assert.isTrue(isOk(body.status))
     })
 

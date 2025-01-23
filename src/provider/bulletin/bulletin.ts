@@ -5,10 +5,10 @@ import {DataForgery} from '../../common/error'
 import {
     Bulletin,
     BulletinCodeEnum,
-    ListRequestBodySchema,
-    ListRequestSchema,
-    ListResponseBody,
-    ListResponseBodySchema,
+    BulletinListRequestBodySchema,
+    BulletinListRequestSchema,
+    BulletinListResponseBody,
+    BulletinListResponseBodySchema,
     SolutionMetadataSchema
 } from '../../yeying/api/bulletin/bulletin_pb'
 import {Client, createClient} from "@connectrpc/connect";
@@ -23,7 +23,7 @@ import {create, toBinary} from "@bufbuild/protobuf";
  * ```ts
  * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
  * const bulletinProvider = new BulletinProvider(providerOption);
- * const response = await bulletinProvider.list(LanguageCodeEnum.EN, 1, 10);
+ * const response = await bulletinProvider.BulletinList(LanguageCodeEnum.EN, 1, 10);
  * console.log(response);
  * ```
  */
@@ -59,18 +59,18 @@ export class BulletinProvider {
      * @throws {DataForgery} 如果验证公告数据的签名无效，则抛出错误。
      * @example
      * ```ts
-     * const response = await bulletinProvider.list(LanguageCodeEnum.EN, 1, 10);
+     * const response = await bulletinProvider.BulletinList(LanguageCodeEnum.EN, 1, 10);
      * console.log(response); // 输出公告列表
      * ```
      */
     async list(language: LanguageCodeEnum, page: number, pageSize: number) {
-        return new Promise<ListResponseBody>(async (resolve, reject) => {
+        return new Promise<BulletinListResponseBody>(async (resolve, reject) => {
             const requestPage = create(RequestPageSchema, {
                 page: page,
                 pageSize: pageSize,
             })
 
-            const body = create(ListRequestBodySchema, {
+            const body = create(BulletinListRequestBodySchema, {
                 language: language,
                 code: BulletinCodeEnum.BULLETIN_CODE_SOLUTION,
                 page: requestPage,
@@ -80,17 +80,17 @@ export class BulletinProvider {
             let header: MessageHeader
             try {
                 // 创建消息头
-                header = await this.authenticate.createHeader(toBinary(ListRequestBodySchema, body))
+                header = await this.authenticate.createHeader(toBinary(BulletinListRequestBodySchema, body))
             } catch (err) {
-                console.error('Fail to create header for listing solutions.', err)
+                console.error('Fail to create header for BulletinListing solutions.', err)
                 return err
             }
 
-            const request = create(ListRequestSchema, {header: header, body: body})
+            const request = create(BulletinListRequestSchema, {header: header, body: body})
             try {
                 const res = await this.client.list(request)
-                await this.authenticate.doResponse(res, ListResponseBodySchema)
-                const body = res.body as ListResponseBody
+                await this.authenticate.doResponse(res, BulletinListResponseBodySchema)
+                const body = res.body as BulletinListResponseBody
                 // 验证解决方案信息的签名
                 for (let solution of body.solutions) {
                     const signature = solution.signature
@@ -112,7 +112,7 @@ export class BulletinProvider {
 
                 resolve(body)
             } catch (err) {
-                console.error('Fail to list solutions', err)
+                console.error('Fail to BulletinList solutions', err)
                 return reject(err)
             }
         })

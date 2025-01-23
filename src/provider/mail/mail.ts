@@ -3,14 +3,14 @@ import {MessageHeader} from '../../yeying/api/common/message_pb'
 import {ProviderOption} from '../common/model'
 import {
     Mail,
-    SendRequestBodySchema,
-    SendRequestSchema,
-    SendResponseBody,
-    SendResponseBodySchema,
-    VerifyRequestBodySchema,
-    VerifyRequestSchema,
-    VerifyResponseBody,
-    VerifyResponseBodySchema
+    SendMailRequestBodySchema,
+    SendMailRequestSchema,
+    SendMailResponseBody,
+    SendMailResponseBodySchema,
+    VerifyMailRequestBodySchema,
+    VerifyMailRequestSchema,
+    VerifyMailResponseBody,
+    VerifyMailResponseBodySchema
 } from "../../yeying/api/mail/mail_pb";
 import {Client, createClient} from "@connectrpc/connect";
 import {createGrpcWebTransport} from "@connectrpc/connect-web";
@@ -73,25 +73,25 @@ export class MailProvider {
      * ```
      */
     send(toMail: string) {
-        return new Promise<SendResponseBody>(async (resolve, reject) => {
-            const body = create(SendRequestBodySchema, {
+        return new Promise<SendMailResponseBody>(async (resolve, reject) => {
+            const body = create(SendMailRequestBodySchema, {
                 toMail: toMail
             })
 
             let header: MessageHeader
             try {
                 // 创建消息头
-                header = await this.authenticate.createHeader(toBinary(SendRequestBodySchema, body))
+                header = await this.authenticate.createHeader(toBinary(SendMailRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header for sending mail', err)
                 return reject(err)
             }
 
-            const request = create(SendRequestSchema, {header: header, body: body})
+            const request = create(SendMailRequestSchema, {header: header, body: body})
             try {
                 const res = await this.client.send(request)
-                await this.authenticate.doResponse(res, SendResponseBodySchema)
-                resolve(res.body as SendResponseBody)
+                await this.authenticate.doResponse(res, SendMailResponseBodySchema)
+                resolve(res.body as SendMailResponseBody)
             } catch (err) {
                 console.error('Fail to send mail', err)
                 return reject(err)
@@ -115,25 +115,25 @@ export class MailProvider {
      * ```
      */
     verify(toMail: string, code: string) {
-        return new Promise<VerifyResponseBody>(async (resolve, reject) => {
-            const body = create(VerifyRequestBodySchema, {
+        return new Promise<VerifyMailResponseBody>(async (resolve, reject) => {
+            const body = create(VerifyMailRequestBodySchema, {
                 toMail: toMail,
                 code: code,
             })
             let header: MessageHeader
             try {
                 // 创建消息头
-                header = await this.authenticate.createHeader(toBinary(VerifyRequestBodySchema, body))
+                header = await this.authenticate.createHeader(toBinary(VerifyMailRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header when verify email code.', err)
                 return reject(err)
             }
 
-            const request = create(VerifyRequestSchema, {header: header, body: body})
+            const request = create(VerifyMailRequestSchema, {header: header, body: body})
             try {
                 const res = await this.client.verify(request)
-                await this.authenticate.doResponse(res, VerifyResponseBodySchema)
-                resolve(res.body as VerifyResponseBody)
+                await this.authenticate.doResponse(res, VerifyMailResponseBodySchema)
+                resolve(res.body as VerifyMailResponseBody)
             } catch (err) {
                 console.error('Fail to verify email code', err)
                 return reject(err)

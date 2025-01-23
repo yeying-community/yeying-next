@@ -12,37 +12,37 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/mail/mail.proto.
  */
 export const file_yeying_api_mail_mail: GenFile = /*@__PURE__*/
-  fileDesc("Chp5ZXlpbmcvYXBpL21haWwvbWFpbC5wcm90bxIPeWV5aW5nLmFwaS5tYWlsIm8KC1NlbmRSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISLgoEYm9keRgCIAEoCzIgLnlleWluZy5hcGkubWFpbC5TZW5kUmVxdWVzdEJvZHkiIQoPU2VuZFJlcXVlc3RCb2R5Eg4KBnRvTWFpbBgBIAEoCSJxCgxTZW5kUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchIvCgRib2R5GAIgASgLMiEueWV5aW5nLmFwaS5tYWlsLlNlbmRSZXNwb25zZUJvZHkiRQoQU2VuZFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cyJzCg1WZXJpZnlSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISMAoEYm9keRgCIAEoCzIiLnlleWluZy5hcGkubWFpbC5WZXJpZnlSZXF1ZXN0Qm9keSIxChFWZXJpZnlSZXF1ZXN0Qm9keRIOCgZ0b01haWwYASABKAkSDAoEY29kZRgCIAEoCSJ1Cg5WZXJpZnlSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjEKBGJvZHkYAiABKAsyIy55ZXlpbmcuYXBpLm1haWwuVmVyaWZ5UmVzcG9uc2VCb2R5IkcKElZlcmlmeVJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1czKaAQoETWFpbBJFCgRTZW5kEhwueWV5aW5nLmFwaS5tYWlsLlNlbmRSZXF1ZXN0Gh0ueWV5aW5nLmFwaS5tYWlsLlNlbmRSZXNwb25zZSIAEksKBlZlcmlmeRIeLnlleWluZy5hcGkubWFpbC5WZXJpZnlSZXF1ZXN0Gh8ueWV5aW5nLmFwaS5tYWlsLlZlcmlmeVJlc3BvbnNlIgBCEVoPeWV5aW5nL2FwaS9tYWlsYgZwcm90bzM", [file_yeying_api_common_message]);
+  fileDesc("Chp5ZXlpbmcvYXBpL21haWwvbWFpbC5wcm90bxIPeWV5aW5nLmFwaS5tYWlsIncKD1NlbmRNYWlsUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjIKBGJvZHkYAiABKAsyJC55ZXlpbmcuYXBpLm1haWwuU2VuZE1haWxSZXF1ZXN0Qm9keSIlChNTZW5kTWFpbFJlcXVlc3RCb2R5Eg4KBnRvTWFpbBgBIAEoCSJ5ChBTZW5kTWFpbFJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISMwoEYm9keRgCIAEoCzIlLnlleWluZy5hcGkubWFpbC5TZW5kTWFpbFJlc3BvbnNlQm9keSJJChRTZW5kTWFpbFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cyJ7ChFWZXJpZnlNYWlsUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjQKBGJvZHkYAiABKAsyJi55ZXlpbmcuYXBpLm1haWwuVmVyaWZ5TWFpbFJlcXVlc3RCb2R5IjUKFVZlcmlmeU1haWxSZXF1ZXN0Qm9keRIOCgZ0b01haWwYASABKAkSDAoEY29kZRgCIAEoCSJ9ChJWZXJpZnlNYWlsUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS5tYWlsLlZlcmlmeU1haWxSZXNwb25zZUJvZHkiSwoWVmVyaWZ5TWFpbFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1czKqAQoETWFpbBJNCgRTZW5kEiAueWV5aW5nLmFwaS5tYWlsLlNlbmRNYWlsUmVxdWVzdBohLnlleWluZy5hcGkubWFpbC5TZW5kTWFpbFJlc3BvbnNlIgASUwoGVmVyaWZ5EiIueWV5aW5nLmFwaS5tYWlsLlZlcmlmeU1haWxSZXF1ZXN0GiMueWV5aW5nLmFwaS5tYWlsLlZlcmlmeU1haWxSZXNwb25zZSIAQhFaD3lleWluZy9hcGkvbWFpbGIGcHJvdG8z", [file_yeying_api_common_message]);
 
 /**
  * *
  * 邮件请求
  *
- * @generated from message yeying.api.mail.SendRequest
+ * @generated from message yeying.api.mail.SendMailRequest
  */
-export type SendRequest = Message<"yeying.api.mail.SendRequest"> & {
+export type SendMailRequest = Message<"yeying.api.mail.SendMailRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.mail.SendRequestBody body = 2;
+   * @generated from field: yeying.api.mail.SendMailRequestBody body = 2;
    */
-  body?: SendRequestBody;
+  body?: SendMailRequestBody;
 };
 
 /**
- * Describes the message yeying.api.mail.SendRequest.
- * Use `create(SendRequestSchema)` to create a new message.
+ * Describes the message yeying.api.mail.SendMailRequest.
+ * Use `create(SendMailRequestSchema)` to create a new message.
  */
-export const SendRequestSchema: GenMessage<SendRequest> = /*@__PURE__*/
+export const SendMailRequestSchema: GenMessage<SendMailRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_mail_mail, 0);
 
 /**
- * @generated from message yeying.api.mail.SendRequestBody
+ * @generated from message yeying.api.mail.SendMailRequestBody
  */
-export type SendRequestBody = Message<"yeying.api.mail.SendRequestBody"> & {
+export type SendMailRequestBody = Message<"yeying.api.mail.SendMailRequestBody"> & {
   /**
    * 收件箱
    *
@@ -52,41 +52,41 @@ export type SendRequestBody = Message<"yeying.api.mail.SendRequestBody"> & {
 };
 
 /**
- * Describes the message yeying.api.mail.SendRequestBody.
- * Use `create(SendRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.mail.SendMailRequestBody.
+ * Use `create(SendMailRequestBodySchema)` to create a new message.
  */
-export const SendRequestBodySchema: GenMessage<SendRequestBody> = /*@__PURE__*/
+export const SendMailRequestBodySchema: GenMessage<SendMailRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_mail_mail, 1);
 
 /**
  * *
  * 邮件相应
  *
- * @generated from message yeying.api.mail.SendResponse
+ * @generated from message yeying.api.mail.SendMailResponse
  */
-export type SendResponse = Message<"yeying.api.mail.SendResponse"> & {
+export type SendMailResponse = Message<"yeying.api.mail.SendMailResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.mail.SendResponseBody body = 2;
+   * @generated from field: yeying.api.mail.SendMailResponseBody body = 2;
    */
-  body?: SendResponseBody;
+  body?: SendMailResponseBody;
 };
 
 /**
- * Describes the message yeying.api.mail.SendResponse.
- * Use `create(SendResponseSchema)` to create a new message.
+ * Describes the message yeying.api.mail.SendMailResponse.
+ * Use `create(SendMailResponseSchema)` to create a new message.
  */
-export const SendResponseSchema: GenMessage<SendResponse> = /*@__PURE__*/
+export const SendMailResponseSchema: GenMessage<SendMailResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_mail_mail, 2);
 
 /**
- * @generated from message yeying.api.mail.SendResponseBody
+ * @generated from message yeying.api.mail.SendMailResponseBody
  */
-export type SendResponseBody = Message<"yeying.api.mail.SendResponseBody"> & {
+export type SendMailResponseBody = Message<"yeying.api.mail.SendMailResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -94,41 +94,41 @@ export type SendResponseBody = Message<"yeying.api.mail.SendResponseBody"> & {
 };
 
 /**
- * Describes the message yeying.api.mail.SendResponseBody.
- * Use `create(SendResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.mail.SendMailResponseBody.
+ * Use `create(SendMailResponseBodySchema)` to create a new message.
  */
-export const SendResponseBodySchema: GenMessage<SendResponseBody> = /*@__PURE__*/
+export const SendMailResponseBodySchema: GenMessage<SendMailResponseBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_mail_mail, 3);
 
 /**
  * *
  * 验证码验证请求体
  *
- * @generated from message yeying.api.mail.VerifyRequest
+ * @generated from message yeying.api.mail.VerifyMailRequest
  */
-export type VerifyRequest = Message<"yeying.api.mail.VerifyRequest"> & {
+export type VerifyMailRequest = Message<"yeying.api.mail.VerifyMailRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.mail.VerifyRequestBody body = 2;
+   * @generated from field: yeying.api.mail.VerifyMailRequestBody body = 2;
    */
-  body?: VerifyRequestBody;
+  body?: VerifyMailRequestBody;
 };
 
 /**
- * Describes the message yeying.api.mail.VerifyRequest.
- * Use `create(VerifyRequestSchema)` to create a new message.
+ * Describes the message yeying.api.mail.VerifyMailRequest.
+ * Use `create(VerifyMailRequestSchema)` to create a new message.
  */
-export const VerifyRequestSchema: GenMessage<VerifyRequest> = /*@__PURE__*/
+export const VerifyMailRequestSchema: GenMessage<VerifyMailRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_mail_mail, 4);
 
 /**
- * @generated from message yeying.api.mail.VerifyRequestBody
+ * @generated from message yeying.api.mail.VerifyMailRequestBody
  */
-export type VerifyRequestBody = Message<"yeying.api.mail.VerifyRequestBody"> & {
+export type VerifyMailRequestBody = Message<"yeying.api.mail.VerifyMailRequestBody"> & {
   /**
    * 收件箱
    *
@@ -143,41 +143,41 @@ export type VerifyRequestBody = Message<"yeying.api.mail.VerifyRequestBody"> & {
 };
 
 /**
- * Describes the message yeying.api.mail.VerifyRequestBody.
- * Use `create(VerifyRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.mail.VerifyMailRequestBody.
+ * Use `create(VerifyMailRequestBodySchema)` to create a new message.
  */
-export const VerifyRequestBodySchema: GenMessage<VerifyRequestBody> = /*@__PURE__*/
+export const VerifyMailRequestBodySchema: GenMessage<VerifyMailRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_mail_mail, 5);
 
 /**
  * *
  * 验证码验证响应体
  *
- * @generated from message yeying.api.mail.VerifyResponse
+ * @generated from message yeying.api.mail.VerifyMailResponse
  */
-export type VerifyResponse = Message<"yeying.api.mail.VerifyResponse"> & {
+export type VerifyMailResponse = Message<"yeying.api.mail.VerifyMailResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.mail.VerifyResponseBody body = 2;
+   * @generated from field: yeying.api.mail.VerifyMailResponseBody body = 2;
    */
-  body?: VerifyResponseBody;
+  body?: VerifyMailResponseBody;
 };
 
 /**
- * Describes the message yeying.api.mail.VerifyResponse.
- * Use `create(VerifyResponseSchema)` to create a new message.
+ * Describes the message yeying.api.mail.VerifyMailResponse.
+ * Use `create(VerifyMailResponseSchema)` to create a new message.
  */
-export const VerifyResponseSchema: GenMessage<VerifyResponse> = /*@__PURE__*/
+export const VerifyMailResponseSchema: GenMessage<VerifyMailResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_mail_mail, 6);
 
 /**
- * @generated from message yeying.api.mail.VerifyResponseBody
+ * @generated from message yeying.api.mail.VerifyMailResponseBody
  */
-export type VerifyResponseBody = Message<"yeying.api.mail.VerifyResponseBody"> & {
+export type VerifyMailResponseBody = Message<"yeying.api.mail.VerifyMailResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -185,10 +185,10 @@ export type VerifyResponseBody = Message<"yeying.api.mail.VerifyResponseBody"> &
 };
 
 /**
- * Describes the message yeying.api.mail.VerifyResponseBody.
- * Use `create(VerifyResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.mail.VerifyMailResponseBody.
+ * Use `create(VerifyMailResponseBodySchema)` to create a new message.
  */
-export const VerifyResponseBodySchema: GenMessage<VerifyResponseBody> = /*@__PURE__*/
+export const VerifyMailResponseBodySchema: GenMessage<VerifyMailResponseBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_mail_mail, 7);
 
 /**
@@ -203,16 +203,16 @@ export const Mail: GenService<{
    */
   send: {
     methodKind: "unary";
-    input: typeof SendRequestSchema;
-    output: typeof SendResponseSchema;
+    input: typeof SendMailRequestSchema;
+    output: typeof SendMailResponseSchema;
   },
   /**
    * @generated from rpc yeying.api.mail.Mail.Verify
    */
   verify: {
     methodKind: "unary";
-    input: typeof VerifyRequestSchema;
-    output: typeof VerifyResponseSchema;
+    input: typeof VerifyMailRequestSchema;
+    output: typeof VerifyMailResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_yeying_api_mail_mail, 0);

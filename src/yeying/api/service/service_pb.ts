@@ -14,12 +14,12 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/service/service.proto.
  */
 export const file_yeying_api_service_service: GenFile = /*@__PURE__*/
-  fileDesc("CiB5ZXlpbmcvYXBpL3NlcnZpY2Uvc2VydmljZS5wcm90bxISeWV5aW5nLmFwaS5zZXJ2aWNlInoKD1JlZ2lzdGVyUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjUKBGJvZHkYAiABKAsyJy55ZXlpbmcuYXBpLnNlcnZpY2UuUmVnaXN0ZXJSZXF1ZXN0Qm9keSJKChNSZWdpc3RlclJlcXVlc3RCb2R5EjMKB3NlcnZpY2UYASABKAsyIi55ZXlpbmcuYXBpLmNvbW1vbi5TZXJ2aWNlTWV0YWRhdGEifAoQUmVnaXN0ZXJSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjYKBGJvZHkYAiABKAsyKC55ZXlpbmcuYXBpLnNlcnZpY2UuUmVnaXN0ZXJSZXNwb25zZUJvZHkiSQoUUmVnaXN0ZXJSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAIgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMidgoNU2VhcmNoUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjMKBGJvZHkYAiABKAsyJS55ZXlpbmcuYXBpLnNlcnZpY2UuU2VhcmNoUmVxdWVzdEJvZHkieQoRU2VhcmNoUmVxdWVzdEJvZHkSNgoJY29uZGl0aW9uGAEgASgLMiMueWV5aW5nLmFwaS5zZXJ2aWNlLlNlYXJjaENvbmRpdGlvbhIsCgRwYWdlGAIgASgLMh4ueWV5aW5nLmFwaS5jb21tb24uUmVxdWVzdFBhZ2UiUgoPU2VhcmNoQ29uZGl0aW9uEjAKBGNvZGUYASABKA4yIi55ZXlpbmcuYXBpLmNvbW1vbi5TZXJ2aWNlQ29kZUVudW0SDQoFb3duZXIYAiABKAkieAoOU2VhcmNoUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI0CgRib2R5GAIgASgLMiYueWV5aW5nLmFwaS5zZXJ2aWNlLlNlYXJjaFJlc3BvbnNlQm9keSJ9ChJTZWFyY2hSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSNAoIc2VydmljZXMYAiADKAsyIi55ZXlpbmcuYXBpLmNvbW1vbi5TZXJ2aWNlTWV0YWRhdGEifgoRVW5yZWdpc3RlclJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI3CgRib2R5GAIgASgLMikueWV5aW5nLmFwaS5zZXJ2aWNlLlVucmVnaXN0ZXJSZXF1ZXN0Qm9keSIkChVVbnJlZ2lzdGVyUmVxdWVzdEJvZHkSCwoDZGlkGAEgASgJIoABChJVbnJlZ2lzdGVyUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI4CgRib2R5GAIgASgLMioueWV5aW5nLmFwaS5zZXJ2aWNlLlVucmVnaXN0ZXJSZXNwb25zZUJvZHkiSwoWVW5yZWdpc3RlclJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1czKUAgoHU2VydmljZRJXCghSZWdpc3RlchIjLnlleWluZy5hcGkuc2VydmljZS5SZWdpc3RlclJlcXVlc3QaJC55ZXlpbmcuYXBpLnNlcnZpY2UuUmVnaXN0ZXJSZXNwb25zZSIAElEKBlNlYXJjaBIhLnlleWluZy5hcGkuc2VydmljZS5TZWFyY2hSZXF1ZXN0GiIueWV5aW5nLmFwaS5zZXJ2aWNlLlNlYXJjaFJlc3BvbnNlIgASXQoKVW5yZWdpc3RlchIlLnlleWluZy5hcGkuc2VydmljZS5VbnJlZ2lzdGVyUmVxdWVzdBomLnlleWluZy5hcGkuc2VydmljZS5VbnJlZ2lzdGVyUmVzcG9uc2UiAEIUWhJ5ZXlpbmcvYXBpL3NlcnZpY2ViBnByb3RvMw", [file_yeying_api_common_message, file_yeying_api_common_code]);
+  fileDesc("CiB5ZXlpbmcvYXBpL3NlcnZpY2Uvc2VydmljZS5wcm90bxISeWV5aW5nLmFwaS5zZXJ2aWNlIoEBChZSZWdpc3RlclNlcnZpY2VSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkuc2VydmljZS5SZWdpc3RlclJlcXVlc3RCb2R5IkoKE1JlZ2lzdGVyUmVxdWVzdEJvZHkSMwoHc2VydmljZRgBIAEoCzIiLnlleWluZy5hcGkuY29tbW9uLlNlcnZpY2VNZXRhZGF0YSKDAQoXUmVnaXN0ZXJTZXJ2aWNlUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI2CgRib2R5GAIgASgLMigueWV5aW5nLmFwaS5zZXJ2aWNlLlJlZ2lzdGVyUmVzcG9uc2VCb2R5IkkKFFJlZ2lzdGVyUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgCIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzIn0KFFNlYXJjaFNlcnZpY2VSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISMwoEYm9keRgCIAEoCzIlLnlleWluZy5hcGkuc2VydmljZS5TZWFyY2hSZXF1ZXN0Qm9keSJ5ChFTZWFyY2hSZXF1ZXN0Qm9keRI2Cgljb25kaXRpb24YASABKAsyIy55ZXlpbmcuYXBpLnNlcnZpY2UuU2VhcmNoQ29uZGl0aW9uEiwKBHBhZ2UYAiABKAsyHi55ZXlpbmcuYXBpLmNvbW1vbi5SZXF1ZXN0UGFnZSJSCg9TZWFyY2hDb25kaXRpb24SMAoEY29kZRgBIAEoDjIiLnlleWluZy5hcGkuY29tbW9uLlNlcnZpY2VDb2RlRW51bRINCgVvd25lchgCIAEoCSJ/ChVTZWFyY2hTZXJ2aWNlUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI0CgRib2R5GAIgASgLMiYueWV5aW5nLmFwaS5zZXJ2aWNlLlNlYXJjaFJlc3BvbnNlQm9keSJ9ChJTZWFyY2hSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSNAoIc2VydmljZXMYAiADKAsyIi55ZXlpbmcuYXBpLmNvbW1vbi5TZXJ2aWNlTWV0YWRhdGEihQEKGFVucmVnaXN0ZXJTZXJ2aWNlUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjcKBGJvZHkYAiABKAsyKS55ZXlpbmcuYXBpLnNlcnZpY2UuVW5yZWdpc3RlclJlcXVlc3RCb2R5IiQKFVVucmVnaXN0ZXJSZXF1ZXN0Qm9keRILCgNkaWQYASABKAkihwEKGVVucmVnaXN0ZXJTZXJ2aWNlUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI4CgRib2R5GAIgASgLMioueWV5aW5nLmFwaS5zZXJ2aWNlLlVucmVnaXN0ZXJSZXNwb25zZUJvZHkiSwoWVW5yZWdpc3RlclJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1czK+AgoHU2VydmljZRJlCghSZWdpc3RlchIqLnlleWluZy5hcGkuc2VydmljZS5SZWdpc3RlclNlcnZpY2VSZXF1ZXN0GisueWV5aW5nLmFwaS5zZXJ2aWNlLlJlZ2lzdGVyU2VydmljZVJlc3BvbnNlIgASXwoGU2VhcmNoEigueWV5aW5nLmFwaS5zZXJ2aWNlLlNlYXJjaFNlcnZpY2VSZXF1ZXN0GikueWV5aW5nLmFwaS5zZXJ2aWNlLlNlYXJjaFNlcnZpY2VSZXNwb25zZSIAEmsKClVucmVnaXN0ZXISLC55ZXlpbmcuYXBpLnNlcnZpY2UuVW5yZWdpc3RlclNlcnZpY2VSZXF1ZXN0Gi0ueWV5aW5nLmFwaS5zZXJ2aWNlLlVucmVnaXN0ZXJTZXJ2aWNlUmVzcG9uc2UiAEIUWhJ5ZXlpbmcvYXBpL3NlcnZpY2ViBnByb3RvMw", [file_yeying_api_common_message, file_yeying_api_common_code]);
 
 /**
- * @generated from message yeying.api.service.RegisterRequest
+ * @generated from message yeying.api.service.RegisterServiceRequest
  */
-export type RegisterRequest = Message<"yeying.api.service.RegisterRequest"> & {
+export type RegisterServiceRequest = Message<"yeying.api.service.RegisterServiceRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
@@ -32,10 +32,10 @@ export type RegisterRequest = Message<"yeying.api.service.RegisterRequest"> & {
 };
 
 /**
- * Describes the message yeying.api.service.RegisterRequest.
- * Use `create(RegisterRequestSchema)` to create a new message.
+ * Describes the message yeying.api.service.RegisterServiceRequest.
+ * Use `create(RegisterServiceRequestSchema)` to create a new message.
  */
-export const RegisterRequestSchema: GenMessage<RegisterRequest> = /*@__PURE__*/
+export const RegisterServiceRequestSchema: GenMessage<RegisterServiceRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_service_service, 0);
 
 /**
@@ -56,9 +56,9 @@ export const RegisterRequestBodySchema: GenMessage<RegisterRequestBody> = /*@__P
   messageDesc(file_yeying_api_service_service, 1);
 
 /**
- * @generated from message yeying.api.service.RegisterResponse
+ * @generated from message yeying.api.service.RegisterServiceResponse
  */
-export type RegisterResponse = Message<"yeying.api.service.RegisterResponse"> & {
+export type RegisterServiceResponse = Message<"yeying.api.service.RegisterServiceResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
@@ -71,10 +71,10 @@ export type RegisterResponse = Message<"yeying.api.service.RegisterResponse"> & 
 };
 
 /**
- * Describes the message yeying.api.service.RegisterResponse.
- * Use `create(RegisterResponseSchema)` to create a new message.
+ * Describes the message yeying.api.service.RegisterServiceResponse.
+ * Use `create(RegisterServiceResponseSchema)` to create a new message.
  */
-export const RegisterResponseSchema: GenMessage<RegisterResponse> = /*@__PURE__*/
+export const RegisterServiceResponseSchema: GenMessage<RegisterServiceResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_service_service, 2);
 
 /**
@@ -95,9 +95,9 @@ export const RegisterResponseBodySchema: GenMessage<RegisterResponseBody> = /*@_
   messageDesc(file_yeying_api_service_service, 3);
 
 /**
- * @generated from message yeying.api.service.SearchRequest
+ * @generated from message yeying.api.service.SearchServiceRequest
  */
-export type SearchRequest = Message<"yeying.api.service.SearchRequest"> & {
+export type SearchServiceRequest = Message<"yeying.api.service.SearchServiceRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
@@ -110,10 +110,10 @@ export type SearchRequest = Message<"yeying.api.service.SearchRequest"> & {
 };
 
 /**
- * Describes the message yeying.api.service.SearchRequest.
- * Use `create(SearchRequestSchema)` to create a new message.
+ * Describes the message yeying.api.service.SearchServiceRequest.
+ * Use `create(SearchServiceRequestSchema)` to create a new message.
  */
-export const SearchRequestSchema: GenMessage<SearchRequest> = /*@__PURE__*/
+export const SearchServiceRequestSchema: GenMessage<SearchServiceRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_service_service, 4);
 
 /**
@@ -161,9 +161,9 @@ export const SearchConditionSchema: GenMessage<SearchCondition> = /*@__PURE__*/
   messageDesc(file_yeying_api_service_service, 6);
 
 /**
- * @generated from message yeying.api.service.SearchResponse
+ * @generated from message yeying.api.service.SearchServiceResponse
  */
-export type SearchResponse = Message<"yeying.api.service.SearchResponse"> & {
+export type SearchServiceResponse = Message<"yeying.api.service.SearchServiceResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
@@ -176,10 +176,10 @@ export type SearchResponse = Message<"yeying.api.service.SearchResponse"> & {
 };
 
 /**
- * Describes the message yeying.api.service.SearchResponse.
- * Use `create(SearchResponseSchema)` to create a new message.
+ * Describes the message yeying.api.service.SearchServiceResponse.
+ * Use `create(SearchServiceResponseSchema)` to create a new message.
  */
-export const SearchResponseSchema: GenMessage<SearchResponse> = /*@__PURE__*/
+export const SearchServiceResponseSchema: GenMessage<SearchServiceResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_service_service, 7);
 
 /**
@@ -205,9 +205,9 @@ export const SearchResponseBodySchema: GenMessage<SearchResponseBody> = /*@__PUR
   messageDesc(file_yeying_api_service_service, 8);
 
 /**
- * @generated from message yeying.api.service.UnregisterRequest
+ * @generated from message yeying.api.service.UnregisterServiceRequest
  */
-export type UnregisterRequest = Message<"yeying.api.service.UnregisterRequest"> & {
+export type UnregisterServiceRequest = Message<"yeying.api.service.UnregisterServiceRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
@@ -220,10 +220,10 @@ export type UnregisterRequest = Message<"yeying.api.service.UnregisterRequest"> 
 };
 
 /**
- * Describes the message yeying.api.service.UnregisterRequest.
- * Use `create(UnregisterRequestSchema)` to create a new message.
+ * Describes the message yeying.api.service.UnregisterServiceRequest.
+ * Use `create(UnregisterServiceRequestSchema)` to create a new message.
  */
-export const UnregisterRequestSchema: GenMessage<UnregisterRequest> = /*@__PURE__*/
+export const UnregisterServiceRequestSchema: GenMessage<UnregisterServiceRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_service_service, 9);
 
 /**
@@ -244,9 +244,9 @@ export const UnregisterRequestBodySchema: GenMessage<UnregisterRequestBody> = /*
   messageDesc(file_yeying_api_service_service, 10);
 
 /**
- * @generated from message yeying.api.service.UnregisterResponse
+ * @generated from message yeying.api.service.UnregisterServiceResponse
  */
-export type UnregisterResponse = Message<"yeying.api.service.UnregisterResponse"> & {
+export type UnregisterServiceResponse = Message<"yeying.api.service.UnregisterServiceResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
@@ -259,10 +259,10 @@ export type UnregisterResponse = Message<"yeying.api.service.UnregisterResponse"
 };
 
 /**
- * Describes the message yeying.api.service.UnregisterResponse.
- * Use `create(UnregisterResponseSchema)` to create a new message.
+ * Describes the message yeying.api.service.UnregisterServiceResponse.
+ * Use `create(UnregisterServiceResponseSchema)` to create a new message.
  */
-export const UnregisterResponseSchema: GenMessage<UnregisterResponse> = /*@__PURE__*/
+export const UnregisterServiceResponseSchema: GenMessage<UnregisterServiceResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_service_service, 11);
 
 /**
@@ -298,24 +298,24 @@ export const Service: GenService<{
    */
   register: {
     methodKind: "unary";
-    input: typeof RegisterRequestSchema;
-    output: typeof RegisterResponseSchema;
+    input: typeof RegisterServiceRequestSchema;
+    output: typeof RegisterServiceResponseSchema;
   },
   /**
    * @generated from rpc yeying.api.service.Service.Search
    */
   search: {
     methodKind: "unary";
-    input: typeof SearchRequestSchema;
-    output: typeof SearchResponseSchema;
+    input: typeof SearchServiceRequestSchema;
+    output: typeof SearchServiceResponseSchema;
   },
   /**
    * @generated from rpc yeying.api.service.Service.Unregister
    */
   unregister: {
     methodKind: "unary";
-    input: typeof UnregisterRequestSchema;
-    output: typeof UnregisterResponseSchema;
+    input: typeof UnregisterServiceRequestSchema;
+    output: typeof UnregisterServiceResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_yeying_api_service_service, 0);

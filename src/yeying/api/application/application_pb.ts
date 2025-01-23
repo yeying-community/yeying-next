@@ -14,34 +14,34 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/application/application.proto.
  */
 export const file_yeying_api_application_application: GenFile = /*@__PURE__*/
-  fileDesc("Cih5ZXlpbmcvYXBpL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLnByb3RvEhZ5ZXlpbmcuYXBpLmFwcGxpY2F0aW9uInoKDVNlYXJjaFJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI3CgRib2R5GAIgASgLMikueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5TZWFyY2hSZXF1ZXN0Qm9keSJ9ChFTZWFyY2hSZXF1ZXN0Qm9keRI6Cgljb25kaXRpb24YASABKAsyJy55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLlNlYXJjaENvbmRpdGlvbhIsCgRwYWdlGAIgASgLMh4ueWV5aW5nLmFwaS5jb21tb24uUmVxdWVzdFBhZ2UikAEKD1NlYXJjaENvbmRpdGlvbhI0CgRjb2RlGAEgASgOMiYueWV5aW5nLmFwaS5jb21tb24uQXBwbGljYXRpb25Db2RlRW51bRI4CgZzdGF0dXMYAiABKA4yKC55ZXlpbmcuYXBpLmNvbW1vbi5BcHBsaWNhdGlvblN0YXR1c0VudW0SDQoFb3duZXIYAyABKAkifAoOU2VhcmNoUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI4CgRib2R5GAIgASgLMioueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5TZWFyY2hSZXNwb25zZUJvZHkiuQEKElNlYXJjaFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxJBCgxhcHBsaWNhdGlvbnMYAiADKAsyKy55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uTWV0YWRhdGESLQoEcGFnZRgDIAEoCzIfLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlUGFnZSJ6Cg1DcmVhdGVSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNwoEYm9keRgCIAEoCzIpLnlleWluZy5hcGkuYXBwbGljYXRpb24uQ3JlYXRlUmVxdWVzdEJvZHkiVQoRQ3JlYXRlUmVxdWVzdEJvZHkSQAoLYXBwbGljYXRpb24YASABKAsyKy55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uTWV0YWRhdGEifAoOQ3JlYXRlUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI4CgRib2R5GAIgASgLMioueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5DcmVhdGVSZXNwb25zZUJvZHkiRwoSQ3JlYXRlUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzInoKDURldGFpbFJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI3CgRib2R5GAIgASgLMikueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5EZXRhaWxSZXF1ZXN0Qm9keSIxChFEZXRhaWxSZXF1ZXN0Qm9keRILCgNkaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoDSJ8Cg5EZXRhaWxSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjgKBGJvZHkYAiABKAsyKi55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkRldGFpbFJlc3BvbnNlQm9keSLGAQoSRGV0YWlsUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEjsKCWFwcFN0YXR1cxgDIAEoDjIoLnlleWluZy5hcGkuY29tbW9uLkFwcGxpY2F0aW9uU3RhdHVzRW51bRJACgthcHBsaWNhdGlvbhgCIAEoCzIrLnlleWluZy5hcGkuYXBwbGljYXRpb24uQXBwbGljYXRpb25NZXRhZGF0YSJ8Cg5PZmZsaW5lUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjgKBGJvZHkYAiABKAsyKi55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLk9mZmxpbmVSZXF1ZXN0Qm9keSIyChJPZmZsaW5lUmVxdWVzdEJvZHkSCwoDZGlkGAEgASgJEg8KB3ZlcnNpb24YAiABKA0ifgoPT2ZmbGluZVJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISOQoEYm9keRgCIAEoCzIrLnlleWluZy5hcGkuYXBwbGljYXRpb24uT2ZmbGluZVJlc3BvbnNlQm9keSJIChNPZmZsaW5lUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzInoKDU9ubGluZVJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI3CgRib2R5GAIgASgLMikueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PbmxpbmVSZXF1ZXN0Qm9keSIxChFPbmxpbmVSZXF1ZXN0Qm9keRILCgNkaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoDSJ8Cg5PbmxpbmVSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjgKBGJvZHkYAiABKAsyKi55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLk9ubGluZVJlc3BvbnNlQm9keSJHChJPbmxpbmVSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMiUQoRQXBwbGljYXRpb25FeHRlbmQSPAoIY29tbWVudHMYASADKAsyKi55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uQ29tbWVudCJZChJBcHBsaWNhdGlvbkNvbW1lbnQSDwoHYXVkaXRvchgBIAEoCRIPCgdjb21tZW50GAIgASgJEg4KBnBhc3NlZBgDIAEoCBIRCglzaWduYXR1cmUYBCABKAkiywIKE0FwcGxpY2F0aW9uTWV0YWRhdGESDQoFb3duZXIYASABKAkSDwoHbmV0d29yaxgCIAEoCRIPCgdhZGRyZXNzGAMgASgJEgsKA2RpZBgEIAEoCRIPCgd2ZXJzaW9uGAUgASgNEgwKBGhhc2gYBiABKAkSDAoEbmFtZRgHIAEoCRI0CgRjb2RlGAggASgOMiYueWV5aW5nLmFwaS5jb21tb24uQXBwbGljYXRpb25Db2RlRW51bRITCgtkZXNjcmlwdGlvbhgJIAEoCRIQCghsb2NhdGlvbhgKIAEoCRIUCgxzZXJ2aWNlQ29kZXMYCyABKAkSDgoGYXZhdGFyGAwgASgJEg4KBmV4dGVuZBgNIAEoCRIPCgdjcmVhdGVkGA4gASgJEhIKCmNoZWNrcG9pbnQYDyABKAkSEQoJc2lnbmF0dXJlGBAgASgJInoKDURlbGV0ZVJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI3CgRib2R5GAIgASgLMikueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5EZWxldGVSZXF1ZXN0Qm9keSIxChFEZWxldGVSZXF1ZXN0Qm9keRILCgNkaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoDSJ8Cg5EZWxldGVSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjgKBGJvZHkYAiABKAsyKi55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkRlbGV0ZVJlc3BvbnNlQm9keSJHChJEZWxldGVSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMieAoMQXVkaXRSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNgoEYm9keRgCIAEoCzIoLnlleWluZy5hcGkuYXBwbGljYXRpb24uQXVkaXRSZXF1ZXN0Qm9keSJPChBBdWRpdFJlcXVlc3RCb2R5EjsKB2NvbW1lbnQYASABKAsyKi55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uQ29tbWVudCJCCg1BdWRpdFJlc3BvbnNlEjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzMooFCgtBcHBsaWNhdGlvbhJZCgZTZWFyY2gSJS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLlNlYXJjaFJlcXVlc3QaJi55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLlNlYXJjaFJlc3BvbnNlIgASVgoFQXVkaXQSJC55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkF1ZGl0UmVxdWVzdBolLnlleWluZy5hcGkuYXBwbGljYXRpb24uQXVkaXRSZXNwb25zZSIAElkKBkNyZWF0ZRIlLnlleWluZy5hcGkuYXBwbGljYXRpb24uQ3JlYXRlUmVxdWVzdBomLnlleWluZy5hcGkuYXBwbGljYXRpb24uQ3JlYXRlUmVzcG9uc2UiABJZCgZEZXRhaWwSJS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkRldGFpbFJlcXVlc3QaJi55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkRldGFpbFJlc3BvbnNlIgASXAoHT2ZmbGluZRImLnlleWluZy5hcGkuYXBwbGljYXRpb24uT2ZmbGluZVJlcXVlc3QaJy55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLk9mZmxpbmVSZXNwb25zZSIAElkKBk9ubGluZRIlLnlleWluZy5hcGkuYXBwbGljYXRpb24uT25saW5lUmVxdWVzdBomLnlleWluZy5hcGkuYXBwbGljYXRpb24uT25saW5lUmVzcG9uc2UiABJZCgZEZWxldGUSJS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkRlbGV0ZVJlcXVlc3QaJi55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkRlbGV0ZVJlc3BvbnNlIgBCGFoWeWV5aW5nL2FwaS9hcHBsaWNhdGlvbmIGcHJvdG8z", [file_yeying_api_common_message, file_yeying_api_common_code]);
+  fileDesc("Cih5ZXlpbmcvYXBpL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLnByb3RvEhZ5ZXlpbmcuYXBpLmFwcGxpY2F0aW9uIpABChhTZWFyY2hBcHBsaWNhdGlvblJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJCCgRib2R5GAIgASgLMjQueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5TZWFyY2hBcHBsaWNhdGlvblJlcXVlc3RCb2R5IogBChxTZWFyY2hBcHBsaWNhdGlvblJlcXVlc3RCb2R5EjoKCWNvbmRpdGlvbhgBIAEoCzInLnlleWluZy5hcGkuYXBwbGljYXRpb24uU2VhcmNoQ29uZGl0aW9uEiwKBHBhZ2UYAiABKAsyHi55ZXlpbmcuYXBpLmNvbW1vbi5SZXF1ZXN0UGFnZSKQAQoPU2VhcmNoQ29uZGl0aW9uEjQKBGNvZGUYASABKA4yJi55ZXlpbmcuYXBpLmNvbW1vbi5BcHBsaWNhdGlvbkNvZGVFbnVtEjgKBnN0YXR1cxgCIAEoDjIoLnlleWluZy5hcGkuY29tbW9uLkFwcGxpY2F0aW9uU3RhdHVzRW51bRINCgVvd25lchgDIAEoCSKSAQoZU2VhcmNoQXBwbGljYXRpb25SZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEkMKBGJvZHkYAiABKAsyNS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLlNlYXJjaEFwcGxpY2F0aW9uUmVzcG9uc2VCb2R5IsQBCh1TZWFyY2hBcHBsaWNhdGlvblJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxJBCgxhcHBsaWNhdGlvbnMYAiADKAsyKy55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uTWV0YWRhdGESLQoEcGFnZRgDIAEoCzIfLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlUGFnZSKQAQoYQ3JlYXRlQXBwbGljYXRpb25SZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISQgoEYm9keRgCIAEoCzI0LnlleWluZy5hcGkuYXBwbGljYXRpb24uQ3JlYXRlQXBwbGljYXRpb25SZXF1ZXN0Qm9keSJgChxDcmVhdGVBcHBsaWNhdGlvblJlcXVlc3RCb2R5EkAKC2FwcGxpY2F0aW9uGAEgASgLMisueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5BcHBsaWNhdGlvbk1ldGFkYXRhIpIBChlDcmVhdGVBcHBsaWNhdGlvblJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISQwoEYm9keRgCIAEoCzI1LnlleWluZy5hcGkuYXBwbGljYXRpb24uQ3JlYXRlQXBwbGljYXRpb25SZXNwb25zZUJvZHkiUgodQ3JlYXRlQXBwbGljYXRpb25SZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMikAEKGEFwcGxpY2F0aW9uRGV0YWlsUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEkIKBGJvZHkYAiABKAsyNC55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uRGV0YWlsUmVxdWVzdEJvZHkiPAocQXBwbGljYXRpb25EZXRhaWxSZXF1ZXN0Qm9keRILCgNkaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoDSKSAQoZQXBwbGljYXRpb25EZXRhaWxSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEkMKBGJvZHkYAiABKAsyNS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uRGV0YWlsUmVzcG9uc2VCb2R5ItEBCh1BcHBsaWNhdGlvbkRldGFpbFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxI7CglhcHBTdGF0dXMYAyABKA4yKC55ZXlpbmcuYXBpLmNvbW1vbi5BcHBsaWNhdGlvblN0YXR1c0VudW0SQAoLYXBwbGljYXRpb24YAiABKAsyKy55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uTWV0YWRhdGEikgEKGU9mZmxpbmVBcHBsaWNhdGlvblJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJDCgRib2R5GAIgASgLMjUueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PZmZsaW5lQXBwbGljYXRpb25SZXF1ZXN0Qm9keSI9Ch1PZmZsaW5lQXBwbGljYXRpb25SZXF1ZXN0Qm9keRILCgNkaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoDSKUAQoaT2ZmbGluZUFwcGxpY2F0aW9uUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJECgRib2R5GAIgASgLMjYueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PZmZsaW5lQXBwbGljYXRpb25SZXNwb25zZUJvZHkiUwoeT2ZmbGluZUFwcGxpY2F0aW9uUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzIpABChhPbmxpbmVBcHBsaWNhdGlvblJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJCCgRib2R5GAIgASgLMjQueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PbmxpbmVBcHBsaWNhdGlvblJlcXVlc3RCb2R5IjwKHE9ubGluZUFwcGxpY2F0aW9uUmVxdWVzdEJvZHkSCwoDZGlkGAEgASgJEg8KB3ZlcnNpb24YAiABKA0ikgEKGU9ubGluZUFwcGxpY2F0aW9uUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJDCgRib2R5GAIgASgLMjUueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PbmxpbmVBcHBsaWNhdGlvblJlc3BvbnNlQm9keSJSCh1PbmxpbmVBcHBsaWNhdGlvblJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cyJRChFBcHBsaWNhdGlvbkV4dGVuZBI8Cghjb21tZW50cxgBIAMoCzIqLnlleWluZy5hcGkuYXBwbGljYXRpb24uQXBwbGljYXRpb25Db21tZW50IlkKEkFwcGxpY2F0aW9uQ29tbWVudBIPCgdhdWRpdG9yGAEgASgJEg8KB2NvbW1lbnQYAiABKAkSDgoGcGFzc2VkGAMgASgIEhEKCXNpZ25hdHVyZRgEIAEoCSLLAgoTQXBwbGljYXRpb25NZXRhZGF0YRINCgVvd25lchgBIAEoCRIPCgduZXR3b3JrGAIgASgJEg8KB2FkZHJlc3MYAyABKAkSCwoDZGlkGAQgASgJEg8KB3ZlcnNpb24YBSABKA0SDAoEaGFzaBgGIAEoCRIMCgRuYW1lGAcgASgJEjQKBGNvZGUYCCABKA4yJi55ZXlpbmcuYXBpLmNvbW1vbi5BcHBsaWNhdGlvbkNvZGVFbnVtEhMKC2Rlc2NyaXB0aW9uGAkgASgJEhAKCGxvY2F0aW9uGAogASgJEhQKDHNlcnZpY2VDb2RlcxgLIAEoCRIOCgZhdmF0YXIYDCABKAkSDgoGZXh0ZW5kGA0gASgJEg8KB2NyZWF0ZWQYDiABKAkSEgoKY2hlY2twb2ludBgPIAEoCRIRCglzaWduYXR1cmUYECABKAkikAEKGERlbGV0ZUFwcGxpY2F0aW9uUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEkIKBGJvZHkYAiABKAsyNC55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkRlbGV0ZUFwcGxpY2F0aW9uUmVxdWVzdEJvZHkiPAocRGVsZXRlQXBwbGljYXRpb25SZXF1ZXN0Qm9keRILCgNkaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoDSKSAQoZRGVsZXRlQXBwbGljYXRpb25SZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEkMKBGJvZHkYAiABKAsyNS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkRlbGV0ZUFwcGxpY2F0aW9uUmVzcG9uc2VCb2R5IlIKHURlbGV0ZUFwcGxpY2F0aW9uUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzIo4BChdBdWRpdEFwcGxpY2F0aW9uUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEkEKBGJvZHkYAiABKAsyMy55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkF1ZGl0QXBwbGljYXRpb25SZXF1ZXN0Qm9keSJaChtBdWRpdEFwcGxpY2F0aW9uUmVxdWVzdEJvZHkSOwoHY29tbWVudBgBIAEoCzIqLnlleWluZy5hcGkuYXBwbGljYXRpb24uQXBwbGljYXRpb25Db21tZW50Ik0KGEF1ZGl0QXBwbGljYXRpb25SZXNwb25zZRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1czKkBgoLQXBwbGljYXRpb24SbwoGU2VhcmNoEjAueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5TZWFyY2hBcHBsaWNhdGlvblJlcXVlc3QaMS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLlNlYXJjaEFwcGxpY2F0aW9uUmVzcG9uc2UiABJsCgVBdWRpdBIvLnlleWluZy5hcGkuYXBwbGljYXRpb24uQXVkaXRBcHBsaWNhdGlvblJlcXVlc3QaMC55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkF1ZGl0QXBwbGljYXRpb25SZXNwb25zZSIAEm8KBkNyZWF0ZRIwLnlleWluZy5hcGkuYXBwbGljYXRpb24uQ3JlYXRlQXBwbGljYXRpb25SZXF1ZXN0GjEueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5DcmVhdGVBcHBsaWNhdGlvblJlc3BvbnNlIgASbwoGRGV0YWlsEjAueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5BcHBsaWNhdGlvbkRldGFpbFJlcXVlc3QaMS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uRGV0YWlsUmVzcG9uc2UiABJyCgdPZmZsaW5lEjEueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PZmZsaW5lQXBwbGljYXRpb25SZXF1ZXN0GjIueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PZmZsaW5lQXBwbGljYXRpb25SZXNwb25zZSIAEm8KBk9ubGluZRIwLnlleWluZy5hcGkuYXBwbGljYXRpb24uT25saW5lQXBwbGljYXRpb25SZXF1ZXN0GjEueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PbmxpbmVBcHBsaWNhdGlvblJlc3BvbnNlIgASbwoGRGVsZXRlEjAueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5EZWxldGVBcHBsaWNhdGlvblJlcXVlc3QaMS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkRlbGV0ZUFwcGxpY2F0aW9uUmVzcG9uc2UiAEIYWhZ5ZXlpbmcvYXBpL2FwcGxpY2F0aW9uYgZwcm90bzM", [file_yeying_api_common_message, file_yeying_api_common_code]);
 
 /**
- * @generated from message yeying.api.application.SearchRequest
+ * @generated from message yeying.api.application.SearchApplicationRequest
  */
-export type SearchRequest = Message<"yeying.api.application.SearchRequest"> & {
+export type SearchApplicationRequest = Message<"yeying.api.application.SearchApplicationRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.application.SearchRequestBody body = 2;
+   * @generated from field: yeying.api.application.SearchApplicationRequestBody body = 2;
    */
-  body?: SearchRequestBody;
+  body?: SearchApplicationRequestBody;
 };
 
 /**
- * Describes the message yeying.api.application.SearchRequest.
- * Use `create(SearchRequestSchema)` to create a new message.
+ * Describes the message yeying.api.application.SearchApplicationRequest.
+ * Use `create(SearchApplicationRequestSchema)` to create a new message.
  */
-export const SearchRequestSchema: GenMessage<SearchRequest> = /*@__PURE__*/
+export const SearchApplicationRequestSchema: GenMessage<SearchApplicationRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 0);
 
 /**
- * @generated from message yeying.api.application.SearchRequestBody
+ * @generated from message yeying.api.application.SearchApplicationRequestBody
  */
-export type SearchRequestBody = Message<"yeying.api.application.SearchRequestBody"> & {
+export type SearchApplicationRequestBody = Message<"yeying.api.application.SearchApplicationRequestBody"> & {
   /**
    * @generated from field: yeying.api.application.SearchCondition condition = 1;
    */
@@ -54,10 +54,10 @@ export type SearchRequestBody = Message<"yeying.api.application.SearchRequestBod
 };
 
 /**
- * Describes the message yeying.api.application.SearchRequestBody.
- * Use `create(SearchRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.application.SearchApplicationRequestBody.
+ * Use `create(SearchApplicationRequestBodySchema)` to create a new message.
  */
-export const SearchRequestBodySchema: GenMessage<SearchRequestBody> = /*@__PURE__*/
+export const SearchApplicationRequestBodySchema: GenMessage<SearchApplicationRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 1);
 
 /**
@@ -88,31 +88,31 @@ export const SearchConditionSchema: GenMessage<SearchCondition> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 2);
 
 /**
- * @generated from message yeying.api.application.SearchResponse
+ * @generated from message yeying.api.application.SearchApplicationResponse
  */
-export type SearchResponse = Message<"yeying.api.application.SearchResponse"> & {
+export type SearchApplicationResponse = Message<"yeying.api.application.SearchApplicationResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.application.SearchResponseBody body = 2;
+   * @generated from field: yeying.api.application.SearchApplicationResponseBody body = 2;
    */
-  body?: SearchResponseBody;
+  body?: SearchApplicationResponseBody;
 };
 
 /**
- * Describes the message yeying.api.application.SearchResponse.
- * Use `create(SearchResponseSchema)` to create a new message.
+ * Describes the message yeying.api.application.SearchApplicationResponse.
+ * Use `create(SearchApplicationResponseSchema)` to create a new message.
  */
-export const SearchResponseSchema: GenMessage<SearchResponse> = /*@__PURE__*/
+export const SearchApplicationResponseSchema: GenMessage<SearchApplicationResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 3);
 
 /**
- * @generated from message yeying.api.application.SearchResponseBody
+ * @generated from message yeying.api.application.SearchApplicationResponseBody
  */
-export type SearchResponseBody = Message<"yeying.api.application.SearchResponseBody"> & {
+export type SearchApplicationResponseBody = Message<"yeying.api.application.SearchApplicationResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -130,38 +130,38 @@ export type SearchResponseBody = Message<"yeying.api.application.SearchResponseB
 };
 
 /**
- * Describes the message yeying.api.application.SearchResponseBody.
- * Use `create(SearchResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.application.SearchApplicationResponseBody.
+ * Use `create(SearchApplicationResponseBodySchema)` to create a new message.
  */
-export const SearchResponseBodySchema: GenMessage<SearchResponseBody> = /*@__PURE__*/
+export const SearchApplicationResponseBodySchema: GenMessage<SearchApplicationResponseBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 4);
 
 /**
- * @generated from message yeying.api.application.CreateRequest
+ * @generated from message yeying.api.application.CreateApplicationRequest
  */
-export type CreateRequest = Message<"yeying.api.application.CreateRequest"> & {
+export type CreateApplicationRequest = Message<"yeying.api.application.CreateApplicationRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.application.CreateRequestBody body = 2;
+   * @generated from field: yeying.api.application.CreateApplicationRequestBody body = 2;
    */
-  body?: CreateRequestBody;
+  body?: CreateApplicationRequestBody;
 };
 
 /**
- * Describes the message yeying.api.application.CreateRequest.
- * Use `create(CreateRequestSchema)` to create a new message.
+ * Describes the message yeying.api.application.CreateApplicationRequest.
+ * Use `create(CreateApplicationRequestSchema)` to create a new message.
  */
-export const CreateRequestSchema: GenMessage<CreateRequest> = /*@__PURE__*/
+export const CreateApplicationRequestSchema: GenMessage<CreateApplicationRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 5);
 
 /**
- * @generated from message yeying.api.application.CreateRequestBody
+ * @generated from message yeying.api.application.CreateApplicationRequestBody
  */
-export type CreateRequestBody = Message<"yeying.api.application.CreateRequestBody"> & {
+export type CreateApplicationRequestBody = Message<"yeying.api.application.CreateApplicationRequestBody"> & {
   /**
    * @generated from field: yeying.api.application.ApplicationMetadata application = 1;
    */
@@ -169,38 +169,38 @@ export type CreateRequestBody = Message<"yeying.api.application.CreateRequestBod
 };
 
 /**
- * Describes the message yeying.api.application.CreateRequestBody.
- * Use `create(CreateRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.application.CreateApplicationRequestBody.
+ * Use `create(CreateApplicationRequestBodySchema)` to create a new message.
  */
-export const CreateRequestBodySchema: GenMessage<CreateRequestBody> = /*@__PURE__*/
+export const CreateApplicationRequestBodySchema: GenMessage<CreateApplicationRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 6);
 
 /**
- * @generated from message yeying.api.application.CreateResponse
+ * @generated from message yeying.api.application.CreateApplicationResponse
  */
-export type CreateResponse = Message<"yeying.api.application.CreateResponse"> & {
+export type CreateApplicationResponse = Message<"yeying.api.application.CreateApplicationResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.application.CreateResponseBody body = 2;
+   * @generated from field: yeying.api.application.CreateApplicationResponseBody body = 2;
    */
-  body?: CreateResponseBody;
+  body?: CreateApplicationResponseBody;
 };
 
 /**
- * Describes the message yeying.api.application.CreateResponse.
- * Use `create(CreateResponseSchema)` to create a new message.
+ * Describes the message yeying.api.application.CreateApplicationResponse.
+ * Use `create(CreateApplicationResponseSchema)` to create a new message.
  */
-export const CreateResponseSchema: GenMessage<CreateResponse> = /*@__PURE__*/
+export const CreateApplicationResponseSchema: GenMessage<CreateApplicationResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 7);
 
 /**
- * @generated from message yeying.api.application.CreateResponseBody
+ * @generated from message yeying.api.application.CreateApplicationResponseBody
  */
-export type CreateResponseBody = Message<"yeying.api.application.CreateResponseBody"> & {
+export type CreateApplicationResponseBody = Message<"yeying.api.application.CreateApplicationResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -208,38 +208,38 @@ export type CreateResponseBody = Message<"yeying.api.application.CreateResponseB
 };
 
 /**
- * Describes the message yeying.api.application.CreateResponseBody.
- * Use `create(CreateResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.application.CreateApplicationResponseBody.
+ * Use `create(CreateApplicationResponseBodySchema)` to create a new message.
  */
-export const CreateResponseBodySchema: GenMessage<CreateResponseBody> = /*@__PURE__*/
+export const CreateApplicationResponseBodySchema: GenMessage<CreateApplicationResponseBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 8);
 
 /**
- * @generated from message yeying.api.application.DetailRequest
+ * @generated from message yeying.api.application.ApplicationDetailRequest
  */
-export type DetailRequest = Message<"yeying.api.application.DetailRequest"> & {
+export type ApplicationDetailRequest = Message<"yeying.api.application.ApplicationDetailRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.application.DetailRequestBody body = 2;
+   * @generated from field: yeying.api.application.ApplicationDetailRequestBody body = 2;
    */
-  body?: DetailRequestBody;
+  body?: ApplicationDetailRequestBody;
 };
 
 /**
- * Describes the message yeying.api.application.DetailRequest.
- * Use `create(DetailRequestSchema)` to create a new message.
+ * Describes the message yeying.api.application.ApplicationDetailRequest.
+ * Use `create(ApplicationDetailRequestSchema)` to create a new message.
  */
-export const DetailRequestSchema: GenMessage<DetailRequest> = /*@__PURE__*/
+export const ApplicationDetailRequestSchema: GenMessage<ApplicationDetailRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 9);
 
 /**
- * @generated from message yeying.api.application.DetailRequestBody
+ * @generated from message yeying.api.application.ApplicationDetailRequestBody
  */
-export type DetailRequestBody = Message<"yeying.api.application.DetailRequestBody"> & {
+export type ApplicationDetailRequestBody = Message<"yeying.api.application.ApplicationDetailRequestBody"> & {
   /**
    * @generated from field: string did = 1;
    */
@@ -252,38 +252,38 @@ export type DetailRequestBody = Message<"yeying.api.application.DetailRequestBod
 };
 
 /**
- * Describes the message yeying.api.application.DetailRequestBody.
- * Use `create(DetailRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.application.ApplicationDetailRequestBody.
+ * Use `create(ApplicationDetailRequestBodySchema)` to create a new message.
  */
-export const DetailRequestBodySchema: GenMessage<DetailRequestBody> = /*@__PURE__*/
+export const ApplicationDetailRequestBodySchema: GenMessage<ApplicationDetailRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 10);
 
 /**
- * @generated from message yeying.api.application.DetailResponse
+ * @generated from message yeying.api.application.ApplicationDetailResponse
  */
-export type DetailResponse = Message<"yeying.api.application.DetailResponse"> & {
+export type ApplicationDetailResponse = Message<"yeying.api.application.ApplicationDetailResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.application.DetailResponseBody body = 2;
+   * @generated from field: yeying.api.application.ApplicationDetailResponseBody body = 2;
    */
-  body?: DetailResponseBody;
+  body?: ApplicationDetailResponseBody;
 };
 
 /**
- * Describes the message yeying.api.application.DetailResponse.
- * Use `create(DetailResponseSchema)` to create a new message.
+ * Describes the message yeying.api.application.ApplicationDetailResponse.
+ * Use `create(ApplicationDetailResponseSchema)` to create a new message.
  */
-export const DetailResponseSchema: GenMessage<DetailResponse> = /*@__PURE__*/
+export const ApplicationDetailResponseSchema: GenMessage<ApplicationDetailResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 11);
 
 /**
- * @generated from message yeying.api.application.DetailResponseBody
+ * @generated from message yeying.api.application.ApplicationDetailResponseBody
  */
-export type DetailResponseBody = Message<"yeying.api.application.DetailResponseBody"> & {
+export type ApplicationDetailResponseBody = Message<"yeying.api.application.ApplicationDetailResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -301,38 +301,38 @@ export type DetailResponseBody = Message<"yeying.api.application.DetailResponseB
 };
 
 /**
- * Describes the message yeying.api.application.DetailResponseBody.
- * Use `create(DetailResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.application.ApplicationDetailResponseBody.
+ * Use `create(ApplicationDetailResponseBodySchema)` to create a new message.
  */
-export const DetailResponseBodySchema: GenMessage<DetailResponseBody> = /*@__PURE__*/
+export const ApplicationDetailResponseBodySchema: GenMessage<ApplicationDetailResponseBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 12);
 
 /**
- * @generated from message yeying.api.application.OfflineRequest
+ * @generated from message yeying.api.application.OfflineApplicationRequest
  */
-export type OfflineRequest = Message<"yeying.api.application.OfflineRequest"> & {
+export type OfflineApplicationRequest = Message<"yeying.api.application.OfflineApplicationRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.application.OfflineRequestBody body = 2;
+   * @generated from field: yeying.api.application.OfflineApplicationRequestBody body = 2;
    */
-  body?: OfflineRequestBody;
+  body?: OfflineApplicationRequestBody;
 };
 
 /**
- * Describes the message yeying.api.application.OfflineRequest.
- * Use `create(OfflineRequestSchema)` to create a new message.
+ * Describes the message yeying.api.application.OfflineApplicationRequest.
+ * Use `create(OfflineApplicationRequestSchema)` to create a new message.
  */
-export const OfflineRequestSchema: GenMessage<OfflineRequest> = /*@__PURE__*/
+export const OfflineApplicationRequestSchema: GenMessage<OfflineApplicationRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 13);
 
 /**
- * @generated from message yeying.api.application.OfflineRequestBody
+ * @generated from message yeying.api.application.OfflineApplicationRequestBody
  */
-export type OfflineRequestBody = Message<"yeying.api.application.OfflineRequestBody"> & {
+export type OfflineApplicationRequestBody = Message<"yeying.api.application.OfflineApplicationRequestBody"> & {
   /**
    * @generated from field: string did = 1;
    */
@@ -345,38 +345,38 @@ export type OfflineRequestBody = Message<"yeying.api.application.OfflineRequestB
 };
 
 /**
- * Describes the message yeying.api.application.OfflineRequestBody.
- * Use `create(OfflineRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.application.OfflineApplicationRequestBody.
+ * Use `create(OfflineApplicationRequestBodySchema)` to create a new message.
  */
-export const OfflineRequestBodySchema: GenMessage<OfflineRequestBody> = /*@__PURE__*/
+export const OfflineApplicationRequestBodySchema: GenMessage<OfflineApplicationRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 14);
 
 /**
- * @generated from message yeying.api.application.OfflineResponse
+ * @generated from message yeying.api.application.OfflineApplicationResponse
  */
-export type OfflineResponse = Message<"yeying.api.application.OfflineResponse"> & {
+export type OfflineApplicationResponse = Message<"yeying.api.application.OfflineApplicationResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.application.OfflineResponseBody body = 2;
+   * @generated from field: yeying.api.application.OfflineApplicationResponseBody body = 2;
    */
-  body?: OfflineResponseBody;
+  body?: OfflineApplicationResponseBody;
 };
 
 /**
- * Describes the message yeying.api.application.OfflineResponse.
- * Use `create(OfflineResponseSchema)` to create a new message.
+ * Describes the message yeying.api.application.OfflineApplicationResponse.
+ * Use `create(OfflineApplicationResponseSchema)` to create a new message.
  */
-export const OfflineResponseSchema: GenMessage<OfflineResponse> = /*@__PURE__*/
+export const OfflineApplicationResponseSchema: GenMessage<OfflineApplicationResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 15);
 
 /**
- * @generated from message yeying.api.application.OfflineResponseBody
+ * @generated from message yeying.api.application.OfflineApplicationResponseBody
  */
-export type OfflineResponseBody = Message<"yeying.api.application.OfflineResponseBody"> & {
+export type OfflineApplicationResponseBody = Message<"yeying.api.application.OfflineApplicationResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -384,38 +384,38 @@ export type OfflineResponseBody = Message<"yeying.api.application.OfflineRespons
 };
 
 /**
- * Describes the message yeying.api.application.OfflineResponseBody.
- * Use `create(OfflineResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.application.OfflineApplicationResponseBody.
+ * Use `create(OfflineApplicationResponseBodySchema)` to create a new message.
  */
-export const OfflineResponseBodySchema: GenMessage<OfflineResponseBody> = /*@__PURE__*/
+export const OfflineApplicationResponseBodySchema: GenMessage<OfflineApplicationResponseBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 16);
 
 /**
- * @generated from message yeying.api.application.OnlineRequest
+ * @generated from message yeying.api.application.OnlineApplicationRequest
  */
-export type OnlineRequest = Message<"yeying.api.application.OnlineRequest"> & {
+export type OnlineApplicationRequest = Message<"yeying.api.application.OnlineApplicationRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.application.OnlineRequestBody body = 2;
+   * @generated from field: yeying.api.application.OnlineApplicationRequestBody body = 2;
    */
-  body?: OnlineRequestBody;
+  body?: OnlineApplicationRequestBody;
 };
 
 /**
- * Describes the message yeying.api.application.OnlineRequest.
- * Use `create(OnlineRequestSchema)` to create a new message.
+ * Describes the message yeying.api.application.OnlineApplicationRequest.
+ * Use `create(OnlineApplicationRequestSchema)` to create a new message.
  */
-export const OnlineRequestSchema: GenMessage<OnlineRequest> = /*@__PURE__*/
+export const OnlineApplicationRequestSchema: GenMessage<OnlineApplicationRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 17);
 
 /**
- * @generated from message yeying.api.application.OnlineRequestBody
+ * @generated from message yeying.api.application.OnlineApplicationRequestBody
  */
-export type OnlineRequestBody = Message<"yeying.api.application.OnlineRequestBody"> & {
+export type OnlineApplicationRequestBody = Message<"yeying.api.application.OnlineApplicationRequestBody"> & {
   /**
    * @generated from field: string did = 1;
    */
@@ -428,38 +428,38 @@ export type OnlineRequestBody = Message<"yeying.api.application.OnlineRequestBod
 };
 
 /**
- * Describes the message yeying.api.application.OnlineRequestBody.
- * Use `create(OnlineRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.application.OnlineApplicationRequestBody.
+ * Use `create(OnlineApplicationRequestBodySchema)` to create a new message.
  */
-export const OnlineRequestBodySchema: GenMessage<OnlineRequestBody> = /*@__PURE__*/
+export const OnlineApplicationRequestBodySchema: GenMessage<OnlineApplicationRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 18);
 
 /**
- * @generated from message yeying.api.application.OnlineResponse
+ * @generated from message yeying.api.application.OnlineApplicationResponse
  */
-export type OnlineResponse = Message<"yeying.api.application.OnlineResponse"> & {
+export type OnlineApplicationResponse = Message<"yeying.api.application.OnlineApplicationResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.application.OnlineResponseBody body = 2;
+   * @generated from field: yeying.api.application.OnlineApplicationResponseBody body = 2;
    */
-  body?: OnlineResponseBody;
+  body?: OnlineApplicationResponseBody;
 };
 
 /**
- * Describes the message yeying.api.application.OnlineResponse.
- * Use `create(OnlineResponseSchema)` to create a new message.
+ * Describes the message yeying.api.application.OnlineApplicationResponse.
+ * Use `create(OnlineApplicationResponseSchema)` to create a new message.
  */
-export const OnlineResponseSchema: GenMessage<OnlineResponse> = /*@__PURE__*/
+export const OnlineApplicationResponseSchema: GenMessage<OnlineApplicationResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 19);
 
 /**
- * @generated from message yeying.api.application.OnlineResponseBody
+ * @generated from message yeying.api.application.OnlineApplicationResponseBody
  */
-export type OnlineResponseBody = Message<"yeying.api.application.OnlineResponseBody"> & {
+export type OnlineApplicationResponseBody = Message<"yeying.api.application.OnlineApplicationResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -467,10 +467,10 @@ export type OnlineResponseBody = Message<"yeying.api.application.OnlineResponseB
 };
 
 /**
- * Describes the message yeying.api.application.OnlineResponseBody.
- * Use `create(OnlineResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.application.OnlineApplicationResponseBody.
+ * Use `create(OnlineApplicationResponseBodySchema)` to create a new message.
  */
-export const OnlineResponseBodySchema: GenMessage<OnlineResponseBody> = /*@__PURE__*/
+export const OnlineApplicationResponseBodySchema: GenMessage<OnlineApplicationResponseBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 20);
 
 /**
@@ -657,31 +657,31 @@ export const ApplicationMetadataSchema: GenMessage<ApplicationMetadata> = /*@__P
   messageDesc(file_yeying_api_application_application, 23);
 
 /**
- * @generated from message yeying.api.application.DeleteRequest
+ * @generated from message yeying.api.application.DeleteApplicationRequest
  */
-export type DeleteRequest = Message<"yeying.api.application.DeleteRequest"> & {
+export type DeleteApplicationRequest = Message<"yeying.api.application.DeleteApplicationRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.application.DeleteRequestBody body = 2;
+   * @generated from field: yeying.api.application.DeleteApplicationRequestBody body = 2;
    */
-  body?: DeleteRequestBody;
+  body?: DeleteApplicationRequestBody;
 };
 
 /**
- * Describes the message yeying.api.application.DeleteRequest.
- * Use `create(DeleteRequestSchema)` to create a new message.
+ * Describes the message yeying.api.application.DeleteApplicationRequest.
+ * Use `create(DeleteApplicationRequestSchema)` to create a new message.
  */
-export const DeleteRequestSchema: GenMessage<DeleteRequest> = /*@__PURE__*/
+export const DeleteApplicationRequestSchema: GenMessage<DeleteApplicationRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 24);
 
 /**
- * @generated from message yeying.api.application.DeleteRequestBody
+ * @generated from message yeying.api.application.DeleteApplicationRequestBody
  */
-export type DeleteRequestBody = Message<"yeying.api.application.DeleteRequestBody"> & {
+export type DeleteApplicationRequestBody = Message<"yeying.api.application.DeleteApplicationRequestBody"> & {
   /**
    * @generated from field: string did = 1;
    */
@@ -694,38 +694,38 @@ export type DeleteRequestBody = Message<"yeying.api.application.DeleteRequestBod
 };
 
 /**
- * Describes the message yeying.api.application.DeleteRequestBody.
- * Use `create(DeleteRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.application.DeleteApplicationRequestBody.
+ * Use `create(DeleteApplicationRequestBodySchema)` to create a new message.
  */
-export const DeleteRequestBodySchema: GenMessage<DeleteRequestBody> = /*@__PURE__*/
+export const DeleteApplicationRequestBodySchema: GenMessage<DeleteApplicationRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 25);
 
 /**
- * @generated from message yeying.api.application.DeleteResponse
+ * @generated from message yeying.api.application.DeleteApplicationResponse
  */
-export type DeleteResponse = Message<"yeying.api.application.DeleteResponse"> & {
+export type DeleteApplicationResponse = Message<"yeying.api.application.DeleteApplicationResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.application.DeleteResponseBody body = 2;
+   * @generated from field: yeying.api.application.DeleteApplicationResponseBody body = 2;
    */
-  body?: DeleteResponseBody;
+  body?: DeleteApplicationResponseBody;
 };
 
 /**
- * Describes the message yeying.api.application.DeleteResponse.
- * Use `create(DeleteResponseSchema)` to create a new message.
+ * Describes the message yeying.api.application.DeleteApplicationResponse.
+ * Use `create(DeleteApplicationResponseSchema)` to create a new message.
  */
-export const DeleteResponseSchema: GenMessage<DeleteResponse> = /*@__PURE__*/
+export const DeleteApplicationResponseSchema: GenMessage<DeleteApplicationResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 26);
 
 /**
- * @generated from message yeying.api.application.DeleteResponseBody
+ * @generated from message yeying.api.application.DeleteApplicationResponseBody
  */
-export type DeleteResponseBody = Message<"yeying.api.application.DeleteResponseBody"> & {
+export type DeleteApplicationResponseBody = Message<"yeying.api.application.DeleteApplicationResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -733,38 +733,38 @@ export type DeleteResponseBody = Message<"yeying.api.application.DeleteResponseB
 };
 
 /**
- * Describes the message yeying.api.application.DeleteResponseBody.
- * Use `create(DeleteResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.application.DeleteApplicationResponseBody.
+ * Use `create(DeleteApplicationResponseBodySchema)` to create a new message.
  */
-export const DeleteResponseBodySchema: GenMessage<DeleteResponseBody> = /*@__PURE__*/
+export const DeleteApplicationResponseBodySchema: GenMessage<DeleteApplicationResponseBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 27);
 
 /**
- * @generated from message yeying.api.application.AuditRequest
+ * @generated from message yeying.api.application.AuditApplicationRequest
  */
-export type AuditRequest = Message<"yeying.api.application.AuditRequest"> & {
+export type AuditApplicationRequest = Message<"yeying.api.application.AuditApplicationRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.application.AuditRequestBody body = 2;
+   * @generated from field: yeying.api.application.AuditApplicationRequestBody body = 2;
    */
-  body?: AuditRequestBody;
+  body?: AuditApplicationRequestBody;
 };
 
 /**
- * Describes the message yeying.api.application.AuditRequest.
- * Use `create(AuditRequestSchema)` to create a new message.
+ * Describes the message yeying.api.application.AuditApplicationRequest.
+ * Use `create(AuditApplicationRequestSchema)` to create a new message.
  */
-export const AuditRequestSchema: GenMessage<AuditRequest> = /*@__PURE__*/
+export const AuditApplicationRequestSchema: GenMessage<AuditApplicationRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 28);
 
 /**
- * @generated from message yeying.api.application.AuditRequestBody
+ * @generated from message yeying.api.application.AuditApplicationRequestBody
  */
-export type AuditRequestBody = Message<"yeying.api.application.AuditRequestBody"> & {
+export type AuditApplicationRequestBody = Message<"yeying.api.application.AuditApplicationRequestBody"> & {
   /**
    * @generated from field: yeying.api.application.ApplicationComment comment = 1;
    */
@@ -772,16 +772,16 @@ export type AuditRequestBody = Message<"yeying.api.application.AuditRequestBody"
 };
 
 /**
- * Describes the message yeying.api.application.AuditRequestBody.
- * Use `create(AuditRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.application.AuditApplicationRequestBody.
+ * Use `create(AuditApplicationRequestBodySchema)` to create a new message.
  */
-export const AuditRequestBodySchema: GenMessage<AuditRequestBody> = /*@__PURE__*/
+export const AuditApplicationRequestBodySchema: GenMessage<AuditApplicationRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 29);
 
 /**
- * @generated from message yeying.api.application.AuditResponse
+ * @generated from message yeying.api.application.AuditApplicationResponse
  */
-export type AuditResponse = Message<"yeying.api.application.AuditResponse"> & {
+export type AuditApplicationResponse = Message<"yeying.api.application.AuditApplicationResponse"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -789,17 +789,16 @@ export type AuditResponse = Message<"yeying.api.application.AuditResponse"> & {
 };
 
 /**
- * Describes the message yeying.api.application.AuditResponse.
- * Use `create(AuditResponseSchema)` to create a new message.
+ * Describes the message yeying.api.application.AuditApplicationResponse.
+ * Use `create(AuditApplicationResponseSchema)` to create a new message.
  */
-export const AuditResponseSchema: GenMessage<AuditResponse> = /*@__PURE__*/
+export const AuditApplicationResponseSchema: GenMessage<AuditApplicationResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_application_application, 30);
 
 /**
  * *
  * 节点自带的应用和后面发布的应用，夜莺社区提供一个节点和一组组网协议。当然其他的社团或者个人，也可以基于源代码，发布自己的节点和一组组网协议，当然
  * 也可以加入到夜莺社区的网络。
- * TODO: 一种是节点自带的应用，另一种通过节点发布的应用，需要考虑如何统一起来，做合规审计以及管理。
  *
  * @generated from service yeying.api.application.Application
  */
@@ -811,8 +810,8 @@ export const Application: GenService<{
    */
   search: {
     methodKind: "unary";
-    input: typeof SearchRequestSchema;
-    output: typeof SearchResponseSchema;
+    input: typeof SearchApplicationRequestSchema;
+    output: typeof SearchApplicationResponseSchema;
   },
   /**
    * 应用审计 
@@ -821,8 +820,8 @@ export const Application: GenService<{
    */
   audit: {
     methodKind: "unary";
-    input: typeof AuditRequestSchema;
-    output: typeof AuditResponseSchema;
+    input: typeof AuditApplicationRequestSchema;
+    output: typeof AuditApplicationResponseSchema;
   },
   /**
    * 创建应用 
@@ -831,8 +830,8 @@ export const Application: GenService<{
    */
   create: {
     methodKind: "unary";
-    input: typeof CreateRequestSchema;
-    output: typeof CreateResponseSchema;
+    input: typeof CreateApplicationRequestSchema;
+    output: typeof CreateApplicationResponseSchema;
   },
   /**
    * 应用详情 
@@ -841,8 +840,8 @@ export const Application: GenService<{
    */
   detail: {
     methodKind: "unary";
-    input: typeof DetailRequestSchema;
-    output: typeof DetailResponseSchema;
+    input: typeof ApplicationDetailRequestSchema;
+    output: typeof ApplicationDetailResponseSchema;
   },
   /**
    * 下架应用 
@@ -851,8 +850,8 @@ export const Application: GenService<{
    */
   offline: {
     methodKind: "unary";
-    input: typeof OfflineRequestSchema;
-    output: typeof OfflineResponseSchema;
+    input: typeof OfflineApplicationRequestSchema;
+    output: typeof OfflineApplicationResponseSchema;
   },
   /**
    * 上架应用 
@@ -861,8 +860,8 @@ export const Application: GenService<{
    */
   online: {
     methodKind: "unary";
-    input: typeof OnlineRequestSchema;
-    output: typeof OnlineResponseSchema;
+    input: typeof OnlineApplicationRequestSchema;
+    output: typeof OnlineApplicationResponseSchema;
   },
   /**
    * 删除应用 
@@ -871,8 +870,8 @@ export const Application: GenService<{
    */
   delete: {
     methodKind: "unary";
-    input: typeof DeleteRequestSchema;
-    output: typeof DeleteResponseSchema;
+    input: typeof DeleteApplicationRequestSchema;
+    output: typeof DeleteApplicationResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_yeying_api_application_application, 0);

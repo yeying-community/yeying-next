@@ -14,34 +14,34 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/bulletin/bulletin.proto.
  */
 export const file_yeying_api_bulletin_bulletin: GenFile = /*@__PURE__*/
-  fileDesc("CiJ5ZXlpbmcvYXBpL2J1bGxldGluL2J1bGxldGluLnByb3RvEhN5ZXlpbmcuYXBpLmJ1bGxldGluInMKC0xpc3RSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISMgoEYm9keRgCIAEoCzIkLnlleWluZy5hcGkuYnVsbGV0aW4uTGlzdFJlcXVlc3RCb2R5IqsBCg9MaXN0UmVxdWVzdEJvZHkSMwoEY29kZRgBIAEoDjIlLnlleWluZy5hcGkuYnVsbGV0aW4uQnVsbGV0aW5Db2RlRW51bRI1CghsYW5ndWFnZRgCIAEoDjIjLnlleWluZy5hcGkuY29tbW9uLkxhbmd1YWdlQ29kZUVudW0SLAoEcGFnZRgDIAEoCzIeLnlleWluZy5hcGkuY29tbW9uLlJlcXVlc3RQYWdlInUKDExpc3RSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjMKBGJvZHkYAiABKAsyJS55ZXlpbmcuYXBpLmJ1bGxldGluLkxpc3RSZXNwb25zZUJvZHkirgEKEExpc3RSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSOAoJc29sdXRpb25zGAIgAygLMiUueWV5aW5nLmFwaS5idWxsZXRpbi5Tb2x1dGlvbk1ldGFkYXRhEi0KBHBhZ2UYAyABKAsyHy55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVBhZ2Ui4gEKEFNvbHV0aW9uTWV0YWRhdGESEQoJcHVibGlzaGVyGAEgASgJEjUKCGxhbmd1YWdlGAIgASgOMiMueWV5aW5nLmFwaS5jb21tb24uTGFuZ3VhZ2VDb2RlRW51bRILCgN1aWQYAyABKAkSDAoEbmFtZRgEIAEoCRITCgtkZXNjcmlwdGlvbhgFIAEoCRIPCgdjcmVhdGVkGAYgASgJEjAKBWNhcmRzGAcgAygLMiEueWV5aW5nLmFwaS5idWxsZXRpbi5Tb2x1dGlvbkNhcmQSEQoJc2lnbmF0dXJlGAggASgJIj4KDFNvbHV0aW9uQ2FyZBIMCgRuYW1lGAEgASgJEg0KBXByaWNlGAIgASgJEhEKCXZhcmlhYmxlcxgDIAEoCSouChBCdWxsZXRpbkNvZGVFbnVtEhoKFkJVTExFVElOX0NPREVfU09MVVRJT04QADJZCghCdWxsZXRpbhJNCgRMaXN0EiAueWV5aW5nLmFwaS5idWxsZXRpbi5MaXN0UmVxdWVzdBohLnlleWluZy5hcGkuYnVsbGV0aW4uTGlzdFJlc3BvbnNlIgBCFVoTeWV5aW5nL2FwaS9idWxsZXRpbmIGcHJvdG8z", [file_yeying_api_common_message, file_yeying_api_common_code]);
+  fileDesc("CiJ5ZXlpbmcvYXBpL2J1bGxldGluL2J1bGxldGluLnByb3RvEhN5ZXlpbmcuYXBpLmJ1bGxldGluIoMBChNCdWxsZXRpbkxpc3RSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISOgoEYm9keRgCIAEoCzIsLnlleWluZy5hcGkuYnVsbGV0aW4uQnVsbGV0aW5MaXN0UmVxdWVzdEJvZHkiswEKF0J1bGxldGluTGlzdFJlcXVlc3RCb2R5EjMKBGNvZGUYASABKA4yJS55ZXlpbmcuYXBpLmJ1bGxldGluLkJ1bGxldGluQ29kZUVudW0SNQoIbGFuZ3VhZ2UYAiABKA4yIy55ZXlpbmcuYXBpLmNvbW1vbi5MYW5ndWFnZUNvZGVFbnVtEiwKBHBhZ2UYAyABKAsyHi55ZXlpbmcuYXBpLmNvbW1vbi5SZXF1ZXN0UGFnZSKFAQoUQnVsbGV0aW5MaXN0UmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI7CgRib2R5GAIgASgLMi0ueWV5aW5nLmFwaS5idWxsZXRpbi5CdWxsZXRpbkxpc3RSZXNwb25zZUJvZHkitgEKGEJ1bGxldGluTGlzdFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxI4Cglzb2x1dGlvbnMYAiADKAsyJS55ZXlpbmcuYXBpLmJ1bGxldGluLlNvbHV0aW9uTWV0YWRhdGESLQoEcGFnZRgDIAEoCzIfLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlUGFnZSLiAQoQU29sdXRpb25NZXRhZGF0YRIRCglwdWJsaXNoZXIYASABKAkSNQoIbGFuZ3VhZ2UYAiABKA4yIy55ZXlpbmcuYXBpLmNvbW1vbi5MYW5ndWFnZUNvZGVFbnVtEgsKA3VpZBgDIAEoCRIMCgRuYW1lGAQgASgJEhMKC2Rlc2NyaXB0aW9uGAUgASgJEg8KB2NyZWF0ZWQYBiABKAkSMAoFY2FyZHMYByADKAsyIS55ZXlpbmcuYXBpLmJ1bGxldGluLlNvbHV0aW9uQ2FyZBIRCglzaWduYXR1cmUYCCABKAkiPgoMU29sdXRpb25DYXJkEgwKBG5hbWUYASABKAkSDQoFcHJpY2UYAiABKAkSEQoJdmFyaWFibGVzGAMgASgJKi4KEEJ1bGxldGluQ29kZUVudW0SGgoWQlVMTEVUSU5fQ09ERV9TT0xVVElPThAAMmkKCEJ1bGxldGluEl0KBExpc3QSKC55ZXlpbmcuYXBpLmJ1bGxldGluLkJ1bGxldGluTGlzdFJlcXVlc3QaKS55ZXlpbmcuYXBpLmJ1bGxldGluLkJ1bGxldGluTGlzdFJlc3BvbnNlIgBCFVoTeWV5aW5nL2FwaS9idWxsZXRpbmIGcHJvdG8z", [file_yeying_api_common_message, file_yeying_api_common_code]);
 
 /**
- * @generated from message yeying.api.bulletin.ListRequest
+ * @generated from message yeying.api.bulletin.BulletinListRequest
  */
-export type ListRequest = Message<"yeying.api.bulletin.ListRequest"> & {
+export type BulletinListRequest = Message<"yeying.api.bulletin.BulletinListRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.bulletin.ListRequestBody body = 2;
+   * @generated from field: yeying.api.bulletin.BulletinListRequestBody body = 2;
    */
-  body?: ListRequestBody;
+  body?: BulletinListRequestBody;
 };
 
 /**
- * Describes the message yeying.api.bulletin.ListRequest.
- * Use `create(ListRequestSchema)` to create a new message.
+ * Describes the message yeying.api.bulletin.BulletinListRequest.
+ * Use `create(BulletinListRequestSchema)` to create a new message.
  */
-export const ListRequestSchema: GenMessage<ListRequest> = /*@__PURE__*/
+export const BulletinListRequestSchema: GenMessage<BulletinListRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_bulletin_bulletin, 0);
 
 /**
- * @generated from message yeying.api.bulletin.ListRequestBody
+ * @generated from message yeying.api.bulletin.BulletinListRequestBody
  */
-export type ListRequestBody = Message<"yeying.api.bulletin.ListRequestBody"> & {
+export type BulletinListRequestBody = Message<"yeying.api.bulletin.BulletinListRequestBody"> & {
   /**
    * @generated from field: yeying.api.bulletin.BulletinCodeEnum code = 1;
    */
@@ -59,38 +59,38 @@ export type ListRequestBody = Message<"yeying.api.bulletin.ListRequestBody"> & {
 };
 
 /**
- * Describes the message yeying.api.bulletin.ListRequestBody.
- * Use `create(ListRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.bulletin.BulletinListRequestBody.
+ * Use `create(BulletinListRequestBodySchema)` to create a new message.
  */
-export const ListRequestBodySchema: GenMessage<ListRequestBody> = /*@__PURE__*/
+export const BulletinListRequestBodySchema: GenMessage<BulletinListRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_bulletin_bulletin, 1);
 
 /**
- * @generated from message yeying.api.bulletin.ListResponse
+ * @generated from message yeying.api.bulletin.BulletinListResponse
  */
-export type ListResponse = Message<"yeying.api.bulletin.ListResponse"> & {
+export type BulletinListResponse = Message<"yeying.api.bulletin.BulletinListResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.bulletin.ListResponseBody body = 2;
+   * @generated from field: yeying.api.bulletin.BulletinListResponseBody body = 2;
    */
-  body?: ListResponseBody;
+  body?: BulletinListResponseBody;
 };
 
 /**
- * Describes the message yeying.api.bulletin.ListResponse.
- * Use `create(ListResponseSchema)` to create a new message.
+ * Describes the message yeying.api.bulletin.BulletinListResponse.
+ * Use `create(BulletinListResponseSchema)` to create a new message.
  */
-export const ListResponseSchema: GenMessage<ListResponse> = /*@__PURE__*/
+export const BulletinListResponseSchema: GenMessage<BulletinListResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_bulletin_bulletin, 2);
 
 /**
- * @generated from message yeying.api.bulletin.ListResponseBody
+ * @generated from message yeying.api.bulletin.BulletinListResponseBody
  */
-export type ListResponseBody = Message<"yeying.api.bulletin.ListResponseBody"> & {
+export type BulletinListResponseBody = Message<"yeying.api.bulletin.BulletinListResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -108,10 +108,10 @@ export type ListResponseBody = Message<"yeying.api.bulletin.ListResponseBody"> &
 };
 
 /**
- * Describes the message yeying.api.bulletin.ListResponseBody.
- * Use `create(ListResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.bulletin.BulletinListResponseBody.
+ * Use `create(BulletinListResponseBodySchema)` to create a new message.
  */
-export const ListResponseBodySchema: GenMessage<ListResponseBody> = /*@__PURE__*/
+export const BulletinListResponseBodySchema: GenMessage<BulletinListResponseBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_bulletin_bulletin, 3);
 
 /**
@@ -218,8 +218,8 @@ export const Bulletin: GenService<{
    */
   list: {
     methodKind: "unary";
-    input: typeof ListRequestSchema;
-    output: typeof ListResponseSchema;
+    input: typeof BulletinListRequestSchema;
+    output: typeof BulletinListResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_yeying_api_bulletin_bulletin, 0);
