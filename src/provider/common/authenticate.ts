@@ -1,17 +1,17 @@
-import { getCurrentUtcString, isExpired, parseDateTime } from '../../common/date'
-import { generateUuid } from '../../common/string'
-import { MessageHeader } from '../../yeying/api/common/message_pb'
-import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
-import { BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes } from '@yeying-community/yeying-web3'
-import { InvalidArgument, NetworkDown, NoPermission } from '../../common/error'
-import { composite } from '../../common/bytes'
-import { RpcError } from 'grpc-web'
-import { convertResponseStatusToError } from '../../common/status'
-import { computeHash } from '../../common/crypto'
+import {getCurrentUtcString, isExpired, parseDateTime} from '../../common/date'
+import {generateUuid} from '../../common/string'
+import {MessageHeader, MessageHeaderSchema} from '../../yeying/api/common/message_pb'
+import {AuthenticateTypeEnum} from '../../yeying/api/common/code_pb'
+import {BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes} from '@yeying-community/yeying-web3'
+import {InvalidArgument, NetworkDown, NoPermission} from '../../common/error'
+import {composite} from '../../common/bytes'
+import {computeHash} from '../../common/crypto'
+import {create, toBinary} from "@bufbuild/protobuf";
+import {DescMessage} from "@bufbuild/protobuf/dist/cjs/descriptors";
 
 /**
  * 基于区块链地址的认证类，用于签名要发送的数据并验证接收到的数据，确保数据传输双方能够确认数据是否被篡改。
- * 
+ *
  * @example
  * ```ts
  * const authenticate = new Authenticate(blockAddress);
@@ -23,11 +23,11 @@ export class Authenticate {
 
     /**
      * 创建 Authenticate 类的实例。
-     * 
+     *
      * @param blockAddress - 与此认证实例关联的区块链地址。
      * @example
      * ```ts
-     * const blockAddress = new BlockAddress(...); 
+     * const blockAddress = new BlockAddress(...);
      * const authenticate = new Authenticate(blockAddress);
      * ```
      */
@@ -37,7 +37,7 @@ export class Authenticate {
 
     /**
      * 获取区块链地址的 DID（去中心化标识符）。
-     * 
+     *
      * @returns 返回区块链地址的 DID。
      * @example
      * ```ts
@@ -50,10 +50,10 @@ export class Authenticate {
     }
 
     /**
-     * 创建消息头并用私钥进行签名。
-     * 
-     * @param body - 可选的附加数据，添加到消息头中。
-     * @returns 一个 Promise，解析为附加签名的消息头。
+     * 创建签名的消息头消息头，使用区块链账户的私钥签名。
+     *
+     * @param body - 二进制序列化的消息体，消息体里面是实际的业务数据。
+     * @returns {Promise<MessageHeader>} 签名的消息头。
      * @throws {InvalidArgument} 如果创建消息头失败，则抛出错误。
      * @example
      * ```ts
@@ -61,22 +61,24 @@ export class Authenticate {
      * console.log(header);
      * ```
      */
-    async createHeader(body?: Uint8Array) {
-        const header = new MessageHeader()
-        header.setDid(this.blockAddress.identifier)
-        header.setAuthtype(AuthenticateTypeEnum.AUTHENTICATE_TYPE_CERT)
-        header.setNonce(generateUuid())
-        header.setVersion(0)
-        header.setTimestamp(getCurrentUtcString())
-        const data = body === undefined ? header.serializeBinary() : composite(header.serializeBinary(), body)
+    async createHeader(body?: Uint8Array): Promise<MessageHeader> {
+        const header: MessageHeader = create(MessageHeaderSchema, {
+            did: this.blockAddress.identifier,
+            authType: AuthenticateTypeEnum.AUTHENTICATE_TYPE_CERT,
+            nonce: generateUuid(),
+            version: 0,
+            timestamp: getCurrentUtcString(),
+        })
+
+        const data = body === undefined ? toBinary(MessageHeaderSchema, header) : composite(toBinary(MessageHeaderSchema, header), body)
         const signature = await this.sign(data)
-        header.setAuthcontent(signature)
+        header.authContent = signature
         return header
     }
 
     /**
      * 使用区块链地址的私钥对给定数据进行签名。
-     * 
+     *
      * @param data - 要签名的数据。
      * @returns 一个 Promise，解析为数据的签名。
      * @throws {InvalidArgument} 如果签名失败，则抛出错误。
@@ -93,7 +95,7 @@ export class Authenticate {
 
     /**
      * 使用从 DID 派生的公钥验证给定数据的签名。
-     * 
+     *
      * @param did - 发送方的 DID（去中心化标识符）。
      * @param data - 要验证的数据。
      * @param signature - 要验证的签名。
@@ -112,7 +114,7 @@ export class Authenticate {
 
     /**
      * 验证消息头和数据主体的有效性。
-     * 
+     *
      * @param header - 要验证的消息头。
      * @param body - 与消息头一起验证的可选数据主体。
      * @throws {InvalidArgument} 如果消息头中的时间戳过期，则抛出错误。
@@ -127,17 +129,16 @@ export class Authenticate {
      * ```
      */
     async verifyHeader(header: MessageHeader, body: Uint8Array | undefined) {
-        const timestamp = header.getTimestamp()
-        const datetime = parseDateTime(timestamp)
+        const datetime = parseDateTime(header.timestamp)
         if (isExpired(datetime, 5 * 60)) {
             throw new InvalidArgument('Timestamp expired')
         }
 
-        const signature = header.getAuthcontent()
-        header.setAuthcontent('')
+        const signature = header.authContent
+        header.authContent = ''
 
-        const data = body === undefined ? header.serializeBinary() : composite(header.serializeBinary(), body)
-        const success = this.verify(header.getDid(), data, signature)
+        const data: Uint8Array = body === undefined ? toBinary(MessageHeaderSchema, header) : composite(toBinary(MessageHeaderSchema, header), body)
+        const success = this.verify(header.did, data, signature)
         if (!success) {
             throw new NoPermission('Invalid signature')
         }
@@ -145,8 +146,7 @@ export class Authenticate {
 
     /**
      * 处理响应，通过验证消息头和处理错误或数据。
-     * 
-     * @param err - 响应过程中遇到的错误。
+     *
      * @param response - 要处理的响应。
      * @returns 一个 Promise，解析为处理后的响应主体。
      * @throws {NetworkDown} 如果协议无效或响应数据缺失，则抛出错误。
@@ -161,28 +161,13 @@ export class Authenticate {
      * });
      * ```
      */
-    doResponse(err: RpcError, response: any): Promise<any> {
-        return new Promise(async (resolve, reject) => {
-            if (
-                err !== null ||
-                response === undefined ||
-                response.getHeader() === undefined ||
-                response.getBody() === undefined ||
-                response.getBody().getStatus() === undefined
-            ) {
-                console.error(err)
-                return reject(new NetworkDown('protocol error!'))
-            }
+    async doResponse(response: any, bodySchema: DescMessage) {
+        if (response === undefined || response.header === undefined || response.body === undefined ||
+            response.body.status === undefined
+        ) {
+            throw new NetworkDown('protocol error!')
+        }
 
-            const body = response.getBody()
-            try {
-                await this.verifyHeader(response.getHeader(), body.serializeBinary())
-            } catch (err) {
-                console.error(err)
-                return reject(err)
-            }
-
-            resolve(body)
-        })
+        await this.verifyHeader(response.header, toBinary(bodySchema, response.body))
     }
 }

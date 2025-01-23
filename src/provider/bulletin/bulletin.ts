@@ -1,45 +1,57 @@
 import {Authenticate} from '../common/authenticate'
-import {BulletinClient} from '../../yeying/api/bulletin/BulletinServiceClientPb'
 import {ProviderOption} from '../common/model'
 import {LanguageCodeEnum} from '../../yeying/api/common/code_pb'
-import {BulletinCodeEnum, ListRequest, ListRequestBody, ListResponseBody} from '../../yeying/api/bulletin/bulletin_pb'
-import {MessageHeader, RequestPage} from '../../yeying/api/common/message_pb'
 import {DataForgery} from '../../common/error'
+import {
+    Bulletin,
+    BulletinCodeEnum,
+    ListRequestBodySchema,
+    ListRequestSchema,
+    ListResponseBody,
+    ListResponseBodySchema,
+    SolutionMetadataSchema
+} from '../../yeying/api/bulletin/bulletin_pb'
+import {Client, createClient} from "@connectrpc/connect";
+import {createGrpcWebTransport} from "@connectrpc/connect-web";
+import {MessageHeader, RequestPageSchema} from "../../yeying/api/common/message_pb";
+import {create, toBinary} from "@bufbuild/protobuf";
 
 /**
  * BulletinProvider 类，用于提供公告相关的操作，包括获取公告列表等。
- * 
+ *
  * @example
  * ```ts
- * const bulletinProvider = new BulletinProvider(authenticate, option);
+ * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
+ * const bulletinProvider = new BulletinProvider(providerOption);
  * const response = await bulletinProvider.list(LanguageCodeEnum.EN, 1, 10);
- * console.log(response); 
+ * console.log(response);
  * ```
  */
 export class BulletinProvider {
     private authenticate: Authenticate
-    private client: BulletinClient
+    private client: Client<typeof Bulletin>
 
     /**
      * 构造 BulletinProvider 实例。
-     * 
-     * @param authenticate - 用于认证的 Authenticate 实例。
+     *
      * @param option - 提供的选项配置，如代理设置等。
      * @example
      * ```ts
-     * const authenticate = new Authenticate(blockAddress);
-     * const providerOption = { proxy: 'proxy_url' };
-     * const bulletinProvider = new BulletinProvider(authenticate, providerOption);
+     * const providerOption = { proxy: 'proxy_url', blockAddress: <your block address> };
+     * const bulletinProvider = new BulletinProvider(providerOption);
      * ```
      */
-    constructor(authenticate: Authenticate, option: ProviderOption) {
-        this.authenticate = authenticate
-        this.client = new BulletinClient(option.proxy)
+    constructor(option: ProviderOption) {
+        this.authenticate = new Authenticate(option.blockAddress)
+        this.client = createClient(Bulletin, createGrpcWebTransport({
+            baseUrl: option.proxy,
+            useBinaryFormat: true,
+        }))
     }
 
     /**
      * 获取公告列表。
-     * 
+     *
      * @param language - 公告的语言。
      * @param page - 页码。
      * @param pageSize - 每页显示的公告数量。
@@ -53,52 +65,56 @@ export class BulletinProvider {
      */
     async list(language: LanguageCodeEnum, page: number, pageSize: number) {
         return new Promise<ListResponseBody>(async (resolve, reject) => {
-            const requestPage = new RequestPage()
-            requestPage.setPage(page)
-            requestPage.setPagesize(pageSize)
+            const requestPage = create(RequestPageSchema, {
+                page: page,
+                pageSize: pageSize,
+            })
 
-            const body = new ListRequestBody()
-            body.setLanguage(language)
-            body.setCode(BulletinCodeEnum.BULLETIN_CODE_SOLUTION)
-            body.setPage(requestPage)
+            const body = create(ListRequestBodySchema, {
+                language: language,
+                code: BulletinCodeEnum.BULLETIN_CODE_SOLUTION,
+                page: requestPage,
+            })
+
 
             let header: MessageHeader
             try {
                 // 创建消息头
-                header = await this.authenticate.createHeader(body.serializeBinary())
+                header = await this.authenticate.createHeader(toBinary(ListRequestBodySchema, body))
             } catch (err) {
-                console.error('创建列表解决方案的消息头失败', err)
+                console.error('Fail to create header for listing solutions.', err)
                 return err
             }
 
-            const request = new ListRequest()
-            request.setHeader(header)
-            request.setBody(body)
+            const request = create(ListRequestSchema, {header: header, body: body})
+            try {
+                const res = await this.client.list(request)
+                await this.authenticate.doResponse(res, ListResponseBodySchema)
+                const body = res.body as ListResponseBody
+                // 验证解决方案信息的签名
+                for (let solution of body.solutions) {
+                    const signature = solution.signature
+                    solution.signature = ''
 
-            // 向客户端发送请求
-            this.client.list(request, null, (err, res) => {
-                // 处理响应并验证数据
-                this.authenticate.doResponse(err, res).then(async (body) => {
-                    // 验证解决方案信息的签名
-                    for (let solutionMetadata of body.getSolutionsList()) {
-                        const signature = solutionMetadata.getSignature()
-                        solutionMetadata.setSignature('')
-                        const passed = await this.authenticate.verify(
-                            solutionMetadata.getPublisher(),
-                            solutionMetadata.serializeBinary(),
-                            signature
-                        )
-                        if (passed) {
-                            solutionMetadata.setSignature(signature)
-                        } else {
-                            // 如果签名无效，抛出数据伪造错误
-                            return reject(new DataForgery('无效的签名！'))
-                        }
+                    const passed = await this.authenticate.verify(
+                        solution.publisher,
+                        toBinary(SolutionMetadataSchema, solution),
+                        signature
+                    )
+
+                    if (passed) {
+                        solution.signature = signature
+                    } else {
+                        // 如果签名无效，抛出数据伪造错误
+                        return reject(new DataForgery('无效的签名！'))
                     }
+                }
 
-                    resolve(body as ListResponseBody)
-                }, reject)
-            })
+                resolve(body)
+            } catch (err) {
+                console.error('Fail to list solutions', err)
+                return reject(err)
+            }
         })
     }
 }

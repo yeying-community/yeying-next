@@ -5,7 +5,6 @@ import {CipherTypeEnum} from "../../../src";
 import {decodeString, encodeHex, encodeString} from "../../../src/common/codec";
 import {generateIv} from "../../../src/common/crypto";
 import {AssetCipher} from "../../../src/provider/warehouse/cipher";
-import {as} from "vitest/dist/chunks/reporters.D7Jzd9GS";
 
 describe('Cipher', () => {
     it('encrypt and decrypt', async () => {

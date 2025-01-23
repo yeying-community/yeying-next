@@ -1,44 +1,57 @@
-import { Authenticate } from '../common/authenticate'
-import { ProviderOption } from '../common/model'
-import { DigitalFormatEnum } from '../../yeying/api/common/code_pb'
-import { RequestPage } from '../../yeying/api/common/message_pb'
-import { AssetClient } from '../../yeying/api/asset/AssetServiceClientPb'
+import {Authenticate} from '../common/authenticate'
+import {ProviderOption} from '../common/model'
+import {RequestPageSchema} from '../../yeying/api/common/message_pb'
 import {
+    Asset,
     AssetMetadata,
-    DetailRequest,
-    DetailRequestBody,
-    RemoveRequest,
-    RemoveRequestBody,
+    AssetMetadataSchema,
+    DetailRequestBodySchema,
+    DetailRequestSchema,
+    DetailResponseBody,
+    DetailResponseBodySchema,
+    RemoveRequestBodySchema,
+    RemoveRequestSchema,
     RemoveResponseBody,
+    RemoveResponseBodySchema,
     SearchCondition,
-    SearchRequest,
-    SearchRequestBody,
+    SearchConditionSchema,
+    SearchRequestBodySchema,
+    SearchRequestSchema,
     SearchResponseBody,
-    SignRequest,
-    SignRequestBody,
+    SearchResponseBodySchema,
+    SignRequestBodySchema,
+    SignRequestSchema,
     SignResponseBody,
-    VersionRequest,
-    VersionRequestBody,
-    VersionResponseBody
+    SignResponseBodySchema,
+    VersionRequestBodySchema,
+    VersionRequestSchema,
+    VersionResponseBody,
+    VersionResponseBodySchema
 } from '../../yeying/api/asset/asset_pb'
+import {Client, createClient} from "@connectrpc/connect";
+import {createGrpcWebTransport} from "@connectrpc/connect-web";
+import {create, toBinary} from "@bufbuild/protobuf";
 
 /**
  * AssetProvider 类提供对资产的管理，包括查询、版本获取、详情查看、删除等操作。
  */
 export class AssetProvider {
     private authenticate: Authenticate
-    private client: AssetClient
+    private client: Client<typeof Asset>
 
     /**
      * 创建 AssetProvider 实例。
-     * @param authenticate - 认证实例，用于身份验证和签名。
      * @param option - 提供者选项，包括代理设置等。
      * @example
-     * const assetProvider = new AssetProvider(authenticate, { proxy: 'http://proxy.url' });
+     * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
+     * const assetProvider = new AssetProvider(providerOption);
      */
-    constructor(authenticate: Authenticate, option: ProviderOption) {
-        this.authenticate = authenticate
-        this.client = new AssetClient(option.proxy)
+    constructor(option: ProviderOption) {
+        this.authenticate = new Authenticate(option.blockAddress)
+        this.client = createClient(Asset, createGrpcWebTransport({
+            baseUrl: option.proxy,
+            useBinaryFormat: true,
+        }))
     }
 
     /**
@@ -50,31 +63,33 @@ export class AssetProvider {
      * @example
      * assetProvider.search(searchCondition, 1, 10).then(response => { console.log(response); });
      */
-    search(condition: SearchCondition, page: number, pageSize: number) {
+    search(condition: Partial<SearchCondition>, page: number, pageSize: number) {
         return new Promise<SearchResponseBody>(async (resolve, reject) => {
-            const requestPage = new RequestPage()
-            requestPage.setPage(page)
-            requestPage.setPagesize(pageSize)
+            const requestPage = create(RequestPageSchema, {page: page, pageSize: pageSize})
+            const c = create(SearchConditionSchema, {
+                format: condition.format,
+                contentHash: condition.contentHash,
+                trash: condition.trash,
+            })
 
-            const body = new SearchRequestBody()
-            body.setCondition(condition)
-            body.setPage(requestPage)
-
+            const body = create(SearchRequestBodySchema, {condition: c, page: requestPage})
             let header
             try {
-                header = await this.authenticate.createHeader(body.serializeBinary())
+                header = await this.authenticate.createHeader(toBinary(SearchRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header for searching assets', err)
                 return reject(err)
             }
 
-            const request = new SearchRequest()
-            request.setHeader(header)
-            request.setBody(body)
-
-            this.client.search(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then((body) => resolve(body as SearchResponseBody), reject)
-            })
+            const request = create(SearchRequestSchema, {header: header, body: body})
+            try {
+                const res = await this.client.search(request)
+                await this.authenticate.doResponse(res, SearchResponseBodySchema)
+                resolve(res.body as SearchResponseBody)
+            } catch (err) {
+                console.error('Fail to search assets', err)
+                return reject(err)
+            }
         })
     }
 
@@ -88,28 +103,27 @@ export class AssetProvider {
      * assetProvider.version('assetUid', 1, 10).then(response => { console.log(response); });
      */
     version(uid: string, page: number, pageSize: number) {
-        return new Promise(async (resolve, reject) => {
-            const body = new VersionRequestBody()
-            body.setUid(uid)
-
-            const requestPage = new RequestPage()
-            requestPage.setPage(page)
-            requestPage.setPagesize(pageSize)
+        return new Promise<VersionResponseBody>(async (resolve, reject) => {
+            const requestPage = create(RequestPageSchema, {page: page, pageSize: pageSize})
+            const body = create(VersionRequestBodySchema, {uid: uid, page: requestPage})
 
             let header
             try {
-                header = await this.authenticate.createHeader(body.serializeBinary())
+                header = await this.authenticate.createHeader(toBinary(VersionRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header when getting asset version', err)
                 return reject(err)
             }
 
-            const request = new VersionRequest()
-            request.setHeader(header)
-            request.setBody(body)
-            this.client.version(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then((body) => resolve(body as VersionResponseBody), reject)
-            })
+            const request = create(VersionRequestSchema, {header: header, body: body})
+            try {
+                const res = await this.client.version(request)
+                await this.authenticate.doResponse(res, VersionResponseBodySchema)
+                resolve(res.body as VersionResponseBody)
+            } catch (err) {
+                console.error('Fail to get version for asset', err)
+                return reject(err)
+            }
         })
     }
 
@@ -123,26 +137,30 @@ export class AssetProvider {
      * assetProvider.detail('assetUid', 1, false).then(metadata => { console.log(metadata); });
      */
     detail(uid: string, version: number, trash: boolean) {
-        return new Promise<AssetMetadata>(async (resolve, reject) => {
-            const body = new DetailRequestBody()
-            body.setUid(uid)
-            body.setVersion(version)
-            body.setTrash(trash)
+        return new Promise<DetailResponseBody>(async (resolve, reject) => {
+            const body = create(DetailRequestBodySchema, {
+                uid: uid,
+                version: version,
+                trash: trash,
+            })
+
             let header
             try {
-                header = await this.authenticate.createHeader(body.serializeBinary())
+                header = await this.authenticate.createHeader(toBinary(DetailRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header when getting asset detail', err)
                 return reject(err)
             }
 
-            const request = new DetailRequest()
-            request.setHeader(header)
-            request.setBody(body)
-
-            this.client.detail(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then((body) => resolve(body.getAsset()), reject)
-            })
+            const request = create(DetailRequestSchema, {header: header, body: body})
+            try {
+                const res = await this.client.detail(request)
+                await this.authenticate.doResponse(res, DetailResponseBodySchema)
+                resolve(res.body as DetailResponseBody)
+            } catch (err) {
+                console.error('Fail to get asset detail', err)
+                return reject(err)
+            }
         })
     }
 
@@ -155,27 +173,34 @@ export class AssetProvider {
      * assetProvider.moveToTrash('assetUid', 1).then(response => { console.log(response); });
      */
     moveToTrash(uid: string, version: number) {
-        return new Promise(async (resolve, reject) => {
-            const body = new RemoveRequestBody()
-            body.setUid(uid)
-            body.setVersion(version)
-            body.setHard(false)
+        return this.delete(uid, version, false)
+    }
+
+    private delete(uid: string, version: number, hard: boolean) {
+        return new Promise<RemoveResponseBody>(async (resolve, reject) => {
+            const body = create(RemoveRequestBodySchema, {
+                uid: uid,
+                version: version,
+                hard: hard,
+            })
 
             let header
             try {
-                header = await this.authenticate.createHeader(body.serializeBinary())
+                header = await this.authenticate.createHeader(toBinary(RemoveRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header when moving asset to trash', err)
                 return reject(err)
             }
 
-            const request = new RemoveRequest()
-            request.setHeader(header)
-            request.setBody(body)
-
-            this.client.remove(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then(resolve, reject)
-            })
+            const request = create(RemoveRequestSchema, {header: header, body: body})
+            try {
+                const res = await this.client.remove(request)
+                await this.authenticate.doResponse(res, RemoveResponseBodySchema)
+                resolve(res.body as RemoveResponseBody)
+            } catch (err) {
+                console.error('Fail to move asset to trash', err)
+                return reject(err)
+            }
         })
     }
 
@@ -188,27 +213,7 @@ export class AssetProvider {
      * assetProvider.remove('assetUid', 1).then(response => { console.log(response); });
      */
     remove(uid: string, version: number) {
-        return new Promise<RemoveResponseBody>(async (resolve, reject) => {
-            const body = new RemoveRequestBody()
-            body.setUid(uid)
-            body.setVersion(version)
-            body.setHard(true)
-            let header
-            try {
-                header = await this.authenticate.createHeader(body.serializeBinary())
-            } catch (err) {
-                console.error('Fail to create header when removing asset', err)
-                return reject(err)
-            }
-
-            const request = new RemoveRequest()
-            request.setHeader(header)
-            request.setBody(body)
-
-            this.client.remove(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then(resolve, reject)
-            })
-        })
+        return this.delete(uid, version, true)
     }
 
     /**
@@ -220,23 +225,31 @@ export class AssetProvider {
      */
     sign(asset: AssetMetadata) {
         return new Promise<SignResponseBody>(async (resolve, reject) => {
-            const body = new SignRequestBody()
+            const body = create(SignRequestBodySchema, {
+                asset: asset,
+            })
+
             let header
             try {
-                asset.setSignature(await this.authenticate.sign(asset.serializeBinary()))
-                body.setAsset(asset)
-                header = await this.authenticate.createHeader(body.serializeBinary())
+                asset.signature = await this.authenticate.sign(toBinary(AssetMetadataSchema, asset))
+                header = await this.authenticate.createHeader(toBinary(SignRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header when signing asset', err)
                 return reject(err)
             }
 
-            const request = new SignRequest()
-            request.setHeader(header)
-            request.setBody(body)
-            this.client.sign(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then(resolve, reject)
+            const request = create(SignRequestSchema, {
+                header: header,
+                body: body
             })
+            try {
+                const res = await this.client.sign(request)
+                await this.authenticate.doResponse(res, SignResponseBodySchema)
+                resolve(res.body as SignResponseBody)
+            } catch (err) {
+                console.error('Fail to sign asset', err)
+                return reject(err)
+            }
         })
     }
 }

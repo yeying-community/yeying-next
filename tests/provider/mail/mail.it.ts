@@ -1,26 +1,29 @@
-import {Authenticate} from "../../../src/provider/common/authenticate";
-import {getBlockAddress, getProvider} from "../common/common";
+import {getBlockAddress, getProviderProxy} from "../common/common";
 import {ProviderOption} from "../../../src/provider/common/model";
 import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
 import {MailProvider} from "../../../src/provider/mail/mail";
+import {isOk} from "../../../src/common/status";
 
-const blockAddress = getBlockAddress()
-const provider: ProviderOption = getProvider(ServiceCodeEnum.SERVICE_CODE_NODE)
+const provider: ProviderOption = {
+    proxy: getProviderProxy(ServiceCodeEnum.SERVICE_CODE_NODE),
+    blockAddress: getBlockAddress(),
+}
 
 describe('Mail', () => {
     it('send', async () => {
-        const mailProvider = new MailProvider(new Authenticate(blockAddress), provider)
-        const toMail = "mock@mail.com"
-        const body = await mailProvider.send(toMail)
+        const mailProvider = new MailProvider(provider)
+        const body = await mailProvider.send("mock@mail.com")
         // @ts-ignore
         console.log(`Success to mail send body=${body}`)
+        assert.isTrue(isOk(body.status))
     })
+
     it('verify', async () => {
-        const mailProvider = new MailProvider(new Authenticate(blockAddress), provider)
+        const mailProvider = new MailProvider(provider)
         const toMail = "mock@mail.com"
         console.log("start verify email:", toMail)
         const body = await mailProvider.verify(toMail, "mockCode")
-        // @ts-ignore
         console.log(`Verify result body=${body}`)
+        assert.isTrue(isOk(body.status))
     })
 })

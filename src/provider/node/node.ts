@@ -1,26 +1,41 @@
 import {Authenticate} from "../common/authenticate";
 import {ProviderOption} from "../common/model";
-import {MessageHeader, ServiceMetadata} from "../../yeying/api/common/message_pb";
+import {MessageHeader, ServiceMetadata, ServiceMetadataSchema} from "../../yeying/api/common/message_pb";
 import {DataForgery} from "../../common/error";
-import {NodeClient} from "../../yeying/api/node/NodeServiceClientPb";
-import {HealthCheckRequest, NodeMetadata, WhoamiRequest} from "../../yeying/api/node/node_pb";
+import {
+    HealthCheckRequestSchema,
+    HealthCheckResponseBody,
+    HealthCheckResponseBodySchema,
+    Node,
+    NodeMetadata,
+    WhoamiRequestSchema,
+    WhoamiResponseBody,
+    WhoamiResponseBodySchema
+} from "../../yeying/api/node/node_pb";
+import {Client, createClient} from "@connectrpc/connect";
+import {createGrpcWebTransport} from "@connectrpc/connect-web";
+import {create, toBinary} from "@bufbuild/protobuf";
 
 /**
  * NodeProvider 每个服务都是一个节点，同个这类了解这个节点健康状态，和节点的元信息。
  *
  * @example
  * ```ts
- * const provider = new NodeProvider(authenticate, providerOption);
+ * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
+ * const provider = new NodeProvider(providerOption);
  * provider.whoami().then(metadata => console.log(metadata));
  * ```
  */
 export class NodeProvider {
     private authenticate: Authenticate
-    private client: NodeClient
+    private client: Client<typeof Node>
 
-    constructor(authenticate: Authenticate, option: ProviderOption) {
-        this.authenticate = authenticate
-        this.client = new NodeClient(option.proxy)
+    constructor(option: ProviderOption) {
+        this.authenticate = new Authenticate(option.blockAddress)
+        this.client = createClient(Node, createGrpcWebTransport({
+            baseUrl: option.proxy,
+            useBinaryFormat: true,
+        }))
     }
 
     /**
@@ -36,21 +51,25 @@ export class NodeProvider {
      * });
      * ```
      */
-    healthCheck(): Promise<any> {
-        return new Promise(async (resolve, reject) => {
+    healthCheck() {
+        return new Promise<HealthCheckResponseBody>(async (resolve, reject) => {
             let header: MessageHeader
             try {
                 header = await this.authenticate.createHeader()
             } catch (err) {
-                console.error('Fail to create header for whoami', err)
+                console.error('Fail to create header for checking health', err)
                 return reject(err)
             }
 
-            const request = new HealthCheckRequest()
-            request.setHeader(header)
-            this.client.healthCheck(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then(resolve, reject)
-            })
+            const request = create(HealthCheckRequestSchema, {header: header})
+            try {
+                const res = await this.client.healthCheck(request)
+                await this.authenticate.doResponse(res, HealthCheckResponseBodySchema)
+                resolve(res.body as HealthCheckResponseBody)
+            } catch (err) {
+                console.error('Fail to check health.', err)
+                return reject(err)
+            }
         })
     }
 
@@ -68,8 +87,8 @@ export class NodeProvider {
      * });
      * ```
      */
-    whoami(): Promise<NodeMetadata> {
-        return new Promise(async (resolve, reject) => {
+    whoami() {
+        return new Promise<WhoamiResponseBody>(async (resolve, reject) => {
             let header: MessageHeader
             try {
                 header = await this.authenticate.createHeader()
@@ -78,27 +97,33 @@ export class NodeProvider {
                 return reject(err)
             }
 
-            const request = new WhoamiRequest()
-            request.setHeader(header)
-            this.client.whoami(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then(async (body) => {
-                    const nodeMetadata = body.getNode() as NodeMetadata
-                    const serviceMetadata = nodeMetadata.getService() as ServiceMetadata
-                    const signature = serviceMetadata.getSignature()
-                    serviceMetadata.setSignature('')
-                    const passed = await this.authenticate.verify(
-                        serviceMetadata.getDid(),
-                        serviceMetadata.serializeBinary(),
-                        signature
-                    )
-                    if (passed) {
-                        serviceMetadata.setSignature(signature)
-                        resolve(nodeMetadata)
-                    } else {
-                        reject(new DataForgery('invalid signature!'))
-                    }
-                }, reject)
-            })
+            const request = create(WhoamiRequestSchema, {header: header})
+            try {
+                const res = await this.client.whoami(request)
+                await this.authenticate.doResponse(res, WhoamiResponseBodySchema)
+                const body = res.body as WhoamiResponseBody
+                const node = body.node as NodeMetadata
+                const service = node.service as ServiceMetadata
+
+                const signature = service.signature
+                service.signature = ''
+                const passed = await this.authenticate.verify(
+                    service.did,
+                    toBinary(ServiceMetadataSchema, service),
+                    signature
+                )
+
+                if (passed) {
+                    service.signature = signature
+                    resolve(body)
+                } else {
+                    reject(new DataForgery('invalid signature!'))
+                }
+
+            } catch (err) {
+                console.error('Fail to call whoami', err)
+                return reject(err)
+            }
         })
     }
 }

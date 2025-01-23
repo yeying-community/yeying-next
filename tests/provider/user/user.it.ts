@@ -1,51 +1,54 @@
 import {UserProvider} from '../../../src/provider/user/user'
-import {Authenticate} from "../../../src/provider/common/authenticate";
-import {getBlockAddress, getProvider} from "../common/common";
-import {ResponseCodeEnum, ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
+import {getBlockAddress, getProviderProxy} from "../common/common";
+import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
 import {ProviderOption} from "../../../src/provider/common/model";
+import {toJson} from "@bufbuild/protobuf";
+import {
+    AddResponseBodySchema,
+    GetResponseBodySchema,
+    StateResponseBodySchema, UserMetadataSchema
+} from "../../../src/yeying/api/user/user_pb";
+import {isDeleted, isExisted, isOk} from "../../../src/common/status";
 
-const blockAddress = getBlockAddress()
-const provider: ProviderOption = getProvider(ServiceCodeEnum.SERVICE_CODE_NODE)
-
+const provider: ProviderOption = {
+    proxy: getProviderProxy(ServiceCodeEnum.SERVICE_CODE_NODE),
+    blockAddress: getBlockAddress(),
+}
 
 describe('User', () => {
     it('delete', async () => {
-        const userProvider = new UserProvider(new Authenticate(blockAddress), provider)
+        const userProvider = new UserProvider(provider)
         const body = await userProvider.delete()
-        console.log(`Success to del user=${blockAddress.identifier}`)
-        // @ts-ignore
-        assert.isTrue(body.getStatus().getCode() === ResponseCodeEnum.OK || body.getStatus().getCode() === ResponseCodeEnum.NOT_FOUND)
+        console.log(`Success to delete user=${provider.blockAddress.identifier}`)
+        assert.isTrue(isDeleted(body.status))
     })
 
     it('add', async () => {
-        const userProvider = new UserProvider(new Authenticate(blockAddress), provider)
+        const userProvider = new UserProvider(provider)
         const body = await userProvider.add('test1', "avatar1")
-        console.log(`Success to add new user=${JSON.stringify(body)}`)
-        // @ts-ignore
-        assert.isTrue(body.getStatus().getCode() === ResponseCodeEnum.OK || body.getStatus().getCode() === ResponseCodeEnum.ALREADY_EXISTS)
+        console.log(`Success to add new user=${JSON.stringify(toJson(AddResponseBodySchema, body))}`)
+        assert.isTrue(isExisted(body.status))
     })
 
     it('get', async () => {
-        const userProvider = new UserProvider(new Authenticate(blockAddress), provider)
+        const userProvider = new UserProvider(provider)
         const body = await userProvider.get()
-        console.log(`Success to get user=${JSON.stringify(body)}`)
-        // @ts-ignore
-        assert.equal(body.getStatus().getCode(), ResponseCodeEnum.OK)
+        console.log(`Success to get user=${JSON.stringify(toJson(GetResponseBodySchema, body))}`)
+        assert.isTrue(isOk(body.status))
     })
 
     it('state', async () => {
-        const userProvider = new UserProvider(new Authenticate(blockAddress), provider)
+        const userProvider = new UserProvider(provider)
         const body = await userProvider.state()
-        console.log(`Success to get user=${JSON.stringify(body)}`)
-        // @ts-ignore
-        assert.equal(body.getStatus().getCode(), ResponseCodeEnum.OK)
+        console.log(`Success to get user=${JSON.stringify(toJson(StateResponseBodySchema, body))}`)
+        assert.isTrue(isOk(body.status))
     })
 
     it('update', async () => {
-        const userProvider = new UserProvider(new Authenticate(blockAddress), provider)
-        const body = await userProvider.update({name: "test2"})
-        console.log(`Success to mod user=${blockAddress.identifier}`)
-        // @ts-ignore
-        assert.equal(body.getStatus().getCode(), ResponseCodeEnum.OK)
+        const userProvider = new UserProvider(provider)
+        const name = "test2"
+        const user = await userProvider.update({name: name})
+        console.log(`Success to update user=${JSON.stringify(toJson(UserMetadataSchema, user))}`)
+        assert.equal(user.name, name)
     })
 })

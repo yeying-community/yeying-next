@@ -1,12 +1,25 @@
-import { Authenticate } from '../common/authenticate'
-import { ProviderOption } from '../common/model'
-import { BlockClient } from '../../yeying/api/asset/BlockServiceClientPb'
-import { BlockMetadata, GetRequest, GetRequestBody, PutRequest, PutRequestBody } from '../../yeying/api/asset/block_pb'
-import { getCurrentUtcString } from '../../common/date'
+import {Authenticate} from '../common/authenticate'
+import {ProviderOption} from '../common/model'
+import {
+    Block,
+    BlockMetadata,
+    BlockMetadataSchema,
+    GetRequestBodySchema,
+    GetRequestSchema,
+    GetResponseBodySchema,
+    PutRequestBodySchema,
+    PutRequestSchema,
+    PutResponseBodySchema
+} from '../../yeying/api/asset/block_pb'
+import {getCurrentUtcString} from '../../common/date'
+import {Client, createClient} from "@connectrpc/connect";
+import {createGrpcWebTransport} from "@connectrpc/connect-web";
+import {create, toBinary} from "@bufbuild/protobuf";
+import {isOk} from "../../common/status";
 
 /**
  * 区块提供者类，用于与区块链交互，提供数据的获取和存储功能。
- * 
+ *
  * @example
  * ```ts
  * const blockProvider = new BlockProvider(authenticate, option);
@@ -16,28 +29,29 @@ import { getCurrentUtcString } from '../../common/date'
  */
 export class BlockProvider {
     private authenticate: Authenticate
-    private client: BlockClient
+    private client: Client<typeof Block>
 
     /**
      * 创建 BlockProvider 实例。
-     * 
-     * @param authenticate - 用于认证操作的 Authenticate 实例。
+     *
      * @param option - 提供连接选项的 ProviderOption 实例。
      * @example
      * ```ts
-     * const authenticate = new Authenticate(blockAddress);
-     * const option = { proxy: 'http://localhost:8080' };
-     * const blockProvider = new BlockProvider(authenticate, option);
+     * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
+     * const blockProvider = new BlockProvider(providerOption);
      * ```
      */
-    constructor(authenticate: Authenticate, option: ProviderOption) {
-        this.authenticate = authenticate
-        this.client = new BlockClient(option.proxy)
+    constructor(option: ProviderOption) {
+        this.authenticate = new Authenticate(option.blockAddress)
+        this.client = createClient(Block, createGrpcWebTransport({
+            baseUrl: option.proxy,
+            useBinaryFormat: true,
+        }))
     }
 
     /**
      * 获取区块的所有者 DID。
-     * 
+     *
      * @returns 返回区块的所有者 DID。
      * @example
      * ```ts
@@ -51,7 +65,7 @@ export class BlockProvider {
 
     /**
      * 获取指定哈希值的区块数据。
-     * 
+     *
      * @param hash - 要获取的区块的哈希值。
      * @returns 一个 Promise，解析为获取到的区块数据（Uint8Array）。
      * @throws {Error} 如果获取区块失败，抛出错误。
@@ -63,29 +77,29 @@ export class BlockProvider {
      */
     get(hash: string) {
         return new Promise<Uint8Array>(async (resolve, reject) => {
-            const method = '/yeying.api.asset.Asset/Get'
-            const body = new GetRequestBody()
-            body.setHash(hash)
+            const body = create(GetRequestBodySchema, {hash: hash})
             let header
             try {
-                header = await this.authenticate.createHeader(body.serializeBinary())
+                header = await this.authenticate.createHeader(toBinary(GetRequestBodySchema, body))
             } catch (err) {
                 console.error(`Fail to create header when getting chunk content, hash=${hash}`, err)
                 return reject(err)
             }
 
-            const request = new GetRequest()
-            request.setHeader(header)
-            request.setBody(body)
-            this.client.get(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then((body) => resolve(res.getData_asU8()), reject)
-            })
+            const request = create(GetRequestSchema, {header: header, body: body})
+            try {
+                const res = await this.client.get(request)
+                await this.authenticate.doResponse(res, GetResponseBodySchema)
+                resolve(res.data)
+            } catch (err) {
+                console.error('Fail to get block', err)
+            }
         })
     }
 
     /**
      * 存储区块数据。
-     * 
+     *
      * @param hash - 要存储的区块的哈希值。
      * @param size - 区块数据的大小。
      * @param data - 区块数据（Uint8Array）。
@@ -97,32 +111,39 @@ export class BlockProvider {
      * console.log(blockMetadata); // 输出存储后的区块元数据
      * ```
      */
-    put(hash: string, size: number, data: Uint8Array) {
+    put(hash: string, size: bigint, data: Uint8Array) {
         return new Promise<BlockMetadata>(async (resolve, reject) => {
-            const block = new BlockMetadata()
-            block.setHash(hash)
-            block.setOwner(this.authenticate.getDid())
-            block.setCreated(getCurrentUtcString())
-            block.setSize(size)
+            const block = create(BlockMetadataSchema, {
+                hash: hash,
+                owner: this.authenticate.getDid(),
+                created: getCurrentUtcString(),
+                size: size,
+            })
 
-            const body = new PutRequestBody()
+            const body = create(PutRequestBodySchema, {block: block})
+
             let header
             try {
-                block.setSignature(await this.authenticate.sign(block.serializeBinary()))
-                body.setBlock(block)
-                header = await this.authenticate.createHeader(body.serializeBinary())
+                block.signature = await this.authenticate.sign(toBinary(BlockMetadataSchema, block))
+                header = await this.authenticate.createHeader(toBinary(PutRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header when putting chunk content', err)
                 return reject(err)
             }
 
-            const request = new PutRequest()
-            request.setHeader(header)
-            request.setBody(body)
-            request.setData(data)
-            this.client.put(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then(() => resolve(block), reject)
-            })
+            const request = create(PutRequestSchema, {header: header, body: body, data: data})
+            try {
+                const res = await this.client.put(request)
+                await this.authenticate.doResponse(res, PutResponseBodySchema)
+                if (isOk(res?.body?.status)) {
+                    resolve(block)
+                } else {
+                    reject(new Error())
+                }
+            } catch (err) {
+                console.error('Fail to put block', err)
+                return reject(err)
+            }
         })
     }
 }

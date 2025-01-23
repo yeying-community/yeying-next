@@ -1,7 +1,8 @@
 import { CipherTypeEnum, DigitalFormatEnum, LanguageCodeEnum } from '../yeying/api/common/code_pb'
 import { BlockMetadata } from '../yeying/api/asset/block_pb'
-import { ChunkMetadata } from '../yeying/api/asset/asset_pb'
+import {ChunkMetadata, ChunkMetadataSchema} from '../yeying/api/asset/asset_pb'
 import { index } from 'typedoc/dist/lib/output/themes/default/partials'
+import {create} from "@bufbuild/protobuf";
 
 export function convertLanguageCodeFrom(s: string) {
     // @ts-ignore
@@ -24,11 +25,11 @@ export function convertCipherTypeTo(code: CipherTypeEnum) {
 }
 
 export function convertChunkMetadataFromBlock(index: number, block: BlockMetadata): ChunkMetadata {
-    const chunk = new ChunkMetadata()
-    chunk.setSize(block.getSize())
-    chunk.setIndex(index)
-    chunk.setHash(block.getHash())
-    return chunk
+    return create(ChunkMetadataSchema, {
+        size: block.size,
+        index: index,
+        hash: block.hash,
+    })
 }
 
 export function getDigitalFormatByName(name: string) {

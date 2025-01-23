@@ -1,16 +1,16 @@
-import {ServiceProvider} from '../../../src/provider/service/service.js'
-import {getBlockAddress, getProvider} from "../common/common";
+import {getBlockAddress, getProviderProxy} from "../common/common";
 import {ProviderOption} from "../../../src/provider/common/model";
-import {ResponseCodeEnum, ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
-import {Authenticate} from "../../../src/provider/common/authenticate";
+import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
+import {ServiceProvider} from "../../../src/provider/service/service";
 
-const blockAddress = getBlockAddress()
-const provider: ProviderOption = getProvider(ServiceCodeEnum.SERVICE_CODE_NODE)
-
+const provider: ProviderOption = {
+    proxy: getProviderProxy(ServiceCodeEnum.SERVICE_CODE_NODE),
+    blockAddress: getBlockAddress(),
+}
 describe('Service', () => {
 
     it('register', async () => {
-        const serviceProvider = new ServiceProvider(new Authenticate(blockAddress), provider)
+        const serviceProvider = new ServiceProvider(provider)
         // await serviceProvider.register(software)
         // console.log(`Success to register identity=${software.blockAddress.identifier}`)
     })
