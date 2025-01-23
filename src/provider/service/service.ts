@@ -1,10 +1,12 @@
 import {Authenticate} from '../common/authenticate'
 import {ProviderOption} from '../common/model'
-import {ServiceClient} from '../../yeying/api/service/ServiceServiceClientPb'
+import {Service} from "../../yeying/api/service/service_pb";
+import {Client, createClient} from "@connectrpc/connect";
+import {createGrpcWebTransport} from "@connectrpc/connect-web";
 
 /**
  * ServiceProvider 类负责登记、注销、以及搜索服务。
- * 
+ *
  * @example
  * ```ts
  * const provider = new ServiceProvider(authenticate, providerOption);
@@ -13,23 +15,24 @@ import {ServiceClient} from '../../yeying/api/service/ServiceServiceClientPb'
  */
 export class ServiceProvider {
     private authenticate: Authenticate
-    private client: ServiceClient
+    private client: Client<typeof Service>
 
     /**
      * ServiceProvider 的构造函数，初始化身份认证和客户端实例。
-     * 
-     * @param authenticate - 用于身份认证的 Authenticate 实例。
+     *
      * @param option - 服务提供商的选项，包括代理设置等。
      * @example
      * ```ts
-     * const authenticate = new Authenticate(blockAddress);
-     * const providerOption = { proxy: 'http://localhost:8080' };
-     * const provider = new ServiceProvider(authenticate, providerOption);
+     * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
+     * const provider = new ServiceProvider(providerOption);
      * ```
      */
-    constructor(authenticate: Authenticate, option: ProviderOption) {
-        this.authenticate = authenticate
-        this.client = new ServiceClient(option.proxy)
+    constructor(option: ProviderOption) {
+        this.authenticate = new Authenticate(option.blockAddress)
+        this.client = createClient(Service, createGrpcWebTransport({
+            baseUrl: option.proxy,
+            useBinaryFormat: true,
+        }))
     }
 
     // register(identity: Idendity) {

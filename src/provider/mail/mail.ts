@@ -1,13 +1,26 @@
-import { Authenticate } from '../common/authenticate'
-import { MessageHeader } from '../../yeying/api/common/message_pb'
-import { ProviderOption } from '../common/model'
-import { MailClient } from '../../yeying/api/mail/MailServiceClientPb'
-import { VerifyRequest, VerifyRequestBody, SendRequest, SendRequestBody } from '../../yeying/api/mail/mail_pb'
+import {Authenticate} from '../common/authenticate'
+import {MessageHeader} from '../../yeying/api/common/message_pb'
+import {ProviderOption} from '../common/model'
+import {
+    Mail,
+    SendRequestBodySchema,
+    SendRequestSchema,
+    SendResponseBody,
+    SendResponseBodySchema,
+    VerifyRequestBodySchema,
+    VerifyRequestSchema,
+    VerifyResponseBody,
+    VerifyResponseBodySchema
+} from "../../yeying/api/mail/mail_pb";
+import {Client, createClient} from "@connectrpc/connect";
+import {createGrpcWebTransport} from "@connectrpc/connect-web";
+import {create, toBinary} from "@bufbuild/protobuf";
+
 
 /**
  * 邮箱验证码服务提供者，提供前端页面直接调用的接口。
  * 通过该类，用户可以发送和验证邮箱验证码。
- * 
+ *
  * @example
  * ```ts
  * const mailProvider = new MailProvider(authenticate, option);
@@ -25,27 +38,29 @@ export class MailProvider {
      * mailClient 邮件客户端，用于与邮件服务交互
      * @private
      */
-    private mailClient: MailClient
+    private client: Client<typeof Mail>
 
     /**
      * 构造函数：初始化认证和邮件客户端
-     * 
-     * @param authenticate - 用于认证的 Authenticate 实例
+     *
      * @param option - 提供者选项，如代理设置
      * @example
      * ```ts
-     * const authenticate = new Authenticate(blockAddress);
-     * const mailProvider = new MailProvider(authenticate, { proxy: 'proxyUrl' });
+     * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
+     * const mailProvider = new MailProvider(providerOption);
      * ```
      */
-    constructor(authenticate: Authenticate, option: ProviderOption) {
-        this.authenticate = authenticate
-        this.mailClient = new MailClient(option.proxy)
+    constructor(option: ProviderOption) {
+        this.authenticate = new Authenticate(option.blockAddress)
+        this.client = createClient(Mail, createGrpcWebTransport({
+            baseUrl: option.proxy,
+            useBinaryFormat: true,
+        }))
     }
 
     /**
      * 发送邮箱验证码。
-     * 
+     *
      * @param toMail - 目标邮箱地址
      * @returns Promise - 发送请求的响应数据
      * @example
@@ -58,32 +73,35 @@ export class MailProvider {
      * ```
      */
     send(toMail: string) {
-        return new Promise(async (resolve, reject) => {
-            const body = new SendRequestBody()
-            body.setTomail(toMail)
+        return new Promise<SendResponseBody>(async (resolve, reject) => {
+            const body = create(SendRequestBodySchema, {
+                toMail: toMail
+            })
+
             let header: MessageHeader
             try {
                 // 创建消息头
-                header = await this.authenticate.createHeader(body.serializeBinary())
+                header = await this.authenticate.createHeader(toBinary(SendRequestBodySchema, body))
             } catch (err) {
-                console.error('Fail to create header for mail send', err)
+                console.error('Fail to create header for sending mail', err)
                 return reject(err)
             }
 
-            const request = new SendRequest()
-            request.setHeader(header)
-            request.setBody(body)
-
-            // 发送请求并处理响应
-            this.mailClient.send(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then((body) => resolve(body), reject)
-            })
+            const request = create(SendRequestSchema, {header: header, body: body})
+            try {
+                const res = await this.client.send(request)
+                await this.authenticate.doResponse(res, SendResponseBodySchema)
+                resolve(res.body as SendResponseBody)
+            } catch (err) {
+                console.error('Fail to send mail', err)
+                return reject(err)
+            }
         })
     }
 
     /**
      * 校验邮箱验证码。
-     * 
+     *
      * @param toMail - 目标邮箱地址
      * @param code - 用户输入的验证码
      * @returns Promise - 校验请求的响应数据
@@ -97,27 +115,29 @@ export class MailProvider {
      * ```
      */
     verify(toMail: string, code: string) {
-        return new Promise(async (resolve, reject) => {
-            const body = new VerifyRequestBody()
-            body.setTomail(toMail)
-            body.setCode(code)
+        return new Promise<VerifyResponseBody>(async (resolve, reject) => {
+            const body = create(VerifyRequestBodySchema, {
+                toMail: toMail,
+                code: code,
+            })
             let header: MessageHeader
             try {
                 // 创建消息头
-                header = await this.authenticate.createHeader(body.serializeBinary())
+                header = await this.authenticate.createHeader(toBinary(VerifyRequestBodySchema, body))
             } catch (err) {
-                console.error('Fail to create header for verify', err)
+                console.error('Fail to create header when verify email code.', err)
                 return reject(err)
             }
 
-            const request = new VerifyRequest()
-            request.setHeader(header)
-            request.setBody(body)
-
-            // 校验请求并处理响应
-            this.mailClient.verify(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then((body) => resolve(body), reject)
-            })
+            const request = create(VerifyRequestSchema, {header: header, body: body})
+            try {
+                const res = await this.client.verify(request)
+                await this.authenticate.doResponse(res, VerifyResponseBodySchema)
+                resolve(res.body as VerifyResponseBody)
+            } catch (err) {
+                console.error('Fail to verify email code', err)
+                return reject(err)
+            }
         })
     }
 }

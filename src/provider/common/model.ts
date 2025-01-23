@@ -1,4 +1,5 @@
 import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
+import {BlockAddress} from "@yeying-community/yeying-web3";
 
 /**
  * 提供商选项接口，包含代理配置。
@@ -17,6 +18,11 @@ export interface ProviderOption {
      * 'http://example.com'
      */
     proxy: string
+
+    /**
+     * 区块链地址。
+     */
+    blockAddress: BlockAddress
 }
 
 /**

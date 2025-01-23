@@ -3,23 +3,23 @@
 //
 // const {ResponseCodeEnum} = code_pkg
 
-import { ResponseStatus } from '../yeying/api/common/message_pb'
-import { ResponseCodeEnum } from '../yeying/api/common/code_pb'
-import { AlreadyExist, InvalidArgument, NotFound, UnknownError } from './error'
+import {ResponseStatus} from '../yeying/api/common/message_pb'
+import {ResponseCodeEnum} from '../yeying/api/common/code_pb'
+
 
 export function convertResponseStatusToError(status: ResponseStatus) {
-    switch (status.getCode()) {
-        case ResponseCodeEnum.OK:
-            return undefined
-        case ResponseCodeEnum.ALREADY_EXISTS:
-            return new AlreadyExist(status.getMessage())
-        case ResponseCodeEnum.INVALID_ARGUMENT:
-            return new InvalidArgument(status.getMessage())
-        case ResponseCodeEnum.NOT_FOUND:
-            return new NotFound(status.getMessage())
-        default:
-            return new UnknownError(status.getMessage())
-    }
+    // switch (status.getCode()) {
+    //     case ResponseCodeEnum.OK:
+    //         return undefined
+    //     case ResponseCodeEnum.ALREADY_EXISTS:
+    //         return new AlreadyExist(status.getMessage())
+    //     case ResponseCodeEnum.INVALID_ARGUMENT:
+    //         return new InvalidArgument(status.getMessage())
+    //     case ResponseCodeEnum.NOT_FOUND:
+    //         return new NotFound(status.getMessage())
+    //     default:
+    //         return new UnknownError(status.getMessage())
+    // }
 }
 
 // export function doError(err, reject, extend) {
@@ -72,14 +72,14 @@ export function convertResponseStatusToError(status: ResponseStatus) {
 //   }
 // }
 //
-// export function isOk(code) {
-//   return code === ResponseCodeEnum.OK
-// }
-//
-// export function isExisted(code) {
-//   return code === ResponseCodeEnum.OK || code === ResponseCodeEnum.ALREADY_EXISTS
-// }
-//
-// export function isDeleted(code) {
-//   return code === ResponseCodeEnum.OK || code === ResponseCodeEnum.NOT_FOUND
-// }
+export function isOk(status?: ResponseStatus) {
+    return status && status.code === ResponseCodeEnum.OK
+}
+
+export function isExisted(status?: ResponseStatus) {
+    return status && (status.code === ResponseCodeEnum.OK || status.code === ResponseCodeEnum.ALREADY_EXISTS)
+}
+
+export function isDeleted(status?: ResponseStatus) {
+    return status && (status.code === ResponseCodeEnum.OK || status.code === ResponseCodeEnum.NOT_FOUND)
+}

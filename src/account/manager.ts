@@ -39,7 +39,7 @@ import {decodeBase64, encodeBase64} from '../common/codec'
 import {LanguageCodeEnum} from '../yeying/api/common/code_pb'
 import {Authenticate} from '../provider/common/authenticate'
 import {convertLanguageCodeTo} from '../common/message'
-import {NodeProvider} from "../provider/node/node";
+// import {NodeProvider} from "../provider/node/node";
 
 /**
  * 账号管理类，用于管理用户账号、身份及缓存数据。
@@ -98,8 +98,8 @@ export class AccountManager {
             domain = `${window.location.protocol}://${window.location.hostname}:${window.location.port}`
         }
 
-        const provider = new NodeProvider(new Authenticate(blockAddress), { proxy: domain })
-        return await provider.whoami()
+        // const provider = new NodeProvider(new Authenticate(blockAddress), { proxy: domain })
+        // return await provider.whoami()
     }
 
     /**

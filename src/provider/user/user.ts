@@ -1,20 +1,32 @@
 import {
-    AddRequest,
-    AddRequestBody,
-    DeleteRequest,
+    AddRequestBodySchema,
+    AddRequestSchema,
+    AddResponseBody,
+    AddResponseBodySchema,
+    DeleteRequestSchema,
     DeleteResponseBody,
-    GetRequest,
+    DeleteResponseBodySchema,
+    GetRequestSchema,
     GetResponseBody,
+    GetResponseBodySchema,
+    StateRequestSchema,
     StateResponseBody,
-    UpdateRequest,
-    UpdateRequestBody,
-    UserMetadata
+    StateResponseBodySchema,
+    UpdateRequestBodySchema,
+    UpdateRequestSchema,
+    UpdateResponseBodySchema,
+    User,
+    UserMetadata,
+    UserMetadataSchema
 } from '../../yeying/api/user/user_pb'
 import {getCurrentUtcString} from '../../common/date'
 import {Authenticate} from '../common/authenticate'
-import {UserClient} from '../../yeying/api/user/UserServiceClientPb'
 import {MessageHeader} from '../../yeying/api/common/message_pb'
 import {ProviderOption} from '../common/model'
+import {create, toBinary} from "@bufbuild/protobuf";
+import {createGrpcWebTransport} from "@connectrpc/connect-web";
+import {Client, createClient} from '@connectrpc/connect'
+import {NotFound} from "../../common/error";
 
 /**
  * 代表了一个用户节点提供商，提供对用户的增、删、改、查操作。
@@ -28,22 +40,30 @@ import {ProviderOption} from '../common/model'
  * ```
  */
 export class UserProvider {
+    /**
+     * 认证实例，用于进行身份验证。
+     *
+     * @private
+     */
     private authenticate: Authenticate
-    private client: UserClient
+    private client: Client<typeof User>
 
     /**
      * 构造函数，用于初始化 `UserProvider` 类。
      *
-     * @param authenticate - 认证实例，用于进行身份验证。
      * @param option - 提供商配置，包括代理设置。
      * @example
      * ```ts
-     * const userProvider = new UserProvider(authenticate, { proxy: 'http://example.com' });
+     * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
+     * const userProvider = new UserProvider(providerOption);
      * ```
      */
-    constructor(authenticate: Authenticate, option: ProviderOption) {
-        this.authenticate = authenticate
-        this.client = new UserClient(option.proxy)
+    constructor(option: ProviderOption) {
+        this.authenticate = new Authenticate(option.blockAddress)
+        this.client = createClient(User, createGrpcWebTransport({
+            baseUrl: option.proxy,
+            useBinaryFormat: true,
+        }));
     }
 
     /**
@@ -61,94 +81,40 @@ export class UserProvider {
      * ```
      */
     add(name: string, avatar: string) {
-        return new Promise(async (resolve, reject) => {
-            const user = new UserMetadata()
-            user.setDid(this.authenticate.getDid())
-            user.setName(name)
-            user.setAvatar(avatar)
-            user.setCreated(getCurrentUtcString())
-            user.setCheckpoint(getCurrentUtcString())
-            const body = new AddRequestBody()
+        return new Promise<AddResponseBody>(async (resolve, reject) => {
+            const user: UserMetadata = create(UserMetadataSchema, {
+                did: this.authenticate.getDid(),
+                name: name,
+                avatar: avatar,
+                created: getCurrentUtcString(),
+                checkpoint: getCurrentUtcString(),
+            });
+
+            const body = create(AddRequestBodySchema, {user: user})
             let header: MessageHeader
             try {
-                user.setSignature(await this.authenticate.sign(user.serializeBinary()))
-                body.setUser(user)
-                header = await this.authenticate.createHeader(body.serializeBinary())
+                user.signature = await this.authenticate.sign(toBinary(UserMetadataSchema, user))
+                header = await this.authenticate.createHeader(toBinary(AddRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header for adding user', err)
                 return reject(err)
             }
 
-            const request = new AddRequest()
-            request.setHeader(header)
-            request.setBody(body)
-
-            this.client.add(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then((body) => resolve(body), reject)
-            })
-        })
-    }
-
-    /**
-     * 修改用户信息。
-     *
-     * @param dict - 需要修改的用户信息，目前支持修改avatar、name等。
-     * @returns 返回修改用户信息的结果。
-     * @throws 错误时抛出 `Error`。
-     * @example
-     * ```ts
-     * userProvider.update({name: 'Jane Doe', avatar: 'avatar2.png'})
-     *   .then(result => console.log(result))
-     *   .catch(err => console.error(err));
-     * ```
-     */
-    update(dict: { [key: string]: any }) {
-        return new Promise(async (resolve, reject) => {
-            const responseBody = await this.get()
-            const user = responseBody.getUser()
-            if (user === undefined) {
-                return
-            }
-            let changed = false
-            if (dict.name) {
-                user.setName(dict.name)
-                changed = true
-            }
-
-            if (dict.avatar) {
-                user.setAvatar(dict.avatar)
-                changed = true
-            }
-
-            if (!changed) {
-                return
-            }
-
-            user.setCheckpoint(getCurrentUtcString())
-            user.setSignature('')
-
-            const body = new UpdateRequestBody()
-            let header
+            const request = create(AddRequestSchema, {header: header, body: body})
             try {
-                user.setSignature(await this.authenticate.sign(user.serializeBinary()))
-                body.setUser(user)
-                header = await this.authenticate.createHeader(body.serializeBinary())
+                const res = await this.client.add(request)
+                await this.authenticate.doResponse(res, AddResponseBodySchema)
+                resolve(res.body as AddResponseBody)
             } catch (err) {
-                console.error('Fail to create header for modifying user', err)
+                console.error('Fail to add user', err)
                 return reject(err)
             }
-
-            const request = new UpdateRequest()
-            request.setHeader(header)
-            request.setBody(body)
-            this.client.update(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then((body) => resolve(body), reject)
-            })
         })
     }
 
+
     /**
-     * 获取用户信息。
+     * 从用户供应商获得存储的用户详情。
      *
      * @returns 返回用户信息。
      * @throws 错误时抛出 `Error`。
@@ -169,16 +135,83 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = new GetRequest()
-            request.setHeader(header)
-            this.client.get(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then((body) => resolve(body), reject)
-            })
+            const request = create(GetRequestSchema, {header: header})
+            try {
+                const res = await this.client.get(request)
+                await this.authenticate.doResponse(res, GetResponseBodySchema)
+                resolve(res.body as GetResponseBody)
+            } catch (err) {
+                console.error('Fail to get user', err)
+                return reject(err)
+            }
         })
     }
 
     /**
-     * 获取用户状态。
+     * 修改用户信息。
+     *
+     * @param attributes - 需要修改的用户信息，目前支持修改avatar、name等。
+     * @returns {Promise<UserMetadata>} 返回修改后的用户信息。
+     * @throws 错误时抛出 `Error`。
+     * @example
+     * ```ts
+     * userProvider.update({name: 'Jane Doe', avatar: 'avatar2.png'})
+     *   .then(result => console.log(result))
+     *   .catch(err => console.error(err));
+     * ```
+     */
+    update(attributes: { [key: string]: any }): Promise<UserMetadata> {
+        return new Promise<UserMetadata>(async (resolve, reject) => {
+            const responseBody = await this.get()
+            const user = responseBody.user
+            if (user === undefined) {
+                return reject(new NotFound('Not found user'))
+            }
+
+            let changed = false
+            if (attributes.name) {
+                user.name = attributes.name
+                changed = true
+            }
+
+            if (attributes.avatar) {
+                user.avatar = attributes.avatar
+                changed = true
+            }
+
+            if (!changed) {
+                return resolve(user)
+            }
+
+            user.checkpoint = getCurrentUtcString()
+            user.signature = ''
+
+            const body = create(UpdateRequestBodySchema, {})
+            let header
+            try {
+                user.signature = await this.authenticate.sign(toBinary(UserMetadataSchema, user))
+                body.user = user
+                header = await this.authenticate.createHeader(toBinary(UpdateRequestBodySchema, body))
+            } catch (err) {
+                console.error('Fail to create header for modifying user', err)
+                return reject(err)
+            }
+
+            const request = create(UpdateRequestSchema, {header: header, body: body})
+            try {
+                const res = await this.client.update(request)
+                await this.authenticate.doResponse(res, UpdateResponseBodySchema)
+                resolve(user)
+            } catch (err) {
+                console.error('Fail to update user', err)
+                return reject(err)
+            }
+        })
+    }
+
+
+    /**
+     * 从当前供应商获取用户状态信息。
      *
      * @returns 返回用户状态。
      * @throws 错误时抛出 `Error`。
@@ -199,16 +232,20 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = new GetRequest()
-            request.setHeader(header)
-            this.client.state(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then((body) => resolve(body), reject)
-            })
+            const request = create(StateRequestSchema, {header: header})
+            try {
+                const res = await this.client.state(request)
+                await this.authenticate.doResponse(res, StateResponseBodySchema)
+                resolve(res.body as StateResponseBody)
+            } catch (err) {
+                console.error('Fail to get user state', err)
+                return reject(err)
+            }
         })
     }
 
     /**
-     * 删除用户。
+     * 从当前供应商删除用户。
      *
      * @returns 返回删除用户的结果。
      * @throws 错误时抛出 `Error`。
@@ -229,11 +266,15 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = new DeleteRequest()
-            request.setHeader(header)
-            this.client.delete(request, null, (err, res) => {
-                this.authenticate.doResponse(err, res).then((body) => resolve(body), reject)
-            })
+            const request = create(DeleteRequestSchema, {header: header})
+            try {
+                const res = await this.client.delete(request)
+                await this.authenticate.doResponse(res, DeleteResponseBodySchema)
+                resolve(res.body as DeleteResponseBody)
+            } catch (err) {
+                console.error('Fail to get user state', err)
+                return reject(err)
+            }
         })
     }
 }
