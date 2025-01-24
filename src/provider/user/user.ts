@@ -32,12 +32,6 @@ import {NotFound} from "../../common/error";
  * 代表了一个用户节点提供商，提供对用户的增、删、改、查操作。
  *
  * @class
- * @example
- * ```ts
- * const authenticate = new Authenticate(blockAddUserress);
- * const providerOption: ProviderOption = { proxy: 'http://example.com' };
- * const userProvider = new UserProvider(authenticate, providerOption);
- * ```
  */
 export class UserProvider {
     /**
@@ -54,7 +48,7 @@ export class UserProvider {
      * @param option - 提供商配置，包括代理设置。
      * @example
      * ```ts
-     * const providerOption = { proxy: <proxy url>, blockAddUserress: <your block address> };
+     * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
      * const userProvider = new UserProvider(providerOption);
      * ```
      */
@@ -67,7 +61,7 @@ export class UserProvider {
     }
 
     /**
-     * 成为用户。
+     * 成为供应商的用户。
      *
      * @param name - 用户名称。
      * @param avatar - 用户头像。

@@ -4,7 +4,7 @@
 
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
 import { enumDesc, fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv1";
-import type { MessageHeader, ResponseStatus } from "../common/message_pb";
+import type { MessageHeader, RequestPage, ResponsePage, ResponseStatus } from "../common/message_pb";
 import { file_yeying_api_common_message } from "../common/message_pb";
 import type { Message } from "@bufbuild/protobuf";
 
@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/invitation/invitation.proto.
  */
 export const file_yeying_api_invitation_invitation: GenFile = /*@__PURE__*/
-  fileDesc("CiZ5ZXlpbmcvYXBpL2ludml0YXRpb24vaW52aXRhdGlvbi5wcm90bxIVeWV5aW5nLmFwaS5pbnZpdGF0aW9uIsIBChJJbnZpdGF0aW9uTWV0YWRhdGESOQoFc2NlbmUYASABKA4yKi55ZXlpbmcuYXBpLmludml0YXRpb24uSW52aXRhdGlvblNjZW5lRW51bRIMCgRjb2RlGAIgASgJEg8KB2NyZWF0ZWQYAyABKAkSDwoHZXhwaXJlZBgEIAEoCRIMCgR1c2VkGAUgASgJEg8KB2ludml0ZXIYBiABKAkSDwoHaW52aXRlZRgHIAEoCRIRCglzaWduYXR1cmUYCCABKAkifQoPR2VuZXJhdGVSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISOAoEYm9keRgCIAEoCzIqLnlleWluZy5hcGkuaW52aXRhdGlvbi5HZW5lcmF0ZVJlcXVlc3RCb2R5Il8KE0dlbmVyYXRlUmVxdWVzdEJvZHkSOQoFc2NlbmUYASABKA4yKi55ZXlpbmcuYXBpLmludml0YXRpb24uSW52aXRhdGlvblNjZW5lRW51bRINCgVjb3VudBgCIAEoDSJ5Cg1WZXJpZnlSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNgoEYm9keRgCIAEoCzIoLnlleWluZy5hcGkuaW52aXRhdGlvbi5WZXJpZnlSZXF1ZXN0Qm9keSIhChFWZXJpZnlSZXF1ZXN0Qm9keRIMCgRjb2RlGAEgASgJInsKDlZlcmlmeVJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNwoEYm9keRgCIAEoCzIpLnlleWluZy5hcGkuaW52aXRhdGlvbi5WZXJpZnlSZXNwb25zZUJvZHkiRwoSVmVyaWZ5UmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzIn8KEEdlbmVyYXRlUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI5CgRib2R5GAIgASgLMisueWV5aW5nLmFwaS5pbnZpdGF0aW9uLkdlbmVyYXRlUmVzcG9uc2VCb2R5IokBChRHZW5lcmF0ZVJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxI+CgtpbnZpdGF0aW9ucxgCIAMoCzIpLnlleWluZy5hcGkuaW52aXRhdGlvbi5JbnZpdGF0aW9uTWV0YWRhdGEqTgoTSW52aXRhdGlvblNjZW5lRW51bRIcChhJTlZJVEFUSU9OX1NDRU5FX1VOS05PV04QABIZChVJTlZJVEFUSU9OX1NDRU5FX1VTRVIQATLEAQoKSW52aXRhdGlvbhJdCghHZW5lcmF0ZRImLnlleWluZy5hcGkuaW52aXRhdGlvbi5HZW5lcmF0ZVJlcXVlc3QaJy55ZXlpbmcuYXBpLmludml0YXRpb24uR2VuZXJhdGVSZXNwb25zZSIAElcKBlZlcmlmeRIkLnlleWluZy5hcGkuaW52aXRhdGlvbi5WZXJpZnlSZXF1ZXN0GiUueWV5aW5nLmFwaS5pbnZpdGF0aW9uLlZlcmlmeVJlc3BvbnNlIgBCF1oVeWV5aW5nL2FwaS9pbnZpdGF0aW9uYgZwcm90bzM", [file_yeying_api_common_message]);
+  fileDesc("CiZ5ZXlpbmcvYXBpL2ludml0YXRpb24vaW52aXRhdGlvbi5wcm90bxIVeWV5aW5nLmFwaS5pbnZpdGF0aW9uIrQBChJJbnZpdGF0aW9uTWV0YWRhdGESOQoFc2NlbmUYASABKA4yKi55ZXlpbmcuYXBpLmludml0YXRpb24uSW52aXRhdGlvblNjZW5lRW51bRIMCgRjb2RlGAIgASgJEg8KB2NyZWF0ZWQYAyABKAkSDwoHZXhwaXJlZBgEIAEoCRIPCgdpbnZpdGVyGAUgASgJEg8KB2ludml0ZWUYBiABKAkSEQoJc2lnbmF0dXJlGAcgASgJIlMKEkludml0YXRpb25Vc2VTdGF0ZRIMCgRjb2RlGAEgASgJEg4KBnVzZWRBdBgCIAEoCRIMCgR1c2VyGAMgASgJEhEKCXNpZ25hdHVyZRgEIAEoCSKNAQoXQ3JlYXRlSW52aXRhdGlvblJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJACgRib2R5GAIgASgLMjIueWV5aW5nLmFwaS5pbnZpdGF0aW9uLkNyZWF0ZUludml0YXRpb25SZXF1ZXN0Qm9keSJcChtDcmVhdGVJbnZpdGF0aW9uUmVxdWVzdEJvZHkSPQoKaW52aXRhdGlvbhgCIAEoCzIpLnlleWluZy5hcGkuaW52aXRhdGlvbi5JbnZpdGF0aW9uTWV0YWRhdGEijwEKGENyZWF0ZUludml0YXRpb25SZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEkEKBGJvZHkYAiABKAsyMy55ZXlpbmcuYXBpLmludml0YXRpb24uQ3JlYXRlSW52aXRhdGlvblJlc3BvbnNlQm9keSKQAQocQ3JlYXRlSW52aXRhdGlvblJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxI9CgppbnZpdGF0aW9uGAIgASgLMikueWV5aW5nLmFwaS5pbnZpdGF0aW9uLkludml0YXRpb25NZXRhZGF0YSKNAQoXU2VhcmNoSW52aXRhdGlvblJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJACgRib2R5GAIgASgLMjIueWV5aW5nLmFwaS5pbnZpdGF0aW9uLlNlYXJjaEludml0YXRpb25SZXF1ZXN0Qm9keSJLChtTZWFyY2hJbnZpdGF0aW9uUmVxdWVzdEJvZHkSLAoEcGFnZRgBIAEoCzIeLnlleWluZy5hcGkuY29tbW9uLlJlcXVlc3RQYWdlIo8BChhTZWFyY2hJbnZpdGF0aW9uUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJBCgRib2R5GAIgASgLMjMueWV5aW5nLmFwaS5pbnZpdGF0aW9uLlNlYXJjaEludml0YXRpb25SZXNwb25zZUJvZHkiwAEKHFNlYXJjaEludml0YXRpb25SZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSPgoLaW52aXRhdGlvbnMYAiADKAsyKS55ZXlpbmcuYXBpLmludml0YXRpb24uSW52aXRhdGlvbk1ldGFkYXRhEi0KBHBhZ2UYAyABKAsyHy55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVBhZ2UijQEKF0ludml0YXRpb25EZXRhaWxSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISQAoEYm9keRgCIAEoCzIyLnlleWluZy5hcGkuaW52aXRhdGlvbi5JbnZpdGF0aW9uRGV0YWlsUmVxdWVzdEJvZHkiKwobSW52aXRhdGlvbkRldGFpbFJlcXVlc3RCb2R5EgwKBGNvZGUYASABKAkijwEKGEludml0YXRpb25EZXRhaWxSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEkEKBGJvZHkYAiABKAsyMy55ZXlpbmcuYXBpLmludml0YXRpb24uSW52aXRhdGlvbkRldGFpbFJlc3BvbnNlQm9keSLKAQocSW52aXRhdGlvbkRldGFpbFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxI9CgppbnZpdGF0aW9uGAIgASgLMikueWV5aW5nLmFwaS5pbnZpdGF0aW9uLkludml0YXRpb25NZXRhZGF0YRI4CgVzdGF0ZRgDIAEoCzIpLnlleWluZy5hcGkuaW52aXRhdGlvbi5JbnZpdGF0aW9uVXNlU3RhdGUqTgoTSW52aXRhdGlvblNjZW5lRW51bRIcChhJTlZJVEFUSU9OX1NDRU5FX1VOS05PV04QABIZChVJTlZJVEFUSU9OX1NDRU5FX1VTRVIQATLTAgoKSW52aXRhdGlvbhJrCgZDcmVhdGUSLi55ZXlpbmcuYXBpLmludml0YXRpb24uQ3JlYXRlSW52aXRhdGlvblJlcXVlc3QaLy55ZXlpbmcuYXBpLmludml0YXRpb24uQ3JlYXRlSW52aXRhdGlvblJlc3BvbnNlIgASawoGU2VhcmNoEi4ueWV5aW5nLmFwaS5pbnZpdGF0aW9uLlNlYXJjaEludml0YXRpb25SZXF1ZXN0Gi8ueWV5aW5nLmFwaS5pbnZpdGF0aW9uLlNlYXJjaEludml0YXRpb25SZXNwb25zZSIAEmsKBkRldGFpbBIuLnlleWluZy5hcGkuaW52aXRhdGlvbi5JbnZpdGF0aW9uRGV0YWlsUmVxdWVzdBovLnlleWluZy5hcGkuaW52aXRhdGlvbi5JbnZpdGF0aW9uRGV0YWlsUmVzcG9uc2UiAEIXWhV5ZXlpbmcvYXBpL2ludml0YXRpb25iBnByb3RvMw", [file_yeying_api_common_message]);
 
 /**
  * @generated from message yeying.api.invitation.InvitationMetadata
@@ -47,30 +47,23 @@ export type InvitationMetadata = Message<"yeying.api.invitation.InvitationMetada
   expired: string;
 
   /**
-   * 使用时间 
+   * 邀请者身份ID
    *
-   * @generated from field: string used = 5;
-   */
-  used: string;
-
-  /**
-   * 邀请者
-   *
-   * @generated from field: string inviter = 6;
+   * @generated from field: string inviter = 5;
    */
   inviter: string;
 
   /**
-   * 受邀者
+   * 受邀者身份ID，可以不填，表示邀请码可以给任何身份使用
    *
-   * @generated from field: string invitee = 7;
+   * @generated from field: string invitee = 6;
    */
   invitee: string;
 
   /**
    * 邀请者签名
    *
-   * @generated from field: string signature = 8;
+   * @generated from field: string signature = 7;
    */
   signature: string;
 };
@@ -83,153 +76,195 @@ export const InvitationMetadataSchema: GenMessage<InvitationMetadata> = /*@__PUR
   messageDesc(file_yeying_api_invitation_invitation, 0);
 
 /**
- * @generated from message yeying.api.invitation.GenerateRequest
+ * 邀请码被使用的状态记录
+ *
+ * @generated from message yeying.api.invitation.InvitationUseState
  */
-export type GenerateRequest = Message<"yeying.api.invitation.GenerateRequest"> & {
+export type InvitationUseState = Message<"yeying.api.invitation.InvitationUseState"> & {
   /**
-   * @generated from field: yeying.api.common.MessageHeader header = 1;
-   */
-  header?: MessageHeader;
-
-  /**
-   * @generated from field: yeying.api.invitation.GenerateRequestBody body = 2;
-   */
-  body?: GenerateRequestBody;
-};
-
-/**
- * Describes the message yeying.api.invitation.GenerateRequest.
- * Use `create(GenerateRequestSchema)` to create a new message.
- */
-export const GenerateRequestSchema: GenMessage<GenerateRequest> = /*@__PURE__*/
-  messageDesc(file_yeying_api_invitation_invitation, 1);
-
-/**
- * @generated from message yeying.api.invitation.GenerateRequestBody
- */
-export type GenerateRequestBody = Message<"yeying.api.invitation.GenerateRequestBody"> & {
-  /**
-   * @generated from field: yeying.api.invitation.InvitationSceneEnum scene = 1;
-   */
-  scene: InvitationSceneEnum;
-
-  /**
-   * @generated from field: uint32 count = 2;
-   */
-  count: number;
-};
-
-/**
- * Describes the message yeying.api.invitation.GenerateRequestBody.
- * Use `create(GenerateRequestBodySchema)` to create a new message.
- */
-export const GenerateRequestBodySchema: GenMessage<GenerateRequestBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_invitation_invitation, 2);
-
-/**
- * @generated from message yeying.api.invitation.VerifyRequest
- */
-export type VerifyRequest = Message<"yeying.api.invitation.VerifyRequest"> & {
-  /**
-   * @generated from field: yeying.api.common.MessageHeader header = 1;
-   */
-  header?: MessageHeader;
-
-  /**
-   * @generated from field: yeying.api.invitation.VerifyRequestBody body = 2;
-   */
-  body?: VerifyRequestBody;
-};
-
-/**
- * Describes the message yeying.api.invitation.VerifyRequest.
- * Use `create(VerifyRequestSchema)` to create a new message.
- */
-export const VerifyRequestSchema: GenMessage<VerifyRequest> = /*@__PURE__*/
-  messageDesc(file_yeying_api_invitation_invitation, 3);
-
-/**
- * @generated from message yeying.api.invitation.VerifyRequestBody
- */
-export type VerifyRequestBody = Message<"yeying.api.invitation.VerifyRequestBody"> & {
-  /**
+   * 邀请码 
+   *
    * @generated from field: string code = 1;
    */
   code: string;
+
+  /**
+   * 使用时间 
+   *
+   * @generated from field: string usedAt = 2;
+   */
+  usedAt: string;
+
+  /**
+   * 使用者身份ID 
+   *
+   * @generated from field: string user = 3;
+   */
+  user: string;
+
+  /**
+   * 受邀者签名 
+   *
+   * @generated from field: string signature = 4;
+   */
+  signature: string;
 };
 
 /**
- * Describes the message yeying.api.invitation.VerifyRequestBody.
- * Use `create(VerifyRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.invitation.InvitationUseState.
+ * Use `create(InvitationUseStateSchema)` to create a new message.
  */
-export const VerifyRequestBodySchema: GenMessage<VerifyRequestBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_invitation_invitation, 4);
+export const InvitationUseStateSchema: GenMessage<InvitationUseState> = /*@__PURE__*/
+  messageDesc(file_yeying_api_invitation_invitation, 1);
 
 /**
- * @generated from message yeying.api.invitation.VerifyResponse
+ * @generated from message yeying.api.invitation.CreateInvitationRequest
  */
-export type VerifyResponse = Message<"yeying.api.invitation.VerifyResponse"> & {
+export type CreateInvitationRequest = Message<"yeying.api.invitation.CreateInvitationRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.invitation.VerifyResponseBody body = 2;
+   * @generated from field: yeying.api.invitation.CreateInvitationRequestBody body = 2;
    */
-  body?: VerifyResponseBody;
+  body?: CreateInvitationRequestBody;
 };
 
 /**
- * Describes the message yeying.api.invitation.VerifyResponse.
- * Use `create(VerifyResponseSchema)` to create a new message.
+ * Describes the message yeying.api.invitation.CreateInvitationRequest.
+ * Use `create(CreateInvitationRequestSchema)` to create a new message.
  */
-export const VerifyResponseSchema: GenMessage<VerifyResponse> = /*@__PURE__*/
-  messageDesc(file_yeying_api_invitation_invitation, 5);
+export const CreateInvitationRequestSchema: GenMessage<CreateInvitationRequest> = /*@__PURE__*/
+  messageDesc(file_yeying_api_invitation_invitation, 2);
 
 /**
- * @generated from message yeying.api.invitation.VerifyResponseBody
+ * @generated from message yeying.api.invitation.CreateInvitationRequestBody
  */
-export type VerifyResponseBody = Message<"yeying.api.invitation.VerifyResponseBody"> & {
+export type CreateInvitationRequestBody = Message<"yeying.api.invitation.CreateInvitationRequestBody"> & {
+  /**
+   * @generated from field: yeying.api.invitation.InvitationMetadata invitation = 2;
+   */
+  invitation?: InvitationMetadata;
+};
+
+/**
+ * Describes the message yeying.api.invitation.CreateInvitationRequestBody.
+ * Use `create(CreateInvitationRequestBodySchema)` to create a new message.
+ */
+export const CreateInvitationRequestBodySchema: GenMessage<CreateInvitationRequestBody> = /*@__PURE__*/
+  messageDesc(file_yeying_api_invitation_invitation, 3);
+
+/**
+ * @generated from message yeying.api.invitation.CreateInvitationResponse
+ */
+export type CreateInvitationResponse = Message<"yeying.api.invitation.CreateInvitationResponse"> & {
+  /**
+   * @generated from field: yeying.api.common.MessageHeader header = 1;
+   */
+  header?: MessageHeader;
+
+  /**
+   * @generated from field: yeying.api.invitation.CreateInvitationResponseBody body = 2;
+   */
+  body?: CreateInvitationResponseBody;
+};
+
+/**
+ * Describes the message yeying.api.invitation.CreateInvitationResponse.
+ * Use `create(CreateInvitationResponseSchema)` to create a new message.
+ */
+export const CreateInvitationResponseSchema: GenMessage<CreateInvitationResponse> = /*@__PURE__*/
+  messageDesc(file_yeying_api_invitation_invitation, 4);
+
+/**
+ * @generated from message yeying.api.invitation.CreateInvitationResponseBody
+ */
+export type CreateInvitationResponseBody = Message<"yeying.api.invitation.CreateInvitationResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
   status?: ResponseStatus;
+
+  /**
+   * @generated from field: yeying.api.invitation.InvitationMetadata invitation = 2;
+   */
+  invitation?: InvitationMetadata;
 };
 
 /**
- * Describes the message yeying.api.invitation.VerifyResponseBody.
- * Use `create(VerifyResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.invitation.CreateInvitationResponseBody.
+ * Use `create(CreateInvitationResponseBodySchema)` to create a new message.
  */
-export const VerifyResponseBodySchema: GenMessage<VerifyResponseBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_invitation_invitation, 6);
+export const CreateInvitationResponseBodySchema: GenMessage<CreateInvitationResponseBody> = /*@__PURE__*/
+  messageDesc(file_yeying_api_invitation_invitation, 5);
 
 /**
- * @generated from message yeying.api.invitation.GenerateResponse
+ * @generated from message yeying.api.invitation.SearchInvitationRequest
  */
-export type GenerateResponse = Message<"yeying.api.invitation.GenerateResponse"> & {
+export type SearchInvitationRequest = Message<"yeying.api.invitation.SearchInvitationRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.invitation.GenerateResponseBody body = 2;
+   * @generated from field: yeying.api.invitation.SearchInvitationRequestBody body = 2;
    */
-  body?: GenerateResponseBody;
+  body?: SearchInvitationRequestBody;
 };
 
 /**
- * Describes the message yeying.api.invitation.GenerateResponse.
- * Use `create(GenerateResponseSchema)` to create a new message.
+ * Describes the message yeying.api.invitation.SearchInvitationRequest.
+ * Use `create(SearchInvitationRequestSchema)` to create a new message.
  */
-export const GenerateResponseSchema: GenMessage<GenerateResponse> = /*@__PURE__*/
+export const SearchInvitationRequestSchema: GenMessage<SearchInvitationRequest> = /*@__PURE__*/
+  messageDesc(file_yeying_api_invitation_invitation, 6);
+
+/**
+ * @generated from message yeying.api.invitation.SearchInvitationRequestBody
+ */
+export type SearchInvitationRequestBody = Message<"yeying.api.invitation.SearchInvitationRequestBody"> & {
+  /**
+   * @generated from field: yeying.api.common.RequestPage page = 1;
+   */
+  page?: RequestPage;
+};
+
+/**
+ * Describes the message yeying.api.invitation.SearchInvitationRequestBody.
+ * Use `create(SearchInvitationRequestBodySchema)` to create a new message.
+ */
+export const SearchInvitationRequestBodySchema: GenMessage<SearchInvitationRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_invitation_invitation, 7);
 
 /**
- * @generated from message yeying.api.invitation.GenerateResponseBody
+ * @generated from message yeying.api.invitation.SearchInvitationResponse
  */
-export type GenerateResponseBody = Message<"yeying.api.invitation.GenerateResponseBody"> & {
+export type SearchInvitationResponse = Message<"yeying.api.invitation.SearchInvitationResponse"> & {
+  /**
+   * @generated from field: yeying.api.common.MessageHeader header = 1;
+   */
+  header?: MessageHeader;
+
+  /**
+   * @generated from field: yeying.api.invitation.SearchInvitationResponseBody body = 2;
+   */
+  body?: SearchInvitationResponseBody;
+};
+
+/**
+ * Describes the message yeying.api.invitation.SearchInvitationResponse.
+ * Use `create(SearchInvitationResponseSchema)` to create a new message.
+ */
+export const SearchInvitationResponseSchema: GenMessage<SearchInvitationResponse> = /*@__PURE__*/
+  messageDesc(file_yeying_api_invitation_invitation, 8);
+
+/**
+ * @generated from message yeying.api.invitation.SearchInvitationResponseBody
+ */
+export type SearchInvitationResponseBody = Message<"yeying.api.invitation.SearchInvitationResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -239,14 +274,107 @@ export type GenerateResponseBody = Message<"yeying.api.invitation.GenerateRespon
    * @generated from field: repeated yeying.api.invitation.InvitationMetadata invitations = 2;
    */
   invitations: InvitationMetadata[];
+
+  /**
+   * @generated from field: yeying.api.common.ResponsePage page = 3;
+   */
+  page?: ResponsePage;
 };
 
 /**
- * Describes the message yeying.api.invitation.GenerateResponseBody.
- * Use `create(GenerateResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.invitation.SearchInvitationResponseBody.
+ * Use `create(SearchInvitationResponseBodySchema)` to create a new message.
  */
-export const GenerateResponseBodySchema: GenMessage<GenerateResponseBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_invitation_invitation, 8);
+export const SearchInvitationResponseBodySchema: GenMessage<SearchInvitationResponseBody> = /*@__PURE__*/
+  messageDesc(file_yeying_api_invitation_invitation, 9);
+
+/**
+ * @generated from message yeying.api.invitation.InvitationDetailRequest
+ */
+export type InvitationDetailRequest = Message<"yeying.api.invitation.InvitationDetailRequest"> & {
+  /**
+   * @generated from field: yeying.api.common.MessageHeader header = 1;
+   */
+  header?: MessageHeader;
+
+  /**
+   * @generated from field: yeying.api.invitation.InvitationDetailRequestBody body = 2;
+   */
+  body?: InvitationDetailRequestBody;
+};
+
+/**
+ * Describes the message yeying.api.invitation.InvitationDetailRequest.
+ * Use `create(InvitationDetailRequestSchema)` to create a new message.
+ */
+export const InvitationDetailRequestSchema: GenMessage<InvitationDetailRequest> = /*@__PURE__*/
+  messageDesc(file_yeying_api_invitation_invitation, 10);
+
+/**
+ * @generated from message yeying.api.invitation.InvitationDetailRequestBody
+ */
+export type InvitationDetailRequestBody = Message<"yeying.api.invitation.InvitationDetailRequestBody"> & {
+  /**
+   * @generated from field: string code = 1;
+   */
+  code: string;
+};
+
+/**
+ * Describes the message yeying.api.invitation.InvitationDetailRequestBody.
+ * Use `create(InvitationDetailRequestBodySchema)` to create a new message.
+ */
+export const InvitationDetailRequestBodySchema: GenMessage<InvitationDetailRequestBody> = /*@__PURE__*/
+  messageDesc(file_yeying_api_invitation_invitation, 11);
+
+/**
+ * @generated from message yeying.api.invitation.InvitationDetailResponse
+ */
+export type InvitationDetailResponse = Message<"yeying.api.invitation.InvitationDetailResponse"> & {
+  /**
+   * @generated from field: yeying.api.common.MessageHeader header = 1;
+   */
+  header?: MessageHeader;
+
+  /**
+   * @generated from field: yeying.api.invitation.InvitationDetailResponseBody body = 2;
+   */
+  body?: InvitationDetailResponseBody;
+};
+
+/**
+ * Describes the message yeying.api.invitation.InvitationDetailResponse.
+ * Use `create(InvitationDetailResponseSchema)` to create a new message.
+ */
+export const InvitationDetailResponseSchema: GenMessage<InvitationDetailResponse> = /*@__PURE__*/
+  messageDesc(file_yeying_api_invitation_invitation, 12);
+
+/**
+ * @generated from message yeying.api.invitation.InvitationDetailResponseBody
+ */
+export type InvitationDetailResponseBody = Message<"yeying.api.invitation.InvitationDetailResponseBody"> & {
+  /**
+   * @generated from field: yeying.api.common.ResponseStatus status = 1;
+   */
+  status?: ResponseStatus;
+
+  /**
+   * @generated from field: yeying.api.invitation.InvitationMetadata invitation = 2;
+   */
+  invitation?: InvitationMetadata;
+
+  /**
+   * @generated from field: yeying.api.invitation.InvitationUseState state = 3;
+   */
+  state?: InvitationUseState;
+};
+
+/**
+ * Describes the message yeying.api.invitation.InvitationDetailResponseBody.
+ * Use `create(InvitationDetailResponseBodySchema)` to create a new message.
+ */
+export const InvitationDetailResponseBodySchema: GenMessage<InvitationDetailResponseBody> = /*@__PURE__*/
+  messageDesc(file_yeying_api_invitation_invitation, 13);
 
 /**
  * @generated from enum yeying.api.invitation.InvitationSceneEnum
@@ -260,7 +388,7 @@ export enum InvitationSceneEnum {
   INVITATION_SCENE_UNKNOWN = 0,
 
   /**
-   * 用户邀请码，成为某个服务的用户，但是这个服务并不开放，只允许受邀使用
+   * 用户邀请码，成为某个服务的用户，用于不完全开放的服务，只允许受邀使用该服务
    *
    * @generated from enum value: INVITATION_SCENE_USER = 1;
    */
@@ -278,24 +406,34 @@ export const InvitationSceneEnumSchema: GenEnum<InvitationSceneEnum> = /*@__PURE
  */
 export const Invitation: GenService<{
   /**
-   * 生成邀请码
+   * 创建邀请码，通常是服务所有者才有权限创建
    *
-   * @generated from rpc yeying.api.invitation.Invitation.Generate
+   * @generated from rpc yeying.api.invitation.Invitation.Create
    */
-  generate: {
+  create: {
     methodKind: "unary";
-    input: typeof GenerateRequestSchema;
-    output: typeof GenerateResponseSchema;
+    input: typeof CreateInvitationRequestSchema;
+    output: typeof CreateInvitationResponseSchema;
   },
   /**
-   * 验证邀请码
+   * 搜索邀请码
    *
-   * @generated from rpc yeying.api.invitation.Invitation.Verify
+   * @generated from rpc yeying.api.invitation.Invitation.Search
    */
-  verify: {
+  search: {
     methodKind: "unary";
-    input: typeof VerifyRequestSchema;
-    output: typeof VerifyResponseSchema;
+    input: typeof SearchInvitationRequestSchema;
+    output: typeof SearchInvitationResponseSchema;
+  },
+  /**
+   * 查询邀请码详情
+   *
+   * @generated from rpc yeying.api.invitation.Invitation.Detail
+   */
+  detail: {
+    methodKind: "unary";
+    input: typeof InvitationDetailRequestSchema;
+    output: typeof InvitationDetailResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_yeying_api_invitation_invitation, 0);
