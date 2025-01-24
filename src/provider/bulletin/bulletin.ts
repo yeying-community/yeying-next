@@ -18,14 +18,7 @@ import {create, toBinary} from "@bufbuild/protobuf";
 
 /**
  * BulletinProvider 类，用于提供公告相关的操作，包括获取公告列表等。
- *
- * @example
- * ```ts
- * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
- * const bulletinProvider = new BulletinProvider(providerOption);
- * const response = await bulletinProvider.BulletinList(LanguageCodeEnum.EN, 1, 10);
- * console.log(response);
- * ```
+ * @class
  */
 export class BulletinProvider {
     private authenticate: Authenticate
@@ -37,7 +30,7 @@ export class BulletinProvider {
      * @param option - 提供的选项配置，如代理设置等。
      * @example
      * ```ts
-     * const providerOption = { proxy: 'proxy_url', blockAddress: <your block address> };
+     * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
      * const bulletinProvider = new BulletinProvider(providerOption);
      * ```
      */
@@ -59,7 +52,7 @@ export class BulletinProvider {
      * @throws {DataForgery} 如果验证公告数据的签名无效，则抛出错误。
      * @example
      * ```ts
-     * const response = await bulletinProvider.BulletinList(LanguageCodeEnum.EN, 1, 10);
+     * const response = await bulletinProvider.list(LanguageCodeEnum.EN, 1, 10);
      * console.log(response); // 输出公告列表
      * ```
      */
