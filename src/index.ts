@@ -12,7 +12,7 @@ export {Uploader} from './provider/warehouse/uploader'
 export {Downloader} from './provider/warehouse/downloader'
 export {AccountManager} from './account/manager'
 export {Account} from './account/model'
-export { MailProvider } from './provider/mail/mail'
+export {MailProvider} from './provider/mail/mail'
 
 export * from './yeying/api/common/code_pb'
 export * from './yeying/api/common/message_pb'

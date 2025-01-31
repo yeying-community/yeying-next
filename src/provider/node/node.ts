@@ -1,13 +1,13 @@
 import {Authenticate} from "../common/authenticate";
 import {ProviderOption} from "../common/model";
-import {MessageHeader, ServiceMetadata, ServiceMetadataSchema} from "../../yeying/api/common/message_pb";
+import {MessageHeader} from "../../yeying/api/common/message_pb";
 import {DataForgery} from "../../common/error";
 import {
     HealthCheckRequestSchema,
     HealthCheckResponseBody,
     HealthCheckResponseBodySchema,
     Node,
-    NodeMetadata,
+    NodeMetadata, NodeMetadataSchema,
     WhoamiRequestSchema,
     WhoamiResponseBody,
     WhoamiResponseBodySchema
@@ -103,18 +103,17 @@ export class NodeProvider {
                 await this.authenticate.doResponse(res, WhoamiResponseBodySchema)
                 const body = res.body as WhoamiResponseBody
                 const node = body.node as NodeMetadata
-                const service = node.service as ServiceMetadata
 
-                const signature = service.signature
-                service.signature = ''
+                const signature = node.signature
+                node.signature = ''
                 const passed = await this.authenticate.verify(
-                    service.did,
-                    toBinary(ServiceMetadataSchema, service),
+                    node.did,
+                    toBinary(NodeMetadataSchema, node),
                     signature
                 )
 
                 if (passed) {
-                    service.signature = signature
+                    node.signature = signature
                     resolve(body)
                 } else {
                     reject(new DataForgery('invalid signature!'))

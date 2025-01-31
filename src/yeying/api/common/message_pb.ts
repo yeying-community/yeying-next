@@ -12,7 +12,7 @@
 
 import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
 import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv1";
-import type { ApiCodeEnum, AuthenticateTypeEnum, ResponseCodeEnum, ServiceCodeEnum } from "./code_pb";
+import type { AuthenticateTypeEnum, ResponseCodeEnum } from "./code_pb";
 import { file_yeying_api_common_code } from "./code_pb";
 import type { Message } from "@bufbuild/protobuf";
 
@@ -20,7 +20,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/common/message.proto.
  */
 export const file_yeying_api_common_message: GenFile = /*@__PURE__*/
-  fileDesc("Ch95ZXlpbmcvYXBpL2NvbW1vbi9tZXNzYWdlLnByb3RvEhF5ZXlpbmcuYXBpLmNvbW1vbiKfAQoNTWVzc2FnZUhlYWRlchILCgNkaWQYASABKAkSOQoIYXV0aFR5cGUYAiABKA4yJy55ZXlpbmcuYXBpLmNvbW1vbi5BdXRoZW50aWNhdGVUeXBlRW51bRITCgthdXRoQ29udGVudBgDIAEoCRINCgVub25jZRgEIAEoCRIRCgl0aW1lc3RhbXAYBSABKAkSDwoHdmVyc2lvbhgGIAEoDSJUCg5SZXNwb25zZVN0YXR1cxIxCgRjb2RlGAEgASgOMiMueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VDb2RlRW51bRIPCgdtZXNzYWdlGAIgASgJIj0KDFJlc3BvbnNlUGFnZRINCgV0b3RhbBgBIAEoDRIMCgRwYWdlGAMgASgNEhAKCHBhZ2VTaXplGAQgASgNIi0KC1JlcXVlc3RQYWdlEgwKBHBhZ2UYASABKA0SEAoIcGFnZVNpemUYAiABKA0iyAIKD1NlcnZpY2VNZXRhZGF0YRINCgVvd25lchgBIAEoCRIPCgduZXR3b3JrGAIgASgNEg8KB2FkZHJlc3MYAyABKAkSCwoDZGlkGAQgASgJEg8KB3ZlcnNpb24YBSABKA0SDAoEbmFtZRgGIAEoCRITCgtkZXNjcmlwdGlvbhgHIAEoCRIwCgRjb2RlGAggASgOMiIueWV5aW5nLmFwaS5jb21tb24uU2VydmljZUNvZGVFbnVtEiwKBGFwaXMYCSADKA4yHi55ZXlpbmcuYXBpLmNvbW1vbi5BcGlDb2RlRW51bRINCgVwcm94eRgKIAEoCRIMCgRncnBjGAsgASgJEg4KBmF2YXRhchgMIAEoCRIPCgdjcmVhdGVkGA0gASgJEhIKCmNoZWNrcG9pbnQYDiABKAkSEQoJc2lnbmF0dXJlGA8gASgJQhNaEXlleWluZy9hcGkvY29tbW9uYgZwcm90bzM", [file_yeying_api_common_code]);
+  fileDesc("Ch95ZXlpbmcvYXBpL2NvbW1vbi9tZXNzYWdlLnByb3RvEhF5ZXlpbmcuYXBpLmNvbW1vbiKfAQoNTWVzc2FnZUhlYWRlchILCgNkaWQYASABKAkSOQoIYXV0aFR5cGUYAiABKA4yJy55ZXlpbmcuYXBpLmNvbW1vbi5BdXRoZW50aWNhdGVUeXBlRW51bRITCgthdXRoQ29udGVudBgDIAEoCRINCgVub25jZRgEIAEoCRIRCgl0aW1lc3RhbXAYBSABKAkSDwoHdmVyc2lvbhgGIAEoDSJUCg5SZXNwb25zZVN0YXR1cxIxCgRjb2RlGAEgASgOMiMueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VDb2RlRW51bRIPCgdtZXNzYWdlGAIgASgJIj0KDFJlc3BvbnNlUGFnZRINCgV0b3RhbBgBIAEoDRIMCgRwYWdlGAMgASgNEhAKCHBhZ2VTaXplGAQgASgNIi0KC1JlcXVlc3RQYWdlEgwKBHBhZ2UYASABKA0SEAoIcGFnZVNpemUYAiABKA1CE1oReWV5aW5nL2FwaS9jb21tb25iBnByb3RvMw", [file_yeying_api_common_code]);
 
 /**
  * @generated from message yeying.api.common.MessageHeader
@@ -148,121 +148,4 @@ export type RequestPage = Message<"yeying.api.common.RequestPage"> & {
  */
 export const RequestPageSchema: GenMessage<RequestPage> = /*@__PURE__*/
   messageDesc(file_yeying_api_common_message, 3);
-
-/**
- * @generated from message yeying.api.common.ServiceMetadata
- */
-export type ServiceMetadata = Message<"yeying.api.common.ServiceMetadata"> & {
-  /**
-   * 服务所有者 
-   *
-   * @generated from field: string owner = 1;
-   */
-  owner: string;
-
-  /**
-   * 服务所在网络 
-   *
-   * @generated from field: uint32 network = 2;
-   */
-  network: number;
-
-  /**
-   * 服务所在网络地址 
-   *
-   * @generated from field: string address = 3;
-   */
-  address: string;
-
-  /**
-   * 服务身份 
-   *
-   * @generated from field: string did = 4;
-   */
-  did: string;
-
-  /**
-   * 服务版本 
-   *
-   * @generated from field: uint32 version = 5;
-   */
-  version: number;
-
-  /**
-   * 服务名称 
-   *
-   * @generated from field: string name = 6;
-   */
-  name: string;
-
-  /**
-   * 服务名称 
-   *
-   * @generated from field: string description = 7;
-   */
-  description: string;
-
-  /**
-   * 服务编码 
-   *
-   * @generated from field: yeying.api.common.ServiceCodeEnum code = 8;
-   */
-  code: ServiceCodeEnum;
-
-  /**
-   * 服务apis 
-   *
-   * @generated from field: repeated yeying.api.common.ApiCodeEnum apis = 9;
-   */
-  apis: ApiCodeEnum[];
-
-  /**
-   * 服务代理 
-   *
-   * @generated from field: string proxy = 10;
-   */
-  proxy: string;
-
-  /**
-   * 服务grpc地址 
-   *
-   * @generated from field: string grpc = 11;
-   */
-  grpc: string;
-
-  /**
-   * 服务头像 
-   *
-   * @generated from field: string avatar = 12;
-   */
-  avatar: string;
-
-  /**
-   * 服务创建时间点 
-   *
-   * @generated from field: string created = 13;
-   */
-  created: string;
-
-  /**
-   * 服务修改时间点 
-   *
-   * @generated from field: string checkpoint = 14;
-   */
-  checkpoint: string;
-
-  /**
-   * 签名
-   *
-   * @generated from field: string signature = 15;
-   */
-  signature: string;
-};
-
-/**
- * Describes the message yeying.api.common.ServiceMetadata.
- * Use `create(ServiceMetadataSchema)` to create a new message.
- */
-export const ServiceMetadataSchema: GenMessage<ServiceMetadata> = /*@__PURE__*/
-  messageDesc(file_yeying_api_common_message, 4);
 

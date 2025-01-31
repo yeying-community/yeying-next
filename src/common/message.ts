@@ -1,12 +1,11 @@
-import { CipherTypeEnum, DigitalFormatEnum, LanguageCodeEnum } from '../yeying/api/common/code_pb'
-import { BlockMetadata } from '../yeying/api/asset/block_pb'
+import {CipherTypeEnum, DigitalFormatEnum, LanguageCodeEnum} from '../yeying/api/common/code_pb'
+import {BlockMetadata} from '../yeying/api/asset/block_pb'
 import {ChunkMetadata, ChunkMetadataSchema} from '../yeying/api/asset/asset_pb'
-import { index } from 'typedoc/dist/lib/output/themes/default/partials'
 import {create} from "@bufbuild/protobuf";
 
-export function convertLanguageCodeFrom(s: string) {
-    // @ts-ignore
-    return CipherTypeEnum[s.toUpperCase()]
+export function convertIdentityCodeFrom(s: string) {
+    const v = CipherTypeEnum[s as keyof typeof CipherTypeEnum];
+    return v !== undefined ? v : CipherTypeEnum.CIPHER_TYPE_UNKNOWN
 }
 
 export function convertLanguageCodeTo(code: LanguageCodeEnum): string {
@@ -15,13 +14,13 @@ export function convertLanguageCodeTo(code: LanguageCodeEnum): string {
 }
 
 export function convertCipherTypeFrom(s: string): CipherTypeEnum {
-    // @ts-ignore
-    return CipherTypeEnum[s.toUpperCase()]
+    const ff = s as keyof typeof CipherTypeEnum
+    const v = CipherTypeEnum[ff]
+    return v !== undefined ? v : CipherTypeEnum.CIPHER_TYPE_UNKNOWN
 }
 
-export function convertCipherTypeTo(code: CipherTypeEnum) {
-    // @ts-ignore
-    return Object.keys(CipherTypeEnum).find((s) => CipherTypeEnum[s] === code)
+export function convertCipherTypeTo(code?: CipherTypeEnum) {
+    return CipherTypeEnum[code === undefined ? CipherTypeEnum.CIPHER_TYPE_UNKNOWN : code]
 }
 
 export function convertChunkMetadataFromBlock(index: number, block: BlockMetadata): ChunkMetadata {

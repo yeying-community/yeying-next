@@ -37,9 +37,7 @@ import {
 } from '../common/crypto'
 import {decodeBase64, encodeBase64} from '../common/codec'
 import {LanguageCodeEnum} from '../yeying/api/common/code_pb'
-import {Authenticate} from '../provider/common/authenticate'
 import {convertLanguageCodeTo} from '../common/message'
-// import {NodeProvider} from "../provider/node/node";
 
 /**
  * 账号管理类，用于管理用户账号、身份及缓存数据。
@@ -74,7 +72,7 @@ export class AccountManager {
 
     /**
      * 获取当前登录用户的区块链节点信息。
-     * 
+     *
      * @param domain - 可选参数，指定节点域名。如果未提供，将使用当前浏览器的域名。
      * @returns 返回当前节点信息。
      * @example
@@ -104,7 +102,7 @@ export class AccountManager {
 
     /**
      * 获取历史登录过的所有账号信息。
-     * 
+     *
      * @returns 返回历史账号信息列表。
      * @example
      * ```ts
@@ -123,7 +121,7 @@ export class AccountManager {
 
     /**
      * 获取当前激活的账号信息。
-     * 
+     *
      * @returns 返回当前激活账号的信息，若没有激活账号，则返回 undefined。
      * @example
      * ```ts
@@ -142,7 +140,7 @@ export class AccountManager {
 
     /**
      * 获取当前激活账号对应的身份信息。
-     * 
+     *
      * @returns 返回当前激活账号的身份信息，若没有激活身份，则返回 undefined。
      * @example
      * ```ts
@@ -161,7 +159,7 @@ export class AccountManager {
 
     /**
      * 获取指定 DID 对应的区块链地址。
-     * 
+     *
      * @param did - 用户的 DID（去中心化标识符）。
      * @returns 返回对应的区块链地址。
      * @example
@@ -176,7 +174,7 @@ export class AccountManager {
 
     /**
      * 注销当前账号，并清理相关的登录信息。
-     * 
+     *
      * @example
      * ```ts
      * accountManager.logout();
@@ -192,7 +190,7 @@ export class AccountManager {
 
     /**
      * 清理缓存中的身份相关信息。
-     * 
+     *
      * @param did - 要清理身份信息的 DID。
      * @example
      * ```ts
@@ -200,11 +198,12 @@ export class AccountManager {
      * // 清理对应 DID 的身份信息
      * ```
      */
-    clear(did: string) {}
+    clear(did: string) {
+    }
 
     /**
      * 判断指定 DID 是否已经登录。
-     * 
+     *
      * @param did - 要检查的 DID。
      * @returns 如果该 DID 已经登录，返回 true；否则返回 false。
      * @example
@@ -318,17 +317,17 @@ export class AccountManager {
     }
 
     /**
-    * 创建一个新的身份，并在区块链上生成地址。
-    * 
-    * @param password - 用户设置的密码。
-    * @param template - 用于创建身份的模板。
-    * @returns 返回新创建的身份。
-    * @example
-    * ```ts
-    * const newIdentity = await createIdentity(password, template);
-    * console.log(newIdentity); // 输出新创建的身份
-    * ```
-    */
+     * 创建一个新的身份，并在区块链上生成地址。
+     *
+     * @param password - 用户设置的密码。
+     * @param template - 用于创建身份的模板。
+     * @returns 返回新创建的身份。
+     * @example
+     * ```ts
+     * const newIdentity = await createIdentity(password, template);
+     * console.log(newIdentity); // 输出新创建的身份
+     * ```
+     */
     async createIdentity(password: string, template: IdentityTemplate) {
         // 创建区块链地址
         const blockAddress = createBlockAddress()
@@ -373,7 +372,7 @@ export class AccountManager {
         const metadata = identity.metadata as IdentityMetadata
         const did = metadata.did
 
-         // 将身份数据缓存
+        // 将身份数据缓存
         this.identityCache.set(did, encodeBase64(Identity.encode(identity).finish()))
         this.identityMap.set(did, identity)
         this.blockAddressMap.set(did, blockAddress)
@@ -381,18 +380,18 @@ export class AccountManager {
     }
 
     /**
-    * 更新现有身份信息。
-    * 
-    * @param template - 用于更新身份的模板。
-    * @param password - 用户设置的密码，用于解密区块链地址。
-    * @param identity - 要更新的身份。
-    * @returns 返回更新后的 DID。
-    * @example
-    * ```ts
-    * const updatedDid = await updateIdentity(template, password, identity);
-    * console.log(updatedDid); // 输出更新后的 DID
-    * ```
-    */
+     * 更新现有身份信息。
+     *
+     * @param template - 用于更新身份的模板。
+     * @param password - 用户设置的密码，用于解密区块链地址。
+     * @param identity - 要更新的身份。
+     * @returns 返回更新后的 DID。
+     * @example
+     * ```ts
+     * const updatedDid = await updateIdentity(template, password, identity);
+     * console.log(updatedDid); // 输出更新后的 DID
+     * ```
+     */
     async updateIdentity(template: IdentityTemplate, password: string, identity: Identity) {
         // 解密区块链地址
         const blockAddress = await decryptBlockAddress(
@@ -413,16 +412,16 @@ export class AccountManager {
     }
 
     /**
-    * 导出身份信息。
-    * 
-    * @param did - 要导出的身份 DID。
-    * @returns 返回解码并验证后的身份信息。
-    * @example
-    * ```ts
-    * const identity = await exportIdentity(did);
-    * console.log(identity); // 输出导出的身份信息
-    * ```
-    */
+     * 导出身份信息。
+     *
+     * @param did - 要导出的身份 DID。
+     * @returns 返回解码并验证后的身份信息。
+     * @example
+     * ```ts
+     * const identity = await exportIdentity(did);
+     * console.log(identity); // 输出导出的身份信息
+     * ```
+     */
     async exportIdentity(did: string) {
         const s = this.identityCache.get(did)
         if (s === null) {
@@ -438,14 +437,14 @@ export class AccountManager {
     }
 
     /**
-    * 导入身份信息。
-    * 
-    * @param content - 要导入的身份信息内容（Base64 编码）。
-    * @example
-    * ```ts
-    * await importIdentity(content);
-    * ```
-    */
+     * 导入身份信息。
+     *
+     * @param content - 要导入的身份信息内容（Base64 编码）。
+     * @example
+     * ```ts
+     * await importIdentity(content);
+     * ```
+     */
     async importIdentity(content: string) {
         const identity = Identity.decode(decodeBase64(content))
         const metadata = identity.metadata as IdentityMetadata
@@ -456,21 +455,21 @@ export class AccountManager {
     }
 
     /**
-    * 添加账户信息到历史记录。
-    * 
-    * @param did - 账户的 DID。
-    * @param name - 账户的名称。
-    * @param avatar - 账户的头像 URL。
-    * @returns 返回添加的账户对象。
-    * @example
-    * ```ts
-    * const account = addAccount(did, name, avatar);
-    * console.log(account); // 输出账户信息
-    * ```
-    */
+     * 添加账户信息到历史记录。
+     *
+     * @param did - 账户的 DID。
+     * @param name - 账户的名称。
+     * @param avatar - 账户的头像 URL。
+     * @returns 返回添加的账户对象。
+     * @example
+     * ```ts
+     * const account = addAccount(did, name, avatar);
+     * console.log(account); // 输出账户信息
+     * ```
+     */
     private addAccount(did: string, name: string, avatar: string): Account {
         const historyAccounts = this.getHistoryAccounts()
-        const account: Account = { name: name, did: did, avatar: avatar, timestamp: Date.now() }
+        const account: Account = {name: name, did: did, avatar: avatar, timestamp: Date.now()}
 
         // 查找账户是否已存在
         const index = historyAccounts.findIndex((i) => i.did === did)

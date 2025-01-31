@@ -65,7 +65,7 @@ export const SearchAssetRequestBodySchema: GenMessage<SearchAssetRequestBody> = 
  */
 export type SearchAssetCondition = Message<"yeying.api.asset.SearchAssetCondition"> & {
   /**
-   * 内容格式
+   * 资产内容格式
    *
    * @generated from field: yeying.api.common.DigitalFormatEnum format = 1;
    */
@@ -79,7 +79,7 @@ export type SearchAssetCondition = Message<"yeying.api.asset.SearchAssetConditio
   contentHash: string;
 
   /**
-   * 回收站里搜索
+   * 是否在回收站里搜索
    *
    * @generated from field: bool trash = 3;
    */
@@ -678,7 +678,6 @@ export const AssetMetadataSchema: GenMessage<AssetMetadata> = /*@__PURE__*/
 
 /**
  * *
- *
  * 开放的分散式仓库网络的接口设计，参考了现实世界中的仓库，逻辑如下：
  * 1、数字资产有两个标识，一个是数字资产的身份标识，可以是分布式数字身份，也可以是用户自定义的身份ID，另一个是数字资产内容的哈希值；
  * 2、数字资产入库，发送到指定存储网络中的节点，可以指定副本数量，一方面保证内容不会因为单个节点故障而丢失，另外也保证内容的可访问性；
