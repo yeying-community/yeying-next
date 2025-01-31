@@ -11,7 +11,7 @@ import {
     SearchServiceRequestSchema,
     SearchServiceResponseBody,
     SearchServiceResponseBodySchema,
-    Service,
+    Service, ServiceMetadata, ServiceMetadataSchema,
     UnregisterServiceRequestBodySchema,
     UnregisterServiceRequestSchema,
     UnregisterServiceResponseBody,
@@ -19,12 +19,7 @@ import {
 } from "../../yeying/api/service/service_pb";
 import {Client, createClient} from "@connectrpc/connect";
 import {createGrpcWebTransport} from "@connectrpc/connect-web";
-import {
-    MessageHeader,
-    RequestPageSchema,
-    ServiceMetadata,
-    ServiceMetadataSchema
-} from "../../yeying/api/common/message_pb";
+import {MessageHeader, RequestPageSchema,} from "../../yeying/api/common/message_pb";
 import {create, toBinary} from "@bufbuild/protobuf";
 
 /**
@@ -113,10 +108,11 @@ export class ServiceProvider {
         })
     }
 
-    unregister(did: string) {
+    unregister(did: string, version: number) {
         return new Promise<UnregisterServiceResponseBody>(async (resolve, reject) => {
             const body = create(UnregisterServiceRequestBodySchema, {
-                did: did
+                did: did,
+                version: version,
             })
 
             let header: MessageHeader
