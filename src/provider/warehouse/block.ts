@@ -116,7 +116,7 @@ export class BlockProvider {
             const block = create(BlockMetadataSchema, {
                 hash: hash,
                 owner: this.authenticate.getDid(),
-                created: getCurrentUtcString(),
+                createdAt: getCurrentUtcString(),
                 size: size,
             })
 

@@ -80,8 +80,8 @@ export class UserProvider {
                 did: this.authenticate.getDid(),
                 name: name,
                 avatar: avatar,
-                created: getCurrentUtcString(),
-                checkpoint: getCurrentUtcString(),
+                createdAt: getCurrentUtcString(),
+                updatedAt: getCurrentUtcString(),
             });
 
             const body = create(AddUserRequestBodySchema, {user: user})
@@ -177,7 +177,7 @@ export class UserProvider {
                 return resolve(user)
             }
 
-            user.checkpoint = getCurrentUtcString()
+            user.updatedAt = getCurrentUtcString()
             user.signature = ''
 
             const body = create(UpdateUserRequestBodySchema, {})

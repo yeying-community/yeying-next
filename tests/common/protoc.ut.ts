@@ -1,14 +1,12 @@
 import {CipherTypeEnum} from "../../src/yeying/api/common/code_pb";
-import {convertCipherTypeFrom, convertCipherTypeTo} from "../../src/common/message";
 import {expect} from "vitest";
 
 describe('Protoc', () => {
     it('enum', async () => {
-        const cipherType = CipherTypeEnum.CIPHER_TYPE_AES_GCM_256
-        console.log(`${CipherTypeEnum[cipherType]}`)
-        const type = CipherTypeEnum.CIPHER_TYPE_AES_GCM_256
-        const str = convertCipherTypeTo(type) as string
-        expect(str).toBe('CIPHER_TYPE_AES_GCM_256')
-        expect(convertCipherTypeFrom(str)).toEqual(cipherType)
+        let type: CipherTypeEnum
+        type = CipherTypeEnum.CIPHER_TYPE_AES_GCM_256
+        expect(CipherTypeEnum[type]).toBe('CIPHER_TYPE_AES_GCM_256')
+        let str = 'CIPHER_TYPE_AES_GCM_256'
+        expect(CipherTypeEnum[str as keyof typeof CipherTypeEnum]).toBe(CipherTypeEnum.CIPHER_TYPE_AES_GCM_256)
     })
 })

@@ -72,7 +72,7 @@ export class SupportProvider {
                 type: type,
                 email: email,
                 description: description,
-                created: getCurrentUtcString(),
+                createdAt: getCurrentUtcString(),
             })
 
             const body = create(CollectSupportRequestBodySchema, {

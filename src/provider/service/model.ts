@@ -1,4 +1,4 @@
-import {Identity, IdentityCodeEnum} from "@yeying-community/yeying-web3";
+import {Identity, IdentityCodeEnum, NetworkTypeEnum} from "@yeying-community/yeying-web3";
 import {create} from "@bufbuild/protobuf";
 import {ApiCodeEnum, ServiceCodeEnum} from "../../yeying/api/common/code_pb";
 import {ServiceMetadataSchema} from "../../yeying/api/service/service_pb";
@@ -19,7 +19,7 @@ export function convertServiceMetadataFromIdentity(identity: Identity) {
     }
 
     return create(ServiceMetadataSchema, {
-        network: metadata.network,
+        network: NetworkTypeEnum[metadata.network],
         owner: metadata.parent,
         address: metadata.address,
         name: metadata.name,
@@ -31,7 +31,7 @@ export function convertServiceMetadataFromIdentity(identity: Identity) {
         proxy: extend.proxy,
         grpc: extend.grpc,
         avatar: metadata.avatar,
-        created: metadata.created,
-        checkpoint: metadata.checkpoint
+        createdAt: metadata.createdAt,
+        updatedAt: metadata.updatedAt
     })
 }
