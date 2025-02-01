@@ -92,20 +92,20 @@ export class Uploader {
                     uid: uid, // 设置文件唯一标识符
                     name: file.name, // 设置文件名称
                     format: getDigitalFormatByName(file.name), // 获取文件格式
-                    created: formatDateTime(convertToUtcDateTime(convertDateToDateTime(new Date(file.lastModified)))),
-                    checkpoint: getCurrentUtcString(),
+                    createdAt: formatDateTime(convertToUtcDateTime(convertDateToDateTime(new Date(file.lastModified)))),
+                    updatedAt: getCurrentUtcString(),
                     description: description,
                     extend: extend,
-                    total: Math.ceil(file.size / this.chunkSize),
-                    block: this.chunkSize,
-                    encrypted: encrypted,
+                    chunkCount: Math.ceil(file.size / this.chunkSize),
+                    chunkSize: this.chunkSize,
+                    isEncrypted: encrypted,
                 })
 
                 console.log(`File last modified time=${file.lastModified}`)
 
                 const assetDigest = new Digest()
                 const mergeDigest = new Digest()
-                const chunkList = new Array(asset.total)  // 用于存储每个块的元数据
+                const chunkList = new Array(asset.chunkCount)  // 用于存储每个块的元数据
 
                 // 按顺序上传文件的每一块
                 const uploadChunk = async (index: number) => {
@@ -128,7 +128,7 @@ export class Uploader {
                     chunkList[index] = convertChunkMetadataFromBlock(index, block)
 
                     // 如果是最后一个块，设置资产的所有信息
-                    if (index === asset.total - 1) {
+                    if (index === asset.chunkCount - 1) {
                         asset.chunks = chunkList  // 设置块的元数据
                         asset.contentHash = encodeHex(assetDigest.sum())  // 设置资产哈希
                         asset.mergedHash = encodeHex(mergeDigest.sum())  // 设置合并哈希

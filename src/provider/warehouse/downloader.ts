@@ -58,7 +58,7 @@ export class Downloader {
             try {
                 console.log(`Try to download asset=${JSON.stringify(toJson(AssetMetadataSchema, asset))}`)
 
-                const chunkBlobs = new Array(asset.total).fill(undefined)
+                const chunkBlobs = new Array(asset.chunkCount).fill(undefined)
 
                 /**
                  * 递归下载每个数据块。
@@ -68,7 +68,7 @@ export class Downloader {
                 const downloadChunk = async (index: number) => {
                     // 下载数据块
                     let data = await this.blockProvider.get(asset.chunks[index].hash)
-                    if (asset.encrypted) {
+                    if (asset.isEncrypted) {
                         // 如果资产加密，解密数据块
                         data = await this.assetCipher.decrypt(data)
                     }

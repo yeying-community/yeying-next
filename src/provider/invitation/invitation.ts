@@ -77,8 +77,8 @@ export class InvitationProvider {
                 code: generateRandomString(32),
                 inviter: this.authenticate.getDid(),
                 invitee: invitee,
-                created: getCurrentUtcString(),
-                expired: formatDateTime(plusSecond(getCurrentUtcDateTime(), duration * 24 * 3600))
+                createdAt: getCurrentUtcString(),
+                expiredAt: formatDateTime(plusSecond(getCurrentUtcDateTime(), duration * 24 * 3600))
             });
 
             const body = create(CreateInvitationRequestBodySchema, {invitation: invitation})
