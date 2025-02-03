@@ -3,12 +3,16 @@ import {ProviderOption} from '../common/model'
 import {RequestPageSchema} from '../../yeying/api/common/message_pb'
 import {
     Asset,
-    AssetMetadata,
-    AssetMetadataSchema,
     AssetDetailRequestBodySchema,
     AssetDetailRequestSchema,
     AssetDetailResponseBody,
     AssetDetailResponseBodySchema,
+    AssetMetadata,
+    AssetMetadataSchema,
+    AssetVersionRequestBodySchema,
+    AssetVersionRequestSchema,
+    AssetVersionResponseBody,
+    AssetVersionResponseBodySchema,
     RemoveAssetRequestBodySchema,
     RemoveAssetRequestSchema,
     RemoveAssetResponseBody,
@@ -22,11 +26,7 @@ import {
     SignAssetRequestBodySchema,
     SignAssetRequestSchema,
     SignAssetResponseBody,
-    SignAssetResponseBodySchema,
-    AssetVersionRequestBodySchema,
-    AssetVersionRequestSchema,
-    AssetVersionResponseBody,
-    AssetVersionResponseBodySchema
+    SignAssetResponseBodySchema
 } from '../../yeying/api/asset/asset_pb'
 import {Client, createClient} from "@connectrpc/connect";
 import {createGrpcWebTransport} from "@connectrpc/connect-web";
@@ -231,7 +231,6 @@ export class AssetProvider {
 
             let header
             try {
-                asset.signature = await this.authenticate.sign(toBinary(AssetMetadataSchema, asset))
                 header = await this.authenticate.createHeader(toBinary(SignAssetRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header when signing asset', err)
@@ -242,14 +241,42 @@ export class AssetProvider {
                 header: header,
                 body: body
             })
+
             try {
                 const res = await this.client.sign(request)
                 await this.authenticate.doResponse(res, SignAssetResponseBodySchema)
-                resolve(res.body as SignAssetResponseBody)
+                const resBody = res.body as SignAssetResponseBody
+                if (await this.verifyAssetMetadata(resBody.asset)) {
+                    resolve(resBody)
+                } else {
+                    reject(new Error('invalid asset metadata!'))
+                }
             } catch (err) {
                 console.error('Fail to sign asset', err)
                 return reject(err)
             }
         })
+    }
+
+    async signAssetMetadata(asset: AssetMetadata) {
+        asset.signature = await this.authenticate.sign(toBinary(AssetMetadataSchema, asset))
+    }
+
+    async verifyAssetMetadata(asset?: AssetMetadata) {
+        if (asset === undefined) {
+            return false
+        }
+
+        const signature = asset.signature
+        try {
+            asset.signature = ''
+            return await this.authenticate.verify(
+                asset.owner,
+                toBinary(AssetMetadataSchema, asset),
+                signature
+            )
+        } finally {
+            asset.signature = signature
+        }
     }
 }

@@ -2,12 +2,15 @@ import {BlockProvider} from './block'
 import {AssetCipher} from './cipher'
 import {convertDateToDateTime, convertToUtcDateTime, formatDateTime, getCurrentUtcString} from '../../common/date'
 import {readBlock} from '../../common/file'
-import {Digest} from '@yeying-community/yeying-web3'
-import {computeHash} from '../../common/crypto'
-import {encodeHex} from '../../common/codec'
+import {Digest, SecurityAlgorithm} from '@yeying-community/yeying-web3'
+import {decodeHex, encodeHex} from '../../common/codec'
 import {convertChunkMetadataFromBlock, getDigitalFormatByName} from '../../common/message'
 import {AssetMetadata, AssetMetadataSchema} from '../../yeying/api/asset/asset_pb'
 import {create} from "@bufbuild/protobuf";
+import {BlockMetadata} from "../../yeying/api/asset/block_pb";
+import {isExisted} from "../../common/status";
+import {ProviderOption} from "../common/model";
+import {AssetProvider} from "./asset";
 
 /**
  * 该类用于上传资产文件，通过将文件分块后上传，每个块加密（可选）并生成哈希值，最后对整个资产进行签名。
@@ -34,22 +37,24 @@ import {create} from "@bufbuild/protobuf";
  */
 export class Uploader {
     blockProvider: BlockProvider
+    assetProvider: AssetProvider
     assetCipher: AssetCipher
     chunkSize: number
 
     /**
      * 创建一个上传器实例，用于文件的分块上传。
      *
-     * @param blockProvider - 处理区块存储的提供者。
-     * @param assetCipher - 用于加密资产的加密器。
+     * @param option {ProviderOption} 处理区块存储的提供者。
+     * @param securityAlgorithm {SecurityAlgorithm} 用于加密资产的加密器。
      * @example
      * ```ts
      * const uploader = new Uploader(blockProvider, assetCipher);
      * ```
      */
-    constructor(blockProvider: BlockProvider, assetCipher: AssetCipher) {
-        this.blockProvider = blockProvider
-        this.assetCipher = assetCipher
+    constructor(option: ProviderOption, securityAlgorithm: SecurityAlgorithm) {
+        this.blockProvider = new BlockProvider(option)
+        this.assetProvider = new AssetProvider(option)
+        this.assetCipher = new AssetCipher(option.blockAddress, securityAlgorithm)
         this.chunkSize = 1024 * 1024 // 默认每块大小为1MB
     }
 
@@ -108,10 +113,10 @@ export class Uploader {
                 const chunkList = new Array(asset.chunkCount)  // 用于存储每个块的元数据
 
                 // 按顺序上传文件的每一块
-                const uploadChunk = async (index: number) => {
-                    const start = index * this.chunkSize
+                for (let i = 0; i < asset.chunkCount; i++) {
+                    const start = i * this.chunkSize
                     const end = Math.min(file.size, start + this.chunkSize)
-                    console.log(`Try to read the index=${index} chunk, size=${end - start}`)
+                    console.log(`Try to read the index=${i} chunk, size=${end - start}`)
                     let data = await readBlock(file, start, end)  // 读取文件块
                     assetDigest.update(data)  // 更新资产的哈希
 
@@ -120,26 +125,32 @@ export class Uploader {
                         data = await this.assetCipher.encrypt(data)
                     }
 
-                    const chunkHash = await computeHash(data)  // 计算块的哈希值
-                    mergeDigest.update(chunkHash)  // 更新合并哈希
+                    const block = await this.blockProvider.createBlockMetadata(data)
+                    mergeDigest.update(decodeHex(block.hash))  // 更新合并哈希
 
-                    // 上传块数据到区块存储
-                    const block = await this.blockProvider.put(encodeHex(chunkHash), BigInt(data.length), data)
-                    chunkList[index] = convertChunkMetadataFromBlock(index, block)
-
-                    // 如果是最后一个块，设置资产的所有信息
-                    if (index === asset.chunkCount - 1) {
-                        asset.chunks = chunkList  // 设置块的元数据
-                        asset.contentHash = encodeHex(assetDigest.sum())  // 设置资产哈希
-                        asset.mergedHash = encodeHex(mergeDigest.sum())  // 设置合并哈希
-                        return
+                    const confirmBody = await this.blockProvider.confirm(block)
+                    if (confirmBody.block) {
+                        // 已经存在，无需上传这个block
+                        console.log(`skip the block=${i}, hash=${block.hash}`)
+                        chunkList[i] = convertChunkMetadataFromBlock(i, confirmBody.block as BlockMetadata)
+                        continue
                     }
 
-                    // 递归上传下一个块
-                    await uploadChunk(index + 1)
+                    // 上传块数据到区块存储
+                    const body = await this.blockProvider.put(block, data)
+                    if (!isExisted(body?.status)) {
+                        return reject(new Error(`Fail to put block=${block}`))
+                    }
+
+                    chunkList[i] = convertChunkMetadataFromBlock(i, body.block as BlockMetadata)
                 }
-                await uploadChunk(0)  // 从第一个块开始上传
-                resolve(asset)  // 上传成功，返回资产元数据
+
+                asset.chunks = chunkList  // 设置块的元数据
+                asset.contentHash = encodeHex(assetDigest.sum())  // 设置资产哈希
+                asset.mergedHash = encodeHex(mergeDigest.sum())  // 设置合并哈希
+                await this.assetProvider.signAssetMetadata(asset)
+                const body = await this.assetProvider.sign(asset)
+                resolve(body.asset as AssetMetadata)  // 上传成功，返回资产元数据
             } catch (err) {
                 console.error(`Fail to upload the file=${file.name}`, err)
                 return reject(err)  // 上传失败，返回错误
