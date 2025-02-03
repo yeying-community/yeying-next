@@ -4,18 +4,24 @@ import {
     Block,
     BlockMetadata,
     BlockMetadataSchema,
+    ConfirmBlockRequestBodySchema,
+    ConfirmBlockRequestSchema,
+    ConfirmBlockResponseBody,
+    ConfirmBlockResponseBodySchema,
     GetBlockRequestBodySchema,
     GetBlockRequestSchema,
     GetBlockResponseBodySchema,
     PutBlockRequestBodySchema,
     PutBlockRequestSchema,
+    PutBlockResponseBody,
     PutBlockResponseBodySchema
 } from '../../yeying/api/asset/block_pb'
 import {getCurrentUtcString} from '../../common/date'
 import {Client, createClient} from "@connectrpc/connect";
 import {createGrpcWebTransport} from "@connectrpc/connect-web";
 import {create, toBinary} from "@bufbuild/protobuf";
-import {isOk} from "../../common/status";
+import {computeHash} from "../../common/crypto";
+import {encodeHex} from "../../common/codec";
 
 /**
  * 区块提供者类，用于与区块链交互，提供数据的获取和存储功能。
@@ -97,34 +103,66 @@ export class BlockProvider {
         })
     }
 
+    async createBlockMetadata(data: Uint8Array) {
+        const chunkHash = await computeHash(data)  // 计算块的哈希值
+        const block = create(BlockMetadataSchema, {
+            hash: encodeHex(chunkHash),
+            owner: this.authenticate.getDid(),
+            createdAt: getCurrentUtcString(),
+            size: BigInt(data.length),
+        })
+        block.signature = await this.authenticate.sign(toBinary(BlockMetadataSchema, block))
+        return block
+    }
+
+    confirm(block: BlockMetadata) {
+        return new Promise<ConfirmBlockResponseBody>(async (resolve, reject) => {
+            const body = create(ConfirmBlockRequestBodySchema, {block: block})
+            let header
+            try {
+                header = await this.authenticate.createHeader(toBinary(ConfirmBlockRequestBodySchema, body))
+            } catch (err) {
+                console.error('Fail to create header when confirming block', err)
+                return reject(err)
+            }
+
+            const request = create(ConfirmBlockRequestSchema, {header: header, body: body})
+            try {
+                const res = await this.client.confirm(request)
+                await this.authenticate.doResponse(res, ConfirmBlockResponseBodySchema)
+                const resBody = res.body as ConfirmBlockResponseBody
+                if (resBody.block) {
+                    if (!await this.verifyBlockMetadata(resBody.block)) {
+                        reject(new Error('invalid block metadata!'))
+                    }
+                }
+
+                return resolve(resBody)
+            } catch (err) {
+                console.error('Fail to put block', err)
+                return reject(err)
+            }
+        })
+    }
+
     /**
      * 存储区块数据。
      *
-     * @param hash - 要存储的区块的哈希值。
-     * @param size - 区块数据的大小。
+     * @param block - 要存储的区块的哈希值。
      * @param data - 区块数据（Uint8Array）。
      * @returns 一个 Promise，解析为存储后的区块元数据（BlockMetadata）。
      * @throws {Error} 如果存储区块失败，抛出错误。
      * @example
      * ```ts
-     * const blockMetadata = await blockProvider.put('someHash', 1000, someData);
-     * console.log(blockMetadata); // 输出存储后的区块元数据
+     * const body = await blockProvider.put('someHash', 1000, someData);
+     * console.log(body); // 输出存储后的区块元数据
      * ```
      */
-    put(hash: string, size: bigint, data: Uint8Array) {
-        return new Promise<BlockMetadata>(async (resolve, reject) => {
-            const block = create(BlockMetadataSchema, {
-                hash: hash,
-                owner: this.authenticate.getDid(),
-                createdAt: getCurrentUtcString(),
-                size: size,
-            })
-
+    put(block: BlockMetadata, data: Uint8Array) {
+        return new Promise<PutBlockResponseBody>(async (resolve, reject) => {
             const body = create(PutBlockRequestBodySchema, {block: block})
-
             let header
             try {
-                block.signature = await this.authenticate.sign(toBinary(BlockMetadataSchema, block))
                 header = await this.authenticate.createHeader(toBinary(PutBlockRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header when putting chunk content', err)
@@ -135,15 +173,34 @@ export class BlockProvider {
             try {
                 const res = await this.client.put(request)
                 await this.authenticate.doResponse(res, PutBlockResponseBodySchema)
-                if (isOk(res?.body?.status)) {
-                    resolve(block)
+                const resBody = res.body as PutBlockResponseBody
+                if (await this.verifyBlockMetadata(resBody.block)) {
+                    resolve(resBody)
                 } else {
-                    reject(new Error())
+                    reject(new Error('invalid block metadata!'))
                 }
             } catch (err) {
                 console.error('Fail to put block', err)
                 return reject(err)
             }
         })
+    }
+
+    async verifyBlockMetadata(block?: BlockMetadata) {
+        if (block === undefined) {
+            return false
+        }
+
+        const signature = block.signature
+        try {
+            block.signature = ''
+            return await this.authenticate.verify(
+                block.owner,
+                toBinary(BlockMetadataSchema, block),
+                signature
+            )
+        } finally {
+            block.signature = signature
+        }
     }
 }

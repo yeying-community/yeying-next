@@ -26,18 +26,20 @@ const content = "hello, yeying community!"
 
 describe('Asset', () => {
     it('upload', async () => {
-        const blockProvider = new BlockProvider(provider)
-        const assetProvider = new AssetProvider(provider)
-        const uploader = new Uploader(blockProvider, new AssetCipher(provider.blockAddress, securityAlgorithm))
+        const uploader = new Uploader(provider, securityAlgorithm)
         const uid = 'fbfe2701-3fc9-4e88-a1b5-e660d1bef159'
         const name = 'test'
         const blob = new Blob([content], {type: 'text/plain'})
         const file = new File([blob], name, {type: 'text/plain'})
         const version = 0
-        const asset = await uploader.upload(file, uid, version, true)
-        const body = await assetProvider.sign(asset)
-        assert.isTrue(isOk(body.status))
-        console.log(`Success to put a asset, id=${uid}, hash=${asset.contentHash}, mergedHash=${asset.mergedHash}`)
+        try {
+            const asset = await uploader.upload(file, uid, version, true)
+            assert.isDefined(asset)
+            console.log(`Success to put asset, id=${uid}, hash=${asset.contentHash}, mergedHash=${asset.mergedHash}`)
+        } catch (err) {
+            console.error('Fail to upload', err)
+            assert.isTrue(false)
+        }
     })
 
     it('search', async () => {
@@ -57,13 +59,10 @@ describe('Asset', () => {
     })
 
     it('download', async () => {
-        const assetProvider = new AssetProvider(provider)
-        const blockProvider = new BlockProvider(provider)
+        const downloader = new Downloader(provider, securityAlgorithm)
         const uid = 'fbfe2701-3fc9-4e88-a1b5-e660d1bef159'
         const version = 0
-        const body = await assetProvider.detail(uid, version, false)
-        const downloader = new Downloader(blockProvider, new AssetCipher(provider.blockAddress, securityAlgorithm))
-        const blob = await downloader.download(body.asset as AssetMetadata)
+        const blob = await downloader.download(uid, version)
         const text = await readFile(blob as Blob, ResultDataType.Text)
         assert.equal(text as string, content)
         console.log(`Success to download uid=${uid}, text=${text}`)

@@ -27,6 +27,7 @@ import {create, toBinary} from "@bufbuild/protobuf";
 import {createGrpcWebTransport} from "@connectrpc/connect-web";
 import {Client, createClient} from '@connectrpc/connect'
 import {NotFound} from "../../common/error";
+import {SolutionMetadataSchema} from "../../yeying/api/bulletin/bulletin_pb";
 
 /**
  * 代表了一个用户节点提供商，提供对用户的增、删、改、查操作。
@@ -98,7 +99,12 @@ export class UserProvider {
             try {
                 const res = await this.client.add(request)
                 await this.authenticate.doResponse(res, AddUserResponseBodySchema)
-                resolve(res.body as AddUserResponseBody)
+                const resBody = res.body as AddUserResponseBody
+                if (await this.verifyUserMetadata(resBody.user as UserMetadata)) {
+                    resolve(resBody)
+                } else {
+                    reject(new Error('invalid user metadata!'))
+                }
             } catch (err) {
                 console.error('Fail to add user', err)
                 return reject(err)
@@ -133,12 +139,35 @@ export class UserProvider {
             try {
                 const res = await this.client.get(request)
                 await this.authenticate.doResponse(res, GetUserResponseBodySchema)
-                resolve(res.body as GetUserResponseBody)
+                const resBody = res.body as GetUserResponseBody
+                if (await this.verifyUserMetadata(resBody.user)) {
+                    resolve(resBody)
+                } else {
+                    reject(new Error('invalid user metadata!'))
+                }
             } catch (err) {
                 console.error('Fail to get user', err)
                 return reject(err)
             }
         })
+    }
+
+    private async verifyUserMetadata(user?: UserMetadata) {
+        if (user === undefined) {
+            return false
+        }
+
+        const signature = user.signature
+        try {
+            user.signature = ''
+            return await this.authenticate.verify(
+                user.did,
+                toBinary(UserMetadataSchema, user),
+                signature
+            )
+        } finally {
+            user.signature = signature
+        }
     }
 
     /**

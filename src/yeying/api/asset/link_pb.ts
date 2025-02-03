@@ -2,8 +2,8 @@
 // @generated from file yeying/api/asset/link.proto (package yeying.api.asset, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
-import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv1";
+import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
+import { enumDesc, fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv1";
 import type { MessageHeader, RequestPage, ResponsePage, ResponseStatus } from "../common/message_pb";
 import { file_yeying_api_common_message } from "../common/message_pb";
 import type { Message } from "@bufbuild/protobuf";
@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/asset/link.proto.
  */
 export const file_yeying_api_asset_link: GenFile = /*@__PURE__*/
-  fileDesc("Cht5ZXlpbmcvYXBpL2Fzc2V0L2xpbmsucHJvdG8SEHlleWluZy5hcGkuYXNzZXQifAoRQ3JlYXRlTGlua1JlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS5hc3NldC5DcmVhdGVMaW5rUmVxdWVzdEJvZHkiRQoVQ3JlYXRlTGlua1JlcXVlc3RCb2R5EiwKBGxpbmsYASABKAsyHi55ZXlpbmcuYXBpLmFzc2V0LkxpbmtNZXRhZGF0YSJ+ChJDcmVhdGVMaW5rUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI2CgRib2R5GAIgASgLMigueWV5aW5nLmFwaS5hc3NldC5DcmVhdGVMaW5rUmVzcG9uc2VCb2R5InkKFkNyZWF0ZUxpbmtSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSLAoEbGluaxgCIAEoCzIeLnlleWluZy5hcGkuYXNzZXQuTGlua01ldGFkYXRhInwKEVNlYXJjaExpbmtSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkuYXNzZXQuU2VhcmNoTGlua1JlcXVlc3RCb2R5IlQKFVNlYXJjaExpbmtSZXF1ZXN0Qm9keRIsCgRwYWdlGAEgASgLMh4ueWV5aW5nLmFwaS5jb21tb24uUmVxdWVzdFBhZ2USDQoFb3duZXIYAiABKAkifgoSU2VhcmNoTGlua1Jlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNgoEYm9keRgCIAEoCzIoLnlleWluZy5hcGkuYXNzZXQuU2VhcmNoTGlua1Jlc3BvbnNlQm9keSKpAQoWU2VhcmNoTGlua1Jlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxItCgRwYWdlGAIgASgLMh8ueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VQYWdlEi0KBWxpbmtzGAMgAygLMh4ueWV5aW5nLmFwaS5hc3NldC5MaW5rTWV0YWRhdGEifAoRVXBkYXRlTGlua1JlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS5hc3NldC5VcGRhdGVMaW5rUmVxdWVzdEJvZHkiRQoVVXBkYXRlTGlua1JlcXVlc3RCb2R5EiwKBGxpbmsYASABKAsyHi55ZXlpbmcuYXBpLmFzc2V0LkxpbmtNZXRhZGF0YSJ+ChJVcGRhdGVMaW5rUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI2CgRib2R5GAIgASgLMigueWV5aW5nLmFwaS5hc3NldC5VcGRhdGVMaW5rUmVzcG9uc2VCb2R5InkKFlVwZGF0ZUxpbmtSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSLAoEbGluaxgCIAEoCzIeLnlleWluZy5hcGkuYXNzZXQuTGlua01ldGFkYXRhInwKEUxpbmtEZXRhaWxSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkuYXNzZXQuVXBkYXRlTGlua1JlcXVlc3RCb2R5IkUKFUxpbmtEZXRhaWxSZXF1ZXN0Qm9keRIsCgRsaW5rGAEgASgLMh4ueWV5aW5nLmFwaS5hc3NldC5MaW5rTWV0YWRhdGEifgoSTGlua0RldGFpbFJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNgoEYm9keRgCIAEoCzIoLnlleWluZy5hcGkuYXNzZXQuTGlua0RldGFpbFJlc3BvbnNlQm9keSJ5ChZMaW5rRGV0YWlsUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEiwKBGxpbmsYAiABKAsyHi55ZXlpbmcuYXBpLmFzc2V0LkxpbmtNZXRhZGF0YSKPAQoMTGlua01ldGFkYXRhEgsKA3VpZBgBIAEoCRINCgVvd25lchgCIAEoCRINCgV1c2VycxgDIAMoCRIMCgRoYXNoGAQgASgJEg0KBXRva2VuGAUgASgJEhEKCWV4cGlyZWRBdBgGIAEoCRIRCgljcmVhdGVkQXQYByABKAkSEQoJc2lnbmF0dXJlGAggASgJMuICCgRMaW5rElUKBkNyZWF0ZRIjLnlleWluZy5hcGkuYXNzZXQuQ3JlYXRlTGlua1JlcXVlc3QaJC55ZXlpbmcuYXBpLmFzc2V0LkNyZWF0ZUxpbmtSZXNwb25zZSIAElUKBlNlYXJjaBIjLnlleWluZy5hcGkuYXNzZXQuU2VhcmNoTGlua1JlcXVlc3QaJC55ZXlpbmcuYXBpLmFzc2V0LlNlYXJjaExpbmtSZXNwb25zZSIAElUKBlVwZGF0ZRIjLnlleWluZy5hcGkuYXNzZXQuVXBkYXRlTGlua1JlcXVlc3QaJC55ZXlpbmcuYXBpLmFzc2V0LlVwZGF0ZUxpbmtSZXNwb25zZSIAElUKBkRldGFpbBIjLnlleWluZy5hcGkuYXNzZXQuTGlua0RldGFpbFJlcXVlc3QaJC55ZXlpbmcuYXBpLmFzc2V0LkxpbmtEZXRhaWxSZXNwb25zZSIAQhJaEHlleWluZy9hcGkvYXNzZXRiBnByb3RvMw", [file_yeying_api_common_message]);
+  fileDesc("Cht5ZXlpbmcvYXBpL2Fzc2V0L2xpbmsucHJvdG8SEHlleWluZy5hcGkuYXNzZXQifAoRQ3JlYXRlTGlua1JlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS5hc3NldC5DcmVhdGVMaW5rUmVxdWVzdEJvZHkiRQoVQ3JlYXRlTGlua1JlcXVlc3RCb2R5EiwKBGxpbmsYASABKAsyHi55ZXlpbmcuYXBpLmFzc2V0LkxpbmtNZXRhZGF0YSJ+ChJDcmVhdGVMaW5rUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI2CgRib2R5GAIgASgLMigueWV5aW5nLmFwaS5hc3NldC5DcmVhdGVMaW5rUmVzcG9uc2VCb2R5InkKFkNyZWF0ZUxpbmtSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSLAoEbGluaxgCIAEoCzIeLnlleWluZy5hcGkuYXNzZXQuTGlua01ldGFkYXRhInwKEVNlYXJjaExpbmtSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkuYXNzZXQuU2VhcmNoTGlua1JlcXVlc3RCb2R5IlQKFVNlYXJjaExpbmtSZXF1ZXN0Qm9keRIsCgRwYWdlGAEgASgLMh4ueWV5aW5nLmFwaS5jb21tb24uUmVxdWVzdFBhZ2USDQoFb3duZXIYAiABKAkifgoSU2VhcmNoTGlua1Jlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNgoEYm9keRgCIAEoCzIoLnlleWluZy5hcGkuYXNzZXQuU2VhcmNoTGlua1Jlc3BvbnNlQm9keSKpAQoWU2VhcmNoTGlua1Jlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxItCgRwYWdlGAIgASgLMh8ueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VQYWdlEi0KBWxpbmtzGAMgAygLMh4ueWV5aW5nLmFwaS5hc3NldC5MaW5rTWV0YWRhdGEifAoRVXBkYXRlTGlua1JlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS5hc3NldC5VcGRhdGVMaW5rUmVxdWVzdEJvZHkiRQoVVXBkYXRlTGlua1JlcXVlc3RCb2R5EiwKBGxpbmsYASABKAsyHi55ZXlpbmcuYXBpLmFzc2V0LkxpbmtNZXRhZGF0YSJ+ChJVcGRhdGVMaW5rUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI2CgRib2R5GAIgASgLMigueWV5aW5nLmFwaS5hc3NldC5VcGRhdGVMaW5rUmVzcG9uc2VCb2R5InkKFlVwZGF0ZUxpbmtSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSLAoEbGluaxgCIAEoCzIeLnlleWluZy5hcGkuYXNzZXQuTGlua01ldGFkYXRhInwKEUxpbmtEZXRhaWxSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkuYXNzZXQuVXBkYXRlTGlua1JlcXVlc3RCb2R5IiQKFUxpbmtEZXRhaWxSZXF1ZXN0Qm9keRILCgN1aWQYASABKAkifgoSTGlua0RldGFpbFJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNgoEYm9keRgCIAEoCzIoLnlleWluZy5hcGkuYXNzZXQuTGlua0RldGFpbFJlc3BvbnNlQm9keSKuAQoWTGlua0RldGFpbFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxIsCgRsaW5rGAIgASgLMh4ueWV5aW5nLmFwaS5hc3NldC5MaW5rTWV0YWRhdGESMwoIdmlzaXRvcnMYAyADKAsyIS55ZXlpbmcuYXBpLmFzc2V0LlZpc2l0b3JNZXRhZGF0YSK1AQoMTGlua01ldGFkYXRhEgsKA3VpZBgBIAEoCRIwCgZzdGF0dXMYAiABKA4yIC55ZXlpbmcuYXBpLmFzc2V0LkxpbmtTdGF0dXNFbnVtEhAKCHZpc2l0b3JzGAMgASgJEg0KBW93bmVyGAQgASgJEgwKBGhhc2gYBSABKAkSEQoJZXhwaXJlZEF0GAYgASgJEhEKCWNyZWF0ZWRBdBgHIAEoCRIRCglzaWduYXR1cmUYCCABKAkiUwoPVmlzaXRvck1ldGFkYXRhEgsKA3VpZBgBIAEoCRIPCgd2aXNpdG9yGAIgASgJEg8KB3Zpc2l0QXQYAyABKAkSEQoJc2lnbmF0dXJlGAQgASgJKnoKDkxpbmtTdGF0dXNFbnVtEhcKE0xJTktfU1RBVFVTX1VOS05PV04QABIaChZMSU5LX1NUQVRVU19VTlZFUklGSUVEEAESGAoUTElOS19TVEFUVVNfVkVSSUZJRUQQAhIZChVMSU5LX1NUQVRVU19DQU5DRUxMRUQQAzLiAgoETGluaxJVCgZDcmVhdGUSIy55ZXlpbmcuYXBpLmFzc2V0LkNyZWF0ZUxpbmtSZXF1ZXN0GiQueWV5aW5nLmFwaS5hc3NldC5DcmVhdGVMaW5rUmVzcG9uc2UiABJVCgZTZWFyY2gSIy55ZXlpbmcuYXBpLmFzc2V0LlNlYXJjaExpbmtSZXF1ZXN0GiQueWV5aW5nLmFwaS5hc3NldC5TZWFyY2hMaW5rUmVzcG9uc2UiABJVCgZVcGRhdGUSIy55ZXlpbmcuYXBpLmFzc2V0LlVwZGF0ZUxpbmtSZXF1ZXN0GiQueWV5aW5nLmFwaS5hc3NldC5VcGRhdGVMaW5rUmVzcG9uc2UiABJVCgZEZXRhaWwSIy55ZXlpbmcuYXBpLmFzc2V0LkxpbmtEZXRhaWxSZXF1ZXN0GiQueWV5aW5nLmFwaS5hc3NldC5MaW5rRGV0YWlsUmVzcG9uc2UiAEISWhB5ZXlpbmcvYXBpL2Fzc2V0YgZwcm90bzM", [file_yeying_api_common_message]);
 
 /**
  * @generated from message yeying.api.asset.CreateLinkRequest
@@ -300,9 +300,9 @@ export const LinkDetailRequestSchema: GenMessage<LinkDetailRequest> = /*@__PURE_
  */
 export type LinkDetailRequestBody = Message<"yeying.api.asset.LinkDetailRequestBody"> & {
   /**
-   * @generated from field: yeying.api.asset.LinkMetadata link = 1;
+   * @generated from field: string uid = 1;
    */
-  link?: LinkMetadata;
+  uid: string;
 };
 
 /**
@@ -347,6 +347,11 @@ export type LinkDetailResponseBody = Message<"yeying.api.asset.LinkDetailRespons
    * @generated from field: yeying.api.asset.LinkMetadata link = 2;
    */
   link?: LinkMetadata;
+
+  /**
+   * @generated from field: repeated yeying.api.asset.VisitorMetadata visitors = 3;
+   */
+  visitors: VisitorMetadata[];
 };
 
 /**
@@ -361,39 +366,39 @@ export const LinkDetailResponseBodySchema: GenMessage<LinkDetailResponseBody> = 
  */
 export type LinkMetadata = Message<"yeying.api.asset.LinkMetadata"> & {
   /**
-   * 链接唯一id
+   * 分享链接唯一ID
    *
    * @generated from field: string uid = 1;
    */
   uid: string;
 
   /**
+   * 分享链接状态
+   *
+   * @generated from field: yeying.api.asset.LinkStatusEnum status = 2;
+   */
+  status: LinkStatusEnum;
+
+  /**
+   * 指定分享链接的访问者身份ID，多个访问者使用逗号隔开，如果不指定，说明任何身份都可以访问
+   *
+   * @generated from field: string visitors = 3;
+   */
+  visitors: string;
+
+  /**
    * 资产所有者身份ID
    *
-   * @generated from field: string owner = 2;
+   * @generated from field: string owner = 4;
    */
   owner: string;
 
   /**
-   * 资产使用者身份ID，如果不指定，说明可以分享给所有人
-   *
-   * @generated from field: repeated string users = 3;
-   */
-  users: string[];
-
-  /**
    * 资产内容哈希
    *
-   * @generated from field: string hash = 4;
+   * @generated from field: string hash = 5;
    */
   hash: string;
-
-  /**
-   * 资产令牌
-   *
-   * @generated from field: string token = 5;
-   */
-  token: string;
 
   /**
    * 分享链接有效截止时间
@@ -410,7 +415,7 @@ export type LinkMetadata = Message<"yeying.api.asset.LinkMetadata"> & {
   createdAt: string;
 
   /**
-   * 资产所有签名
+   * 资产所有者签名
    *
    * @generated from field: string signature = 8;
    */
@@ -423,6 +428,85 @@ export type LinkMetadata = Message<"yeying.api.asset.LinkMetadata"> & {
  */
 export const LinkMetadataSchema: GenMessage<LinkMetadata> = /*@__PURE__*/
   messageDesc(file_yeying_api_asset_link, 16);
+
+/**
+ * @generated from message yeying.api.asset.VisitorMetadata
+ */
+export type VisitorMetadata = Message<"yeying.api.asset.VisitorMetadata"> & {
+  /**
+   * 分享链接唯一ID
+   *
+   * @generated from field: string uid = 1;
+   */
+  uid: string;
+
+  /**
+   * 访问者身份ID
+   *
+   * @generated from field: string visitor = 2;
+   */
+  visitor: string;
+
+  /**
+   * 访问时间
+   *
+   * @generated from field: string visitAt = 3;
+   */
+  visitAt: string;
+
+  /**
+   * 访问者签名
+   *
+   * @generated from field: string signature = 4;
+   */
+  signature: string;
+};
+
+/**
+ * Describes the message yeying.api.asset.VisitorMetadata.
+ * Use `create(VisitorMetadataSchema)` to create a new message.
+ */
+export const VisitorMetadataSchema: GenMessage<VisitorMetadata> = /*@__PURE__*/
+  messageDesc(file_yeying_api_asset_link, 17);
+
+/**
+ * @generated from enum yeying.api.asset.LinkStatusEnum
+ */
+export enum LinkStatusEnum {
+  /**
+   * 未知编码，是一种占位符
+   *
+   * @generated from enum value: LINK_STATUS_UNKNOWN = 0;
+   */
+  LINK_STATUS_UNKNOWN = 0,
+
+  /**
+   * 无需验证身份，直接访问
+   *
+   * @generated from enum value: LINK_STATUS_UNVERIFIED = 1;
+   */
+  LINK_STATUS_UNVERIFIED = 1,
+
+  /**
+   * 需要验证身份，访问需要身份DID、下载时间和签名
+   *
+   * @generated from enum value: LINK_STATUS_VERIFIED = 2;
+   */
+  LINK_STATUS_VERIFIED = 2,
+
+  /**
+   * 提前取消分享链接
+   *
+   * @generated from enum value: LINK_STATUS_CANCELLED = 3;
+   */
+  LINK_STATUS_CANCELLED = 3,
+}
+
+/**
+ * Describes the enum yeying.api.asset.LinkStatusEnum.
+ */
+export const LinkStatusEnumSchema: GenEnum<LinkStatusEnum> = /*@__PURE__*/
+  enumDesc(file_yeying_api_asset_link, 0);
 
 /**
  * @generated from service yeying.api.asset.Link

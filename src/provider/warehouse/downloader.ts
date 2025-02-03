@@ -1,7 +1,10 @@
-import { BlockProvider } from './block'
+import {BlockProvider} from './block'
 import {AssetMetadata, AssetMetadataSchema} from '../../yeying/api/asset/asset_pb'
-import { AssetCipher } from './cipher'
+import {AssetCipher} from './cipher'
 import {toJson} from "@bufbuild/protobuf";
+import {ProviderOption} from "../common/model";
+import {SecurityAlgorithm} from "@yeying-community/yeying-web3";
+import {AssetProvider} from "./asset";
 
 /**
  * Downloader 类用于下载资产数据，支持从区块提供者获取数据并进行解密。
@@ -18,6 +21,7 @@ import {toJson} from "@bufbuild/protobuf";
  */
 export class Downloader {
     blockProvider: BlockProvider
+    assetProvider: AssetProvider
     assetCipher: AssetCipher
 
     /**
@@ -32,9 +36,10 @@ export class Downloader {
      * const downloader = new Downloader(blockProvider, assetCipher);
      * ```
      */
-    constructor(blockProvider: BlockProvider, assetCipher: AssetCipher) {
-        this.blockProvider = blockProvider
-        this.assetCipher = assetCipher
+    constructor(option: ProviderOption, securityAlgorithm: SecurityAlgorithm) {
+        this.assetProvider = new AssetProvider(option)
+        this.blockProvider = new BlockProvider(option)
+        this.assetCipher = new AssetCipher(option.blockAddress, securityAlgorithm)
     }
 
     /**
@@ -53,9 +58,11 @@ export class Downloader {
      * });
      * ```
      */
-    download(asset: AssetMetadata) {
+    download(uid: string, version: number, trash: boolean = false) {
         return new Promise(async (resolve, reject) => {
             try {
+                const body = await this.assetProvider.detail(uid, version, trash)
+                const asset = body.asset as AssetMetadata
                 console.log(`Try to download asset=${JSON.stringify(toJson(AssetMetadataSchema, asset))}`)
 
                 const chunkBlobs = new Array(asset.chunkCount).fill(undefined)
@@ -74,11 +81,11 @@ export class Downloader {
                     }
 
                     // 将解密后的数据块转换为 Blob
-                    chunkBlobs[index] = new Blob([data], { type: 'application/octet-stream' })
+                    chunkBlobs[index] = new Blob([data], {type: 'application/octet-stream'})
 
                     // 如果所有块都已下载，合并为一个 Blob 并返回
                     if (index === chunkBlobs.length - 1) {
-                        resolve(new Blob(chunkBlobs, { type: 'application/octet-stream' }))
+                        resolve(new Blob(chunkBlobs, {type: 'application/octet-stream'}))
                     } else {
                         // 否则继续下载下一个块
                         await downloadChunk(index + 1)
@@ -88,7 +95,7 @@ export class Downloader {
                 // 从第0块开始下载，当前是顺序下载，后续可以支持并发下载
                 await downloadChunk(0)
             } catch (e) {
-                console.log(`Fail to download asset=${asset}`, e)
+                console.log(`Fail to download asset, uid=${uid}, version=${version}, trash=${trash}`, e)
                 return reject(e)
             }
         })
