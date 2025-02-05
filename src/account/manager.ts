@@ -4,14 +4,14 @@
 // 2、所有的密码的管理都是在端上完成，不会和后台服务器有任何交互，也就是密码完全由用户负责；
 // 3、一个端上多个身份切换，任何时刻只有一个身份在起作用
 // 4、对于不再端上使用的身份，能够一键清理不留痕迹；
-import {SessionCache} from '../cache/session'
-import {LocalCache} from '../cache/local'
-import {InvalidPassword, NotFound} from '../common/error'
-import {Account} from './model'
+import { SessionCache } from '../cache/session'
+import { LocalCache } from '../cache/local'
+import { InvalidPassword, NotFound } from '../common/error'
+import { Account } from './model'
 import {
     BlockAddress,
     createBlockAddress,
-    createIdentity,
+    createIdentity, deserializeIdentityFromJson,
     Identity,
     IdentityApplicationExtend,
     IdentityCodeEnum,
@@ -22,11 +22,11 @@ import {
     IdentityTemplate,
     NetworkTypeEnum,
     SecurityAlgorithm,
-    SecurityConfig,
+    SecurityConfig, serializeIdentityToJson,
     updateIdentity,
     verifyIdentity
 } from '@yeying-community/yeying-web3'
-import {CookieCache} from '../cache/cookie'
+import { CookieCache } from '../cache/cookie'
 import {
     decryptBlockAddress,
     decryptString,
@@ -35,9 +35,9 @@ import {
     generateIv,
     generateSecurityAlgorithm
 } from '../common/crypto'
-import {decodeBase64, encodeBase64} from '../common/codec'
-import {LanguageCodeEnum} from '../yeying/api/common/code_pb'
-import {convertLanguageCodeTo} from '../common/message'
+import { encodeBase64 } from '../common/codec'
+import { LanguageCodeEnum } from '../yeying/api/common/code_pb'
+import { convertLanguageCodeTo } from '../common/message'
 
 /**
  * 账号管理类，用于管理用户账号、身份及缓存数据。
@@ -198,8 +198,7 @@ export class AccountManager {
      * // 清理对应 DID 的身份信息
      * ```
      */
-    clear(did: string) {
-    }
+    clear(did: string) {}
 
     /**
      * 判断指定 DID 是否已经登录。
@@ -373,7 +372,7 @@ export class AccountManager {
         const did = metadata.did
 
         // 将身份数据缓存
-        this.identityCache.set(did, encodeBase64(Identity.encode(identity).finish()))
+        this.identityCache.set(did, serializeIdentityToJson(identity))
         this.identityMap.set(did, identity)
         this.blockAddressMap.set(did, blockAddress)
         return identity
@@ -405,7 +404,7 @@ export class AccountManager {
         const did = (identity.metadata as IdentityMetadata).did
 
         // 更新缓存中的身份信息
-        this.identityCache.set(did, encodeBase64(Identity.encode(newIdentity).finish()))
+        this.identityCache.set(did, serializeIdentityToJson(newIdentity))
         this.identityMap.set(did, newIdentity)
         this.blockAddressMap.set(did, blockAddress)
         return did
@@ -429,7 +428,7 @@ export class AccountManager {
         }
 
         // 验证身份是否有效
-        const identity = Identity.decode(decodeBase64(s))
+        const identity = deserializeIdentityFromJson(s)
         const passed = await verifyIdentity(identity)
         if (passed) {
             return identity
@@ -439,19 +438,20 @@ export class AccountManager {
     /**
      * 导入身份信息。
      *
-     * @param content - 要导入的身份信息内容（Base64 编码）。
+     * @param content - 要导入的身份内容。
      * @example
      * ```ts
-     * await importIdentity(content);
+     * const identity = await importIdentity(content);
      * ```
      */
     async importIdentity(content: string) {
-        const identity = Identity.decode(decodeBase64(content))
+        const identity = deserializeIdentityFromJson(content)
         const metadata = identity.metadata as IdentityMetadata
         // 验证身份
         await verifyIdentity(identity)
         // 将导入的身份缓存
         this.identityCache.set(metadata.did, content)
+        return identity
     }
 
     /**
@@ -469,7 +469,7 @@ export class AccountManager {
      */
     private addAccount(did: string, name: string, avatar: string): Account {
         const historyAccounts = this.getHistoryAccounts()
-        const account: Account = {name: name, did: did, avatar: avatar, timestamp: Date.now()}
+        const account: Account = { name: name, did: did, avatar: avatar, timestamp: Date.now() }
 
         // 查找账户是否已存在
         const index = historyAccounts.findIndex((i) => i.did === did)
