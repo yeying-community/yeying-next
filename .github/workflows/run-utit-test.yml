@@ -45,10 +45,12 @@ jobs:
           YEYING_NODE_URL: ${{ vars.YEYING_NODE_URL }}
           YEYING_AGENT_URL: ${{ vars.YEYING_AGENT_URL }}
           YEYING_WAREHOUSE_URL: ${{ vars.YEYING_WAREHOUSE_URL }}
+          YEYING_AI_URL: ${{ vars.YEYING_AI_URL }}
         run: |
           echo "Using Yeying Node URL: $YEYING_NODE_URL"
           echo "Using Yeying Agent URL: $YEYING_AGENT_URL"
           echo "Using Yeying Warehouse URL: $YEYING_WAREHOUSE_URL"
+          echo "Using Yeying AI URL: $YEYING_AI_URL"
           shopt -s globstar; npm run test -- tests/**/*.ut.ts
 
       - name: check it.ts file exists
@@ -62,10 +64,12 @@ jobs:
           YEYING_NODE_URL: ${{ vars.YEYING_NODE_URL }}
           YEYING_AGENT_URL: ${{ vars.YEYING_AGENT_URL }}
           YEYING_WAREHOUSE_URL: ${{ vars.YEYING_WAREHOUSE_URL }}
+          YEYING_AI_URL: ${{ vars.YEYING_AI_URL }}
         run: |
           echo "Using Yeying Node URL: $YEYING_NODE_URL"
           echo "Using Yeying Agent URL: $YEYING_AGENT_URL"
           echo "Using Yeying Warehouse URL: $YEYING_WAREHOUSE_URL"
+          echo "Using Yeying AI URL: $YEYING_AI_URL"
           shopt -s globstar; npm run test -- tests/**/*.it.ts
 
       - name: Generate docs

@@ -377,6 +377,13 @@ export enum ServiceCodeEnum {
    * @generated from enum value: SERVICE_CODE_MCP = 4;
    */
   SERVICE_CODE_MCP = 4,
+
+  /**
+   * 机器人服务供应商，提供各种模型和算法服务
+   *
+   * @generated from enum value: SERVICE_CODE_AI = 5;
+   */
+  SERVICE_CODE_AI = 5,
 }
 
 /**
