@@ -60,24 +60,19 @@ export class BlockProvider {
 
     /**
      * 获取区块的所有者 DID。
-     *
-     * @returns 返回区块的所有者 DID。
-     * @example
-     * ```ts
-     * const owner = blockProvider.getOwner();
-     * console.log(owner); // 输出区块所有者 DID
-     * ```
      */
     getOwner() {
         return this.authenticate.getDid()
     }
 
     /**
-     * 获取指定哈希值的区块数据。
+     * 获取资产块数据。
      *
      * @param hash - 要获取的区块的哈希值。
+     *
      * @returns 一个 Promise，解析为获取到的区块数据（Uint8Array）。
      * @throws {Error} 如果获取区块失败，抛出错误。
+     *
      * @example
      * ```ts
      * const data = await blockProvider.get('someHash');

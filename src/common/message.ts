@@ -1,4 +1,4 @@
-import {CipherTypeEnum, DigitalFormatEnum, LanguageCodeEnum} from '../yeying/api/common/code_pb'
+import { CipherTypeEnum, DigitalFormatEnum, LanguageCodeEnum } from '../yeying/api/common/code_pb'
 
 export function convertIdentityCodeFrom(s: string) {
     const v = CipherTypeEnum[s as keyof typeof CipherTypeEnum]

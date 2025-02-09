@@ -14,9 +14,7 @@ export { AccountManager } from './account/manager'
 export { Account } from './account/model'
 export { MailProvider } from './provider/mail/mail'
 
-
-
-export {IdentityTemplate} from '@yeying-community/yeying-web3'
+export { IdentityTemplate } from '@yeying-community/yeying-web3'
 export * from './yeying/api/common/code_pb'
 export * from './yeying/api/common/message_pb'
 export * from './yeying/api/asset/asset_pb'
