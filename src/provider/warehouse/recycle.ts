@@ -5,6 +5,9 @@ import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary } from '@bufbuild/protobuf'
 import {
     DeletedAssetMetadata,
+    RecoverDeletedAssetRequestBodySchema,
+    RecoverDeletedAssetRequestSchema,
+    RecoverDeletedAssetResponseBodySchema,
     Recycle,
     RemoveDeletedAssetRequestBodySchema,
     RemoveDeletedAssetRequestSchema,
@@ -87,6 +90,40 @@ export class RecycleProvider {
                 resolve(res?.body?.assets as DeletedAssetMetadata[])
             } catch (err) {
                 console.error('Fail to search deleted assets', err)
+                return reject(err)
+            }
+        })
+    }
+
+    /**
+     * 恢复删除资产。
+     *
+     * @param namespaceId 资产的唯一标识符。
+     * @param hash 资产哈希值。
+     *
+     */
+    recover(namespaceId: string, hash: string) {
+        return new Promise<void>(async (resolve, reject) => {
+            const body = create(RecoverDeletedAssetRequestBodySchema, {
+                namespaceId: namespaceId,
+                hash: hash
+            })
+
+            let header
+            try {
+                header = await this.authenticate.createHeader(toBinary(RecoverDeletedAssetRequestBodySchema, body))
+            } catch (err) {
+                console.error('Fail to create header when removing from recycle', err)
+                return reject(err)
+            }
+
+            const request = create(RecoverDeletedAssetRequestSchema, { header: header, body: body })
+            try {
+                const res = await this.client.recover(request)
+                await this.authenticate.doResponse(res, RecoverDeletedAssetResponseBodySchema)
+                resolve()
+            } catch (err) {
+                console.error('Fail to recover asset from recycle', err)
                 return reject(err)
             }
         })
