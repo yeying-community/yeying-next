@@ -1,5 +1,5 @@
-import {Authenticate} from '../common/authenticate'
-import {Client, createClient} from '@connectrpc/connect'
+import { Authenticate } from '../common/authenticate'
+import { Client, createClient } from '@connectrpc/connect'
 import {
     CreateLinkRequestBodySchema,
     CreateLinkRequestSchema,
@@ -7,13 +7,14 @@ import {
     Link,
     LinkMetadata,
     LinkMetadataSchema,
-    LinkStatusEnum
+    LinkTypeEnum,
+    UrlMetadata
 } from '../../yeying/api/asset/link_pb'
-import {ProviderOption} from '../common/model'
-import {createGrpcWebTransport} from '@connectrpc/connect-web'
-import {create, toBinary} from '@bufbuild/protobuf'
-import {generateUuid} from '../../common/string'
-import {formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond} from '../../common/date'
+import { ProviderOption } from '../common/model'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create, toBinary } from '@bufbuild/protobuf'
+import { generateUuid } from '../../common/string'
+import { formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond } from '../../common/date'
 
 /**
  * LinkProvider 类提供对资产分享链接的管理
@@ -43,25 +44,27 @@ export class LinkProvider {
     /**
      * 创建资产分享链接
      *
-     * @param contentHash {string} 要分享的资产哈希值
-     * @param duration {string} 分享链接有效时长，单位是秒
-     * @param status {LinkStatusEnum} 分享链接状态
-     * @param visitors {string[]} 指定具体的访问者
+     * @param namespaceId 资产命名空间
+     * @param hash 要分享的资产哈希值
+     * @param duration 分享链接有效时长，单位是秒
+     * @param type 分享链接类型
+     * @param visitors 指定具体的访问者
      *
      * @returns Promise 创建资产分享链接的状态和元信息
      *
      * @example
      * linkProvider.create(assetMetadata).then(response => { console.log(response); });
      */
-    create(contentHash: string, duration: number, status: LinkStatusEnum, visitors: string[] = []) {
-        return new Promise<LinkMetadata>(async (resolve, reject) => {
+    create(namespaceId: string, hash: string, duration: number, type: LinkTypeEnum, visitors: string[] = []) {
+        return new Promise<[LinkMetadata, UrlMetadata]>(async (resolve, reject) => {
             const link = create(LinkMetadataSchema, {
+                namespaceId: namespaceId,
                 owner: this.authenticate.getDid(),
                 uid: generateUuid(),
                 createdAt: getCurrentUtcString(),
                 expiredAt: formatDateTime(plusSecond(getCurrentUtcDateTime(), duration)),
-                hash: contentHash,
-                status: status,
+                hash: hash,
+                type: type,
                 visitors: visitors && visitors.length > 0 ? visitors.join(',') : undefined
             })
 
@@ -86,7 +89,7 @@ export class LinkProvider {
             try {
                 const res = await this.client.create(request)
                 await this.authenticate.doResponse(res, CreateLinkResponseBodySchema)
-                resolve(res?.body?.link as LinkMetadata)
+                resolve([res?.body?.link as LinkMetadata, res?.body?.url as UrlMetadata])
             } catch (err) {
                 console.error('Fail to create link for asset', err)
                 return reject(err)

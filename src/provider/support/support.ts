@@ -14,7 +14,7 @@ import {
 import { Client, createClient } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary } from '@bufbuild/protobuf'
-import {generateRandomString, generateUuid} from "../../common/string";
+import { generateRandomString, generateUuid } from '../../common/string'
 
 /**
  * 支持服务提供者类，用于与支持服务进行交互，包括收集 FAQ 数据。

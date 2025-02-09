@@ -1,13 +1,13 @@
-import {getCurrentUtcString, isExpired, parseDateTime} from '../../common/date'
-import {generateUuid} from '../../common/string'
-import {MessageHeader, MessageHeaderSchema} from '../../yeying/api/common/message_pb'
-import {AuthenticateTypeEnum} from '../../yeying/api/common/code_pb'
-import {BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes} from '@yeying-community/yeying-web3'
-import {InvalidArgument, NetworkError, NoPermission} from '../../common/error'
-import {composite} from '../../common/bytes'
-import {computeHash} from '../../common/crypto'
-import {create, toBinary} from '@bufbuild/protobuf'
-import {DescMessage} from '@bufbuild/protobuf/dist/cjs/descriptors'
+import { getCurrentUtcString, isExpired, parseDateTime } from '../../common/date'
+import { generateUuid } from '../../common/string'
+import { MessageHeader, MessageHeaderSchema } from '../../yeying/api/common/message_pb'
+import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
+import { BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes } from '@yeying-community/yeying-web3'
+import { InvalidArgument, NetworkError, NoPermission } from '../../common/error'
+import { composite } from '../../common/bytes'
+import { computeHash } from '../../common/crypto'
+import { create, toBinary } from '@bufbuild/protobuf'
+import { DescMessage } from '@bufbuild/protobuf/dist/cjs/descriptors'
 
 /**
  * 基于区块链地址的认证类，用于签名要发送的数据并验证接收到的数据，确保数据传输双方能够确认数据是否被篡改。
@@ -22,43 +22,33 @@ export class Authenticate {
     private blockAddress: BlockAddress
 
     /**
-     * 创建 Authenticate 类的实例。
+     * 创建认证实例。
      *
-     * @param blockAddress - 与此认证实例关联的区块链地址。
+     * @param blockAddress 区块链地址。
      * @example
+     *
      * ```ts
-     * const blockAddress = new BlockAddress(...);
-     * const authenticate = new Authenticate(blockAddress);
+     * const authenticate = new Authenticate(<block address>);
      * ```
+     *
      */
     constructor(blockAddress: BlockAddress) {
         this.blockAddress = blockAddress
     }
 
     /**
-     * 获取区块链地址的 DID（去中心化标识符）。
-     *
-     * @returns 返回区块链地址的 DID。
-     * @example
-     * ```ts
-     * const did = authenticate.getDid();
-     * console.log(did); // 输出区块链地址的 DID
-     * ```
+     * 获取身份DID。
      */
     getDid() {
         return this.blockAddress.identifier
     }
 
     /**
-     * 创建签名的消息头消息头，使用区块链账户的私钥签名。
+     * 创建签名的消息头
      *
-     * @param body - 二进制序列化的消息体，消息体里面是实际的业务数据。
-     * @returns {Promise<MessageHeader>} 签名的消息头。
+     * @param body 二进制序列化的消息体，消息体里面是实际的业务数据。
+     * @returns 签名的消息头。
      * @throws {InvalidArgument} 如果创建消息头失败，则抛出错误。
-     * @example
-     * ```ts
-     * const header = await authenticate.createHeader(body);
-     * console.log(header);
      * ```
      */
     async createHeader(body?: Uint8Array): Promise<MessageHeader> {
@@ -80,16 +70,11 @@ export class Authenticate {
     }
 
     /**
-     * 使用区块链地址的私钥对给定数据进行签名。
+     * 签名数据
      *
-     * @param data - 要签名的数据。
-     * @returns 一个 Promise，解析为数据的签名。
+     * @param data 要签名的数据。
+     * @returns {Promise<string>} 签名。
      * @throws {InvalidArgument} 如果签名失败，则抛出错误。
-     * @example
-     * ```ts
-     * const signature = await authenticate.sign(data);
-     * console.log(signature); // 输出签名
-     * ```
      */
     async sign(data: Uint8Array) {
         const hashBytes = await computeHash(data)
@@ -97,18 +82,13 @@ export class Authenticate {
     }
 
     /**
-     * 使用从 DID 派生的公钥验证给定数据的签名。
+     * 验证签名
      *
-     * @param did - 发送方的 DID（去中心化标识符）。
-     * @param data - 要验证的数据。
-     * @param signature - 要验证的签名。
-     * @returns 一个 Promise，解析为布尔值，表示验证是否成功。
+     * @param did 身份DID。
+     * @param data 要验证的数据。
+     * @param signature 签名。
+     * @returns {Promise<boolean>} 验证是否成功。
      * @throws {NoPermission} 如果验证失败，则抛出错误。
-     * @example
-     * ```ts
-     * const isValid = await authenticate.verify(did, data, signature);
-     * console.log(isValid); // 输出是否验证成功
-     * ```
      */
     async verify(did: string, data: Uint8Array, signature: string) {
         const hashBytes = await computeHash(data)
@@ -116,20 +96,14 @@ export class Authenticate {
     }
 
     /**
-     * 验证消息头和数据主体的有效性。
+     * 验证签名的消息头
      *
      * @param header - 要验证的消息头。
-     * @param body - 与消息头一起验证的可选数据主体。
+     * @param body - 二进制序列化的消息体，消息体里面是实际的业务数据。
+     * @return {Promise<void>}
+     *
      * @throws {InvalidArgument} 如果消息头中的时间戳过期，则抛出错误。
      * @throws {NoPermission} 如果签名无效，则抛出错误。
-     * @example
-     * ```ts
-     * try {
-     *   await authenticate.verifyHeader(header, body);
-     * } catch (err) {
-     *   console.error(err); // 输出错误信息
-     * }
-     * ```
      */
     async verifyHeader(header: MessageHeader, body: Uint8Array | undefined) {
         const datetime = parseDateTime(header.timestamp)

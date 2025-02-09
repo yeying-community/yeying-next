@@ -11,7 +11,8 @@ import { Account } from './model'
 import {
     BlockAddress,
     createBlockAddress,
-    createIdentity, deserializeIdentityFromJson,
+    createIdentity,
+    deserializeIdentityFromJson,
     Identity,
     IdentityApplicationExtend,
     IdentityCodeEnum,
@@ -22,7 +23,8 @@ import {
     IdentityTemplate,
     NetworkTypeEnum,
     SecurityAlgorithm,
-    SecurityConfig, serializeIdentityToJson,
+    SecurityConfig,
+    serializeIdentityToJson,
     updateIdentity,
     verifyIdentity
 } from '@yeying-community/yeying-web3'

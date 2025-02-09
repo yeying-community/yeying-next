@@ -1,15 +1,15 @@
-import {BlockProvider} from './block'
-import {AssetCipher} from './cipher'
-import {convertDateToDateTime, convertToUtcDateTime, formatDateTime, getCurrentUtcString} from '../../common/date'
-import {readBlock} from '../../common/file'
-import {Digest, SecurityAlgorithm} from '@yeying-community/yeying-web3'
-import {decodeHex, encodeHex} from '../../common/codec'
-import {getDigitalFormatByName} from '../../common/message'
-import {AssetMetadata, AssetMetadataSchema} from '../../yeying/api/asset/asset_pb'
-import {create} from '@bufbuild/protobuf'
-import {isExisted} from '../../common/status'
-import {ProviderOption} from '../common/model'
-import {AssetProvider} from './asset'
+import { BlockProvider } from './block'
+import { AssetCipher } from './cipher'
+import { convertDateToDateTime, convertToUtcDateTime, formatDateTime, getCurrentUtcString } from '../../common/date'
+import { readBlock } from '../../common/file'
+import { Digest, SecurityAlgorithm } from '@yeying-community/yeying-web3'
+import { decodeHex, encodeHex } from '../../common/codec'
+import { getDigitalFormatByName } from '../../common/message'
+import { AssetMetadata, AssetMetadataSchema } from '../../yeying/api/asset/asset_pb'
+import { create } from '@bufbuild/protobuf'
+import { isExisted } from '../../common/status'
+import { ProviderOption } from '../common/model'
+import { AssetProvider } from './asset'
 
 /**
  * 该类用于上传资产文件，通过将文件分块后上传，每个块加密（可选）并生成哈希值，最后对整个资产进行签名。
@@ -58,37 +58,20 @@ export class Uploader {
     }
 
     /**
-     * 上传文件并返回文件的资产元数据。
+     * 上传文件。
      *
-     * @param namespaceId - 资产所在命名空间。
-     * @param file - 要上传的文件。
-     * @param version - 文件的版本号，默认值为 0。
-     * @param encrypted - 是否对文件进行加密，默认值为 `true`。
-     * @param parent - 文件的父哈希，默认为空字符串。
-     * @param description - 文件的描述，默认为空字符串。
-     * @param extend - 额外的扩展信息，默认为空字符串。
-     * @returns 返回一个 Promise，解析为文件上传后生成的资产元数据。
+     * @param namespaceId 资产所在命名空间。
+     * @param file 要上传的资产文件。
+     * @param encrypted 是否对文件进行加密，默认值为 `true`。
+     * @param parent 可选，父亲哈希。
+     * @param description 可选，文件的描述。
      *
-     * @example
-     * ```ts
-     * uploader.upload(file, "uid1234", 1, true, "", "File description").then(asset => {
-     *   console.log('Asset uploaded:', asset);
-     * }).catch(err => {
-     *   console.error('Upload failed:', err);
-     * });
-     * ```
+     * @returns {Promise<AssetMetadata>} 返回资产元数据。
+     *
      */
-    upload(
-        namespaceId: string,
-        file: File,
-        encrypted: boolean = true,
-        parentHash?: string,
-        description?: string,
-    ) {
+    upload(namespaceId: string, file: File, encrypted: boolean = true, parentHash?: string, description?: string) {
         return new Promise<AssetMetadata>(async (resolve, reject) => {
             try {
-
-
                 const asset = create(AssetMetadataSchema, {
                     namespaceId: namespaceId,
                     owner: this.blockProvider.getOwner(), // 设置资产拥有者
@@ -147,11 +130,10 @@ export class Uploader {
                     chunkList[i] = body.block?.hash
                 }
 
-                asset.chunks = chunkList // 设置块的元数据
-                asset.hash = encodeHex(assetDigest.sum()) // 设置资产哈希
-                await this.assetProvider.signAssetMetadata(asset)
-                const body = await this.assetProvider.sign(asset)
-                resolve(body.asset as AssetMetadata) // 上传成功，返回资产元数据
+                asset.chunks = chunkList // 资产块的元数据
+                asset.hash = encodeHex(assetDigest.sum()) // 资产哈希
+
+                resolve(await this.assetProvider.sign(asset)) // 上传成功，返回资产元数据
             } catch (err) {
                 console.error(`Fail to upload the file=${file.name}`, err)
                 return reject(err) // 上传失败，返回错误

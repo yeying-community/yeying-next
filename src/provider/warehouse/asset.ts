@@ -1,6 +1,6 @@
-import {Authenticate} from '../common/authenticate'
-import {ProviderOption} from '../common/model'
-import {RequestPageSchema} from '../../yeying/api/common/message_pb'
+import { Authenticate } from '../common/authenticate'
+import { ProviderOption } from '../common/model'
+import { RequestPageSchema } from '../../yeying/api/common/message_pb'
 import {
     Asset,
     AssetDetailRequestBodySchema,
@@ -10,22 +10,20 @@ import {
     AssetMetadataSchema,
     DeleteAssetRequestBodySchema,
     DeleteAssetRequestSchema,
-    DeleteAssetResponseBody,
     DeleteAssetResponseBodySchema,
     SearchAssetCondition,
     SearchAssetConditionSchema,
     SearchAssetRequestBodySchema,
     SearchAssetRequestSchema,
-    SearchAssetResponseBody,
     SearchAssetResponseBodySchema,
     SignAssetRequestBodySchema,
     SignAssetRequestSchema,
     SignAssetResponseBody,
     SignAssetResponseBodySchema
 } from '../../yeying/api/asset/asset_pb'
-import {Client, createClient} from '@connectrpc/connect'
-import {createGrpcWebTransport} from '@connectrpc/connect-web'
-import {create, toBinary} from '@bufbuild/protobuf'
+import { Client, createClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create, toBinary } from '@bufbuild/protobuf'
 
 /**
  * AssetProvider 类提供对资产的管理，包括查询、版本获取、详情查看、删除等操作。
@@ -35,11 +33,15 @@ export class AssetProvider {
     private client: Client<typeof Asset>
 
     /**
-     * 创建 AssetProvider 实例。
-     * @param option - 提供者选项，包括代理设置等。
+     * 创建资产供应商实例。
+     *
+     * @param option - 提供者选项，包括代理设置，身份的区块链地址等。
+     *
      * @example
+     * ```ts
      * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
      * const assetProvider = new AssetProvider(providerOption);
+     * ```
      */
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
@@ -54,23 +56,24 @@ export class AssetProvider {
 
     /**
      * 搜索资产。
+     *
      * @param condition - 搜索条件。
      * @param page - 页码。
      * @param pageSize - 每页数量。
+     *
      * @returns Promise，解析为搜索结果。
-     * @example
-     * assetProvider.search(searchCondition, 1, 10).then(response => { console.log(response); });
+     *
      */
     search(condition: Partial<SearchAssetCondition>, page: number, pageSize: number) {
-        return new Promise<SearchAssetResponseBody>(async (resolve, reject) => {
-            const requestPage = create(RequestPageSchema, {page: page, pageSize: pageSize})
+        return new Promise<AssetMetadata[]>(async (resolve, reject) => {
+            const requestPage = create(RequestPageSchema, { page: page, pageSize: pageSize })
             const c = create(SearchAssetConditionSchema, {
                 namespaceId: condition.namespaceId,
                 format: condition.format,
-                hash: condition.hash,
+                hash: condition.hash
             })
 
-            const body = create(SearchAssetRequestBodySchema, {condition: c, page: requestPage})
+            const body = create(SearchAssetRequestBodySchema, { condition: c, page: requestPage })
             let header
             try {
                 header = await this.authenticate.createHeader(toBinary(SearchAssetRequestBodySchema, body))
@@ -79,11 +82,11 @@ export class AssetProvider {
                 return reject(err)
             }
 
-            const request = create(SearchAssetRequestSchema, {header: header, body: body})
+            const request = create(SearchAssetRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.search(request)
                 await this.authenticate.doResponse(res, SearchAssetResponseBodySchema)
-                resolve(res.body as SearchAssetResponseBody)
+                resolve(res?.body?.assets as AssetMetadata[])
             } catch (err) {
                 console.error('Fail to search assets', err)
                 return reject(err)
@@ -127,17 +130,18 @@ export class AssetProvider {
 
     /**
      * 获取资产的详细信息。
+     *
      * @param namespaceId - 资产所在命名空间。
-     * @param version - 资产的哈希值。
+     * @param version - 资产哈希值。
+     *
      * @returns Promise，解析为资产元数据。
-     * @example
-     * assetProvider.detail('assetUid', 1, false).then(metadata => { console.log(metadata); });
+     *
      */
     detail(namespaceId: string, hash: string) {
         return new Promise<AssetMetadata>(async (resolve, reject) => {
             const body = create(AssetDetailRequestBodySchema, {
                 namespaceId: namespaceId,
-                hash: hash,
+                hash: hash
             })
 
             let header
@@ -148,7 +152,7 @@ export class AssetProvider {
                 return reject(err)
             }
 
-            const request = create(AssetDetailRequestSchema, {header: header, body: body})
+            const request = create(AssetDetailRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.detail(request)
                 await this.authenticate.doResponse(res, AssetDetailResponseBodySchema)
@@ -161,33 +165,33 @@ export class AssetProvider {
     }
 
     /**
-     * 将资产移动到回收站。
-     * @param namespaceId - 资产的唯一标识符。
-     * @param hash - 资产的版本。
+     * 删除资产，也就是放入回收站。
+     * @param namespaceId 资产的所在空间。
+     * @param hash 资产哈希值。
+     *
      * @returns Promise，解析为移除响应。
-     * @example
-     * assetProvider.delete('assetUid', 1).then(response => { console.log(response); });
+     *
      */
     delete(namespaceId: string, hash: string) {
-        return new Promise<DeleteAssetResponseBody>(async (resolve, reject) => {
+        return new Promise<void>(async (resolve, reject) => {
             const body = create(DeleteAssetRequestBodySchema, {
                 namespaceId: namespaceId,
-                hash: hash,
+                hash: hash
             })
 
             let header
             try {
                 header = await this.authenticate.createHeader(toBinary(DeleteAssetRequestBodySchema, body))
             } catch (err) {
-                console.error('Fail to create header when deleting asset', err)
+                console.error('Fail to create header when deleting asset.', err)
                 return reject(err)
             }
 
-            const request = create(DeleteAssetRequestSchema, {header: header, body: body})
+            const request = create(DeleteAssetRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.delete(request)
                 await this.authenticate.doResponse(res, DeleteAssetResponseBodySchema)
-                resolve(res.body as DeleteAssetResponseBody)
+                resolve()
             } catch (err) {
                 console.error('Fail to delete asset.', err)
                 return reject(err)
@@ -195,22 +199,22 @@ export class AssetProvider {
         })
     }
 
-
     /**
-     * 对资产进行签名操作。
+     * 和资产仓库签约。
+     *
      * @param asset - 要签名的资产元数据。
+     *
      * @returns Promise，解析为签名响应。
      * @example
      * assetProvider.sign(assetMetadata).then(response => { console.log(response); });
      */
     sign(asset: AssetMetadata) {
-        return new Promise<SignAssetResponseBody>(async (resolve, reject) => {
-            const body = create(SignAssetRequestBodySchema, {
-                asset: asset
-            })
+        return new Promise<AssetMetadata>(async (resolve, reject) => {
+            const body = create(SignAssetRequestBodySchema, { asset: asset })
 
             let header
             try {
+                await this.signAssetMetadata(asset)
                 header = await this.authenticate.createHeader(toBinary(SignAssetRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header when signing asset', err)
@@ -227,7 +231,7 @@ export class AssetProvider {
                 await this.authenticate.doResponse(res, SignAssetResponseBodySchema)
                 const resBody = res.body as SignAssetResponseBody
                 if (await this.verifyAssetMetadata(resBody.asset)) {
-                    resolve(resBody)
+                    resolve(resBody?.asset as AssetMetadata)
                 } else {
                     reject(new Error('invalid asset metadata!'))
                 }
@@ -238,11 +242,11 @@ export class AssetProvider {
         })
     }
 
-    async signAssetMetadata(asset: AssetMetadata) {
+    private async signAssetMetadata(asset: AssetMetadata) {
         asset.signature = await this.authenticate.sign(toBinary(AssetMetadataSchema, asset))
     }
 
-    async verifyAssetMetadata(asset?: AssetMetadata) {
+    private async verifyAssetMetadata(asset?: AssetMetadata) {
         if (asset === undefined) {
             return false
         }

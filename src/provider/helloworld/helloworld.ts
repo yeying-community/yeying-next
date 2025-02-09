@@ -1,6 +1,6 @@
-import {Authenticate} from '../common/authenticate'
-import {MessageHeader} from '../../yeying/api/common/message_pb'
-import {ProviderOption} from '../common/model'
+import { Authenticate } from '../common/authenticate'
+import { MessageHeader } from '../../yeying/api/common/message_pb'
+import { ProviderOption } from '../common/model'
 import {
     Greeter,
     HelloResponseBody,
@@ -8,9 +8,9 @@ import {
     HelloResponseBodySchema,
     HelloRequestBodySchema
 } from '../../yeying/api/helloworld/helloworld_pb'
-import {Client, createClient} from "@connectrpc/connect";
-import {createGrpcWebTransport} from "@connectrpc/connect-web";
-import {create, toBinary} from "@bufbuild/protobuf";
+import { Client, createClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create, toBinary } from '@bufbuild/protobuf'
 
 /**
  * 代表了一个节点，夜莺社区提供了默认的节点，也可以选择其他社区的节点，以及使用该节点的生态应用
@@ -22,10 +22,13 @@ export class HelloProvider {
 
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
-        this.client = createClient(Greeter, createGrpcWebTransport({
-            baseUrl: option.proxy,
-            useBinaryFormat: true,
-        }))
+        this.client = createClient(
+            Greeter,
+            createGrpcWebTransport({
+                baseUrl: option.proxy,
+                useBinaryFormat: true
+            })
+        )
     }
 
     /**
@@ -57,7 +60,7 @@ export class HelloProvider {
                 return reject(err)
             }
 
-            const request = create(HelloRequestSchema, {header: header, body: body})
+            const request = create(HelloRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.sayHello(request)
                 await this.authenticate.doResponse(res, HelloResponseBodySchema)

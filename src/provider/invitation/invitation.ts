@@ -1,10 +1,10 @@
-import {formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond} from '../../common/date'
-import {Authenticate} from '../common/authenticate'
-import {MessageHeader, RequestPageSchema} from '../../yeying/api/common/message_pb'
-import {ProviderOption} from '../common/model'
-import {create, toBinary} from '@bufbuild/protobuf'
-import {createGrpcWebTransport} from '@connectrpc/connect-web'
-import {Client, createClient} from '@connectrpc/connect'
+import { formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond } from '../../common/date'
+import { Authenticate } from '../common/authenticate'
+import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/message_pb'
+import { ProviderOption } from '../common/model'
+import { create, toBinary } from '@bufbuild/protobuf'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { Client, createClient } from '@connectrpc/connect'
 import {
     CreateInvitationRequestBodySchema,
     CreateInvitationRequestSchema,
@@ -22,7 +22,7 @@ import {
     SearchInvitationResponseBody,
     SearchInvitationResponseBodySchema
 } from '../../yeying/api/invitation/invitation_pb'
-import {generateRandomString} from '../../common/string'
+import { generateRandomString } from '../../common/string'
 
 /**
  * 邀请码提供商，创建和查询邀请码。

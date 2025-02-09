@@ -1,15 +1,9 @@
-import {Authenticate} from '../common/authenticate'
-import {ProviderOption} from '../common/model'
-import {
-    BlockMetadataSchema,
-    GetBlockRequestBodySchema,
-    GetBlockRequestSchema,
-    GetBlockResponseBodySchema
-} from '../../yeying/api/asset/block_pb'
-import {getCurrentUtcString} from '../../common/date'
-import {Client, createClient} from '@connectrpc/connect'
-import {createGrpcWebTransport} from '@connectrpc/connect-web'
-import {create, toBinary} from '@bufbuild/protobuf'
+import { Authenticate } from '../common/authenticate'
+import { ProviderOption } from '../common/model'
+import { getCurrentUtcString } from '../../common/date'
+import { Client, createClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create, toBinary } from '@bufbuild/protobuf'
 import {
     CreateNamespaceRequestBodySchema,
     CreateNamespaceRequestSchema,
@@ -18,14 +12,15 @@ import {
     Namespace,
     NamespaceMetadata,
     NamespaceMetadataSchema,
+    SearchNamespaceCondition,
     SearchNamespaceConditionSchema,
     SearchNamespaceRequestBodySchema,
     SearchNamespaceRequestSchema,
     SearchNamespaceResponseBody,
     SearchNamespaceResponseBodySchema
-} from "../../yeying/api/asset/namespace_pb";
-import {generateUuid} from "../../common/string";
-import {RequestPageSchema} from "../../yeying/api/common/message_pb";
+} from '../../yeying/api/asset/namespace_pb'
+import { generateUuid } from '../../common/string'
+import { RequestPageSchema } from '../../yeying/api/common/message_pb'
 
 /**
  * 区块提供者类，用于与区块链交互，提供数据的获取和存储功能。
@@ -66,8 +61,12 @@ export class NamespaceProvider {
     /**
      * 搜索命名空间
      *
-     * @param hash - 要获取的区块的哈希值。
-     * @returns 一个 Promise，解析为获取到的区块数据（Uint8Array）。
+     * @param page 第几页，从1开始。
+     * @param pageSize 页面大小。
+     * @param condition 可选，搜索条件
+     *
+     * @returns 当前页面的命名空间
+     *
      * @throws {Error} 如果获取区块失败，抛出错误。
      * @example
      * ```ts
@@ -75,21 +74,22 @@ export class NamespaceProvider {
      * console.log(data); // 输出区块数据
      * ```
      */
-    search(page: number, pageSize: number, name?: string) {
-        return new Promise<SearchNamespaceResponseBody>(async (resolve, reject) => {
+    search(page: number, pageSize: number, condition?: Partial<SearchNamespaceCondition>) {
+        return new Promise<NamespaceMetadata[]>(async (resolve, reject) => {
             const body = create(SearchNamespaceRequestBodySchema, {
-                condition: create(SearchNamespaceConditionSchema, {name: name}),
-                page: create(RequestPageSchema, {page: page, pageSize: pageSize})
+                condition: create(SearchNamespaceConditionSchema, { name: condition?.name }),
+                page: create(RequestPageSchema, { page: page, pageSize: pageSize })
             })
+
             let header
             try {
                 header = await this.authenticate.createHeader(toBinary(SearchNamespaceRequestBodySchema, body))
             } catch (err) {
-                console.error(`Fail to create header when search namespace, page=${page}, pageSize=${pageSize}`, err)
+                console.error(`Fail to create header when searching namespace, page=${page}, pageSize=${pageSize}`, err)
                 return reject(err)
             }
 
-            const request = create(SearchNamespaceRequestSchema, {header: header, body: body})
+            const request = create(SearchNamespaceRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.search(request)
                 await this.authenticate.doResponse(res, SearchNamespaceResponseBodySchema)
@@ -100,7 +100,7 @@ export class NamespaceProvider {
                     }
                 }
 
-                resolve(resBody)
+                resolve(resBody.namespaces)
             } catch (err) {
                 console.error('Fail to search namespace', err)
             }
@@ -110,21 +110,16 @@ export class NamespaceProvider {
     /**
      * 创建命名空间
      *
-     * @param name {string} 命名空间名称
-     * @param description {string} 命名空间描述
+     * @param name 命名空间名称
+     * @param description 命名空间描述
      *
      * @returns 一个 Promise，解析为获取到的区块数据（Uint8Array）。
      * @throws {Error} 如果获取区块失败，抛出错误。
-     * @example
-     * ```ts
-     * const data = await namespaceProvider.get('someHash');
-     * console.log(data); // 输出区块数据
-     * ```
      */
     create(name: string, description: string, uid?: string, participants?: string) {
         return new Promise<CreateNamespaceResponseBody>(async (resolve, reject) => {
             const namespace = await this.createNamespaceMetadata(name, description, uid, participants)
-            const body = create(CreateNamespaceRequestBodySchema, {namespace: namespace})
+            const body = create(CreateNamespaceRequestBodySchema, { namespace: namespace })
             let header
             try {
                 header = await this.authenticate.createHeader(toBinary(CreateNamespaceRequestBodySchema, body))
@@ -133,7 +128,7 @@ export class NamespaceProvider {
                 return reject(err)
             }
 
-            const request = create(CreateNamespaceRequestSchema, {header: header, body: body})
+            const request = create(CreateNamespaceRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.create(request)
                 await this.authenticate.doResponse(res, CreateNamespaceResponseBodySchema)
@@ -160,7 +155,7 @@ export class NamespaceProvider {
             description: description,
             participants: participants,
             createdAt: getCurrentUtcString(),
-            updatedAt: getCurrentUtcString(),
+            updatedAt: getCurrentUtcString()
         })
         namespace.signature = await this.authenticate.sign(toBinary(NamespaceMetadataSchema, namespace))
         return namespace
@@ -174,7 +169,11 @@ export class NamespaceProvider {
         const signature = namespace.signature
         try {
             namespace.signature = ''
-            return await this.authenticate.verify(namespace.owner, toBinary(NamespaceMetadataSchema, namespace), signature)
+            return await this.authenticate.verify(
+                namespace.owner,
+                toBinary(NamespaceMetadataSchema, namespace),
+                signature
+            )
         } finally {
             namespace.signature = signature
         }

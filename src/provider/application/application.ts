@@ -10,10 +10,9 @@ import {
     ApplicationMetadataSchema,
     CreateApplicationRequestBodySchema,
     CreateApplicationRequestSchema,
-    CreateApplicationResponseBody,
     CreateApplicationResponseBodySchema
 } from '../../yeying/api/application/application_pb'
-import {NetworkError, SignError} from "../../common/error";
+import { NetworkError, SignError } from '../../common/error'
 
 /**
  * ApplicationProvider 管理应用。
