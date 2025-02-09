@@ -1,5 +1,11 @@
-export class NetworkDown extends Error {
-    constructor(message: string, options?: ErrorOptions) {
+export class NetworkError extends Error {
+    constructor(message?: string, options?: ErrorOptions) {
+        super(message, options)
+    }
+}
+
+export class SignError extends Error {
+    constructor(message?: string, options?: ErrorOptions) {
         super(message, options)
     }
 }

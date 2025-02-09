@@ -1,13 +1,13 @@
-import { getCurrentUtcString, isExpired, parseDateTime } from '../../common/date'
-import { generateUuid } from '../../common/string'
-import { MessageHeader, MessageHeaderSchema } from '../../yeying/api/common/message_pb'
-import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
-import { BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes } from '@yeying-community/yeying-web3'
-import { InvalidArgument, NetworkDown, NoPermission } from '../../common/error'
-import { composite } from '../../common/bytes'
-import { computeHash } from '../../common/crypto'
-import { create, toBinary } from '@bufbuild/protobuf'
-import { DescMessage } from '@bufbuild/protobuf/dist/cjs/descriptors'
+import {getCurrentUtcString, isExpired, parseDateTime} from '../../common/date'
+import {generateUuid} from '../../common/string'
+import {MessageHeader, MessageHeaderSchema} from '../../yeying/api/common/message_pb'
+import {AuthenticateTypeEnum} from '../../yeying/api/common/code_pb'
+import {BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes} from '@yeying-community/yeying-web3'
+import {InvalidArgument, NetworkError, NoPermission} from '../../common/error'
+import {composite} from '../../common/bytes'
+import {computeHash} from '../../common/crypto'
+import {create, toBinary} from '@bufbuild/protobuf'
+import {DescMessage} from '@bufbuild/protobuf/dist/cjs/descriptors'
 
 /**
  * 基于区块链地址的认证类，用于签名要发送的数据并验证接收到的数据，确保数据传输双方能够确认数据是否被篡改。
@@ -155,7 +155,7 @@ export class Authenticate {
      *
      * @param response - 要处理的响应。
      * @returns 一个 Promise，解析为处理后的响应主体。
-     * @throws {NetworkDown} 如果协议无效或响应数据缺失，则抛出错误。
+     * @throws {NetworkError} 如果协议无效或响应数据缺失，则抛出错误。
      * @throws {InvalidArgument} 如果消息头验证失败，则抛出错误。
      * @throws {NoPermission} 如果签名验证失败，则抛出错误。
      * @example
@@ -174,7 +174,7 @@ export class Authenticate {
             response.body === undefined ||
             response.body.status === undefined
         ) {
-            throw new NetworkDown('protocol error!')
+            throw new NetworkError('protocol error!')
         }
 
         await this.verifyHeader(response.header, toBinary(bodySchema, response.body))
