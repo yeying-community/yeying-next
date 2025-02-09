@@ -1,9 +1,9 @@
 import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
-import {BlockAddress} from "@yeying-community/yeying-web3";
+import { BlockAddress } from '@yeying-community/yeying-web3'
 
 /**
  * 提供商选项接口，包含代理配置。
- * 
+ *
  * @interface
  * @example
  * ```ts
@@ -13,7 +13,7 @@ import {BlockAddress} from "@yeying-community/yeying-web3";
 export interface ProviderOption {
     /**
      * 代理服务器的 URL 地址。
-     * 
+     *
      * @example
      * 'http://example.com'
      */
@@ -27,7 +27,7 @@ export interface ProviderOption {
 
 /**
  * 将字符串类型的认证类型转换为对应的枚举值。
- * 
+ *
  * @param type - 字符串类型的认证类型。
  * @returns 返回对应的 `AuthenticateTypeEnum` 枚举值，如果字符串无法转换，则返回 `AuthenticateTypeEnum.AUTHENTICATE_TYPE_UNKNOWN`。
  * @example
@@ -43,7 +43,7 @@ export function convertAuthenticateTypeFrom(type: string) {
 
 /**
  * 将认证类型枚举值转换为字符串。
- * 
+ *
  * @param type - 认证类型枚举值。
  * @returns 返回对应的字符串类型认证值，如果传入值无效，则返回 `AuthenticateTypeEnum.AUTHENTICATE_TYPE_UNKNOWN`。
  * @example

@@ -1,5 +1,3 @@
-import { BlockAddress, Identity } from '@yeying-community/yeying-web3'
-
 export interface Account {
     // 身份名称
     name: string

@@ -1,6 +1,6 @@
-import {Authenticate} from '../common/authenticate'
-import {MessageHeader} from '../../yeying/api/common/message_pb'
-import {ProviderOption} from '../common/model'
+import { Authenticate } from '../common/authenticate'
+import { MessageHeader } from '../../yeying/api/common/message_pb'
+import { ProviderOption } from '../common/model'
 import {
     Mail,
     SendMailRequestBodySchema,
@@ -11,11 +11,10 @@ import {
     VerifyMailRequestSchema,
     VerifyMailResponseBody,
     VerifyMailResponseBodySchema
-} from "../../yeying/api/mail/mail_pb";
-import {Client, createClient} from "@connectrpc/connect";
-import {createGrpcWebTransport} from "@connectrpc/connect-web";
-import {create, toBinary} from "@bufbuild/protobuf";
-
+} from '../../yeying/api/mail/mail_pb'
+import { Client, createClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create, toBinary } from '@bufbuild/protobuf'
 
 /**
  * 邮箱验证码服务提供者，提供前端页面直接调用的接口。
@@ -52,10 +51,13 @@ export class MailProvider {
      */
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
-        this.client = createClient(Mail, createGrpcWebTransport({
-            baseUrl: option.proxy,
-            useBinaryFormat: true,
-        }))
+        this.client = createClient(
+            Mail,
+            createGrpcWebTransport({
+                baseUrl: option.proxy,
+                useBinaryFormat: true
+            })
+        )
     }
 
     /**
@@ -87,7 +89,7 @@ export class MailProvider {
                 return reject(err)
             }
 
-            const request = create(SendMailRequestSchema, {header: header, body: body})
+            const request = create(SendMailRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.send(request)
                 await this.authenticate.doResponse(res, SendMailResponseBodySchema)
@@ -118,7 +120,7 @@ export class MailProvider {
         return new Promise<VerifyMailResponseBody>(async (resolve, reject) => {
             const body = create(VerifyMailRequestBodySchema, {
                 toMail: toMail,
-                code: code,
+                code: code
             })
             let header: MessageHeader
             try {
@@ -129,7 +131,7 @@ export class MailProvider {
                 return reject(err)
             }
 
-            const request = create(VerifyMailRequestSchema, {header: header, body: body})
+            const request = create(VerifyMailRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.verify(request)
                 await this.authenticate.doResponse(res, VerifyMailResponseBodySchema)

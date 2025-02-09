@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/user/user.proto.
  */
 export const file_yeying_api_user_user: GenFile = /*@__PURE__*/
-  fileDesc("Chp5ZXlpbmcvYXBpL3VzZXIvdXNlci5wcm90bxIPeWV5aW5nLmFwaS51c2VyInIKDFVzZXJNZXRhZGF0YRILCgNkaWQYASABKAkSDAoEbmFtZRgCIAEoCRIOCgZhdmF0YXIYAyABKAkSEQoJY3JlYXRlZEF0GAQgASgJEhEKCXVwZGF0ZWRBdBgFIAEoCRIRCglzaWduYXR1cmUYBiABKAkirwEKCVVzZXJTdGF0ZRILCgNkaWQYASABKAkSKwoEcm9sZRgCIAEoDjIdLnlleWluZy5hcGkudXNlci5Vc2VyUm9sZUVudW0SLwoGc3RhdHVzGAMgASgOMh8ueWV5aW5nLmFwaS51c2VyLlVzZXJTdGF0dXNFbnVtEhEKCWNyZWF0ZWRBdBgEIAEoCRIRCgl1cGRhdGVkQXQYBSABKAkSEQoJc2lnbmF0dXJlGAYgASgJInUKDkFkZFVzZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISMQoEYm9keRgCIAEoCzIjLnlleWluZy5hcGkudXNlci5BZGRVc2VyUmVxdWVzdEJvZHkiQQoSQWRkVXNlclJlcXVlc3RCb2R5EisKBHVzZXIYASABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhIncKD0FkZFVzZXJSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjIKBGJvZHkYAiABKAsyJC55ZXlpbmcuYXBpLnVzZXIuQWRkVXNlclJlc3BvbnNlQm9keSJ1ChNBZGRVc2VyUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEisKBHVzZXIYAiABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhInsKEVVwZGF0ZVVzZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNAoEYm9keRgCIAEoCzImLnlleWluZy5hcGkudXNlci5VcGRhdGVVc2VyUmVxdWVzdEJvZHkiRAoVVXBkYXRlVXNlclJlcXVlc3RCb2R5EisKBHVzZXIYASABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhIn0KElVwZGF0ZVVzZXJSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjUKBGJvZHkYAiABKAsyJy55ZXlpbmcuYXBpLnVzZXIuVXBkYXRlVXNlclJlc3BvbnNlQm9keSJLChZVcGRhdGVVc2VyUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzIkUKEURlbGV0ZVVzZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXIifQoSRGVsZXRlVXNlclJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkudXNlci5EZWxldGVVc2VyUmVzcG9uc2VCb2R5IksKFkRlbGV0ZVVzZXJSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMiQgoOR2V0VXNlclJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlciJ3Cg9HZXRVc2VyUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchIyCgRib2R5GAIgASgLMiQueWV5aW5nLmFwaS51c2VyLkdldFVzZXJSZXNwb25zZUJvZHkidQoTR2V0VXNlclJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxIrCgR1c2VyGAIgASgLMh0ueWV5aW5nLmFwaS51c2VyLlVzZXJNZXRhZGF0YSJEChBVc2VyU3RhdGVSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXIiewoRVXNlclN0YXRlUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI0CgRib2R5GAIgASgLMiYueWV5aW5nLmFwaS51c2VyLlVzZXJTdGF0ZVJlc3BvbnNlQm9keSJ5ChVVc2VyU3RhdGVSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSLQoJdXNlclN0YXRlGAIgASgLMhoueWV5aW5nLmFwaS51c2VyLlVzZXJTdGF0ZSqfAgoOVXNlclN0YXR1c0VudW0SFwoTVVNFUl9TVEFUVVNfVU5LTk9XThAAEhYKElVTRVJfU1RBVFVTX0FDVElWRRABEhcKE1VTRVJfU1RBVFVTX09GRkxJTkUQAhIXChNVU0VSX1NUQVRVU19ESVNBQkxFEAMSFAoQVVNFUl9TVEFUVVNfTE9DSxAEEhoKFlVTRVJfU1RBVFVTX1VOVkVSSUZJRUQQBRIXChNVU0VSX1NUQVRVU19ERUxFVEVEEAYSFwoTVVNFUl9TVEFUVVNfRE9STUFOVBAHEhYKElVTRVJfU1RBVFVTX0ZSRUVaRRAIEhUKEVVTRVJfU1RBVFVTX0FVRElUEAkSFwoTVVNFUl9TVEFUVVNfUkVGVVNFRBAKKlAKDFVzZXJSb2xlRW51bRIVChFVU0VSX1JPTEVfVU5LTk9XThAAEhMKD1VTRVJfUk9MRV9PV05FUhABEhQKEFVTRVJfUk9MRV9OT1JNQUwQAjKaAwoEVXNlchJKCgNBZGQSHy55ZXlpbmcuYXBpLnVzZXIuQWRkVXNlclJlcXVlc3QaIC55ZXlpbmcuYXBpLnVzZXIuQWRkVXNlclJlc3BvbnNlIgASSgoDR2V0Eh8ueWV5aW5nLmFwaS51c2VyLkdldFVzZXJSZXF1ZXN0GiAueWV5aW5nLmFwaS51c2VyLkdldFVzZXJSZXNwb25zZSIAElMKBkRlbGV0ZRIiLnlleWluZy5hcGkudXNlci5EZWxldGVVc2VyUmVxdWVzdBojLnlleWluZy5hcGkudXNlci5EZWxldGVVc2VyUmVzcG9uc2UiABJTCgZVcGRhdGUSIi55ZXlpbmcuYXBpLnVzZXIuVXBkYXRlVXNlclJlcXVlc3QaIy55ZXlpbmcuYXBpLnVzZXIuVXBkYXRlVXNlclJlc3BvbnNlIgASUAoFU3RhdGUSIS55ZXlpbmcuYXBpLnVzZXIuVXNlclN0YXRlUmVxdWVzdBoiLnlleWluZy5hcGkudXNlci5Vc2VyU3RhdGVSZXNwb25zZSIAQhFaD3lleWluZy9hcGkvdXNlcmIGcHJvdG8z", [file_yeying_api_common_message]);
+  fileDesc("Chp5ZXlpbmcvYXBpL3VzZXIvdXNlci5wcm90bxIPeWV5aW5nLmFwaS51c2VyInIKDFVzZXJNZXRhZGF0YRILCgNkaWQYASABKAkSDAoEbmFtZRgCIAEoCRIOCgZhdmF0YXIYAyABKAkSEQoJY3JlYXRlZEF0GAQgASgJEhEKCXVwZGF0ZWRBdBgFIAEoCRIRCglzaWduYXR1cmUYBiABKAkirwEKCVVzZXJTdGF0ZRILCgNkaWQYASABKAkSKwoEcm9sZRgCIAEoDjIdLnlleWluZy5hcGkudXNlci5Vc2VyUm9sZUVudW0SLwoGc3RhdHVzGAMgASgOMh8ueWV5aW5nLmFwaS51c2VyLlVzZXJTdGF0dXNFbnVtEhEKCWNyZWF0ZWRBdBgEIAEoCRIRCgl1cGRhdGVkQXQYBSABKAkSEQoJc2lnbmF0dXJlGAYgASgJInUKDkFkZFVzZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISMQoEYm9keRgCIAEoCzIjLnlleWluZy5hcGkudXNlci5BZGRVc2VyUmVxdWVzdEJvZHkiQQoSQWRkVXNlclJlcXVlc3RCb2R5EisKBHVzZXIYASABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhIncKD0FkZFVzZXJSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjIKBGJvZHkYAiABKAsyJC55ZXlpbmcuYXBpLnVzZXIuQWRkVXNlclJlc3BvbnNlQm9keSJ1ChNBZGRVc2VyUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEisKBHVzZXIYAiABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhInsKEVVwZGF0ZVVzZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNAoEYm9keRgCIAEoCzImLnlleWluZy5hcGkudXNlci5VcGRhdGVVc2VyUmVxdWVzdEJvZHkiRAoVVXBkYXRlVXNlclJlcXVlc3RCb2R5EisKBHVzZXIYASABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhIn0KElVwZGF0ZVVzZXJSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjUKBGJvZHkYAiABKAsyJy55ZXlpbmcuYXBpLnVzZXIuVXBkYXRlVXNlclJlc3BvbnNlQm9keSJLChZVcGRhdGVVc2VyUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzIkUKEURlbGV0ZVVzZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXIifQoSRGVsZXRlVXNlclJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkudXNlci5EZWxldGVVc2VyUmVzcG9uc2VCb2R5IksKFkRlbGV0ZVVzZXJSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMiRQoRVXNlckRldGFpbFJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlciJ9ChJVc2VyRGV0YWlsUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS51c2VyLlVzZXJEZXRhaWxSZXNwb25zZUJvZHkipwEKFlVzZXJEZXRhaWxSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSKwoEdXNlchgCIAEoCzIdLnlleWluZy5hcGkudXNlci5Vc2VyTWV0YWRhdGESLQoJdXNlclN0YXRlGAMgASgLMhoueWV5aW5nLmFwaS51c2VyLlVzZXJTdGF0ZSqfAgoOVXNlclN0YXR1c0VudW0SFwoTVVNFUl9TVEFUVVNfVU5LTk9XThAAEhYKElVTRVJfU1RBVFVTX0FDVElWRRABEhcKE1VTRVJfU1RBVFVTX09GRkxJTkUQAhIXChNVU0VSX1NUQVRVU19ESVNBQkxFEAMSFAoQVVNFUl9TVEFUVVNfTE9DSxAEEhoKFlVTRVJfU1RBVFVTX1VOVkVSSUZJRUQQBRIXChNVU0VSX1NUQVRVU19ERUxFVEVEEAYSFwoTVVNFUl9TVEFUVVNfRE9STUFOVBAHEhYKElVTRVJfU1RBVFVTX0ZSRUVaRRAIEhUKEVVTRVJfU1RBVFVTX0FVRElUEAkSFwoTVVNFUl9TVEFUVVNfUkVGVVNFRBAKKlAKDFVzZXJSb2xlRW51bRIVChFVU0VSX1JPTEVfVU5LTk9XThAAEhMKD1VTRVJfUk9MRV9PV05FUhABEhQKEFVTRVJfUk9MRV9OT1JNQUwQAjLRAgoEVXNlchJKCgNBZGQSHy55ZXlpbmcuYXBpLnVzZXIuQWRkVXNlclJlcXVlc3QaIC55ZXlpbmcuYXBpLnVzZXIuQWRkVXNlclJlc3BvbnNlIgASUwoGRGV0YWlsEiIueWV5aW5nLmFwaS51c2VyLlVzZXJEZXRhaWxSZXF1ZXN0GiMueWV5aW5nLmFwaS51c2VyLlVzZXJEZXRhaWxSZXNwb25zZSIAElMKBkRlbGV0ZRIiLnlleWluZy5hcGkudXNlci5EZWxldGVVc2VyUmVxdWVzdBojLnlleWluZy5hcGkudXNlci5EZWxldGVVc2VyUmVzcG9uc2UiABJTCgZVcGRhdGUSIi55ZXlpbmcuYXBpLnVzZXIuVXBkYXRlVXNlclJlcXVlc3QaIy55ZXlpbmcuYXBpLnVzZXIuVXBkYXRlVXNlclJlc3BvbnNlIgBCEVoPeWV5aW5nL2FwaS91c2VyYgZwcm90bzM", [file_yeying_api_common_message]);
 
 /**
  * @generated from message yeying.api.user.UserMetadata
@@ -316,9 +316,9 @@ export const DeleteUserResponseBodySchema: GenMessage<DeleteUserResponseBody> = 
   messageDesc(file_yeying_api_user_user, 12);
 
 /**
- * @generated from message yeying.api.user.GetUserRequest
+ * @generated from message yeying.api.user.UserDetailRequest
  */
-export type GetUserRequest = Message<"yeying.api.user.GetUserRequest"> & {
+export type UserDetailRequest = Message<"yeying.api.user.UserDetailRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
@@ -326,38 +326,38 @@ export type GetUserRequest = Message<"yeying.api.user.GetUserRequest"> & {
 };
 
 /**
- * Describes the message yeying.api.user.GetUserRequest.
- * Use `create(GetUserRequestSchema)` to create a new message.
+ * Describes the message yeying.api.user.UserDetailRequest.
+ * Use `create(UserDetailRequestSchema)` to create a new message.
  */
-export const GetUserRequestSchema: GenMessage<GetUserRequest> = /*@__PURE__*/
+export const UserDetailRequestSchema: GenMessage<UserDetailRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_user_user, 13);
 
 /**
- * @generated from message yeying.api.user.GetUserResponse
+ * @generated from message yeying.api.user.UserDetailResponse
  */
-export type GetUserResponse = Message<"yeying.api.user.GetUserResponse"> & {
+export type UserDetailResponse = Message<"yeying.api.user.UserDetailResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.user.GetUserResponseBody body = 2;
+   * @generated from field: yeying.api.user.UserDetailResponseBody body = 2;
    */
-  body?: GetUserResponseBody;
+  body?: UserDetailResponseBody;
 };
 
 /**
- * Describes the message yeying.api.user.GetUserResponse.
- * Use `create(GetUserResponseSchema)` to create a new message.
+ * Describes the message yeying.api.user.UserDetailResponse.
+ * Use `create(UserDetailResponseSchema)` to create a new message.
  */
-export const GetUserResponseSchema: GenMessage<GetUserResponse> = /*@__PURE__*/
+export const UserDetailResponseSchema: GenMessage<UserDetailResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_user_user, 14);
 
 /**
- * @generated from message yeying.api.user.GetUserResponseBody
+ * @generated from message yeying.api.user.UserDetailResponseBody
  */
-export type GetUserResponseBody = Message<"yeying.api.user.GetUserResponseBody"> & {
+export type UserDetailResponseBody = Message<"yeying.api.user.UserDetailResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -367,75 +367,19 @@ export type GetUserResponseBody = Message<"yeying.api.user.GetUserResponseBody">
    * @generated from field: yeying.api.user.UserMetadata user = 2;
    */
   user?: UserMetadata;
-};
-
-/**
- * Describes the message yeying.api.user.GetUserResponseBody.
- * Use `create(GetUserResponseBodySchema)` to create a new message.
- */
-export const GetUserResponseBodySchema: GenMessage<GetUserResponseBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_user_user, 15);
-
-/**
- * @generated from message yeying.api.user.UserStateRequest
- */
-export type UserStateRequest = Message<"yeying.api.user.UserStateRequest"> & {
-  /**
-   * @generated from field: yeying.api.common.MessageHeader header = 1;
-   */
-  header?: MessageHeader;
-};
-
-/**
- * Describes the message yeying.api.user.UserStateRequest.
- * Use `create(UserStateRequestSchema)` to create a new message.
- */
-export const UserStateRequestSchema: GenMessage<UserStateRequest> = /*@__PURE__*/
-  messageDesc(file_yeying_api_user_user, 16);
-
-/**
- * @generated from message yeying.api.user.UserStateResponse
- */
-export type UserStateResponse = Message<"yeying.api.user.UserStateResponse"> & {
-  /**
-   * @generated from field: yeying.api.common.MessageHeader header = 1;
-   */
-  header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.user.UserStateResponseBody body = 2;
-   */
-  body?: UserStateResponseBody;
-};
-
-/**
- * Describes the message yeying.api.user.UserStateResponse.
- * Use `create(UserStateResponseSchema)` to create a new message.
- */
-export const UserStateResponseSchema: GenMessage<UserStateResponse> = /*@__PURE__*/
-  messageDesc(file_yeying_api_user_user, 17);
-
-/**
- * @generated from message yeying.api.user.UserStateResponseBody
- */
-export type UserStateResponseBody = Message<"yeying.api.user.UserStateResponseBody"> & {
-  /**
-   * @generated from field: yeying.api.common.ResponseStatus status = 1;
-   */
-  status?: ResponseStatus;
-
-  /**
-   * @generated from field: yeying.api.user.UserState userState = 2;
+   * @generated from field: yeying.api.user.UserState userState = 3;
    */
   userState?: UserState;
 };
 
 /**
- * Describes the message yeying.api.user.UserStateResponseBody.
- * Use `create(UserStateResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.user.UserDetailResponseBody.
+ * Use `create(UserDetailResponseBodySchema)` to create a new message.
  */
-export const UserStateResponseBodySchema: GenMessage<UserStateResponseBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_user_user, 18);
+export const UserDetailResponseBodySchema: GenMessage<UserDetailResponseBody> = /*@__PURE__*/
+  messageDesc(file_yeying_api_user_user, 15);
 
 /**
  * @generated from enum yeying.api.user.UserStatusEnum
@@ -574,12 +518,12 @@ export const User: GenService<{
   /**
    * 获取用户
    *
-   * @generated from rpc yeying.api.user.User.Get
+   * @generated from rpc yeying.api.user.User.Detail
    */
-  get: {
+  detail: {
     methodKind: "unary";
-    input: typeof GetUserRequestSchema;
-    output: typeof GetUserResponseSchema;
+    input: typeof UserDetailRequestSchema;
+    output: typeof UserDetailResponseSchema;
   },
   /**
    * 删除用户
@@ -600,16 +544,6 @@ export const User: GenService<{
     methodKind: "unary";
     input: typeof UpdateUserRequestSchema;
     output: typeof UpdateUserResponseSchema;
-  },
-  /**
-   * 用户状态信息
-   *
-   * @generated from rpc yeying.api.user.User.State
-   */
-  state: {
-    methodKind: "unary";
-    input: typeof UserStateRequestSchema;
-    output: typeof UserStateResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_yeying_api_user_user, 0);

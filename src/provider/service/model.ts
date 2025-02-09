@@ -1,12 +1,12 @@
-import {Identity, IdentityCodeEnum, NetworkTypeEnum} from "@yeying-community/yeying-web3";
-import {create} from "@bufbuild/protobuf";
-import {ApiCodeEnum, ServiceCodeEnum} from "../../yeying/api/common/code_pb";
-import {ServiceMetadataSchema} from "../../yeying/api/service/service_pb";
+import { Identity, IdentityCodeEnum, NetworkTypeEnum } from '@yeying-community/yeying-web3'
+import { create } from '@bufbuild/protobuf'
+import { ApiCodeEnum, ServiceCodeEnum } from '../../yeying/api/common/code_pb'
+import { ServiceMetadataSchema } from '../../yeying/api/service/service_pb'
 
 export function convertServiceMetadataFromIdentity(identity: Identity) {
     const metadata = identity.metadata
     if (metadata === undefined) {
-        throw new Error("invalid identity metadata!")
+        throw new Error('invalid identity metadata!')
     }
 
     if (metadata.code !== IdentityCodeEnum.IDENTITY_CODE_SERVICE) {
@@ -15,7 +15,7 @@ export function convertServiceMetadataFromIdentity(identity: Identity) {
 
     const extend = identity.serviceExtend
     if (extend === undefined) {
-        throw new Error("invalid identity extend!")
+        throw new Error('invalid identity extend!')
     }
 
     return create(ServiceMetadataSchema, {

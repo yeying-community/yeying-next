@@ -6,16 +6,10 @@ import {
     DeleteUserRequestSchema,
     DeleteUserResponseBody,
     DeleteUserResponseBodySchema,
-    GetUserRequestSchema,
-    GetUserResponseBody,
-    GetUserResponseBodySchema,
-    UserStateRequestSchema,
-    UserStateResponseBody,
-    UserStateResponseBodySchema,
     UpdateUserRequestBodySchema,
     UpdateUserRequestSchema,
     UpdateUserResponseBodySchema,
-    User,
+    User, UserDetailRequestSchema, UserDetailResponseBody, UserDetailResponseBodySchema,
     UserMetadata,
     UserMetadataSchema
 } from '../../yeying/api/user/user_pb'
@@ -23,11 +17,9 @@ import {getCurrentUtcString} from '../../common/date'
 import {Authenticate} from '../common/authenticate'
 import {MessageHeader} from '../../yeying/api/common/message_pb'
 import {ProviderOption} from '../common/model'
-import {create, toBinary} from "@bufbuild/protobuf";
-import {createGrpcWebTransport} from "@connectrpc/connect-web";
+import {create, toBinary} from '@bufbuild/protobuf'
+import {createGrpcWebTransport} from '@connectrpc/connect-web'
 import {Client, createClient} from '@connectrpc/connect'
-import {NotFound} from "../../common/error";
-import {SolutionMetadataSchema} from "../../yeying/api/bulletin/bulletin_pb";
 
 /**
  * 代表了一个用户节点提供商，提供对用户的增、删、改、查操作。
@@ -55,10 +47,13 @@ export class UserProvider {
      */
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
-        this.client = createClient(User, createGrpcWebTransport({
-            baseUrl: option.proxy,
-            useBinaryFormat: true,
-        }));
+        this.client = createClient(
+            User,
+            createGrpcWebTransport({
+                baseUrl: option.proxy,
+                useBinaryFormat: true
+            })
+        )
     }
 
     /**
@@ -82,8 +77,8 @@ export class UserProvider {
                 name: name,
                 avatar: avatar,
                 createdAt: getCurrentUtcString(),
-                updatedAt: getCurrentUtcString(),
-            });
+                updatedAt: getCurrentUtcString()
+            })
 
             const body = create(AddUserRequestBodySchema, {user: user})
             let header: MessageHeader
@@ -112,7 +107,6 @@ export class UserProvider {
         })
     }
 
-
     /**
      * 从用户供应商获得存储的用户详情。
      *
@@ -120,13 +114,13 @@ export class UserProvider {
      * @throws 错误时抛出 `Error`。
      * @example
      * ```ts
-     * userProvider.get()
+     * userProvider.detail()
      *   .then(user => console.log(user))
      *   .catch(err => console.error(err));
      * ```
      */
-    get() {
-        return new Promise<GetUserResponseBody>(async (resolve, reject) => {
+    detail() {
+        return new Promise<UserDetailResponseBody>(async (resolve, reject) => {
             let header
             try {
                 header = await this.authenticate.createHeader()
@@ -135,11 +129,11 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = create(GetUserRequestSchema, {header: header})
+            const request = create(UserDetailRequestSchema, {header: header})
             try {
-                const res = await this.client.get(request)
-                await this.authenticate.doResponse(res, GetUserResponseBodySchema)
-                const resBody = res.body as GetUserResponseBody
+                const res = await this.client.detail(request)
+                await this.authenticate.doResponse(res, UserDetailResponseBodySchema)
+                const resBody = res.body as UserDetailResponseBody
                 if (await this.verifyUserMetadata(resBody.user)) {
                     resolve(resBody)
                 } else {
@@ -160,11 +154,7 @@ export class UserProvider {
         const signature = user.signature
         try {
             user.signature = ''
-            return await this.authenticate.verify(
-                user.did,
-                toBinary(UserMetadataSchema, user),
-                signature
-            )
+            return await this.authenticate.verify(user.did, toBinary(UserMetadataSchema, user), signature)
         } finally {
             user.signature = signature
         }
@@ -183,37 +173,12 @@ export class UserProvider {
      *   .catch(err => console.error(err));
      * ```
      */
-    update(attributes: { [key: string]: any }): Promise<UserMetadata> {
+    update(user: UserMetadata): Promise<UserMetadata> {
         return new Promise<UserMetadata>(async (resolve, reject) => {
-            const responseBody = await this.get()
-            const user = responseBody.user
-            if (user === undefined) {
-                return reject(new NotFound('Not found user'))
-            }
-
-            let changed = false
-            if (attributes.name) {
-                user.name = attributes.name
-                changed = true
-            }
-
-            if (attributes.avatar) {
-                user.avatar = attributes.avatar
-                changed = true
-            }
-
-            if (!changed) {
-                return resolve(user)
-            }
-
-            user.updatedAt = getCurrentUtcString()
-            user.signature = ''
-
             const body = create(UpdateUserRequestBodySchema, {})
             let header
             try {
-                user.signature = await this.authenticate.sign(toBinary(UserMetadataSchema, user))
-                body.user = user
+                body.user = await this.signUserMetadata(user)
                 header = await this.authenticate.createHeader(toBinary(UpdateUserRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header for modifying user', err)
@@ -227,41 +192,6 @@ export class UserProvider {
                 resolve(user)
             } catch (err) {
                 console.error('Fail to update user', err)
-                return reject(err)
-            }
-        })
-    }
-
-
-    /**
-     * 从当前供应商获取用户状态信息。
-     *
-     * @returns 返回用户状态。
-     * @throws 错误时抛出 `Error`。
-     * @example
-     * ```ts
-     * userProvider.state()
-     *   .then(user => console.log(user))
-     *   .catch(err => console.error(err));
-     * ```
-     */
-    state() {
-        return new Promise<UserStateResponseBody>(async (resolve, reject) => {
-            let header
-            try {
-                header = await this.authenticate.createHeader()
-            } catch (err) {
-                console.error('Fail to create header for getting user state.', err)
-                return reject(err)
-            }
-
-            const request = create(UserStateRequestSchema, {header: header})
-            try {
-                const res = await this.client.state(request)
-                await this.authenticate.doResponse(res, UserStateResponseBodySchema)
-                resolve(res.body as UserStateResponseBody)
-            } catch (err) {
-                console.error('Fail to get user state', err)
                 return reject(err)
             }
         })
@@ -299,5 +229,12 @@ export class UserProvider {
                 return reject(err)
             }
         })
+    }
+
+    private async signUserMetadata(user: UserMetadata) {
+        user.updatedAt = getCurrentUtcString()
+        user.signature = ''
+        user.signature = await this.authenticate.sign(toBinary(UserMetadataSchema, user))
+        return user
     }
 }

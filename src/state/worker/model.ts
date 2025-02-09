@@ -1,4 +1,3 @@
-
 // export class WorkerResult {
 //   constructor(status, operator, state) {
 //     this.status = status

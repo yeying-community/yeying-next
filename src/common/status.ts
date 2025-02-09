@@ -3,9 +3,8 @@
 //
 // const {ResponseCodeEnum} = code_pkg
 
-import {ResponseStatus} from '../yeying/api/common/message_pb'
-import {ResponseCodeEnum} from '../yeying/api/common/code_pb'
-
+import { ResponseStatus } from '../yeying/api/common/message_pb'
+import { ResponseCodeEnum } from '../yeying/api/common/code_pb'
 
 export function convertResponseStatusToError(status: ResponseStatus) {
     // switch (status.getCode()) {

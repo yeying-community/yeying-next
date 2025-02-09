@@ -1,18 +1,19 @@
-import {Authenticate} from "../common/authenticate";
-import {Client, createClient} from "@connectrpc/connect";
+import {Authenticate} from '../common/authenticate'
+import {Client, createClient} from '@connectrpc/connect'
 import {
     CreateLinkRequestBodySchema,
     CreateLinkRequestSchema,
-    CreateLinkResponseBody,
     CreateLinkResponseBodySchema,
     Link,
-    LinkMetadataSchema, LinkStatusEnum
-} from "../../yeying/api/asset/link_pb";
-import {ProviderOption} from "../common/model";
-import {createGrpcWebTransport} from "@connectrpc/connect-web";
-import {create, toBinary} from "@bufbuild/protobuf";
-import {generateUuid} from "../../common/string";
-import {formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond} from "../../common/date";
+    LinkMetadata,
+    LinkMetadataSchema,
+    LinkStatusEnum
+} from '../../yeying/api/asset/link_pb'
+import {ProviderOption} from '../common/model'
+import {createGrpcWebTransport} from '@connectrpc/connect-web'
+import {create, toBinary} from '@bufbuild/protobuf'
+import {generateUuid} from '../../common/string'
+import {formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond} from '../../common/date'
 
 /**
  * LinkProvider 类提供对资产分享链接的管理
@@ -30,10 +31,13 @@ export class LinkProvider {
      */
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
-        this.client = createClient(Link, createGrpcWebTransport({
-            baseUrl: option.proxy,
-            useBinaryFormat: true,
-        }))
+        this.client = createClient(
+            Link,
+            createGrpcWebTransport({
+                baseUrl: option.proxy,
+                useBinaryFormat: true
+            })
+        )
     }
 
     /**
@@ -50,7 +54,7 @@ export class LinkProvider {
      * linkProvider.create(assetMetadata).then(response => { console.log(response); });
      */
     create(contentHash: string, duration: number, status: LinkStatusEnum, visitors: string[] = []) {
-        return new Promise<CreateLinkResponseBody>(async (resolve, reject) => {
+        return new Promise<LinkMetadata>(async (resolve, reject) => {
             const link = create(LinkMetadataSchema, {
                 owner: this.authenticate.getDid(),
                 uid: generateUuid(),
@@ -58,11 +62,11 @@ export class LinkProvider {
                 expiredAt: formatDateTime(plusSecond(getCurrentUtcDateTime(), duration)),
                 hash: contentHash,
                 status: status,
-                visitors: visitors && visitors.length > 0 ? visitors.join(",") : undefined,
+                visitors: visitors && visitors.length > 0 ? visitors.join(',') : undefined
             })
 
             const body = create(CreateLinkRequestBodySchema, {
-                link: link,
+                link: link
             })
 
             let header
@@ -78,10 +82,11 @@ export class LinkProvider {
                 header: header,
                 body: body
             })
+
             try {
                 const res = await this.client.create(request)
                 await this.authenticate.doResponse(res, CreateLinkResponseBodySchema)
-                resolve(res.body as CreateLinkResponseBody)
+                resolve(res?.body?.link as LinkMetadata)
             } catch (err) {
                 console.error('Fail to create link for asset', err)
                 return reject(err)

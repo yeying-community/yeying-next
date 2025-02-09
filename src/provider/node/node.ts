@@ -1,20 +1,21 @@
-import {Authenticate} from "../common/authenticate";
-import {ProviderOption} from "../common/model";
-import {MessageHeader} from "../../yeying/api/common/message_pb";
-import {DataForgery} from "../../common/error";
+import { Authenticate } from '../common/authenticate'
+import { ProviderOption } from '../common/model'
+import { MessageHeader } from '../../yeying/api/common/message_pb'
+import { DataForgery } from '../../common/error'
 import {
     HealthCheckRequestSchema,
     HealthCheckResponseBody,
     HealthCheckResponseBodySchema,
     Node,
-    NodeMetadata, NodeMetadataSchema,
+    NodeMetadata,
+    NodeMetadataSchema,
     WhoamiRequestSchema,
     WhoamiResponseBody,
     WhoamiResponseBodySchema
-} from "../../yeying/api/node/node_pb";
-import {Client, createClient} from "@connectrpc/connect";
-import {createGrpcWebTransport} from "@connectrpc/connect-web";
-import {create, toBinary} from "@bufbuild/protobuf";
+} from '../../yeying/api/node/node_pb'
+import { Client, createClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create, toBinary } from '@bufbuild/protobuf'
 
 /**
  * NodeProvider 每个服务都是一个节点，同个这类了解这个节点健康状态，和节点的元信息。
@@ -32,10 +33,13 @@ export class NodeProvider {
 
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
-        this.client = createClient(Node, createGrpcWebTransport({
-            baseUrl: option.proxy,
-            useBinaryFormat: true,
-        }))
+        this.client = createClient(
+            Node,
+            createGrpcWebTransport({
+                baseUrl: option.proxy,
+                useBinaryFormat: true
+            })
+        )
     }
 
     /**
@@ -61,7 +65,7 @@ export class NodeProvider {
                 return reject(err)
             }
 
-            const request = create(HealthCheckRequestSchema, {header: header})
+            const request = create(HealthCheckRequestSchema, { header: header })
             try {
                 const res = await this.client.healthCheck(request)
                 await this.authenticate.doResponse(res, HealthCheckResponseBodySchema)
@@ -97,7 +101,7 @@ export class NodeProvider {
                 return reject(err)
             }
 
-            const request = create(WhoamiRequestSchema, {header: header})
+            const request = create(WhoamiRequestSchema, { header: header })
             try {
                 const res = await this.client.whoami(request)
                 await this.authenticate.doResponse(res, WhoamiResponseBodySchema)
@@ -106,11 +110,7 @@ export class NodeProvider {
 
                 const signature = node.signature
                 node.signature = ''
-                const passed = await this.authenticate.verify(
-                    node.did,
-                    toBinary(NodeMetadataSchema, node),
-                    signature
-                )
+                const passed = await this.authenticate.verify(node.did, toBinary(NodeMetadataSchema, node), signature)
 
                 if (passed) {
                     node.signature = signature
@@ -118,7 +118,6 @@ export class NodeProvider {
                 } else {
                     reject(new DataForgery('invalid signature!'))
                 }
-
             } catch (err) {
                 console.error('Fail to call whoami', err)
                 return reject(err)

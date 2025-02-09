@@ -1,9 +1,9 @@
-import {Authenticate} from '../common/authenticate'
-import {ProviderOption} from '../common/model'
-import {Client, createClient} from "@connectrpc/connect";
-import {createGrpcWebTransport} from "@connectrpc/connect-web";
-import {MessageHeader} from "../../yeying/api/common/message_pb";
-import {create, toBinary} from "@bufbuild/protobuf";
+import { Authenticate } from '../common/authenticate'
+import { ProviderOption } from '../common/model'
+import { Client, createClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { MessageHeader } from '../../yeying/api/common/message_pb'
+import { create, toBinary } from '@bufbuild/protobuf'
 import {
     Application,
     ApplicationMetadata,
@@ -12,7 +12,7 @@ import {
     CreateApplicationRequestSchema,
     CreateApplicationResponseBody,
     CreateApplicationResponseBodySchema
-} from "../../yeying/api/application/application_pb";
+} from '../../yeying/api/application/application_pb'
 
 /**
  * ApplicationProvider 管理应用。
@@ -35,10 +35,13 @@ export class ApplicationProvider {
      */
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
-        this.client = createClient(Application, createGrpcWebTransport({
-            baseUrl: option.proxy,
-            useBinaryFormat: true,
-        }))
+        this.client = createClient(
+            Application,
+            createGrpcWebTransport({
+                baseUrl: option.proxy,
+                useBinaryFormat: true
+            })
+        )
     }
 
     create(application: ApplicationMetadata) {
@@ -56,7 +59,7 @@ export class ApplicationProvider {
                 return reject(err)
             }
 
-            const request = create(CreateApplicationRequestSchema, {header: header, body: body})
+            const request = create(CreateApplicationRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.create(request)
                 await this.authenticate.doResponse(res, CreateApplicationResponseBodySchema)

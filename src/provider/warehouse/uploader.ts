@@ -4,13 +4,12 @@ import {convertDateToDateTime, convertToUtcDateTime, formatDateTime, getCurrentU
 import {readBlock} from '../../common/file'
 import {Digest, SecurityAlgorithm} from '@yeying-community/yeying-web3'
 import {decodeHex, encodeHex} from '../../common/codec'
-import {convertChunkMetadataFromBlock, getDigitalFormatByName} from '../../common/message'
+import {getDigitalFormatByName} from '../../common/message'
 import {AssetMetadata, AssetMetadataSchema} from '../../yeying/api/asset/asset_pb'
-import {create} from "@bufbuild/protobuf";
-import {BlockMetadata} from "../../yeying/api/asset/block_pb";
-import {isExisted} from "../../common/status";
-import {ProviderOption} from "../common/model";
-import {AssetProvider} from "./asset";
+import {create} from '@bufbuild/protobuf'
+import {isExisted} from '../../common/status'
+import {ProviderOption} from '../common/model'
+import {AssetProvider} from './asset'
 
 /**
  * 该类用于上传资产文件，通过将文件分块后上传，每个块加密（可选）并生成哈希值，最后对整个资产进行签名。
@@ -61,8 +60,8 @@ export class Uploader {
     /**
      * 上传文件并返回文件的资产元数据。
      *
+     * @param namespaceId - 资产所在命名空间。
      * @param file - 要上传的文件。
-     * @param uid - 文件的唯一标识符。
      * @param version - 文件的版本号，默认值为 0。
      * @param encrypted - 是否对文件进行加密，默认值为 `true`。
      * @param parent - 文件的父哈希，默认为空字符串。
@@ -80,45 +79,48 @@ export class Uploader {
      * ```
      */
     upload(
+        namespaceId: string,
         file: File,
-        uid: string,
-        version: number = 0,
         encrypted: boolean = true,
-        parent: string = '',
-        description: string = '',
-        extend: string = ''
+        parentHash?: string,
+        description?: string,
     ) {
         return new Promise<AssetMetadata>(async (resolve, reject) => {
             try {
+
+
                 const asset = create(AssetMetadataSchema, {
+                    namespaceId: namespaceId,
                     owner: this.blockProvider.getOwner(), // 设置资产拥有者
-                    parentHash: parent,  // 设置父哈希
-                    version: version, // 设置版本号
-                    uid: uid, // 设置文件唯一标识符
+                    parentHash: parentHash, // 设置父哈希
                     name: file.name, // 设置文件名称
                     format: getDigitalFormatByName(file.name), // 获取文件格式
                     createdAt: formatDateTime(convertToUtcDateTime(convertDateToDateTime(new Date(file.lastModified)))),
                     updatedAt: getCurrentUtcString(),
                     description: description,
-                    extend: extend,
                     chunkCount: Math.ceil(file.size / this.chunkSize),
                     chunkSize: this.chunkSize,
-                    isEncrypted: encrypted,
+                    isEncrypted: encrypted
                 })
+
+                if (parentHash) {
+                    const parent = await this.assetProvider.detail(namespaceId, parentHash)
+                    asset.version = parent.version + 1
+                }
 
                 console.log(`File last modified time=${file.lastModified}`)
 
                 const assetDigest = new Digest()
                 const mergeDigest = new Digest()
-                const chunkList = new Array(asset.chunkCount)  // 用于存储每个块的元数据
+                const chunkList = new Array(asset.chunkCount) // 用于存储每个块的元数据
 
                 // 按顺序上传文件的每一块
                 for (let i = 0; i < asset.chunkCount; i++) {
                     const start = i * this.chunkSize
                     const end = Math.min(file.size, start + this.chunkSize)
                     console.log(`Try to read the index=${i} chunk, size=${end - start}`)
-                    let data = await readBlock(file, start, end)  // 读取文件块
-                    assetDigest.update(data)  // 更新资产的哈希
+                    let data = await readBlock(file, start, end) // 读取文件块
+                    assetDigest.update(data) // 更新资产的哈希
 
                     if (encrypted) {
                         // 对数据进行加密（可选）
@@ -126,13 +128,13 @@ export class Uploader {
                     }
 
                     const block = await this.blockProvider.createBlockMetadata(data)
-                    mergeDigest.update(decodeHex(block.hash))  // 更新合并哈希
+                    mergeDigest.update(decodeHex(block.hash)) // 更新合并哈希
 
                     const confirmBody = await this.blockProvider.confirm(block)
                     if (confirmBody.block) {
                         // 已经存在，无需上传这个block
                         console.log(`skip the block=${i}, hash=${block.hash}`)
-                        chunkList[i] = convertChunkMetadataFromBlock(i, confirmBody.block as BlockMetadata)
+                        chunkList[i] = confirmBody.block.hash
                         continue
                     }
 
@@ -142,18 +144,17 @@ export class Uploader {
                         return reject(new Error(`Fail to put block=${block}`))
                     }
 
-                    chunkList[i] = convertChunkMetadataFromBlock(i, body.block as BlockMetadata)
+                    chunkList[i] = body.block?.hash
                 }
 
-                asset.chunks = chunkList  // 设置块的元数据
-                asset.contentHash = encodeHex(assetDigest.sum())  // 设置资产哈希
-                asset.mergedHash = encodeHex(mergeDigest.sum())  // 设置合并哈希
+                asset.chunks = chunkList // 设置块的元数据
+                asset.hash = encodeHex(assetDigest.sum()) // 设置资产哈希
                 await this.assetProvider.signAssetMetadata(asset)
                 const body = await this.assetProvider.sign(asset)
-                resolve(body.asset as AssetMetadata)  // 上传成功，返回资产元数据
+                resolve(body.asset as AssetMetadata) // 上传成功，返回资产元数据
             } catch (err) {
                 console.error(`Fail to upload the file=${file.name}`, err)
-                return reject(err)  // 上传失败，返回错误
+                return reject(err) // 上传失败，返回错误
             }
         })
     }

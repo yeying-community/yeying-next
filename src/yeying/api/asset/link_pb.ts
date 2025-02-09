@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/asset/link.proto.
  */
 export const file_yeying_api_asset_link: GenFile = /*@__PURE__*/
-  fileDesc("Cht5ZXlpbmcvYXBpL2Fzc2V0L2xpbmsucHJvdG8SEHlleWluZy5hcGkuYXNzZXQifAoRQ3JlYXRlTGlua1JlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS5hc3NldC5DcmVhdGVMaW5rUmVxdWVzdEJvZHkiRQoVQ3JlYXRlTGlua1JlcXVlc3RCb2R5EiwKBGxpbmsYASABKAsyHi55ZXlpbmcuYXBpLmFzc2V0LkxpbmtNZXRhZGF0YSJ+ChJDcmVhdGVMaW5rUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI2CgRib2R5GAIgASgLMigueWV5aW5nLmFwaS5hc3NldC5DcmVhdGVMaW5rUmVzcG9uc2VCb2R5InkKFkNyZWF0ZUxpbmtSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSLAoEbGluaxgCIAEoCzIeLnlleWluZy5hcGkuYXNzZXQuTGlua01ldGFkYXRhInwKEVNlYXJjaExpbmtSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkuYXNzZXQuU2VhcmNoTGlua1JlcXVlc3RCb2R5IlQKFVNlYXJjaExpbmtSZXF1ZXN0Qm9keRIsCgRwYWdlGAEgASgLMh4ueWV5aW5nLmFwaS5jb21tb24uUmVxdWVzdFBhZ2USDQoFb3duZXIYAiABKAkifgoSU2VhcmNoTGlua1Jlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNgoEYm9keRgCIAEoCzIoLnlleWluZy5hcGkuYXNzZXQuU2VhcmNoTGlua1Jlc3BvbnNlQm9keSKpAQoWU2VhcmNoTGlua1Jlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxItCgRwYWdlGAIgASgLMh8ueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VQYWdlEi0KBWxpbmtzGAMgAygLMh4ueWV5aW5nLmFwaS5hc3NldC5MaW5rTWV0YWRhdGEifAoRVXBkYXRlTGlua1JlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS5hc3NldC5VcGRhdGVMaW5rUmVxdWVzdEJvZHkiRQoVVXBkYXRlTGlua1JlcXVlc3RCb2R5EiwKBGxpbmsYASABKAsyHi55ZXlpbmcuYXBpLmFzc2V0LkxpbmtNZXRhZGF0YSJ+ChJVcGRhdGVMaW5rUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI2CgRib2R5GAIgASgLMigueWV5aW5nLmFwaS5hc3NldC5VcGRhdGVMaW5rUmVzcG9uc2VCb2R5InkKFlVwZGF0ZUxpbmtSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSLAoEbGluaxgCIAEoCzIeLnlleWluZy5hcGkuYXNzZXQuTGlua01ldGFkYXRhInwKEUxpbmtEZXRhaWxSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkuYXNzZXQuVXBkYXRlTGlua1JlcXVlc3RCb2R5IiQKFUxpbmtEZXRhaWxSZXF1ZXN0Qm9keRILCgN1aWQYASABKAkifgoSTGlua0RldGFpbFJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNgoEYm9keRgCIAEoCzIoLnlleWluZy5hcGkuYXNzZXQuTGlua0RldGFpbFJlc3BvbnNlQm9keSKuAQoWTGlua0RldGFpbFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxIsCgRsaW5rGAIgASgLMh4ueWV5aW5nLmFwaS5hc3NldC5MaW5rTWV0YWRhdGESMwoIdmlzaXRvcnMYAyADKAsyIS55ZXlpbmcuYXBpLmFzc2V0LlZpc2l0b3JNZXRhZGF0YSK1AQoMTGlua01ldGFkYXRhEgsKA3VpZBgBIAEoCRIwCgZzdGF0dXMYAiABKA4yIC55ZXlpbmcuYXBpLmFzc2V0LkxpbmtTdGF0dXNFbnVtEhAKCHZpc2l0b3JzGAMgASgJEg0KBW93bmVyGAQgASgJEgwKBGhhc2gYBSABKAkSEQoJZXhwaXJlZEF0GAYgASgJEhEKCWNyZWF0ZWRBdBgHIAEoCRIRCglzaWduYXR1cmUYCCABKAkiUwoPVmlzaXRvck1ldGFkYXRhEgsKA3VpZBgBIAEoCRIPCgd2aXNpdG9yGAIgASgJEg8KB3Zpc2l0QXQYAyABKAkSEQoJc2lnbmF0dXJlGAQgASgJKnoKDkxpbmtTdGF0dXNFbnVtEhcKE0xJTktfU1RBVFVTX1VOS05PV04QABIaChZMSU5LX1NUQVRVU19VTlZFUklGSUVEEAESGAoUTElOS19TVEFUVVNfVkVSSUZJRUQQAhIZChVMSU5LX1NUQVRVU19DQU5DRUxMRUQQAzLiAgoETGluaxJVCgZDcmVhdGUSIy55ZXlpbmcuYXBpLmFzc2V0LkNyZWF0ZUxpbmtSZXF1ZXN0GiQueWV5aW5nLmFwaS5hc3NldC5DcmVhdGVMaW5rUmVzcG9uc2UiABJVCgZTZWFyY2gSIy55ZXlpbmcuYXBpLmFzc2V0LlNlYXJjaExpbmtSZXF1ZXN0GiQueWV5aW5nLmFwaS5hc3NldC5TZWFyY2hMaW5rUmVzcG9uc2UiABJVCgZVcGRhdGUSIy55ZXlpbmcuYXBpLmFzc2V0LlVwZGF0ZUxpbmtSZXF1ZXN0GiQueWV5aW5nLmFwaS5hc3NldC5VcGRhdGVMaW5rUmVzcG9uc2UiABJVCgZEZXRhaWwSIy55ZXlpbmcuYXBpLmFzc2V0LkxpbmtEZXRhaWxSZXF1ZXN0GiQueWV5aW5nLmFwaS5hc3NldC5MaW5rRGV0YWlsUmVzcG9uc2UiAEISWhB5ZXlpbmcvYXBpL2Fzc2V0YgZwcm90bzM", [file_yeying_api_common_message]);
+  fileDesc("Cht5ZXlpbmcvYXBpL2Fzc2V0L2xpbmsucHJvdG8SEHlleWluZy5hcGkuYXNzZXQifAoRQ3JlYXRlTGlua1JlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS5hc3NldC5DcmVhdGVMaW5rUmVxdWVzdEJvZHkiRQoVQ3JlYXRlTGlua1JlcXVlc3RCb2R5EiwKBGxpbmsYASABKAsyHi55ZXlpbmcuYXBpLmFzc2V0LkxpbmtNZXRhZGF0YSJ+ChJDcmVhdGVMaW5rUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI2CgRib2R5GAIgASgLMigueWV5aW5nLmFwaS5hc3NldC5DcmVhdGVMaW5rUmVzcG9uc2VCb2R5IqUBChZDcmVhdGVMaW5rUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEioKA3VybBgCIAEoCzIdLnlleWluZy5hcGkuYXNzZXQuVXJsTWV0YWRhdGESLAoEbGluaxgDIAEoCzIeLnlleWluZy5hcGkuYXNzZXQuTGlua01ldGFkYXRhInwKEVNlYXJjaExpbmtSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkuYXNzZXQuU2VhcmNoTGlua1JlcXVlc3RCb2R5In8KFVNlYXJjaExpbmtSZXF1ZXN0Qm9keRIsCgRwYWdlGAEgASgLMh4ueWV5aW5nLmFwaS5jb21tb24uUmVxdWVzdFBhZ2USOAoJY29uZGl0aW9uGAIgASgLMiUueWV5aW5nLmFwaS5hc3NldC5TZWFyY2hMaW5rQ29uZGl0aW9uIiMKE1NlYXJjaExpbmtDb25kaXRpb24SDAoEaGFzaBgBIAEoCSJ+ChJTZWFyY2hMaW5rUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI2CgRib2R5GAIgASgLMigueWV5aW5nLmFwaS5hc3NldC5TZWFyY2hMaW5rUmVzcG9uc2VCb2R5IqkBChZTZWFyY2hMaW5rUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEi0KBHBhZ2UYAiABKAsyHy55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVBhZ2USLQoFbGlua3MYAyADKAsyHi55ZXlpbmcuYXBpLmFzc2V0LkxpbmtNZXRhZGF0YSJ8ChFVcGRhdGVMaW5rUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjUKBGJvZHkYAiABKAsyJy55ZXlpbmcuYXBpLmFzc2V0LlVwZGF0ZUxpbmtSZXF1ZXN0Qm9keSJFChVVcGRhdGVMaW5rUmVxdWVzdEJvZHkSLAoEbGluaxgBIAEoCzIeLnlleWluZy5hcGkuYXNzZXQuTGlua01ldGFkYXRhIn4KElVwZGF0ZUxpbmtSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjYKBGJvZHkYAiABKAsyKC55ZXlpbmcuYXBpLmFzc2V0LlVwZGF0ZUxpbmtSZXNwb25zZUJvZHkipQEKFlVwZGF0ZUxpbmtSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSKgoDdXJsGAIgASgLMh0ueWV5aW5nLmFwaS5hc3NldC5VcmxNZXRhZGF0YRIsCgRsaW5rGAMgASgLMh4ueWV5aW5nLmFwaS5hc3NldC5MaW5rTWV0YWRhdGEifAoRTGlua0RldGFpbFJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS5hc3NldC5MaW5rRGV0YWlsUmVxdWVzdEJvZHkiJAoVTGlua0RldGFpbFJlcXVlc3RCb2R5EgsKA3VpZBgBIAEoCSJ+ChJMaW5rRGV0YWlsUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI2CgRib2R5GAIgASgLMigueWV5aW5nLmFwaS5hc3NldC5MaW5rRGV0YWlsUmVzcG9uc2VCb2R5IqUBChZMaW5rRGV0YWlsUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEioKA3VybBgCIAEoCzIdLnlleWluZy5hcGkuYXNzZXQuVXJsTWV0YWRhdGESLAoEbGluaxgDIAEoCzIeLnlleWluZy5hcGkuYXNzZXQuTGlua01ldGFkYXRhIn4KEkxpbmtWaXNpdG9yUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjYKBGJvZHkYAiABKAsyKC55ZXlpbmcuYXBpLmFzc2V0LkxpbmtWaXNpdG9yUmVxdWVzdEJvZHkiUwoWTGlua1Zpc2l0b3JSZXF1ZXN0Qm9keRILCgN1aWQYASABKAkSLAoEcGFnZRgCIAEoCzIeLnlleWluZy5hcGkuY29tbW9uLlJlcXVlc3RQYWdlIoABChNMaW5rVmlzaXRvclJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNwoEYm9keRgCIAEoCzIpLnlleWluZy5hcGkuYXNzZXQuTGlua1Zpc2l0b3JSZXNwb25zZUJvZHkisAEKF0xpbmtWaXNpdG9yUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEi0KBHBhZ2UYAiABKAsyHy55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVBhZ2USMwoIdmlzaXRvcnMYAyADKAsyIS55ZXlpbmcuYXBpLmFzc2V0LlZpc2l0b3JNZXRhZGF0YSLcAQoMTGlua01ldGFkYXRhEg0KBW93bmVyGAEgASgJEgsKA3VpZBgCIAEoCRIwCgZzdGF0dXMYAyABKA4yIC55ZXlpbmcuYXBpLmFzc2V0LkxpbmtTdGF0dXNFbnVtEhAKCHZpc2l0b3JzGAQgASgJEhMKC25hbWVzcGFjZUlkGAUgASgJEgwKBGhhc2gYBiABKAkSEAoIcGFzc3dvcmQYByABKAkSEQoJZXhwaXJlZEF0GAggASgJEhEKCWNyZWF0ZWRBdBgJIAEoCRIRCglzaWduYXR1cmUYCiABKAkicwoLVXJsTWV0YWRhdGESEgoKc2VydmljZURpZBgBIAEoCRIOCgZsaW5rSWQYAiABKAkSDQoFdG9rZW4YAyABKAkSCwoDdXJsGAQgASgJEhEKCWNyZWF0ZWRBdBgFIAEoCRIRCglzaWduYXR1cmUYBiABKAkiVAoPVmlzaXRvck1ldGFkYXRhEg4KBmxpbmtJZBgBIAEoCRILCgNkaWQYAiABKAkSEQoJY3JlYXRlZEF0GAMgASgJEhEKCXNpZ25hdHVyZRgEIAEoCSp8Cg5MaW5rU3RhdHVzRW51bRIXChNMSU5LX1NUQVRVU19VTktOT1dOEAASFgoSTElOS19TVEFUVVNfUFVCTElDEAESHQoZTElOS19TVEFUVVNfQVVUSEVOVElDQVRFRBACEhoKFkxJTktfU1RBVFVTX1RFUk1JTkFURUQQAzK8AwoETGluaxJVCgZDcmVhdGUSIy55ZXlpbmcuYXBpLmFzc2V0LkNyZWF0ZUxpbmtSZXF1ZXN0GiQueWV5aW5nLmFwaS5hc3NldC5DcmVhdGVMaW5rUmVzcG9uc2UiABJVCgZTZWFyY2gSIy55ZXlpbmcuYXBpLmFzc2V0LlNlYXJjaExpbmtSZXF1ZXN0GiQueWV5aW5nLmFwaS5hc3NldC5TZWFyY2hMaW5rUmVzcG9uc2UiABJVCgZEZXRhaWwSIy55ZXlpbmcuYXBpLmFzc2V0LkxpbmtEZXRhaWxSZXF1ZXN0GiQueWV5aW5nLmFwaS5hc3NldC5MaW5rRGV0YWlsUmVzcG9uc2UiABJYCgdWaXNpdG9yEiQueWV5aW5nLmFwaS5hc3NldC5MaW5rVmlzaXRvclJlcXVlc3QaJS55ZXlpbmcuYXBpLmFzc2V0LkxpbmtWaXNpdG9yUmVzcG9uc2UiABJVCgZVcGRhdGUSIy55ZXlpbmcuYXBpLmFzc2V0LlVwZGF0ZUxpbmtSZXF1ZXN0GiQueWV5aW5nLmFwaS5hc3NldC5VcGRhdGVMaW5rUmVzcG9uc2UiAEISWhB5ZXlpbmcvYXBpL2Fzc2V0YgZwcm90bzM", [file_yeying_api_common_message]);
 
 /**
  * @generated from message yeying.api.asset.CreateLinkRequest
@@ -85,7 +85,12 @@ export type CreateLinkResponseBody = Message<"yeying.api.asset.CreateLinkRespons
   status?: ResponseStatus;
 
   /**
-   * @generated from field: yeying.api.asset.LinkMetadata link = 2;
+   * @generated from field: yeying.api.asset.UrlMetadata url = 2;
+   */
+  url?: UrlMetadata;
+
+  /**
+   * @generated from field: yeying.api.asset.LinkMetadata link = 3;
    */
   link?: LinkMetadata;
 };
@@ -129,9 +134,9 @@ export type SearchLinkRequestBody = Message<"yeying.api.asset.SearchLinkRequestB
   page?: RequestPage;
 
   /**
-   * @generated from field: string owner = 2;
+   * @generated from field: yeying.api.asset.SearchLinkCondition condition = 2;
    */
-  owner: string;
+  condition?: SearchLinkCondition;
 };
 
 /**
@@ -140,6 +145,23 @@ export type SearchLinkRequestBody = Message<"yeying.api.asset.SearchLinkRequestB
  */
 export const SearchLinkRequestBodySchema: GenMessage<SearchLinkRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_asset_link, 5);
+
+/**
+ * @generated from message yeying.api.asset.SearchLinkCondition
+ */
+export type SearchLinkCondition = Message<"yeying.api.asset.SearchLinkCondition"> & {
+  /**
+   * @generated from field: string hash = 1;
+   */
+  hash: string;
+};
+
+/**
+ * Describes the message yeying.api.asset.SearchLinkCondition.
+ * Use `create(SearchLinkConditionSchema)` to create a new message.
+ */
+export const SearchLinkConditionSchema: GenMessage<SearchLinkCondition> = /*@__PURE__*/
+  messageDesc(file_yeying_api_asset_link, 6);
 
 /**
  * @generated from message yeying.api.asset.SearchLinkResponse
@@ -161,7 +183,7 @@ export type SearchLinkResponse = Message<"yeying.api.asset.SearchLinkResponse"> 
  * Use `create(SearchLinkResponseSchema)` to create a new message.
  */
 export const SearchLinkResponseSchema: GenMessage<SearchLinkResponse> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_link, 6);
+  messageDesc(file_yeying_api_asset_link, 7);
 
 /**
  * @generated from message yeying.api.asset.SearchLinkResponseBody
@@ -188,7 +210,7 @@ export type SearchLinkResponseBody = Message<"yeying.api.asset.SearchLinkRespons
  * Use `create(SearchLinkResponseBodySchema)` to create a new message.
  */
 export const SearchLinkResponseBodySchema: GenMessage<SearchLinkResponseBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_link, 7);
+  messageDesc(file_yeying_api_asset_link, 8);
 
 /**
  * @generated from message yeying.api.asset.UpdateLinkRequest
@@ -210,7 +232,7 @@ export type UpdateLinkRequest = Message<"yeying.api.asset.UpdateLinkRequest"> & 
  * Use `create(UpdateLinkRequestSchema)` to create a new message.
  */
 export const UpdateLinkRequestSchema: GenMessage<UpdateLinkRequest> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_link, 8);
+  messageDesc(file_yeying_api_asset_link, 9);
 
 /**
  * @generated from message yeying.api.asset.UpdateLinkRequestBody
@@ -227,7 +249,7 @@ export type UpdateLinkRequestBody = Message<"yeying.api.asset.UpdateLinkRequestB
  * Use `create(UpdateLinkRequestBodySchema)` to create a new message.
  */
 export const UpdateLinkRequestBodySchema: GenMessage<UpdateLinkRequestBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_link, 9);
+  messageDesc(file_yeying_api_asset_link, 10);
 
 /**
  * @generated from message yeying.api.asset.UpdateLinkResponse
@@ -249,7 +271,7 @@ export type UpdateLinkResponse = Message<"yeying.api.asset.UpdateLinkResponse"> 
  * Use `create(UpdateLinkResponseSchema)` to create a new message.
  */
 export const UpdateLinkResponseSchema: GenMessage<UpdateLinkResponse> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_link, 10);
+  messageDesc(file_yeying_api_asset_link, 11);
 
 /**
  * @generated from message yeying.api.asset.UpdateLinkResponseBody
@@ -261,7 +283,12 @@ export type UpdateLinkResponseBody = Message<"yeying.api.asset.UpdateLinkRespons
   status?: ResponseStatus;
 
   /**
-   * @generated from field: yeying.api.asset.LinkMetadata link = 2;
+   * @generated from field: yeying.api.asset.UrlMetadata url = 2;
+   */
+  url?: UrlMetadata;
+
+  /**
+   * @generated from field: yeying.api.asset.LinkMetadata link = 3;
    */
   link?: LinkMetadata;
 };
@@ -271,7 +298,7 @@ export type UpdateLinkResponseBody = Message<"yeying.api.asset.UpdateLinkRespons
  * Use `create(UpdateLinkResponseBodySchema)` to create a new message.
  */
 export const UpdateLinkResponseBodySchema: GenMessage<UpdateLinkResponseBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_link, 11);
+  messageDesc(file_yeying_api_asset_link, 12);
 
 /**
  * @generated from message yeying.api.asset.LinkDetailRequest
@@ -283,9 +310,9 @@ export type LinkDetailRequest = Message<"yeying.api.asset.LinkDetailRequest"> & 
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.asset.UpdateLinkRequestBody body = 2;
+   * @generated from field: yeying.api.asset.LinkDetailRequestBody body = 2;
    */
-  body?: UpdateLinkRequestBody;
+  body?: LinkDetailRequestBody;
 };
 
 /**
@@ -293,7 +320,7 @@ export type LinkDetailRequest = Message<"yeying.api.asset.LinkDetailRequest"> & 
  * Use `create(LinkDetailRequestSchema)` to create a new message.
  */
 export const LinkDetailRequestSchema: GenMessage<LinkDetailRequest> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_link, 12);
+  messageDesc(file_yeying_api_asset_link, 13);
 
 /**
  * @generated from message yeying.api.asset.LinkDetailRequestBody
@@ -310,7 +337,7 @@ export type LinkDetailRequestBody = Message<"yeying.api.asset.LinkDetailRequestB
  * Use `create(LinkDetailRequestBodySchema)` to create a new message.
  */
 export const LinkDetailRequestBodySchema: GenMessage<LinkDetailRequestBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_link, 13);
+  messageDesc(file_yeying_api_asset_link, 14);
 
 /**
  * @generated from message yeying.api.asset.LinkDetailResponse
@@ -332,7 +359,7 @@ export type LinkDetailResponse = Message<"yeying.api.asset.LinkDetailResponse"> 
  * Use `create(LinkDetailResponseSchema)` to create a new message.
  */
 export const LinkDetailResponseSchema: GenMessage<LinkDetailResponse> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_link, 14);
+  messageDesc(file_yeying_api_asset_link, 15);
 
 /**
  * @generated from message yeying.api.asset.LinkDetailResponseBody
@@ -344,9 +371,102 @@ export type LinkDetailResponseBody = Message<"yeying.api.asset.LinkDetailRespons
   status?: ResponseStatus;
 
   /**
-   * @generated from field: yeying.api.asset.LinkMetadata link = 2;
+   * @generated from field: yeying.api.asset.UrlMetadata url = 2;
+   */
+  url?: UrlMetadata;
+
+  /**
+   * @generated from field: yeying.api.asset.LinkMetadata link = 3;
    */
   link?: LinkMetadata;
+};
+
+/**
+ * Describes the message yeying.api.asset.LinkDetailResponseBody.
+ * Use `create(LinkDetailResponseBodySchema)` to create a new message.
+ */
+export const LinkDetailResponseBodySchema: GenMessage<LinkDetailResponseBody> = /*@__PURE__*/
+  messageDesc(file_yeying_api_asset_link, 16);
+
+/**
+ * @generated from message yeying.api.asset.LinkVisitorRequest
+ */
+export type LinkVisitorRequest = Message<"yeying.api.asset.LinkVisitorRequest"> & {
+  /**
+   * @generated from field: yeying.api.common.MessageHeader header = 1;
+   */
+  header?: MessageHeader;
+
+  /**
+   * @generated from field: yeying.api.asset.LinkVisitorRequestBody body = 2;
+   */
+  body?: LinkVisitorRequestBody;
+};
+
+/**
+ * Describes the message yeying.api.asset.LinkVisitorRequest.
+ * Use `create(LinkVisitorRequestSchema)` to create a new message.
+ */
+export const LinkVisitorRequestSchema: GenMessage<LinkVisitorRequest> = /*@__PURE__*/
+  messageDesc(file_yeying_api_asset_link, 17);
+
+/**
+ * @generated from message yeying.api.asset.LinkVisitorRequestBody
+ */
+export type LinkVisitorRequestBody = Message<"yeying.api.asset.LinkVisitorRequestBody"> & {
+  /**
+   * @generated from field: string uid = 1;
+   */
+  uid: string;
+
+  /**
+   * @generated from field: yeying.api.common.RequestPage page = 2;
+   */
+  page?: RequestPage;
+};
+
+/**
+ * Describes the message yeying.api.asset.LinkVisitorRequestBody.
+ * Use `create(LinkVisitorRequestBodySchema)` to create a new message.
+ */
+export const LinkVisitorRequestBodySchema: GenMessage<LinkVisitorRequestBody> = /*@__PURE__*/
+  messageDesc(file_yeying_api_asset_link, 18);
+
+/**
+ * @generated from message yeying.api.asset.LinkVisitorResponse
+ */
+export type LinkVisitorResponse = Message<"yeying.api.asset.LinkVisitorResponse"> & {
+  /**
+   * @generated from field: yeying.api.common.MessageHeader header = 1;
+   */
+  header?: MessageHeader;
+
+  /**
+   * @generated from field: yeying.api.asset.LinkVisitorResponseBody body = 2;
+   */
+  body?: LinkVisitorResponseBody;
+};
+
+/**
+ * Describes the message yeying.api.asset.LinkVisitorResponse.
+ * Use `create(LinkVisitorResponseSchema)` to create a new message.
+ */
+export const LinkVisitorResponseSchema: GenMessage<LinkVisitorResponse> = /*@__PURE__*/
+  messageDesc(file_yeying_api_asset_link, 19);
+
+/**
+ * @generated from message yeying.api.asset.LinkVisitorResponseBody
+ */
+export type LinkVisitorResponseBody = Message<"yeying.api.asset.LinkVisitorResponseBody"> & {
+  /**
+   * @generated from field: yeying.api.common.ResponseStatus status = 1;
+   */
+  status?: ResponseStatus;
+
+  /**
+   * @generated from field: yeying.api.common.ResponsePage page = 2;
+   */
+  page?: ResponsePage;
 
   /**
    * @generated from field: repeated yeying.api.asset.VisitorMetadata visitors = 3;
@@ -355,69 +475,81 @@ export type LinkDetailResponseBody = Message<"yeying.api.asset.LinkDetailRespons
 };
 
 /**
- * Describes the message yeying.api.asset.LinkDetailResponseBody.
- * Use `create(LinkDetailResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.asset.LinkVisitorResponseBody.
+ * Use `create(LinkVisitorResponseBodySchema)` to create a new message.
  */
-export const LinkDetailResponseBodySchema: GenMessage<LinkDetailResponseBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_link, 15);
+export const LinkVisitorResponseBodySchema: GenMessage<LinkVisitorResponseBody> = /*@__PURE__*/
+  messageDesc(file_yeying_api_asset_link, 20);
 
 /**
  * @generated from message yeying.api.asset.LinkMetadata
  */
 export type LinkMetadata = Message<"yeying.api.asset.LinkMetadata"> & {
   /**
+   * 分享链接所有者
+   *
+   * @generated from field: string owner = 1;
+   */
+  owner: string;
+
+  /**
    * 分享链接唯一ID
    *
-   * @generated from field: string uid = 1;
+   * @generated from field: string uid = 2;
    */
   uid: string;
 
   /**
    * 分享链接状态
    *
-   * @generated from field: yeying.api.asset.LinkStatusEnum status = 2;
+   * @generated from field: yeying.api.asset.LinkStatusEnum status = 3;
    */
   status: LinkStatusEnum;
 
   /**
    * 指定分享链接的访问者身份ID，多个访问者使用逗号隔开，如果不指定，说明任何身份都可以访问
    *
-   * @generated from field: string visitors = 3;
+   * @generated from field: string visitors = 4;
    */
   visitors: string;
 
   /**
-   * 资产所有者身份ID
-   *
-   * @generated from field: string owner = 4;
+   * @generated from field: string namespaceId = 5;
    */
-  owner: string;
+  namespaceId: string;
 
   /**
    * 资产内容哈希
    *
-   * @generated from field: string hash = 5;
+   * @generated from field: string hash = 6;
    */
   hash: string;
 
   /**
+   * 访问口令
+   *
+   * @generated from field: string password = 7;
+   */
+  password: string;
+
+  /**
    * 分享链接有效截止时间
    *
-   * @generated from field: string expiredAt = 6;
+   * @generated from field: string expiredAt = 8;
    */
   expiredAt: string;
 
   /**
    * 分享链接创建时间
    *
-   * @generated from field: string createdAt = 7;
+   * @generated from field: string createdAt = 9;
    */
   createdAt: string;
 
   /**
    * 资产所有者签名
    *
-   * @generated from field: string signature = 8;
+   * @generated from field: string signature = 10;
    */
   signature: string;
 };
@@ -427,32 +559,86 @@ export type LinkMetadata = Message<"yeying.api.asset.LinkMetadata"> & {
  * Use `create(LinkMetadataSchema)` to create a new message.
  */
 export const LinkMetadataSchema: GenMessage<LinkMetadata> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_link, 16);
+  messageDesc(file_yeying_api_asset_link, 21);
+
+/**
+ * @generated from message yeying.api.asset.UrlMetadata
+ */
+export type UrlMetadata = Message<"yeying.api.asset.UrlMetadata"> & {
+  /**
+   * 服务Did
+   *
+   * @generated from field: string serviceDid = 1;
+   */
+  serviceDid: string;
+
+  /**
+   * 分享链接ID
+   *
+   * @generated from field: string linkId = 2;
+   */
+  linkId: string;
+
+  /**
+   * 访问令牌
+   *
+   * @generated from field: string token = 3;
+   */
+  token: string;
+
+  /**
+   * 分享链接
+   *
+   * @generated from field: string url = 4;
+   */
+  url: string;
+
+  /**
+   * 创建时间
+   *
+   * @generated from field: string createdAt = 5;
+   */
+  createdAt: string;
+
+  /**
+   * 服务签名
+   *
+   * @generated from field: string signature = 6;
+   */
+  signature: string;
+};
+
+/**
+ * Describes the message yeying.api.asset.UrlMetadata.
+ * Use `create(UrlMetadataSchema)` to create a new message.
+ */
+export const UrlMetadataSchema: GenMessage<UrlMetadata> = /*@__PURE__*/
+  messageDesc(file_yeying_api_asset_link, 22);
 
 /**
  * @generated from message yeying.api.asset.VisitorMetadata
  */
 export type VisitorMetadata = Message<"yeying.api.asset.VisitorMetadata"> & {
   /**
-   * 分享链接唯一ID
+   * 分享链接ID
    *
-   * @generated from field: string uid = 1;
+   * @generated from field: string linkId = 1;
    */
-  uid: string;
+  linkId: string;
 
   /**
    * 访问者身份ID
    *
-   * @generated from field: string visitor = 2;
+   * @generated from field: string did = 2;
    */
-  visitor: string;
+  did: string;
 
   /**
    * 访问时间
    *
-   * @generated from field: string visitAt = 3;
+   * @generated from field: string createdAt = 3;
    */
-  visitAt: string;
+  createdAt: string;
 
   /**
    * 访问者签名
@@ -467,7 +653,7 @@ export type VisitorMetadata = Message<"yeying.api.asset.VisitorMetadata"> & {
  * Use `create(VisitorMetadataSchema)` to create a new message.
  */
 export const VisitorMetadataSchema: GenMessage<VisitorMetadata> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_link, 17);
+  messageDesc(file_yeying_api_asset_link, 23);
 
 /**
  * @generated from enum yeying.api.asset.LinkStatusEnum
@@ -481,25 +667,25 @@ export enum LinkStatusEnum {
   LINK_STATUS_UNKNOWN = 0,
 
   /**
-   * 无需验证身份，直接访问
+   * 完全公开的，无需验证身份，直接访问
    *
-   * @generated from enum value: LINK_STATUS_UNVERIFIED = 1;
+   * @generated from enum value: LINK_STATUS_PUBLIC = 1;
    */
-  LINK_STATUS_UNVERIFIED = 1,
+  LINK_STATUS_PUBLIC = 1,
 
   /**
-   * 需要验证身份，访问需要身份DID、下载时间和签名
+   * 需要验证身份，包括访问需要的身份DID、下载时间和签名
    *
-   * @generated from enum value: LINK_STATUS_VERIFIED = 2;
+   * @generated from enum value: LINK_STATUS_AUTHENTICATED = 2;
    */
-  LINK_STATUS_VERIFIED = 2,
+  LINK_STATUS_AUTHENTICATED = 2,
 
   /**
-   * 提前取消分享链接
+   * 提前终止分享链接
    *
-   * @generated from enum value: LINK_STATUS_CANCELLED = 3;
+   * @generated from enum value: LINK_STATUS_TERMINATED = 3;
    */
-  LINK_STATUS_CANCELLED = 3,
+  LINK_STATUS_TERMINATED = 3,
 }
 
 /**
@@ -533,6 +719,26 @@ export const Link: GenService<{
     output: typeof SearchLinkResponseSchema;
   },
   /**
+   * 获得分享链接明细
+   *
+   * @generated from rpc yeying.api.asset.Link.Detail
+   */
+  detail: {
+    methodKind: "unary";
+    input: typeof LinkDetailRequestSchema;
+    output: typeof LinkDetailResponseSchema;
+  },
+  /**
+   * 分享链接的访问信息
+   *
+   * @generated from rpc yeying.api.asset.Link.Visitor
+   */
+  visitor: {
+    methodKind: "unary";
+    input: typeof LinkVisitorRequestSchema;
+    output: typeof LinkVisitorResponseSchema;
+  },
+  /**
    * 更新资产分享链接，实现变更、取消等功能
    *
    * @generated from rpc yeying.api.asset.Link.Update
@@ -541,16 +747,6 @@ export const Link: GenService<{
     methodKind: "unary";
     input: typeof UpdateLinkRequestSchema;
     output: typeof UpdateLinkResponseSchema;
-  },
-  /**
-   * 获得分享链接明细，包括谁下载
-   *
-   * @generated from rpc yeying.api.asset.Link.Detail
-   */
-  detail: {
-    methodKind: "unary";
-    input: typeof LinkDetailRequestSchema;
-    output: typeof LinkDetailResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_yeying_api_asset_link, 0);

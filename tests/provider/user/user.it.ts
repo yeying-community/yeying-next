@@ -5,9 +5,9 @@ import {ProviderOption} from "../../../src/provider/common/model";
 import {toJson} from "@bufbuild/protobuf";
 import {
     AddUserResponseBodySchema,
-    GetUserResponseBodySchema,
+    UserDetailResponseBodySchema,
+    UserMetadata,
     UserMetadataSchema,
-    UserStateResponseBodySchema
 } from "../../../src/yeying/api/user/user_pb";
 import {isDeleted, isExisted, isOk} from "../../../src/common/status";
 
@@ -31,25 +31,21 @@ describe('User', () => {
         assert.isTrue(isExisted(body.status))
     })
 
-    it('get', async () => {
+    it('detail', async () => {
         const userProvider = new UserProvider(provider)
-        const body = await userProvider.get()
-        console.log(`Success to get user=${JSON.stringify(toJson(GetUserResponseBodySchema, body))}`)
-        assert.isTrue(isOk(body.status))
-    })
-
-    it('state', async () => {
-        const userProvider = new UserProvider(provider)
-        const body = await userProvider.state()
-        console.log(`Success to get user=${JSON.stringify(toJson(UserStateResponseBodySchema, body))}`)
+        const body = await userProvider.detail()
+        console.log(`Success to get user=${JSON.stringify(toJson(UserDetailResponseBodySchema, body))}`)
         assert.isTrue(isOk(body.status))
     })
 
     it('update', async () => {
         const userProvider = new UserProvider(provider)
-        const name = "test2"
-        const user = await userProvider.update({name: name})
-        console.log(`Success to update user=${JSON.stringify(toJson(UserMetadataSchema, user))}`)
-        assert.equal(user.name, name)
+        const body = await userProvider.detail()
+        assert.isTrue(isOk(body.status))
+        const user = body.user as UserMetadata
+        user.name = "test2"
+        const resUser = await userProvider.update(user)
+        console.log(`Success to update user=${JSON.stringify(toJson(UserMetadataSchema, resUser))}`)
+        assert.equal(user.name, resUser.name)
     })
 })

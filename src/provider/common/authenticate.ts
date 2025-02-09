@@ -1,13 +1,13 @@
-import {getCurrentUtcString, isExpired, parseDateTime} from '../../common/date'
-import {generateUuid} from '../../common/string'
-import {MessageHeader, MessageHeaderSchema} from '../../yeying/api/common/message_pb'
-import {AuthenticateTypeEnum} from '../../yeying/api/common/code_pb'
-import {BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes} from '@yeying-community/yeying-web3'
-import {InvalidArgument, NetworkDown, NoPermission} from '../../common/error'
-import {composite} from '../../common/bytes'
-import {computeHash} from '../../common/crypto'
-import {create, toBinary} from "@bufbuild/protobuf";
-import {DescMessage} from "@bufbuild/protobuf/dist/cjs/descriptors";
+import { getCurrentUtcString, isExpired, parseDateTime } from '../../common/date'
+import { generateUuid } from '../../common/string'
+import { MessageHeader, MessageHeaderSchema } from '../../yeying/api/common/message_pb'
+import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
+import { BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes } from '@yeying-community/yeying-web3'
+import { InvalidArgument, NetworkDown, NoPermission } from '../../common/error'
+import { composite } from '../../common/bytes'
+import { computeHash } from '../../common/crypto'
+import { create, toBinary } from '@bufbuild/protobuf'
+import { DescMessage } from '@bufbuild/protobuf/dist/cjs/descriptors'
 
 /**
  * 基于区块链地址的认证类，用于签名要发送的数据并验证接收到的数据，确保数据传输双方能够确认数据是否被篡改。
@@ -67,10 +67,13 @@ export class Authenticate {
             authType: AuthenticateTypeEnum.AUTHENTICATE_TYPE_CERT,
             nonce: generateUuid(),
             version: 0,
-            timestamp: getCurrentUtcString(),
+            timestamp: getCurrentUtcString()
         })
 
-        const data = body === undefined ? toBinary(MessageHeaderSchema, header) : composite(toBinary(MessageHeaderSchema, header), body)
+        const data =
+            body === undefined
+                ? toBinary(MessageHeaderSchema, header)
+                : composite(toBinary(MessageHeaderSchema, header), body)
         const signature = await this.sign(data)
         header.authContent = signature
         return header
@@ -137,7 +140,10 @@ export class Authenticate {
         const signature = header.authContent
         header.authContent = ''
 
-        const data: Uint8Array = body === undefined ? toBinary(MessageHeaderSchema, header) : composite(toBinary(MessageHeaderSchema, header), body)
+        const data: Uint8Array =
+            body === undefined
+                ? toBinary(MessageHeaderSchema, header)
+                : composite(toBinary(MessageHeaderSchema, header), body)
         const success = this.verify(header.did, data, signature)
         if (!success) {
             throw new NoPermission('Invalid signature')
@@ -162,7 +168,10 @@ export class Authenticate {
      * ```
      */
     async doResponse(response: any, bodySchema: DescMessage) {
-        if (response === undefined || response.header === undefined || response.body === undefined ||
+        if (
+            response === undefined ||
+            response.header === undefined ||
+            response.body === undefined ||
             response.body.status === undefined
         ) {
             throw new NetworkDown('protocol error!')

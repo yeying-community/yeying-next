@@ -1,7 +1,7 @@
-import {Authenticate} from '../common/authenticate'
-import {ProviderOption} from '../common/model'
-import {LanguageCodeEnum} from '../../yeying/api/common/code_pb'
-import {DataForgery} from '../../common/error'
+import { Authenticate } from '../common/authenticate'
+import { ProviderOption } from '../common/model'
+import { LanguageCodeEnum } from '../../yeying/api/common/code_pb'
+import { DataForgery } from '../../common/error'
 import {
     Bulletin,
     BulletinCodeEnum,
@@ -11,10 +11,10 @@ import {
     BulletinListResponseBodySchema,
     SolutionMetadataSchema
 } from '../../yeying/api/bulletin/bulletin_pb'
-import {Client, createClient} from "@connectrpc/connect";
-import {createGrpcWebTransport} from "@connectrpc/connect-web";
-import {MessageHeader, RequestPageSchema} from "../../yeying/api/common/message_pb";
-import {create, toBinary} from "@bufbuild/protobuf";
+import { Client, createClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/message_pb'
+import { create, toBinary } from '@bufbuild/protobuf'
 
 /**
  * BulletinProvider 类，用于提供公告相关的操作，包括获取公告列表等。
@@ -36,10 +36,13 @@ export class BulletinProvider {
      */
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
-        this.client = createClient(Bulletin, createGrpcWebTransport({
-            baseUrl: option.proxy,
-            useBinaryFormat: true,
-        }))
+        this.client = createClient(
+            Bulletin,
+            createGrpcWebTransport({
+                baseUrl: option.proxy,
+                useBinaryFormat: true
+            })
+        )
     }
 
     /**
@@ -60,15 +63,14 @@ export class BulletinProvider {
         return new Promise<BulletinListResponseBody>(async (resolve, reject) => {
             const requestPage = create(RequestPageSchema, {
                 page: page,
-                pageSize: pageSize,
+                pageSize: pageSize
             })
 
             const body = create(BulletinListRequestBodySchema, {
                 language: language,
                 code: BulletinCodeEnum.BULLETIN_CODE_SOLUTION,
-                page: requestPage,
+                page: requestPage
             })
-
 
             let header: MessageHeader
             try {
@@ -79,7 +81,7 @@ export class BulletinProvider {
                 return err
             }
 
-            const request = create(BulletinListRequestSchema, {header: header, body: body})
+            const request = create(BulletinListRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.list(request)
                 await this.authenticate.doResponse(res, BulletinListResponseBodySchema)
