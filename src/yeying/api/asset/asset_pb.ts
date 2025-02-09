@@ -14,7 +14,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/asset/asset.proto.
  */
 export const file_yeying_api_asset_asset: GenFile = /*@__PURE__*/
-  fileDesc("Chx5ZXlpbmcvYXBpL2Fzc2V0L2Fzc2V0LnByb3RvEhB5ZXlpbmcuYXBpLmFzc2V0In4KElNlYXJjaEFzc2V0UmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjYKBGJvZHkYAiABKAsyKC55ZXlpbmcuYXBpLmFzc2V0LlNlYXJjaEFzc2V0UmVxdWVzdEJvZHkigQEKFlNlYXJjaEFzc2V0UmVxdWVzdEJvZHkSOQoJY29uZGl0aW9uGAEgASgLMiYueWV5aW5nLmFwaS5hc3NldC5TZWFyY2hBc3NldENvbmRpdGlvbhIsCgRwYWdlGAIgASgLMh4ueWV5aW5nLmFwaS5jb21tb24uUmVxdWVzdFBhZ2UicAoUU2VhcmNoQXNzZXRDb25kaXRpb24SNAoGZm9ybWF0GAEgASgOMiQueWV5aW5nLmFwaS5jb21tb24uRGlnaXRhbEZvcm1hdEVudW0SEwoLY29udGVudEhhc2gYAiABKAkSDQoFdHJhc2gYAyABKAgigAEKE1NlYXJjaEFzc2V0UmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI3CgRib2R5GAIgASgLMikueWV5aW5nLmFwaS5hc3NldC5TZWFyY2hBc3NldFJlc3BvbnNlQm9keSJ9ChdTZWFyY2hBc3NldFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxIvCgZhc3NldHMYAiADKAsyHy55ZXlpbmcuYXBpLmFzc2V0LkFzc2V0TWV0YWRhdGEiegoQU2lnbkFzc2V0UmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjQKBGJvZHkYAiABKAsyJi55ZXlpbmcuYXBpLmFzc2V0LlNpZ25Bc3NldFJlcXVlc3RCb2R5IkYKFFNpZ25Bc3NldFJlcXVlc3RCb2R5Ei4KBWFzc2V0GAEgASgLMh8ueWV5aW5nLmFwaS5hc3NldC5Bc3NldE1ldGFkYXRhInwKEVNpZ25Bc3NldFJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkuYXNzZXQuU2lnbkFzc2V0UmVzcG9uc2VCb2R5InoKFVNpZ25Bc3NldFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxIuCgVhc3NldBgCIAEoCzIfLnlleWluZy5hcGkuYXNzZXQuQXNzZXRNZXRhZGF0YSKAAQoTQXNzZXRWZXJzaW9uUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjcKBGJvZHkYAiABKAsyKS55ZXlpbmcuYXBpLmFzc2V0LkFzc2V0VmVyc2lvblJlcXVlc3RCb2R5IlQKF0Fzc2V0VmVyc2lvblJlcXVlc3RCb2R5EgsKA3VpZBgBIAEoCRIsCgRwYWdlGAIgASgLMh4ueWV5aW5nLmFwaS5jb21tb24uUmVxdWVzdFBhZ2UiggEKFEFzc2V0VmVyc2lvblJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISOAoEYm9keRgCIAEoCzIqLnlleWluZy5hcGkuYXNzZXQuQXNzZXRWZXJzaW9uUmVzcG9uc2VCb2R5In4KGEFzc2V0VmVyc2lvblJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxIvCgZhc3NldHMYAiADKAsyHy55ZXlpbmcuYXBpLmFzc2V0LkFzc2V0TWV0YWRhdGEifgoSQXNzZXREZXRhaWxSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNgoEYm9keRgCIAEoCzIoLnlleWluZy5hcGkuYXNzZXQuQXNzZXREZXRhaWxSZXF1ZXN0Qm9keSJFChZBc3NldERldGFpbFJlcXVlc3RCb2R5EgsKA3VpZBgBIAEoCRIPCgd2ZXJzaW9uGAIgASgNEg0KBXRyYXNoGAMgASgIIoABChNBc3NldERldGFpbFJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNwoEYm9keRgCIAEoCzIpLnlleWluZy5hcGkuYXNzZXQuQXNzZXREZXRhaWxSZXNwb25zZUJvZHkifAoXQXNzZXREZXRhaWxSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSLgoFYXNzZXQYAiABKAsyHy55ZXlpbmcuYXBpLmFzc2V0LkFzc2V0TWV0YWRhdGEifgoSUmVtb3ZlQXNzZXRSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNgoEYm9keRgCIAEoCzIoLnlleWluZy5hcGkuYXNzZXQuUmVtb3ZlQXNzZXRSZXF1ZXN0Qm9keSJEChZSZW1vdmVBc3NldFJlcXVlc3RCb2R5EgsKA3VpZBgBIAEoCRIPCgd2ZXJzaW9uGAIgASgNEgwKBGhhcmQYAyABKAgigAEKE1JlbW92ZUFzc2V0UmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI3CgRib2R5GAIgASgLMikueWV5aW5nLmFwaS5hc3NldC5SZW1vdmVBc3NldFJlc3BvbnNlQm9keSJMChdSZW1vdmVBc3NldFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cyI6Cg1DaHVua01ldGFkYXRhEg0KBWluZGV4GAEgASgNEgwKBGhhc2gYAiABKAkSDAoEc2l6ZRgDIAEoBCKpAwoNQXNzZXRNZXRhZGF0YRINCgVvd25lchgBIAEoCRIPCgd2ZXJzaW9uGAIgASgNEgsKA3VpZBgDIAEoCRIMCgRuYW1lGAQgASgJEhIKCnBhcmVudEhhc2gYBSABKAkSEwoLY29udGVudEhhc2gYBiABKAkSEgoKbWVyZ2VkSGFzaBgHIAEoCRITCgtkZXNjcmlwdGlvbhgIIAEoCRI0CgZmb3JtYXQYCSABKA4yJC55ZXlpbmcuYXBpLmNvbW1vbi5EaWdpdGFsRm9ybWF0RW51bRIMCgRzaXplGAogASgEEhEKCWNyZWF0ZWRBdBgLIAEoCRIRCgl1cGRhdGVkQXQYDCABKAkSEQoJZGVsZXRlZEF0GA0gASgJEhIKCmNodW5rQ291bnQYDiABKA0SEQoJY2h1bmtTaXplGA8gASgNEhMKC2lzRW5jcnlwdGVkGBAgASgIEg4KBmV4dGVuZBgRIAEoCRIvCgZjaHVua3MYEiADKAsyHy55ZXlpbmcuYXBpLmFzc2V0LkNodW5rTWV0YWRhdGESEQoJc2lnbmF0dXJlGBMgASgJMsEDCgVBc3NldBJXCgZTZWFyY2gSJC55ZXlpbmcuYXBpLmFzc2V0LlNlYXJjaEFzc2V0UmVxdWVzdBolLnlleWluZy5hcGkuYXNzZXQuU2VhcmNoQXNzZXRSZXNwb25zZSIAElEKBFNpZ24SIi55ZXlpbmcuYXBpLmFzc2V0LlNpZ25Bc3NldFJlcXVlc3QaIy55ZXlpbmcuYXBpLmFzc2V0LlNpZ25Bc3NldFJlc3BvbnNlIgASWgoHVmVyc2lvbhIlLnlleWluZy5hcGkuYXNzZXQuQXNzZXRWZXJzaW9uUmVxdWVzdBomLnlleWluZy5hcGkuYXNzZXQuQXNzZXRWZXJzaW9uUmVzcG9uc2UiABJXCgZEZXRhaWwSJC55ZXlpbmcuYXBpLmFzc2V0LkFzc2V0RGV0YWlsUmVxdWVzdBolLnlleWluZy5hcGkuYXNzZXQuQXNzZXREZXRhaWxSZXNwb25zZSIAElcKBlJlbW92ZRIkLnlleWluZy5hcGkuYXNzZXQuUmVtb3ZlQXNzZXRSZXF1ZXN0GiUueWV5aW5nLmFwaS5hc3NldC5SZW1vdmVBc3NldFJlc3BvbnNlIgBCEloQeWV5aW5nL2FwaS9hc3NldGIGcHJvdG8z", [file_yeying_api_common_message, file_yeying_api_common_code]);
+  fileDesc("Chx5ZXlpbmcvYXBpL2Fzc2V0L2Fzc2V0LnByb3RvEhB5ZXlpbmcuYXBpLmFzc2V0In4KElNlYXJjaEFzc2V0UmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjYKBGJvZHkYAiABKAsyKC55ZXlpbmcuYXBpLmFzc2V0LlNlYXJjaEFzc2V0UmVxdWVzdEJvZHkigQEKFlNlYXJjaEFzc2V0UmVxdWVzdEJvZHkSOQoJY29uZGl0aW9uGAEgASgLMiYueWV5aW5nLmFwaS5hc3NldC5TZWFyY2hBc3NldENvbmRpdGlvbhIsCgRwYWdlGAIgASgLMh4ueWV5aW5nLmFwaS5jb21tb24uUmVxdWVzdFBhZ2UibwoUU2VhcmNoQXNzZXRDb25kaXRpb24SNAoGZm9ybWF0GAEgASgOMiQueWV5aW5nLmFwaS5jb21tb24uRGlnaXRhbEZvcm1hdEVudW0SDAoEaGFzaBgCIAEoCRITCgtuYW1lc3BhY2VJZBgDIAEoCSKAAQoTU2VhcmNoQXNzZXRSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjcKBGJvZHkYAiABKAsyKS55ZXlpbmcuYXBpLmFzc2V0LlNlYXJjaEFzc2V0UmVzcG9uc2VCb2R5In0KF1NlYXJjaEFzc2V0UmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEi8KBmFzc2V0cxgCIAMoCzIfLnlleWluZy5hcGkuYXNzZXQuQXNzZXRNZXRhZGF0YSJ6ChBTaWduQXNzZXRSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNAoEYm9keRgCIAEoCzImLnlleWluZy5hcGkuYXNzZXQuU2lnbkFzc2V0UmVxdWVzdEJvZHkiRgoUU2lnbkFzc2V0UmVxdWVzdEJvZHkSLgoFYXNzZXQYASABKAsyHy55ZXlpbmcuYXBpLmFzc2V0LkFzc2V0TWV0YWRhdGEifAoRU2lnbkFzc2V0UmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS5hc3NldC5TaWduQXNzZXRSZXNwb25zZUJvZHkiegoVU2lnbkFzc2V0UmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEi4KBWFzc2V0GAIgASgLMh8ueWV5aW5nLmFwaS5hc3NldC5Bc3NldE1ldGFkYXRhIn4KElVwZGF0ZUFzc2V0UmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjYKBGJvZHkYAiABKAsyKC55ZXlpbmcuYXBpLmFzc2V0LlVwZGF0ZUFzc2V0UmVxdWVzdEJvZHkiSAoWVXBkYXRlQXNzZXRSZXF1ZXN0Qm9keRIuCgVhc3NldBgBIAEoCzIfLnlleWluZy5hcGkuYXNzZXQuQXNzZXRNZXRhZGF0YSKAAQoTVXBkYXRlQXNzZXRSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjcKBGJvZHkYAiABKAsyKS55ZXlpbmcuYXBpLmFzc2V0LlVwZGF0ZUFzc2V0UmVzcG9uc2VCb2R5In0KF1VwZGF0ZUFzc2V0UmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEi8KBmFzc2V0cxgCIAEoCzIfLnlleWluZy5hcGkuYXNzZXQuQXNzZXRNZXRhZGF0YSJ+ChJBc3NldERldGFpbFJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI2CgRib2R5GAIgASgLMigueWV5aW5nLmFwaS5hc3NldC5Bc3NldERldGFpbFJlcXVlc3RCb2R5IjsKFkFzc2V0RGV0YWlsUmVxdWVzdEJvZHkSDAoEaGFzaBgBIAEoCRITCgtuYW1lc3BhY2VJZBgCIAEoCSKAAQoTQXNzZXREZXRhaWxSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjcKBGJvZHkYAiABKAsyKS55ZXlpbmcuYXBpLmFzc2V0LkFzc2V0RGV0YWlsUmVzcG9uc2VCb2R5InwKF0Fzc2V0RGV0YWlsUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEi4KBWFzc2V0GAIgASgLMh8ueWV5aW5nLmFwaS5hc3NldC5Bc3NldE1ldGFkYXRhIn4KEkRlbGV0ZUFzc2V0UmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjYKBGJvZHkYAiABKAsyKC55ZXlpbmcuYXBpLmFzc2V0LkRlbGV0ZUFzc2V0UmVxdWVzdEJvZHkiOwoWRGVsZXRlQXNzZXRSZXF1ZXN0Qm9keRIMCgRoYXNoGAEgASgJEhMKC25hbWVzcGFjZUlkGAIgASgJIoABChNEZWxldGVBc3NldFJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNwoEYm9keRgCIAEoCzIpLnlleWluZy5hcGkuYXNzZXQuRGVsZXRlQXNzZXRSZXNwb25zZUJvZHkiTAoXRGVsZXRlQXNzZXRSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMi0gIKDUFzc2V0TWV0YWRhdGESEwoLbmFtZXNwYWNlSWQYASABKAkSDQoFb3duZXIYAiABKAkSEgoKcGFyZW50SGFzaBgDIAEoCRIMCgRoYXNoGAQgASgJEg8KB3ZlcnNpb24YBSABKA0SDAoEbmFtZRgGIAEoCRIOCgZjaHVua3MYByADKAkSEwoLZGVzY3JpcHRpb24YCCABKAkSNAoGZm9ybWF0GAkgASgOMiQueWV5aW5nLmFwaS5jb21tb24uRGlnaXRhbEZvcm1hdEVudW0SDAoEc2l6ZRgKIAEoBBIRCgljcmVhdGVkQXQYCyABKAkSEQoJdXBkYXRlZEF0GAwgASgJEhIKCmNodW5rQ291bnQYDSABKA0SEQoJY2h1bmtTaXplGA4gASgNEhMKC2lzRW5jcnlwdGVkGA8gASgIEhEKCXNpZ25hdHVyZRgQIAEoCTK+AwoFQXNzZXQSVwoGU2VhcmNoEiQueWV5aW5nLmFwaS5hc3NldC5TZWFyY2hBc3NldFJlcXVlc3QaJS55ZXlpbmcuYXBpLmFzc2V0LlNlYXJjaEFzc2V0UmVzcG9uc2UiABJRCgRTaWduEiIueWV5aW5nLmFwaS5hc3NldC5TaWduQXNzZXRSZXF1ZXN0GiMueWV5aW5nLmFwaS5hc3NldC5TaWduQXNzZXRSZXNwb25zZSIAElcKBlVwZGF0ZRIkLnlleWluZy5hcGkuYXNzZXQuVXBkYXRlQXNzZXRSZXF1ZXN0GiUueWV5aW5nLmFwaS5hc3NldC5VcGRhdGVBc3NldFJlc3BvbnNlIgASVwoGRGV0YWlsEiQueWV5aW5nLmFwaS5hc3NldC5Bc3NldERldGFpbFJlcXVlc3QaJS55ZXlpbmcuYXBpLmFzc2V0LkFzc2V0RGV0YWlsUmVzcG9uc2UiABJXCgZEZWxldGUSJC55ZXlpbmcuYXBpLmFzc2V0LkRlbGV0ZUFzc2V0UmVxdWVzdBolLnlleWluZy5hcGkuYXNzZXQuRGVsZXRlQXNzZXRSZXNwb25zZSIAQhJaEHlleWluZy9hcGkvYXNzZXRiBnByb3RvMw", [file_yeying_api_common_message, file_yeying_api_common_code]);
 
 /**
  * @generated from message yeying.api.asset.SearchAssetRequest
@@ -74,16 +74,16 @@ export type SearchAssetCondition = Message<"yeying.api.asset.SearchAssetConditio
   /**
    * 内容哈希值
    *
-   * @generated from field: string contentHash = 2;
+   * @generated from field: string hash = 2;
    */
-  contentHash: string;
+  hash: string;
 
   /**
-   * 是否在回收站里搜索
+   * 命名空间ID
    *
-   * @generated from field: bool trash = 3;
+   * @generated from field: string namespaceId = 3;
    */
-  trash: boolean;
+  namespaceId: string;
 };
 
 /**
@@ -223,95 +223,86 @@ export const SignAssetResponseBodySchema: GenMessage<SignAssetResponseBody> = /*
   messageDesc(file_yeying_api_asset_asset, 8);
 
 /**
- * @generated from message yeying.api.asset.AssetVersionRequest
+ * @generated from message yeying.api.asset.UpdateAssetRequest
  */
-export type AssetVersionRequest = Message<"yeying.api.asset.AssetVersionRequest"> & {
+export type UpdateAssetRequest = Message<"yeying.api.asset.UpdateAssetRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.asset.AssetVersionRequestBody body = 2;
+   * @generated from field: yeying.api.asset.UpdateAssetRequestBody body = 2;
    */
-  body?: AssetVersionRequestBody;
+  body?: UpdateAssetRequestBody;
 };
 
 /**
- * Describes the message yeying.api.asset.AssetVersionRequest.
- * Use `create(AssetVersionRequestSchema)` to create a new message.
+ * Describes the message yeying.api.asset.UpdateAssetRequest.
+ * Use `create(UpdateAssetRequestSchema)` to create a new message.
  */
-export const AssetVersionRequestSchema: GenMessage<AssetVersionRequest> = /*@__PURE__*/
+export const UpdateAssetRequestSchema: GenMessage<UpdateAssetRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_asset_asset, 9);
 
 /**
- * @generated from message yeying.api.asset.AssetVersionRequestBody
+ * @generated from message yeying.api.asset.UpdateAssetRequestBody
  */
-export type AssetVersionRequestBody = Message<"yeying.api.asset.AssetVersionRequestBody"> & {
+export type UpdateAssetRequestBody = Message<"yeying.api.asset.UpdateAssetRequestBody"> & {
   /**
-   * 资产唯一ID
-   *
-   * @generated from field: string uid = 1;
+   * @generated from field: yeying.api.asset.AssetMetadata asset = 1;
    */
-  uid: string;
-
-  /**
-   * @generated from field: yeying.api.common.RequestPage page = 2;
-   */
-  page?: RequestPage;
+  asset?: AssetMetadata;
 };
 
 /**
- * Describes the message yeying.api.asset.AssetVersionRequestBody.
- * Use `create(AssetVersionRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.asset.UpdateAssetRequestBody.
+ * Use `create(UpdateAssetRequestBodySchema)` to create a new message.
  */
-export const AssetVersionRequestBodySchema: GenMessage<AssetVersionRequestBody> = /*@__PURE__*/
+export const UpdateAssetRequestBodySchema: GenMessage<UpdateAssetRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_asset_asset, 10);
 
 /**
- * @generated from message yeying.api.asset.AssetVersionResponse
+ * @generated from message yeying.api.asset.UpdateAssetResponse
  */
-export type AssetVersionResponse = Message<"yeying.api.asset.AssetVersionResponse"> & {
+export type UpdateAssetResponse = Message<"yeying.api.asset.UpdateAssetResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.asset.AssetVersionResponseBody body = 2;
+   * @generated from field: yeying.api.asset.UpdateAssetResponseBody body = 2;
    */
-  body?: AssetVersionResponseBody;
+  body?: UpdateAssetResponseBody;
 };
 
 /**
- * Describes the message yeying.api.asset.AssetVersionResponse.
- * Use `create(AssetVersionResponseSchema)` to create a new message.
+ * Describes the message yeying.api.asset.UpdateAssetResponse.
+ * Use `create(UpdateAssetResponseSchema)` to create a new message.
  */
-export const AssetVersionResponseSchema: GenMessage<AssetVersionResponse> = /*@__PURE__*/
+export const UpdateAssetResponseSchema: GenMessage<UpdateAssetResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_asset_asset, 11);
 
 /**
- * @generated from message yeying.api.asset.AssetVersionResponseBody
+ * @generated from message yeying.api.asset.UpdateAssetResponseBody
  */
-export type AssetVersionResponseBody = Message<"yeying.api.asset.AssetVersionResponseBody"> & {
+export type UpdateAssetResponseBody = Message<"yeying.api.asset.UpdateAssetResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
   status?: ResponseStatus;
 
   /**
-   * 返回的资产按照版本从大到小排列
-   *
-   * @generated from field: repeated yeying.api.asset.AssetMetadata assets = 2;
+   * @generated from field: yeying.api.asset.AssetMetadata assets = 2;
    */
-  assets: AssetMetadata[];
+  assets?: AssetMetadata;
 };
 
 /**
- * Describes the message yeying.api.asset.AssetVersionResponseBody.
- * Use `create(AssetVersionResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.asset.UpdateAssetResponseBody.
+ * Use `create(UpdateAssetResponseBodySchema)` to create a new message.
  */
-export const AssetVersionResponseBodySchema: GenMessage<AssetVersionResponseBody> = /*@__PURE__*/
+export const UpdateAssetResponseBodySchema: GenMessage<UpdateAssetResponseBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_asset_asset, 12);
 
 /**
@@ -343,23 +334,14 @@ export type AssetDetailRequestBody = Message<"yeying.api.asset.AssetDetailReques
   /**
    * 资产唯一ID
    *
-   * @generated from field: string uid = 1;
+   * @generated from field: string hash = 1;
    */
-  uid: string;
+  hash: string;
 
   /**
-   * 资产版本
-   *
-   * @generated from field: uint32 version = 2;
+   * @generated from field: string namespaceId = 2;
    */
-  version: number;
-
-  /**
-   * 资产是否在回收站中
-   *
-   * @generated from field: bool trash = 3;
-   */
-  trash: boolean;
+  namespaceId: string;
 };
 
 /**
@@ -414,86 +396,77 @@ export const AssetDetailResponseBodySchema: GenMessage<AssetDetailResponseBody> 
   messageDesc(file_yeying_api_asset_asset, 16);
 
 /**
- * @generated from message yeying.api.asset.RemoveAssetRequest
+ * @generated from message yeying.api.asset.DeleteAssetRequest
  */
-export type RemoveAssetRequest = Message<"yeying.api.asset.RemoveAssetRequest"> & {
+export type DeleteAssetRequest = Message<"yeying.api.asset.DeleteAssetRequest"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.asset.RemoveAssetRequestBody body = 2;
+   * @generated from field: yeying.api.asset.DeleteAssetRequestBody body = 2;
    */
-  body?: RemoveAssetRequestBody;
+  body?: DeleteAssetRequestBody;
 };
 
 /**
- * Describes the message yeying.api.asset.RemoveAssetRequest.
- * Use `create(RemoveAssetRequestSchema)` to create a new message.
+ * Describes the message yeying.api.asset.DeleteAssetRequest.
+ * Use `create(DeleteAssetRequestSchema)` to create a new message.
  */
-export const RemoveAssetRequestSchema: GenMessage<RemoveAssetRequest> = /*@__PURE__*/
+export const DeleteAssetRequestSchema: GenMessage<DeleteAssetRequest> = /*@__PURE__*/
   messageDesc(file_yeying_api_asset_asset, 17);
 
 /**
- * @generated from message yeying.api.asset.RemoveAssetRequestBody
+ * @generated from message yeying.api.asset.DeleteAssetRequestBody
  */
-export type RemoveAssetRequestBody = Message<"yeying.api.asset.RemoveAssetRequestBody"> & {
+export type DeleteAssetRequestBody = Message<"yeying.api.asset.DeleteAssetRequestBody"> & {
   /**
-   * 资产唯一ID
+   * 资产哈希值
    *
-   * @generated from field: string uid = 1;
+   * @generated from field: string hash = 1;
    */
-  uid: string;
+  hash: string;
 
   /**
-   * 资产版本
-   *
-   * @generated from field: uint32 version = 2;
+   * @generated from field: string namespaceId = 2;
    */
-  version: number;
-
-  /**
-   * 是否硬删除，也就是永久删除，默认是软删除，需要说明的是，只能硬删除已软删除的资产
-   *
-   * @generated from field: bool hard = 3;
-   */
-  hard: boolean;
+  namespaceId: string;
 };
 
 /**
- * Describes the message yeying.api.asset.RemoveAssetRequestBody.
- * Use `create(RemoveAssetRequestBodySchema)` to create a new message.
+ * Describes the message yeying.api.asset.DeleteAssetRequestBody.
+ * Use `create(DeleteAssetRequestBodySchema)` to create a new message.
  */
-export const RemoveAssetRequestBodySchema: GenMessage<RemoveAssetRequestBody> = /*@__PURE__*/
+export const DeleteAssetRequestBodySchema: GenMessage<DeleteAssetRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_asset_asset, 18);
 
 /**
- * @generated from message yeying.api.asset.RemoveAssetResponse
+ * @generated from message yeying.api.asset.DeleteAssetResponse
  */
-export type RemoveAssetResponse = Message<"yeying.api.asset.RemoveAssetResponse"> & {
+export type DeleteAssetResponse = Message<"yeying.api.asset.DeleteAssetResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.asset.RemoveAssetResponseBody body = 2;
+   * @generated from field: yeying.api.asset.DeleteAssetResponseBody body = 2;
    */
-  body?: RemoveAssetResponseBody;
+  body?: DeleteAssetResponseBody;
 };
 
 /**
- * Describes the message yeying.api.asset.RemoveAssetResponse.
- * Use `create(RemoveAssetResponseSchema)` to create a new message.
+ * Describes the message yeying.api.asset.DeleteAssetResponse.
+ * Use `create(DeleteAssetResponseSchema)` to create a new message.
  */
-export const RemoveAssetResponseSchema: GenMessage<RemoveAssetResponse> = /*@__PURE__*/
+export const DeleteAssetResponseSchema: GenMessage<DeleteAssetResponse> = /*@__PURE__*/
   messageDesc(file_yeying_api_asset_asset, 19);
 
 /**
- * @generated from message yeying.api.asset.RemoveAssetResponseBody
+ * @generated from message yeying.api.asset.DeleteAssetResponseBody
  */
-export type RemoveAssetResponseBody = Message<"yeying.api.asset.RemoveAssetResponseBody"> & {
+export type DeleteAssetResponseBody = Message<"yeying.api.asset.DeleteAssetResponseBody"> & {
   /**
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
@@ -501,101 +474,68 @@ export type RemoveAssetResponseBody = Message<"yeying.api.asset.RemoveAssetRespo
 };
 
 /**
- * Describes the message yeying.api.asset.RemoveAssetResponseBody.
- * Use `create(RemoveAssetResponseBodySchema)` to create a new message.
+ * Describes the message yeying.api.asset.DeleteAssetResponseBody.
+ * Use `create(DeleteAssetResponseBodySchema)` to create a new message.
  */
-export const RemoveAssetResponseBodySchema: GenMessage<RemoveAssetResponseBody> = /*@__PURE__*/
+export const DeleteAssetResponseBodySchema: GenMessage<DeleteAssetResponseBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_asset_asset, 20);
 
 /**
- * 资产块信息
- *
- * @generated from message yeying.api.asset.ChunkMetadata
- */
-export type ChunkMetadata = Message<"yeying.api.asset.ChunkMetadata"> & {
-  /**
-   * 块在资产中的索引
-   *
-   * @generated from field: uint32 index = 1;
-   */
-  index: number;
-
-  /**
-   * 资产块哈希值，可能是加密后的哈希值，也可能是明文的哈希值，同一个资产种，不同的两块哈希值可能一样
-   *
-   * @generated from field: string hash = 2;
-   */
-  hash: string;
-
-  /**
-   * 资产块大小，可能是密文块的大小，也可能是明文块的大小
-   *
-   * @generated from field: uint64 size = 3;
-   */
-  size: bigint;
-};
-
-/**
- * Describes the message yeying.api.asset.ChunkMetadata.
- * Use `create(ChunkMetadataSchema)` to create a new message.
- */
-export const ChunkMetadataSchema: GenMessage<ChunkMetadata> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_asset, 21);
-
-/**
  * 资产定义
+ * 同一个所有者在使用两个应用时产生了相同的资产，也就是资产内容的哈希值一样，那么可能存在这样一种情况，一个应用不再使用这个资产要求删除，但是另一个
+ * 还需要使用不能删除，如何解决这个问题：在用户层面设置一个项目空间的概念，在项目空间里面保证哈希值唯一即可。
  *
  * @generated from message yeying.api.asset.AssetMetadata
  */
 export type AssetMetadata = Message<"yeying.api.asset.AssetMetadata"> & {
   /**
+   * 资产命名空间
+   *
+   * @generated from field: string namespaceId = 1;
+   */
+  namespaceId: string;
+
+  /**
    * 资产所有者
    *
-   * @generated from field: string owner = 1;
+   * @generated from field: string owner = 2;
    */
   owner: string;
 
   /**
-   * 资产版本
+   * 父资产内容哈希值
    *
-   * @generated from field: uint32 version = 2;
-   */
-  version: number;
-
-  /**
-   * 资产唯一ID
-   *
-   * @generated from field: string uid = 3;
-   */
-  uid: string;
-
-  /**
-   * 资产名称
-   *
-   * @generated from field: string name = 4;
-   */
-  name: string;
-
-  /**
-   * 上一个版本的资产内容哈希值
-   *
-   * @generated from field: string parentHash = 5;
+   * @generated from field: string parentHash = 3;
    */
   parentHash: string;
 
   /**
    * 资产内容哈希值
    *
-   * @generated from field: string contentHash = 6;
+   * @generated from field: string hash = 4;
    */
-  contentHash: string;
+  hash: string;
 
   /**
-   * 资产块哈希值合并后计算的哈希值，验证数据一致性，如果资产内容小于块的大小
+   * 资产版本
    *
-   * @generated from field: string mergedHash = 7;
+   * @generated from field: uint32 version = 5;
    */
-  mergedHash: string;
+  version: number;
+
+  /**
+   * 资产名称
+   *
+   * @generated from field: string name = 6;
+   */
+  name: string;
+
+  /**
+   * 所有资产块的哈希值
+   *
+   * @generated from field: repeated string chunks = 7;
+   */
+  chunks: string[];
 
   /**
    * 资产描述
@@ -633,51 +573,30 @@ export type AssetMetadata = Message<"yeying.api.asset.AssetMetadata"> & {
   updatedAt: string;
 
   /**
-   * 资产删除时间
-   *
-   * @generated from field: string deletedAt = 13;
-   */
-  deletedAt: string;
-
-  /**
    * 资产块数量
    *
-   * @generated from field: uint32 chunkCount = 14;
+   * @generated from field: uint32 chunkCount = 13;
    */
   chunkCount: number;
 
   /**
    * 资产块大小
    *
-   * @generated from field: uint32 chunkSize = 15;
+   * @generated from field: uint32 chunkSize = 14;
    */
   chunkSize: number;
 
   /**
    * 是否加密
    *
-   * @generated from field: bool isEncrypted = 16;
+   * @generated from field: bool isEncrypted = 15;
    */
   isEncrypted: boolean;
 
   /**
-   * 资产扩展信息
-   *
-   * @generated from field: string extend = 17;
-   */
-  extend: string;
-
-  /**
-   * 资产块信息
-   *
-   * @generated from field: repeated yeying.api.asset.ChunkMetadata chunks = 18;
-   */
-  chunks: ChunkMetadata[];
-
-  /**
    * 资产元信息的签名
    *
-   * @generated from field: string signature = 19;
+   * @generated from field: string signature = 16;
    */
   signature: string;
 };
@@ -687,10 +606,13 @@ export type AssetMetadata = Message<"yeying.api.asset.AssetMetadata"> & {
  * Use `create(AssetMetadataSchema)` to create a new message.
  */
 export const AssetMetadataSchema: GenMessage<AssetMetadata> = /*@__PURE__*/
-  messageDesc(file_yeying_api_asset_asset, 22);
+  messageDesc(file_yeying_api_asset_asset, 21);
 
 /**
  * *
+ *
+ * 整个资产仓库基于分布式数字身份和资产内容哈希驱动，并能够在不同资产仓库间转移
+ *
  * 开放的分散式仓库网络的接口设计，参考了现实世界中的仓库，逻辑如下：
  * 1、数字资产有两个标识，一个是数字资产的身份标识，可以是分布式数字身份，也可以是用户自定义的身份ID，另一个是数字资产内容的哈希值；
  * 2、数字资产入库，发送到指定存储网络中的节点，可以指定副本数量，一方面保证内容不会因为单个节点故障而丢失，另外也保证内容的可访问性；
@@ -698,10 +620,22 @@ export const AssetMetadataSchema: GenMessage<AssetMetadata> = /*@__PURE__*/
  * 4、授权数字资产，所有者和使用者立交易关系，确保使用者根据指定的策略访问数据，仓库会统计数字资产的使用情况，比如统计内容取（浏览）的次数评估内容热度
  * ，或者统计内容存的次数（收藏）评估内容质量，目的是更好的分配存储资源；
  *
- * 分散式存储网络的使用场景：
+ * 仓库使用场景：
  * 1、创作场景，知识产权证明
  * 2、代码包分发场景，比如软件包，模型包等
  * 3、数字资产，类似nft等
+ *
+ * 资产定位逻辑：
+ *
+ * 采用三元组唯一定位，(用户身份、命名空间、哈希值)
+ * 命名空间的定位逻辑：某个用户下面是唯一的，命名空间所有者，可以指定多个参与者，用于存储完成某项工作生成资产数据，这些资产数据属于命名空间所有者
+ * 资产的定位逻辑：每个命名空间是隔离的，同一个所有者，同一个命名空间，资产哈希值必须唯一
+ * 资产块的定位逻辑：每个命名空间是隔离的，用一个所有者，同一个命名空间，资产块是唯一的，资产块维持一个引用计数，其逻辑如下：
+ * - 当有一个新资产放入命名空间，则引用计数加1；
+ * - 当有一个老资产移出命名空间，则引用计数减1；
+ * 当某个资产块的引用计数为0，表示没有和资产仓库服务签约，只是临时存储，通常分块上传完成以后就会立即签约，但是考虑委托第三方服务生成的数据直接放到命名
+ * 空间，第三方服务没有命名空间所有者的私钥，无法和资产仓库完成签约，只能先上传，事后由命名空间所有者完成签名；
+ *
  *
  * @generated from service yeying.api.asset.Asset
  */
@@ -731,14 +665,14 @@ export const Asset: GenService<{
   },
   /**
    * *
-   * 查看某个资产的版本
+   * 更新资产元信息
    *
-   * @generated from rpc yeying.api.asset.Asset.Version
+   * @generated from rpc yeying.api.asset.Asset.Update
    */
-  version: {
+  update: {
     methodKind: "unary";
-    input: typeof AssetVersionRequestSchema;
-    output: typeof AssetVersionResponseSchema;
+    input: typeof UpdateAssetRequestSchema;
+    output: typeof UpdateAssetResponseSchema;
   },
   /**
    * *
@@ -756,14 +690,14 @@ export const Asset: GenService<{
   },
   /**
    * *
-   * 从当前仓储网络移除掉数字内容；
+   * 删除资产，不回立即删除，而是放入回收站；资产支持多版本，在删除的时候，采取头或者尾部删除，不能从中间删除，确保版本的链条能够正常工作；
    *
-   * @generated from rpc yeying.api.asset.Asset.Remove
+   * @generated from rpc yeying.api.asset.Asset.Delete
    */
-  remove: {
+  delete: {
     methodKind: "unary";
-    input: typeof RemoveAssetRequestSchema;
-    output: typeof RemoveAssetResponseSchema;
+    input: typeof DeleteAssetRequestSchema;
+    output: typeof DeleteAssetResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_yeying_api_asset_asset, 0);

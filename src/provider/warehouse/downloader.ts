@@ -1,10 +1,10 @@
-import {BlockProvider} from './block'
-import {AssetMetadata, AssetMetadataSchema} from '../../yeying/api/asset/asset_pb'
-import {AssetCipher} from './cipher'
-import {toJson} from "@bufbuild/protobuf";
-import {ProviderOption} from "../common/model";
-import {SecurityAlgorithm} from "@yeying-community/yeying-web3";
-import {AssetProvider} from "./asset";
+import { BlockProvider } from './block'
+import { AssetMetadata, AssetMetadataSchema } from '../../yeying/api/asset/asset_pb'
+import { AssetCipher } from './cipher'
+import { toJson } from '@bufbuild/protobuf'
+import { ProviderOption } from '../common/model'
+import { SecurityAlgorithm } from '@yeying-community/yeying-web3'
+import { AssetProvider } from './asset'
 
 /**
  * Downloader 类用于下载资产数据，支持从区块提供者获取数据并进行解密。
@@ -45,7 +45,7 @@ export class Downloader {
     /**
      * 下载给定资产的所有数据块，支持解密并合并为一个 Blob 对象。
      *
-     * @param asset - 需要下载的资产元数据。
+     * @param namespaceId - 需要下载的资产元数据。
      * @returns 一个 Promise，解析为下载并解密后的 Blob 对象。
      * @throws {Error} 如果下载过程失败，则抛出错误。
      * @example
@@ -58,11 +58,10 @@ export class Downloader {
      * });
      * ```
      */
-    download(uid: string, version: number, trash: boolean = false) {
+    download(namespaceId: string, hash: string) {
         return new Promise(async (resolve, reject) => {
             try {
-                const body = await this.assetProvider.detail(uid, version, trash)
-                const asset = body.asset as AssetMetadata
+                const asset = await this.assetProvider.detail(namespaceId, hash)
                 console.log(`Try to download asset=${JSON.stringify(toJson(AssetMetadataSchema, asset))}`)
 
                 const chunkBlobs = new Array(asset.chunkCount).fill(undefined)
@@ -74,18 +73,18 @@ export class Downloader {
                  */
                 const downloadChunk = async (index: number) => {
                     // 下载数据块
-                    let data = await this.blockProvider.get(asset.chunks[index].hash)
+                    let data = await this.blockProvider.get(asset.chunks[index])
                     if (asset.isEncrypted) {
                         // 如果资产加密，解密数据块
                         data = await this.assetCipher.decrypt(data)
                     }
 
                     // 将解密后的数据块转换为 Blob
-                    chunkBlobs[index] = new Blob([data], {type: 'application/octet-stream'})
+                    chunkBlobs[index] = new Blob([data], { type: 'application/octet-stream' })
 
                     // 如果所有块都已下载，合并为一个 Blob 并返回
                     if (index === chunkBlobs.length - 1) {
-                        resolve(new Blob(chunkBlobs, {type: 'application/octet-stream'}))
+                        resolve(new Blob(chunkBlobs, { type: 'application/octet-stream' }))
                     } else {
                         // 否则继续下载下一个块
                         await downloadChunk(index + 1)
@@ -95,7 +94,7 @@ export class Downloader {
                 // 从第0块开始下载，当前是顺序下载，后续可以支持并发下载
                 await downloadChunk(0)
             } catch (e) {
-                console.log(`Fail to download asset, uid=${uid}, version=${version}, trash=${trash}`, e)
+                console.log(`Fail to download asset, namespaceId=${namespaceId}, hash=${hash}`, e)
                 return reject(e)
             }
         })

@@ -1,19 +1,20 @@
-import {ProviderOption} from '../common/model'
-import {Authenticate} from '../common/authenticate'
-import {MessageHeader} from '../../yeying/api/common/message_pb'
-import {getCurrentUtcString} from '../../common/date'
+import { ProviderOption } from '../common/model'
+import { Authenticate } from '../common/authenticate'
+import { MessageHeader } from '../../yeying/api/common/message_pb'
+import { getCurrentUtcString } from '../../common/date'
 import {
     CollectSupportRequestBodySchema,
-    CollectSupportRequestSchema, 
+    CollectSupportRequestSchema,
     CollectSupportResponseBody,
     CollectSupportResponseBodySchema,
     FaqMetadataSchema,
     Support,
     SupportCodeEnum
-} from "../../yeying/api/support/support_pb";
-import {Client, createClient} from "@connectrpc/connect";
-import {createGrpcWebTransport} from "@connectrpc/connect-web";
-import {create, toBinary} from "@bufbuild/protobuf";
+} from '../../yeying/api/support/support_pb'
+import { Client, createClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create, toBinary } from '@bufbuild/protobuf'
+import {generateRandomString, generateUuid} from "../../common/string";
 
 /**
  * 支持服务提供者类，用于与支持服务进行交互，包括收集 FAQ 数据。
@@ -41,10 +42,13 @@ export class SupportProvider {
      */
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
-        this.client = createClient(Support, createGrpcWebTransport({
-            baseUrl: option.proxy,
-            useBinaryFormat: true,
-        }))
+        this.client = createClient(
+            Support,
+            createGrpcWebTransport({
+                baseUrl: option.proxy,
+                useBinaryFormat: true
+            })
+        )
     }
 
     /**
@@ -72,11 +76,11 @@ export class SupportProvider {
                 type: type,
                 email: email,
                 description: description,
-                createdAt: getCurrentUtcString(),
+                createdAt: getCurrentUtcString()
             })
 
             const body = create(CollectSupportRequestBodySchema, {
-                code: SupportCodeEnum.SUPPORT_CODE_FAQ,
+                code: SupportCodeEnum.SUPPORT_CODE_FAQ
             })
 
             let header: MessageHeader
@@ -90,7 +94,7 @@ export class SupportProvider {
                 return reject(err)
             }
 
-            const request = create(CollectSupportRequestSchema, {header: header, body: body})
+            const request = create(CollectSupportRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.collect(request)
                 await this.authenticate.doResponse(res, CollectSupportResponseBodySchema)

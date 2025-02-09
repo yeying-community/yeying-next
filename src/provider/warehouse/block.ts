@@ -1,5 +1,5 @@
-import {Authenticate} from '../common/authenticate'
-import {ProviderOption} from '../common/model'
+import { Authenticate } from '../common/authenticate'
+import { ProviderOption } from '../common/model'
 import {
     Block,
     BlockMetadata,
@@ -16,12 +16,12 @@ import {
     PutBlockResponseBody,
     PutBlockResponseBodySchema
 } from '../../yeying/api/asset/block_pb'
-import {getCurrentUtcString} from '../../common/date'
-import {Client, createClient} from "@connectrpc/connect";
-import {createGrpcWebTransport} from "@connectrpc/connect-web";
-import {create, toBinary} from "@bufbuild/protobuf";
-import {computeHash} from "../../common/crypto";
-import {encodeHex} from "../../common/codec";
+import { getCurrentUtcString } from '../../common/date'
+import { Client, createClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create, toBinary } from '@bufbuild/protobuf'
+import { computeHash } from '../../common/crypto'
+import { encodeHex } from '../../common/codec'
 
 /**
  * 区块提供者类，用于与区块链交互，提供数据的获取和存储功能。
@@ -49,10 +49,13 @@ export class BlockProvider {
      */
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
-        this.client = createClient(Block, createGrpcWebTransport({
-            baseUrl: option.proxy,
-            useBinaryFormat: true,
-        }))
+        this.client = createClient(
+            Block,
+            createGrpcWebTransport({
+                baseUrl: option.proxy,
+                useBinaryFormat: true
+            })
+        )
     }
 
     /**
@@ -83,7 +86,7 @@ export class BlockProvider {
      */
     get(hash: string) {
         return new Promise<Uint8Array>(async (resolve, reject) => {
-            const body = create(GetBlockRequestBodySchema, {hash: hash})
+            const body = create(GetBlockRequestBodySchema, { hash: hash })
             let header
             try {
                 header = await this.authenticate.createHeader(toBinary(GetBlockRequestBodySchema, body))
@@ -92,7 +95,7 @@ export class BlockProvider {
                 return reject(err)
             }
 
-            const request = create(GetBlockRequestSchema, {header: header, body: body})
+            const request = create(GetBlockRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.get(request)
                 await this.authenticate.doResponse(res, GetBlockResponseBodySchema)
@@ -104,12 +107,12 @@ export class BlockProvider {
     }
 
     async createBlockMetadata(data: Uint8Array) {
-        const chunkHash = await computeHash(data)  // 计算块的哈希值
+        const chunkHash = await computeHash(data) // 计算块的哈希值
         const block = create(BlockMetadataSchema, {
             hash: encodeHex(chunkHash),
             owner: this.authenticate.getDid(),
             createdAt: getCurrentUtcString(),
-            size: BigInt(data.length),
+            size: BigInt(data.length)
         })
         block.signature = await this.authenticate.sign(toBinary(BlockMetadataSchema, block))
         return block
@@ -117,7 +120,7 @@ export class BlockProvider {
 
     confirm(block: BlockMetadata) {
         return new Promise<ConfirmBlockResponseBody>(async (resolve, reject) => {
-            const body = create(ConfirmBlockRequestBodySchema, {block: block})
+            const body = create(ConfirmBlockRequestBodySchema, { block: block })
             let header
             try {
                 header = await this.authenticate.createHeader(toBinary(ConfirmBlockRequestBodySchema, body))
@@ -126,13 +129,13 @@ export class BlockProvider {
                 return reject(err)
             }
 
-            const request = create(ConfirmBlockRequestSchema, {header: header, body: body})
+            const request = create(ConfirmBlockRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.confirm(request)
                 await this.authenticate.doResponse(res, ConfirmBlockResponseBodySchema)
                 const resBody = res.body as ConfirmBlockResponseBody
                 if (resBody.block) {
-                    if (!await this.verifyBlockMetadata(resBody.block)) {
+                    if (!(await this.verifyBlockMetadata(resBody.block))) {
                         reject(new Error('invalid block metadata!'))
                     }
                 }
@@ -160,7 +163,7 @@ export class BlockProvider {
      */
     put(block: BlockMetadata, data: Uint8Array) {
         return new Promise<PutBlockResponseBody>(async (resolve, reject) => {
-            const body = create(PutBlockRequestBodySchema, {block: block})
+            const body = create(PutBlockRequestBodySchema, { block: block })
             let header
             try {
                 header = await this.authenticate.createHeader(toBinary(PutBlockRequestBodySchema, body))
@@ -169,7 +172,7 @@ export class BlockProvider {
                 return reject(err)
             }
 
-            const request = create(PutBlockRequestSchema, {header: header, body: body, data: data})
+            const request = create(PutBlockRequestSchema, { header: header, body: body, data: data })
             try {
                 const res = await this.client.put(request)
                 await this.authenticate.doResponse(res, PutBlockResponseBodySchema)
@@ -194,11 +197,7 @@ export class BlockProvider {
         const signature = block.signature
         try {
             block.signature = ''
-            return await this.authenticate.verify(
-                block.owner,
-                toBinary(BlockMetadataSchema, block),
-                signature
-            )
+            return await this.authenticate.verify(block.owner, toBinary(BlockMetadataSchema, block), signature)
         } finally {
             block.signature = signature
         }

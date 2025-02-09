@@ -1,5 +1,5 @@
-import {Authenticate} from '../common/authenticate'
-import {ProviderOption} from '../common/model'
+import { Authenticate } from '../common/authenticate'
+import { ProviderOption } from '../common/model'
 import {
     RegisterServiceRequestBodySchema,
     RegisterServiceRequestSchema,
@@ -11,16 +11,18 @@ import {
     SearchServiceRequestSchema,
     SearchServiceResponseBody,
     SearchServiceResponseBodySchema,
-    Service, ServiceMetadata, ServiceMetadataSchema,
+    Service,
+    ServiceMetadata,
+    ServiceMetadataSchema,
     UnregisterServiceRequestBodySchema,
     UnregisterServiceRequestSchema,
     UnregisterServiceResponseBody,
     UnregisterServiceResponseBodySchema
-} from "../../yeying/api/service/service_pb";
-import {Client, createClient} from "@connectrpc/connect";
-import {createGrpcWebTransport} from "@connectrpc/connect-web";
-import {MessageHeader, RequestPageSchema,} from "../../yeying/api/common/message_pb";
-import {create, toBinary} from "@bufbuild/protobuf";
+} from '../../yeying/api/service/service_pb'
+import { Client, createClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/message_pb'
+import { create, toBinary } from '@bufbuild/protobuf'
 
 /**
  * ServiceProvider 类负责登记、注销、以及搜索服务。
@@ -44,10 +46,13 @@ export class ServiceProvider {
      */
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
-        this.client = createClient(Service, createGrpcWebTransport({
-            baseUrl: option.proxy,
-            useBinaryFormat: true,
-        }))
+        this.client = createClient(
+            Service,
+            createGrpcWebTransport({
+                baseUrl: option.proxy,
+                useBinaryFormat: true
+            })
+        )
     }
 
     register(service: ServiceMetadata) {
@@ -65,7 +70,7 @@ export class ServiceProvider {
                 return reject(err)
             }
 
-            const request = create(RegisterServiceRequestSchema, {header: header, body: body})
+            const request = create(RegisterServiceRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.register(request)
                 await this.authenticate.doResponse(res, RegisterServiceResponseBodySchema)
@@ -82,10 +87,10 @@ export class ServiceProvider {
             const body = create(SearchServiceRequestBodySchema, {
                 condition: create(SearchServiceConditionSchema, {
                     code: condition.code,
-                    owner: condition.owner,
+                    owner: condition.owner
                 }),
 
-                page: create(RequestPageSchema, {page: page, pageSize: pageSize})
+                page: create(RequestPageSchema, { page: page, pageSize: pageSize })
             })
 
             let header: MessageHeader
@@ -96,7 +101,7 @@ export class ServiceProvider {
                 return reject(err)
             }
 
-            const request = create(SearchServiceRequestSchema, {header: header, body: body})
+            const request = create(SearchServiceRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.search(request)
                 await this.authenticate.doResponse(res, SearchServiceResponseBodySchema)
@@ -112,7 +117,7 @@ export class ServiceProvider {
         return new Promise<UnregisterServiceResponseBody>(async (resolve, reject) => {
             const body = create(UnregisterServiceRequestBodySchema, {
                 did: did,
-                version: version,
+                version: version
             })
 
             let header: MessageHeader
@@ -123,7 +128,7 @@ export class ServiceProvider {
                 return reject(err)
             }
 
-            const request = create(UnregisterServiceRequestSchema, {header: header, body: body})
+            const request = create(UnregisterServiceRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.unregister(request)
                 await this.authenticate.doResponse(res, UnregisterServiceResponseBodySchema)

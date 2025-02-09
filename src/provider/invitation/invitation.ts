@@ -1,10 +1,9 @@
-import {UserStateRequestSchema, UserStateResponseBody, UserStateResponseBodySchema} from '../../yeying/api/user/user_pb'
 import {formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond} from '../../common/date'
 import {Authenticate} from '../common/authenticate'
 import {MessageHeader, RequestPageSchema} from '../../yeying/api/common/message_pb'
 import {ProviderOption} from '../common/model'
-import {create, toBinary} from "@bufbuild/protobuf";
-import {createGrpcWebTransport} from "@connectrpc/connect-web";
+import {create, toBinary} from '@bufbuild/protobuf'
+import {createGrpcWebTransport} from '@connectrpc/connect-web'
 import {Client, createClient} from '@connectrpc/connect'
 import {
     CreateInvitationRequestBodySchema,
@@ -22,9 +21,8 @@ import {
     SearchInvitationRequestSchema,
     SearchInvitationResponseBody,
     SearchInvitationResponseBodySchema
-} from "../../yeying/api/invitation/invitation_pb";
-import {generateRandomString} from "../../common/string";
-import {SearchServiceRequestBodySchema} from "../../yeying/api/service/service_pb";
+} from '../../yeying/api/invitation/invitation_pb'
+import {generateRandomString} from '../../common/string'
 
 /**
  * 邀请码提供商，创建和查询邀请码。
@@ -51,10 +49,13 @@ export class InvitationProvider {
      */
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
-        this.client = createClient(Invitation, createGrpcWebTransport({
-            baseUrl: option.proxy,
-            useBinaryFormat: true,
-        }));
+        this.client = createClient(
+            Invitation,
+            createGrpcWebTransport({
+                baseUrl: option.proxy,
+                useBinaryFormat: true
+            })
+        )
     }
 
     /**
@@ -79,9 +80,9 @@ export class InvitationProvider {
                 invitee: invitee,
                 createdAt: getCurrentUtcString(),
                 expiredAt: formatDateTime(plusSecond(getCurrentUtcDateTime(), duration * 24 * 3600))
-            });
+            })
 
-            const body = create(CreateInvitationRequestBodySchema, {invitation: invitation})
+            const body = create(CreateInvitationRequestBodySchema, { invitation: invitation })
             let header: MessageHeader
             try {
                 invitation.signature = await this.authenticate.sign(toBinary(InvitationMetadataSchema, invitation))
@@ -91,7 +92,7 @@ export class InvitationProvider {
                 return reject(err)
             }
 
-            const request = create(CreateInvitationRequestSchema, {header: header, body: body})
+            const request = create(CreateInvitationRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.create(request)
                 await this.authenticate.doResponse(res, CreateInvitationResponseBodySchema)
@@ -102,7 +103,6 @@ export class InvitationProvider {
             }
         })
     }
-
 
     /**
      * 搜索所有邀请码。
@@ -121,7 +121,7 @@ export class InvitationProvider {
             const body = create(SearchInvitationRequestBodySchema, {
                 page: create(RequestPageSchema, {
                     page: page,
-                    pageSize: pageSize,
+                    pageSize: pageSize
                 })
             })
 
@@ -133,7 +133,7 @@ export class InvitationProvider {
                 return reject(err)
             }
 
-            const request = create(SearchInvitationRequestSchema, {header: header, body: body})
+            const request = create(SearchInvitationRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.search(request)
                 await this.authenticate.doResponse(res, SearchInvitationResponseBodySchema)
@@ -170,7 +170,7 @@ export class InvitationProvider {
                 return reject(err)
             }
 
-            const request = create(InvitationDetailRequestSchema, {header: header, body: body})
+            const request = create(InvitationDetailRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.detail(request)
                 await this.authenticate.doResponse(res, InvitationDetailResponseBodySchema)
