@@ -39,7 +39,7 @@ beforeAll(async () => {
     await assetProvider.delete(asset.namespaceId, asset.hash)
 });
 
-describe('Asset', () => {
+describe('Recycle', () => {
     it('search from trash', async () => {
         const condition: Partial<SearchAssetCondition> = {
             format: DigitalFormatEnum.DIGITAL_FORMAT_TEXT,
@@ -53,7 +53,13 @@ describe('Asset', () => {
         })
     })
 
+    it('recover from trash', async () => {
+        await recycleProvider.recover(asset.namespaceId, asset.hash)
+        console.log(`Success to recover from trash, namespaceId=${asset.namespaceId}, hash=${asset.hash}`)
+    })
+
     it('remove from trash', async () => {
+        await assetProvider.delete(asset.namespaceId, asset.hash)
         await recycleProvider.remove(asset.namespaceId, asset.hash)
         console.log(`Success to remove from trash, namespaceId=${asset.namespaceId}, hash=${asset.hash}`)
     })

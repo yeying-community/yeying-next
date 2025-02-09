@@ -101,14 +101,17 @@ export class BlockProvider {
         })
     }
 
-    async createBlockMetadata(data: Uint8Array) {
+    async createBlockMetadata(namespaceId: string, data: Uint8Array) {
         const chunkHash = await computeHash(data) // 计算块的哈希值
         const block = create(BlockMetadataSchema, {
+            namespaceId: namespaceId,
             hash: encodeHex(chunkHash),
             owner: this.authenticate.getDid(),
+            uploader: this.authenticate.getDid(),
             createdAt: getCurrentUtcString(),
             size: BigInt(data.length)
         })
+
         block.signature = await this.authenticate.sign(toBinary(BlockMetadataSchema, block))
         return block
     }

@@ -110,7 +110,7 @@ export class Uploader {
                         data = await this.assetCipher.encrypt(data)
                     }
 
-                    const block = await this.blockProvider.createBlockMetadata(data)
+                    const block = await this.blockProvider.createBlockMetadata(namespaceId, data)
                     mergeDigest.update(decodeHex(block.hash)) // 更新合并哈希
 
                     const confirmBody = await this.blockProvider.confirm(block)
