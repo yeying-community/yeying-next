@@ -69,7 +69,7 @@ export class Uploader {
      * @returns {Promise<AssetMetadata>} 返回资产元数据。
      *
      */
-    upload(namespaceId: string, file: File, encrypted: boolean = true, parentHash?: string, description?: string) {
+    upload(namespaceId: string, file: File, encrypted: boolean = true, parentHash?: string, description?: string): Promise<AssetMetadata> {
         return new Promise<AssetMetadata>(async (resolve, reject) => {
             try {
                 const asset = create(AssetMetadataSchema, {
@@ -81,6 +81,7 @@ export class Uploader {
                     createdAt: formatDateTime(convertToUtcDateTime(convertDateToDateTime(new Date(file.lastModified)))),
                     updatedAt: getCurrentUtcString(),
                     description: description,
+                    size: BigInt(file.size),
                     chunkCount: Math.ceil(file.size / this.chunkSize),
                     chunkSize: this.chunkSize,
                     isEncrypted: encrypted
