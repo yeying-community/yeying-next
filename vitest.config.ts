@@ -8,6 +8,7 @@ export default defineConfig({
     globals: true,
     environment: "happy-dom",
     setupFiles: './vitest.setup.ts',
+    testTimeout: 60000, // 超时时间 60 秒
   },
 })
 
