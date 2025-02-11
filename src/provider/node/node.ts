@@ -16,7 +16,7 @@ import {
 import { Client, createClient } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary } from '@bufbuild/protobuf'
-import {AssetMetadata, AssetMetadataSchema} from "../../yeying/api/asset/asset_pb";
+import { AssetMetadata, AssetMetadataSchema } from '../../yeying/api/asset/asset_pb'
 
 /**
  * NodeProvider 每个服务都是一个节点，同个这类了解这个节点健康状态，和节点的元信息。

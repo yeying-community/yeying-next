@@ -69,7 +69,13 @@ export class Uploader {
      * @returns {Promise<AssetMetadata>} 返回资产元数据。
      *
      */
-    upload(namespaceId: string, file: File, encrypted: boolean = true, parentHash?: string, description?: string): Promise<AssetMetadata> {
+    upload(
+        namespaceId: string,
+        file: File,
+        encrypted: boolean = true,
+        parentHash?: string,
+        description?: string
+    ): Promise<AssetMetadata> {
         return new Promise<AssetMetadata>(async (resolve, reject) => {
             try {
                 const asset = create(AssetMetadataSchema, {
