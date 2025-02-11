@@ -71,7 +71,7 @@ export class Cancelled extends Error {
 }
 
 export class InvalidPassword extends Error {
-    constructor(message: string, options?: ErrorOptions) {
+    constructor(message?: string, options?: ErrorOptions) {
         super(message, options)
     }
 }
@@ -92,7 +92,7 @@ export class DataForgery extends Error {
 
 // 没有权限
 export class NoPermission extends Error {
-    constructor(message: string, options?: ErrorOptions) {
+    constructor(message?: string, options?: ErrorOptions) {
         super(message, options)
     }
 }

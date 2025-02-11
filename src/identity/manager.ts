@@ -4,9 +4,9 @@
 // 2、所有的密码的管理都是在端上完成，不会和后台服务器有任何交互，也就是密码完全由用户负责；
 // 3、一个端上多个身份切换，任何时刻只有一个身份在起作用
 // 4、对于不再端上使用的身份，能够一键清理不留痕迹；
-import {SessionCache} from '../cache/session'
-import {LocalCache} from '../cache/local'
-import {DataTampering, InvalidPassword, NotFound} from '../common/error'
+import { SessionCache } from '../cache/session'
+import { LocalCache } from '../cache/local'
+import { DataTampering, InvalidArgument, InvalidPassword, NoPermission, NotFound } from '../common/error'
 
 import {
     BlockAddress,
@@ -22,12 +22,11 @@ import {
     IdentityServiceExtend,
     IdentityTemplate,
     SecurityAlgorithm,
-    SecurityConfig,
     serializeIdentityToJson,
     updateIdentity,
     verifyIdentity
 } from '@yeying-community/yeying-web3'
-import {CookieCache} from '../cache/cookie'
+import { CookieCache } from '../cache/cookie'
 import {
     decryptBlockAddress,
     decryptString,
@@ -36,8 +35,8 @@ import {
     generateIv,
     generateSecurityAlgorithm
 } from '../common/crypto'
-import {encodeBase64} from '../common/codec'
-import {NodeProvider} from "../provider/node/node";
+import { encodeBase64 } from '../common/codec'
+import { NodeProvider } from '../provider/node/node'
 
 /**
  * 身份管理类，用于管理用户身份、缓存数据。
@@ -87,7 +86,7 @@ export class IdentityManager {
             return
         }
 
-        const blockAddress = this.getBlockAddress(activeDid)
+        const blockAddress = await this.getBlockAddress(activeDid)
         if (blockAddress === undefined) {
             return
         }
@@ -96,7 +95,7 @@ export class IdentityManager {
             domain = `${window.location.protocol}://${window.location.hostname}:${window.location.port}`
         }
 
-        const provider = new NodeProvider({proxy: domain, blockAddress: blockAddress})
+        const provider = new NodeProvider({ proxy: domain, blockAddress: blockAddress })
         return await provider.whoami()
     }
 
@@ -108,37 +107,25 @@ export class IdentityManager {
      */
     getHistory() {
         const history = this.accountCache.get(this.historyKey)
-        if (history === null) {
-            return []
-        } else {
-            return JSON.parse(history) as string[]
-        }
+        return history === null ? [] : (JSON.parse(history) as string[])
     }
 
     /**
      * 获取当前激活的身份DID。
      *
-     * @returns {stirng|undefine} 返回当前激活账号的信息，若没有激活账号，则返回 undefined。
+     * @returns  返回当前激活账号的信息，若没有激活账号，则返回 undefined。
      *
      */
     getActiveDid(): string | undefined {
         const did = this.sessionCache.get(this.loginKey)
-        if (did === null) {
-            return undefined
-        } else {
-            return did
-        }
+        return did === null ? undefined : did
     }
 
     /**
      * 获取当前激活账号对应的身份信息。
      *
      * @returns 返回当前激活账号的身份信息，若没有激活身份，则返回 undefined。
-     * @example
-     * ```ts
-     * const activeIdentity = accountManager.getActiveIdentity();
-     * console.log(activeIdentity); // 输出当前激活账号的身份信息
-     * ```
+     *
      */
     getActiveIdentity() {
         const activeDid = this.getActiveDid()
@@ -154,24 +141,56 @@ export class IdentityManager {
      *
      * @param did - 用户的 DID（去中心化标识符）。
      * @returns 返回对应的区块链地址。
+     *
+     * throws
      * @example
      * ```ts
      * const blockAddress = accountManager.getBlockAddress(did);
      * console.log(blockAddress); // 输出对应的区块链地址
      * ```
      */
-    getBlockAddress(did: string) {
-        return this.blockAddressMap.get(did)
+    async getBlockAddress(did: string) {
+        const blockAddress = this.blockAddressMap.get(did)
+        if (blockAddress !== undefined) {
+            return blockAddress
+        }
+
+        const token = this.cookieCache.get(did)
+        if (token === null) {
+            throw new NoPermission()
+        }
+
+        const encryptedPassword = this.sessionCache.get(did)
+        if (encryptedPassword === null) {
+            throw new NoPermission()
+        }
+
+        const identity = await this.getIdentity(did)
+        try {
+            const password = await decryptString(
+                identity.securityConfig?.algorithm as SecurityAlgorithm,
+                token,
+                encryptedPassword
+            )
+
+            // 解密身份
+            const blockAddress = await decryptBlockAddress(
+                identity.blockAddress,
+                identity.securityConfig?.algorithm as SecurityAlgorithm,
+                password
+            )
+
+            this.blockAddressMap.set(did, blockAddress)
+            return blockAddress
+        } catch (err) {
+            console.error(`Fail to decrypt identity=${did}`, err)
+            throw new NoPermission()
+        }
     }
 
     /**
      * 注销当前账号，并清理相关的登录信息。
      *
-     * @example
-     * ```ts
-     * accountManager.logout();
-     * // 之后调用 getActiveAccount() 返回 undefined，表示注销成功
-     * ```
      */
     logout() {
         const activeDid = this.getActiveDid()
@@ -190,83 +209,61 @@ export class IdentityManager {
      * // 清理对应 DID 的身份信息
      * ```
      */
-    clear(did: string) {
-
-    }
+    clear(did: string) {}
 
     /**
-     * 判断指定 DID 是否已经登录。
+     * 判断身份已登陆
      *
-     * @param did - 要检查的 DID。
-     * @returns 如果该 DID 已经登录，返回 true；否则返回 false。
+     * @param did - 要检查的身份DID。
+     * @returns 如果身份已经登录，返回 true；否则返回 false。
      *
      */
     isLogin(did: string): boolean {
-        return this.blockAddressMap.get(did) !== undefined
+        if (this.blockAddressMap.get(did) !== undefined) {
+            return true
+        }
+
+        if (this.cookieCache.get(did) !== null && this.sessionCache.get(did) !== null) {
+            return true
+        }
+
+        return false
     }
 
     // 登陆，解密身份信息
-    login(did: string, password?: string): Promise<Identity> {
-        return new Promise(async (resolve, reject) => {
-            if (this.isLogin(did)) {
-                // 检查当前激活的账户是否发生了变化，如果发生了变化，则自动注销当前账户，切换当前激活的账号
-                const identity = this.getActiveIdentity()
-                if (identity && identity.metadata?.did === did) {
-                    return resolve(identity)
-                }
-            }
+    async login(did: string, password: string): Promise<Identity> {
+        // 加载身份信息
+        const identity = await this.getIdentity(did)
 
-            const identity = await this.getIdentity(did)
-            if (identity === undefined) {
-                return reject(new NotFound('Not found identity!'))
-            }
-
-            if (password === undefined) {
-                const token = this.cookieCache.get(did)
-                if (token === null) {
-                    return reject(new InvalidPassword(`Invalid password!`))
-                }
-
-                const encryptedPassword = this.sessionCache.get(did)
-                if (encryptedPassword === null) {
-                    return reject(new InvalidPassword(`Invalid password!`))
-                }
-
-                password = await decryptString(
-                    identity.securityConfig?.algorithm as SecurityAlgorithm,
-                    token,
-                    encryptedPassword
-                )
-            }
-
-            // 加载身份信息
-            try {
-                // 解密身份
-                const blockAddress = await decryptBlockAddress(
-                    identity.blockAddress,
-                    identity.securityConfig?.algorithm as SecurityAlgorithm,
-                    password
-                )
-
-                this.blockAddressMap.set(did, blockAddress)
-                this.identityMap.set(did, identity)
-            } catch (err) {
-                console.error(`Fail to decrypt identity=${did}`, err)
-                return reject(new InvalidPassword(`Invalid password!`))
-            }
-
-            // 设置当前登陆帐户
+        if (this.isLogin(did)) {
             this.sessionCache.set(this.loginKey, did)
-            try {
-                // 缓存密码
-                await this.cachePassword(did, password, identity.securityConfig?.algorithm as SecurityAlgorithm)
-            } catch (err) {
-               console.error(`Fail to cache password`, err)
-            } finally {
-                resolve(identity)
-            }
+            return identity
+        }
 
-        })
+        try {
+            // 解密身份
+            const blockAddress = await decryptBlockAddress(
+                identity.blockAddress,
+                identity.securityConfig?.algorithm as SecurityAlgorithm,
+                password
+            )
+
+            this.blockAddressMap.set(did, blockAddress)
+        } catch (err) {
+            console.error(`Fail to decrypt identity=${did}`, err)
+            throw new InvalidPassword()
+        }
+
+        try {
+            // 缓存密码
+            await this.cachePassword(did, password, identity.securityConfig?.algorithm as SecurityAlgorithm)
+        } catch (err) {
+            console.error(`Fail to cache password`, err)
+        }
+
+        // 设置当前登陆帐户
+        this.sessionCache.set(this.loginKey, did)
+        return identity
     }
 
     /**
@@ -283,7 +280,7 @@ export class IdentityManager {
         if (template.securityConfig === undefined) {
             // 如果没有定义安全配置，则创建一个空的安全配置
             template.securityConfig = {
-                algorithm: generateSecurityAlgorithm(),
+                algorithm: generateSecurityAlgorithm()
             }
         }
 
@@ -303,7 +300,7 @@ export class IdentityManager {
                     template.extend = IdentityApplicationExtend.create({})
                     break
                 default:
-                    throw new Error(`Not support code=${template.code}`)
+                    throw new InvalidArgument(`Not support code=${template.code}`)
             }
         }
 
@@ -337,7 +334,8 @@ export class IdentityManager {
      *
      * @returns 返回更新身份。
      */
-    async updateIdentity(template: Partial<IdentityTemplate>, password: string, identity: Identity) {
+    async updateIdentity(did: string, template: Partial<IdentityTemplate>, password: string) {
+        const identity = await this.getIdentity(did)
         // 解密区块链地址
         const blockAddress = await decryptBlockAddress(
             identity.blockAddress,
@@ -347,7 +345,6 @@ export class IdentityManager {
 
         // 使用模板更新身份
         const newIdentity: Identity = await updateIdentity(template, identity, blockAddress)
-        const did = (identity.metadata as IdentityMetadata).did
 
         // 更新缓存中的身份信息
         this.identityCache.set(did, serializeIdentityToJson(newIdentity))
@@ -365,6 +362,11 @@ export class IdentityManager {
      *
      */
     async getIdentity(did: string): Promise<Identity> {
+        const existing = this.identityMap.get(did)
+        if (existing) {
+            return existing
+        }
+
         const s = this.identityCache.get(did)
         if (s === null) {
             throw new NotFound()
@@ -372,9 +374,11 @@ export class IdentityManager {
 
         // 验证身份是否有效
         const identity = deserializeIdentityFromJson(s)
-        if (!await verifyIdentity(identity)) {
+        if (!(await verifyIdentity(identity))) {
             throw new DataTampering()
         }
+
+        this.identityMap.set(did, identity)
         return identity
     }
 
@@ -387,17 +391,17 @@ export class IdentityManager {
      *
      */
     async exportIdentity(did: string): Promise<string> {
-        const s = this.identityCache.get(did)
-        if (s === null) {
+        const identity = this.identityCache.get(did)
+        if (identity === null) {
             throw new NotFound()
         }
 
         // 验证身份是否有效
-        if (!await verifyIdentity(deserializeIdentityFromJson(s))) {
+        if (!(await verifyIdentity(deserializeIdentityFromJson(identity)))) {
             throw new DataTampering()
         }
 
-        return s
+        return identity
     }
 
     /**
@@ -413,7 +417,7 @@ export class IdentityManager {
         const metadata = identity.metadata as IdentityMetadata
 
         // 验证身份
-        if (!await verifyIdentity(identity)) {
+        if (!(await verifyIdentity(identity))) {
             throw new DataTampering()
         }
 
@@ -432,7 +436,7 @@ export class IdentityManager {
      */
     private setHistory(did: string) {
         const history = this.getHistory()
-        const index = history.findIndex(a => a === did)
+        const index = history.findIndex((a) => a === did)
         if (index !== -1) {
             return
         }
@@ -447,7 +451,9 @@ export class IdentityManager {
     private async cachePassword(did: string, password: string, securityAlgorithm: SecurityAlgorithm) {
         // 生成令牌，令牌存放在cookie中，令牌用来加密身份的密码，令牌一旦过期，那么身份将会失效。
         const token = encodeBase64(generateIv(32))
+        // 加密密码
         const encryptedPassword = await encryptString(securityAlgorithm, token, password)
+        // 缓存加密的密码
         this.sessionCache.set(did, encryptedPassword)
         // 缓存令牌
         this.cookieCache.set(did, token, this.durationDays)

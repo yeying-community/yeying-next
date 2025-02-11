@@ -66,7 +66,7 @@ describe('Identity', () => {
             }
         }
 
-        const newIdentity = await manager.updateIdentity(newTemplate, password, identity)
+        const newIdentity = await manager.updateIdentity(identity?.metadata?.did as string, newTemplate, password)
         expect(newIdentity.metadata?.name).toStrictEqual("new")
         expect(newIdentity.metadata?.avatar).toStrictEqual(template.avatar)
         expect(newIdentity.personalExtend?.telephone).toStrictEqual("1234567891")
