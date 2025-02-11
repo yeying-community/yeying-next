@@ -73,7 +73,7 @@ export class Downloader {
                  */
                 const downloadChunk = async (index: number) => {
                     // 下载数据块
-                    let data = await this.blockProvider.get(asset.chunks[index])
+                    let data = await this.blockProvider.get(namespaceId, asset.chunks[index])
                     if (asset.isEncrypted) {
                         // 如果资产加密，解密数据块
                         data = await this.assetCipher.decrypt(data)

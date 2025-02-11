@@ -16,6 +16,7 @@ import {
 import { Client, createClient } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary } from '@bufbuild/protobuf'
+import {AssetMetadata, AssetMetadataSchema} from "../../yeying/api/asset/asset_pb";
 
 /**
  * NodeProvider 每个服务都是一个节点，同个这类了解这个节点健康状态，和节点的元信息。
@@ -45,18 +46,9 @@ export class NodeProvider {
     /**
      * 检查当前节点的健康状态。
      *
-     * @returns 返回一个 Promise，解析为 HealthCheckResponseBody
-     * @example
-     * ```ts
-     * provider.healthCheck().then(response => {
-     *     console.log('Status:', response.getStatus());
-     * }).catch(err => {
-     *     console.error('Error:', err);
-     * });
-     * ```
      */
     healthCheck() {
-        return new Promise<HealthCheckResponseBody>(async (resolve, reject) => {
+        return new Promise<void>(async (resolve, reject) => {
             let header: MessageHeader
             try {
                 header = await this.authenticate.createHeader()
@@ -69,7 +61,7 @@ export class NodeProvider {
             try {
                 const res = await this.client.healthCheck(request)
                 await this.authenticate.doResponse(res, HealthCheckResponseBodySchema)
-                resolve(res.body as HealthCheckResponseBody)
+                resolve()
             } catch (err) {
                 console.error('Fail to check health.', err)
                 return reject(err)
@@ -92,7 +84,7 @@ export class NodeProvider {
      * ```
      */
     whoami() {
-        return new Promise<WhoamiResponseBody>(async (resolve, reject) => {
+        return new Promise<NodeMetadata>(async (resolve, reject) => {
             let header: MessageHeader
             try {
                 header = await this.authenticate.createHeader()
@@ -106,15 +98,8 @@ export class NodeProvider {
                 const res = await this.client.whoami(request)
                 await this.authenticate.doResponse(res, WhoamiResponseBodySchema)
                 const body = res.body as WhoamiResponseBody
-                const node = body.node as NodeMetadata
-
-                const signature = node.signature
-                node.signature = ''
-                const passed = await this.authenticate.verify(node.did, toBinary(NodeMetadataSchema, node), signature)
-
-                if (passed) {
-                    node.signature = signature
-                    resolve(body)
+                if (await this.verifyNodeMetadata(body.node)) {
+                    resolve(body.node as NodeMetadata)
                 } else {
                     reject(new DataForgery('invalid signature!'))
                 }
@@ -123,5 +108,19 @@ export class NodeProvider {
                 return reject(err)
             }
         })
+    }
+
+    private async verifyNodeMetadata(node?: NodeMetadata) {
+        if (node === undefined) {
+            return false
+        }
+
+        const signature = node.signature
+        try {
+            node.signature = ''
+            return await this.authenticate.verify(node.did, toBinary(NodeMetadataSchema, node), signature)
+        } finally {
+            node.signature = signature
+        }
     }
 }
