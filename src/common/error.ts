@@ -53,7 +53,7 @@ export class InvalidArgument extends Error {
 }
 
 export class NotFound extends Error {
-    constructor(message: string, options?: ErrorOptions) {
+    constructor(message?: string, options?: ErrorOptions) {
         super(message, options)
     }
 }
@@ -78,7 +78,7 @@ export class InvalidPassword extends Error {
 
 // 数据篡改
 export class DataTampering extends Error {
-    constructor(message: string, options: ErrorOptions) {
+    constructor(message?: string, options?: ErrorOptions) {
         super(message, options)
     }
 }

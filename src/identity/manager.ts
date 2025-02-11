@@ -4,10 +4,10 @@
 // 2、所有的密码的管理都是在端上完成，不会和后台服务器有任何交互，也就是密码完全由用户负责；
 // 3、一个端上多个身份切换，任何时刻只有一个身份在起作用
 // 4、对于不再端上使用的身份，能够一键清理不留痕迹；
-import { SessionCache } from '../cache/session'
-import { LocalCache } from '../cache/local'
-import { InvalidPassword, NotFound } from '../common/error'
-import { Account } from './model'
+import {SessionCache} from '../cache/session'
+import {LocalCache} from '../cache/local'
+import {DataTampering, InvalidPassword, NotFound} from '../common/error'
+
 import {
     BlockAddress,
     createBlockAddress,
@@ -21,14 +21,13 @@ import {
     IdentityPersonalExtend,
     IdentityServiceExtend,
     IdentityTemplate,
-    NetworkTypeEnum,
     SecurityAlgorithm,
     SecurityConfig,
     serializeIdentityToJson,
     updateIdentity,
     verifyIdentity
 } from '@yeying-community/yeying-web3'
-import { CookieCache } from '../cache/cookie'
+import {CookieCache} from '../cache/cookie'
 import {
     decryptBlockAddress,
     decryptString,
@@ -37,14 +36,13 @@ import {
     generateIv,
     generateSecurityAlgorithm
 } from '../common/crypto'
-import { encodeBase64 } from '../common/codec'
-import { LanguageCodeEnum } from '../yeying/api/common/code_pb'
-import { convertLanguageCodeTo } from '../common/message'
+import {encodeBase64} from '../common/codec'
+import {NodeProvider} from "../provider/node/node";
 
 /**
- * 账号管理类，用于管理用户账号、身份及缓存数据。
+ * 身份管理类，用于管理用户身份、缓存数据。
  */
-export class AccountManager {
+export class IdentityManager {
     private historyKey: string = 'yeying.history.accounts' // 历史账号存储的键名
     private loginKey: string = 'yeying.login.account' // 当前登录账号存储的键名
     private cookieCache: CookieCache // 存储cookie的缓存
@@ -84,12 +82,12 @@ export class AccountManager {
      * ```
      */
     async getNode(domain?: string) {
-        const account = this.getActiveAccount()
-        if (account === undefined) {
+        const activeDid = this.getActiveDid()
+        if (activeDid === undefined) {
             return
         }
 
-        const blockAddress = this.getBlockAddress(account.did)
+        const blockAddress = this.getBlockAddress(activeDid)
         if (blockAddress === undefined) {
             return
         }
@@ -98,45 +96,37 @@ export class AccountManager {
             domain = `${window.location.protocol}://${window.location.hostname}:${window.location.port}`
         }
 
-        // const provider = new NodeProvider(new Authenticate(blockAddress), { proxy: domain })
-        // return await provider.whoami()
+        const provider = new NodeProvider({proxy: domain, blockAddress: blockAddress})
+        return await provider.whoami()
     }
 
     /**
      * 获取历史登录过的所有账号信息。
      *
      * @returns 返回历史账号信息列表。
-     * @example
-     * ```ts
-     * const historyAccounts = accountManager.getHistoryAccounts();
-     * console.log(historyAccounts); // 输出历史账号信息列表
-     * ```
+     *
      */
-    getHistoryAccounts() {
-        const accounts = this.accountCache.get(this.historyKey)
-        if (accounts === null) {
+    getHistory() {
+        const history = this.accountCache.get(this.historyKey)
+        if (history === null) {
             return []
         } else {
-            return JSON.parse(accounts) as Account[]
+            return JSON.parse(history) as string[]
         }
     }
 
     /**
-     * 获取当前激活的账号信息。
+     * 获取当前激活的身份DID。
      *
-     * @returns 返回当前激活账号的信息，若没有激活账号，则返回 undefined。
-     * @example
-     * ```ts
-     * const activeAccount = accountManager.getActiveAccount();
-     * console.log(activeAccount); // 输出当前激活账号的信息
-     * ```
+     * @returns {stirng|undefine} 返回当前激活账号的信息，若没有激活账号，则返回 undefined。
+     *
      */
-    getActiveAccount(): Account | undefined {
-        const account = this.sessionCache.get(this.loginKey)
-        if (account === null) {
+    getActiveDid(): string | undefined {
+        const did = this.sessionCache.get(this.loginKey)
+        if (did === null) {
             return undefined
         } else {
-            return JSON.parse(account) as Account
+            return did
         }
     }
 
@@ -151,9 +141,9 @@ export class AccountManager {
      * ```
      */
     getActiveIdentity() {
-        const activeAccount = this.getActiveAccount()
-        if (activeAccount !== undefined) {
-            return this.identityMap.get(activeAccount.did)
+        const activeDid = this.getActiveDid()
+        if (activeDid) {
+            return this.identityMap.get(activeDid)
         } else {
             return undefined
         }
@@ -184,9 +174,9 @@ export class AccountManager {
      * ```
      */
     logout() {
-        const activeAccount = this.getActiveAccount()
-        if (activeAccount) {
-            this.blockAddressMap.delete(activeAccount.did)
+        const activeDid = this.getActiveDid()
+        if (activeDid) {
+            this.blockAddressMap.delete(activeDid)
         }
     }
 
@@ -200,40 +190,37 @@ export class AccountManager {
      * // 清理对应 DID 的身份信息
      * ```
      */
-    clear(did: string) {}
+    clear(did: string) {
+
+    }
 
     /**
      * 判断指定 DID 是否已经登录。
      *
      * @param did - 要检查的 DID。
      * @returns 如果该 DID 已经登录，返回 true；否则返回 false。
-     * @example
-     * ```ts
-     * const isLoggedIn = accountManager.isLogin(did);
-     * console.log(isLoggedIn); // 输出是否已登录
-     * ```
+     *
      */
     isLogin(did: string): boolean {
         return this.blockAddressMap.get(did) !== undefined
     }
 
     // 登陆，解密身份信息
-    login(did: string, password?: string): Promise<Account> {
+    login(did: string, password?: string): Promise<Identity> {
         return new Promise(async (resolve, reject) => {
             if (this.isLogin(did)) {
                 // 检查当前激活的账户是否发生了变化，如果发生了变化，则自动注销当前账户，切换当前激活的账号
-                const account = this.getActiveAccount()
-                if (account !== undefined && account.did === did) {
-                    return resolve(account)
+                const identity = this.getActiveIdentity()
+                if (identity && identity.metadata?.did === did) {
+                    return resolve(identity)
                 }
             }
 
-            const identity = await this.exportIdentity(did)
+            const identity = await this.getIdentity(did)
             if (identity === undefined) {
                 return reject(new NotFound('Not found identity!'))
             }
 
-            const metadata = identity.metadata as IdentityMetadata
             if (password === undefined) {
                 const token = this.cookieCache.get(did)
                 if (token === null) {
@@ -268,53 +255,18 @@ export class AccountManager {
                 return reject(new InvalidPassword(`Invalid password!`))
             }
 
-            // 添加到历史账号中
-            const account = this.addAccount(metadata.did, metadata.name, metadata.avatar)
-
             // 设置当前登陆帐户
-            this.sessionCache.set(this.loginKey, JSON.stringify(account))
-            resolve(account)
-        })
-    }
-
-    /**
-     * 创建临时身份时，用户什么都不用输入，包括密码，全部由系统生成。解开身份的密码作为token临时存放在cookie中，临时身份最终有两个结局：
-     * 1、自动过期被遗忘，这个身份再也无法使用，与这个身份相关信息也不再被认为有效；
-     * 2、临时身份转正同时token失效，身份信息将被继续保留，用户自己的密码加密身份信息
-     */
-    async createGuest(language: LanguageCodeEnum = LanguageCodeEnum.LANGUAGE_CODE_ZH_CH, template?: IdentityTemplate) {
-        // 生成访客的模版
-        if (template === undefined) {
-            template = {
-                language: convertLanguageCodeTo(language),
-                network: NetworkTypeEnum.NETWORK_TYPE_YEYING,
-                parent: '',
-                code: IdentityCodeEnum.IDENTITY_CODE_PERSONAL,
-                name: 'Guest',
-                description: '',
-                avatar: '',
-                extend: IdentityPersonalExtend.create({})
+            this.sessionCache.set(this.loginKey, did)
+            try {
+                // 缓存密码
+                await this.cachePassword(did, password, identity.securityConfig?.algorithm as SecurityAlgorithm)
+            } catch (err) {
+               console.error(`Fail to cache password`, err)
+            } finally {
+                resolve(identity)
             }
-        }
 
-        // 生成身份密码，密码保存在session中，需要使用cookie中的token加密和解密，保证其安全性
-        const password = encodeBase64(generateIv(16))
-        const identity = await this.createIdentity(password, template)
-        const metadata = identity.metadata as IdentityMetadata
-        const did = metadata.did
-
-        // 生成令牌，令牌存放在cookie中，令牌用来加密身份的密码，令牌一旦过期，那么身份将会失效。
-        const token = encodeBase64(generateIv(32))
-        const encryptedPassword = await encryptString(
-            identity.securityConfig?.algorithm as SecurityAlgorithm,
-            token,
-            password
-        )
-        this.sessionCache.set(did, encryptedPassword)
-
-        // 缓存令牌
-        this.cookieCache.set(did, token, this.durationDays)
-        return identity
+        })
     }
 
     /**
@@ -323,22 +275,16 @@ export class AccountManager {
      * @param password - 用户设置的密码。
      * @param template - 用于创建身份的模板。
      * @returns 返回新创建的身份。
-     * @example
-     * ```ts
-     * const newIdentity = await createIdentity(password, template);
-     * console.log(newIdentity); // 输出新创建的身份
-     * ```
+     *
      */
     async createIdentity(password: string, template: IdentityTemplate) {
         // 创建区块链地址
         const blockAddress = createBlockAddress()
         if (template.securityConfig === undefined) {
-            template.securityConfig = SecurityConfig.create({})
-        }
-
-        // 如果没有定义安全配置，则创建一个空的安全配置
-        if (template.securityConfig.algorithm === undefined) {
-            template.securityConfig.algorithm = generateSecurityAlgorithm()
+            // 如果没有定义安全配置，则创建一个空的安全配置
+            template.securityConfig = {
+                algorithm: generateSecurityAlgorithm(),
+            }
         }
 
         // 如果安全配置没有定义算法，则生成一个默认的安全算法
@@ -364,7 +310,7 @@ export class AccountManager {
         // 使用密码和安全算法加密区块链地址
         const encryptedBlockAddress = await encryptBlockAddress(
             blockAddress,
-            template.securityConfig.algorithm,
+            template.securityConfig.algorithm as SecurityAlgorithm,
             password
         )
 
@@ -377,23 +323,21 @@ export class AccountManager {
         this.identityCache.set(did, serializeIdentityToJson(identity))
         this.identityMap.set(did, identity)
         this.blockAddressMap.set(did, blockAddress)
+        this.setHistory(did)
+
         return identity
     }
 
     /**
-     * 更新现有身份信息。
+     * 更新身份信息。
      *
-     * @param template - 用于更新身份的模板。
+     * @param template - 用于更新身份的模板, 只需填写需要更新的字段即可。
      * @param password - 用户设置的密码，用于解密区块链地址。
      * @param identity - 要更新的身份。
-     * @returns 返回更新后的 DID。
-     * @example
-     * ```ts
-     * const updatedDid = await updateIdentity(template, password, identity);
-     * console.log(updatedDid); // 输出更新后的 DID
-     * ```
+     *
+     * @returns 返回更新身份。
      */
-    async updateIdentity(template: IdentityTemplate, password: string, identity: Identity) {
+    async updateIdentity(template: Partial<IdentityTemplate>, password: string, identity: Identity) {
         // 解密区块链地址
         const blockAddress = await decryptBlockAddress(
             identity.blockAddress,
@@ -402,89 +346,110 @@ export class AccountManager {
         )
 
         // 使用模板更新身份
-        const newIdentity = await updateIdentity(template, identity, blockAddress)
+        const newIdentity: Identity = await updateIdentity(template, identity, blockAddress)
         const did = (identity.metadata as IdentityMetadata).did
 
         // 更新缓存中的身份信息
         this.identityCache.set(did, serializeIdentityToJson(newIdentity))
         this.identityMap.set(did, newIdentity)
         this.blockAddressMap.set(did, blockAddress)
-        return did
+        return newIdentity
+    }
+
+    /**
+     * 获得身份信息。
+     *
+     * @param did 身份DID。
+     *
+     * @returns {Promise<string>} 身份对象。
+     *
+     */
+    async getIdentity(did: string): Promise<Identity> {
+        const s = this.identityCache.get(did)
+        if (s === null) {
+            throw new NotFound()
+        }
+
+        // 验证身份是否有效
+        const identity = deserializeIdentityFromJson(s)
+        if (!await verifyIdentity(identity)) {
+            throw new DataTampering()
+        }
+        return identity
     }
 
     /**
      * 导出身份信息。
      *
-     * @param did - 要导出的身份 DID。
-     * @returns 返回解码并验证后的身份信息。
-     * @example
-     * ```ts
-     * const identity = await exportIdentity(did);
-     * console.log(identity); // 输出导出的身份信息
-     * ```
+     * @param did 要导出的身份DID。
+     *
+     * @returns {Promise<string>} JSON序列化的身份信息字符串。
+     *
      */
-    async exportIdentity(did: string) {
+    async exportIdentity(did: string): Promise<string> {
         const s = this.identityCache.get(did)
         if (s === null) {
-            return
+            throw new NotFound()
         }
 
         // 验证身份是否有效
-        const identity = deserializeIdentityFromJson(s)
-        const passed = await verifyIdentity(identity)
-        if (passed) {
-            return identity
+        if (!await verifyIdentity(deserializeIdentityFromJson(s))) {
+            throw new DataTampering()
         }
+
+        return s
     }
 
     /**
      * 导入身份信息。
      *
-     * @param content - 要导入的身份内容。
-     * @example
-     * ```ts
-     * const identity = await importIdentity(content);
-     * ```
+     * @param content JSON序列化的身份信息字符串。
+     *
+     * @returns {Identity} 身份信息对象
+     *
      */
-    async importIdentity(content: string) {
+    async importIdentity(content: string): Promise<Identity> {
         const identity = deserializeIdentityFromJson(content)
         const metadata = identity.metadata as IdentityMetadata
+
         // 验证身份
-        await verifyIdentity(identity)
+        if (!await verifyIdentity(identity)) {
+            throw new DataTampering()
+        }
+
         // 将导入的身份缓存
         this.identityCache.set(metadata.did, content)
+        this.setHistory(metadata.did)
         return identity
     }
 
     /**
-     * 添加账户信息到历史记录。
+     * 添加身份DID到历史记录中
      *
-     * @param did - 账户的 DID。
-     * @param name - 账户的名称。
-     * @param avatar - 账户的头像 URL。
-     * @returns 返回添加的账户对象。
-     * @example
-     * ```ts
-     * const account = addAccount(did, name, avatar);
-     * console.log(account); // 输出账户信息
-     * ```
+     * @param did 身份DID
+     *
+     * @private
      */
-    private addAccount(did: string, name: string, avatar: string): Account {
-        const historyAccounts = this.getHistoryAccounts()
-        const account: Account = { name: name, did: did, avatar: avatar, timestamp: Date.now() }
-
-        // 查找账户是否已存在
-        const index = historyAccounts.findIndex((i) => i.did === did)
+    private setHistory(did: string) {
+        const history = this.getHistory()
+        const index = history.findIndex(a => a === did)
         if (index !== -1) {
-            // 如果账户已存在，则更新账户信息
-            historyAccounts[index] = account
-        } else {
-            // 否则添加新账户
-            historyAccounts.push(account)
+            return
         }
 
-        // 将历史账户数据缓存
-        this.accountCache.set(this.historyKey, JSON.stringify(historyAccounts))
-        return account
+        history.push(did)
+        this.accountCache.set(this.historyKey, JSON.stringify(history))
+    }
+
+    /**
+     * 将密码加密后缓存到会话中，密钥保存在cookie中。
+     */
+    private async cachePassword(did: string, password: string, securityAlgorithm: SecurityAlgorithm) {
+        // 生成令牌，令牌存放在cookie中，令牌用来加密身份的密码，令牌一旦过期，那么身份将会失效。
+        const token = encodeBase64(generateIv(32))
+        const encryptedPassword = await encryptString(securityAlgorithm, token, password)
+        this.sessionCache.set(did, encryptedPassword)
+        // 缓存令牌
+        this.cookieCache.set(did, token, this.durationDays)
     }
 }

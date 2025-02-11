@@ -67,8 +67,8 @@ export class BlockProvider {
 
     /**
      * 获取资产块数据。
-     *
-     * @param hash - 要获取的区块的哈希值。
+     * @param namespaceId 资产块命名空间。
+     * @param hash - 要获取的资产块哈希值。
      *
      * @returns 一个 Promise，解析为获取到的区块数据（Uint8Array）。
      * @throws {Error} 如果获取区块失败，抛出错误。
@@ -79,9 +79,13 @@ export class BlockProvider {
      * console.log(data); // 输出区块数据
      * ```
      */
-    get(hash: string) {
+    get(namespaceId: string, hash: string) {
         return new Promise<Uint8Array>(async (resolve, reject) => {
-            const body = create(GetBlockRequestBodySchema, { hash: hash })
+            const body = create(GetBlockRequestBodySchema, {
+                namespaceId: namespaceId,
+                hash: hash
+            })
+
             let header
             try {
                 header = await this.authenticate.createHeader(toBinary(GetBlockRequestBodySchema, body))
