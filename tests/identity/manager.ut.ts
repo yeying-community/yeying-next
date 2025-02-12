@@ -31,7 +31,7 @@ describe('Identity', () => {
         const identity = await manager.createIdentity(password, template)
         const metadata = identity.metadata as IdentityMetadata
         console.log(`Success to create identity=${metadata.did}`)
-        const result = await manager.importIdentity(await manager.exportIdentity(metadata.did))
+        const result = await manager.importIdentity(await manager.exportIdentity(metadata.did), password)
         expect(result).toStrictEqual(identity)
     })
 

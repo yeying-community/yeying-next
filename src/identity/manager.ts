@@ -65,8 +65,8 @@ export class IdentityManager {
         this.blockAddressMap = new Map<string, BlockAddress>()
         // 缓存身份信息
         this.identityMap = new Map<string, Identity>()
-        // 默认密码保存有效期是30天，也就是临时身份有效期是30天
-        this.durationDays = 30
+        // 默认密码保存有效期是7天
+        this.durationDays = 7
     }
 
     /**
@@ -127,10 +127,10 @@ export class IdentityManager {
      * @returns 返回当前激活账号的身份信息，若没有激活身份，则返回 undefined。
      *
      */
-    getActiveIdentity() {
+    async getActiveIdentity() {
         const activeDid = this.getActiveDid()
         if (activeDid) {
-            return this.identityMap.get(activeDid)
+            return await this.getIdentity(activeDid)
         } else {
             return undefined
         }
@@ -196,20 +196,9 @@ export class IdentityManager {
         const activeDid = this.getActiveDid()
         if (activeDid) {
             this.blockAddressMap.delete(activeDid)
+            this.clearPassword(activeDid)
         }
     }
-
-    /**
-     * 清理缓存中的身份相关信息。
-     *
-     * @param did - 要清理身份信息的 DID。
-     * @example
-     * ```ts
-     * accountManager.clear(did);
-     * // 清理对应 DID 的身份信息
-     * ```
-     */
-    clear(did: string) {}
 
     /**
      * 判断身份已登陆
@@ -322,6 +311,13 @@ export class IdentityManager {
         this.blockAddressMap.set(did, blockAddress)
         this.setHistory(did)
 
+        try {
+            // 缓存密码
+            await this.cachePassword(did, password, identity.securityConfig?.algorithm as SecurityAlgorithm)
+        } catch (err) {
+            console.error(`Fail to cache password`, err)
+        }
+
         return identity
     }
 
@@ -408,11 +404,12 @@ export class IdentityManager {
      * 导入身份信息。
      *
      * @param content JSON序列化的身份信息字符串。
+     * @param password 身份的解密密码
      *
      * @returns {Identity} 身份信息对象
      *
      */
-    async importIdentity(content: string): Promise<Identity> {
+    async importIdentity(content: string, password: string): Promise<Identity> {
         const identity = deserializeIdentityFromJson(content)
         const metadata = identity.metadata as IdentityMetadata
 
@@ -421,8 +418,25 @@ export class IdentityManager {
             throw new DataTampering()
         }
 
+        // 解密区块链地址
+        const blockAddress = await decryptBlockAddress(
+            identity.blockAddress,
+            identity.securityConfig?.algorithm as SecurityAlgorithm,
+            password
+        )
+
+        const did = identity.metadata?.did as string
+        try {
+            // 缓存密码
+            await this.cachePassword(did, password, identity.securityConfig?.algorithm as SecurityAlgorithm)
+        } catch (err) {
+            console.error(`Fail to cache password`, err)
+        }
+
         // 将导入的身份缓存
         this.identityCache.set(metadata.did, content)
+        this.identityMap.set(did, identity)
+        this.blockAddressMap.set(did, blockAddress)
         this.setHistory(metadata.did)
         return identity
     }
@@ -456,6 +470,13 @@ export class IdentityManager {
         // 缓存加密的密码
         this.sessionCache.set(did, encryptedPassword)
         // 缓存令牌
-        this.cookieCache.set(did, token, this.durationDays)
+        this.cookieCache.set(did, token, this.durationDays * 24 * 60)
+    }
+
+    private clearPassword(did: string) {
+        // 缓存令牌
+        this.cookieCache.delete(did)
+        // 缓存加密的密码
+        this.sessionCache.remove(did)
     }
 }

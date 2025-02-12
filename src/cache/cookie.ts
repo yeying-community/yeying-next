@@ -3,18 +3,18 @@
 // 持久性：可以设置过期时间，没有设置时浏览器会在会话结束（即浏览器关闭）时删除
 // 特点：可以用于服务器通信，每次请求都会自动携带；安全性较低，容易被捕获；注意使用`HttpOnly`和`Secure`属性。
 export class CookieCache {
-    set(name: string, value: string, days: number) {
+    set(key: string, value: string, minutes: number) {
         let expires = ''
-        if (days) {
+        if (minutes) {
             const date = new Date()
-            date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
+            date.setTime(date.getTime() + minutes * 60 * 1000)
             expires = '; expires=' + date.toUTCString()
         }
-        document.cookie = name + '=' + (value || '') + expires + '; path=/'
+        document.cookie = key + '=' + (value || '') + expires + '; path=/'
     }
 
-    get(name: string) {
-        const nameEQ = name + '='
+    get(key: string) {
+        const nameEQ = key + '='
         const ca = document.cookie.split(';')
         for (let i = 0; i < ca.length; i++) {
             let c = ca[i]
@@ -27,5 +27,15 @@ export class CookieCache {
             }
         }
         return null
+    }
+
+    /**
+     * Deletes a cookie by setting its expiration date to a time in the past.
+     *
+     * @param The name of the cookie to be deleted.
+     */
+    delete(key: string) {
+        // Set the cookie's expiration date to a time in the past to remove it
+        document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
     }
 }
