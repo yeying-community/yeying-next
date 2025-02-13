@@ -73,12 +73,8 @@ export class IdentityManager {
      * 获取当前登录用户的区块链节点信息。
      *
      * @param domain - 可选参数，指定节点域名。如果未提供，将使用当前浏览器的域名。
-     * @returns 返回当前节点信息。
-     * @example
-     * ```ts
-     * const node = await accountManager.getNode();
-     * console.log(node); // 输出当前节点信息
-     * ```
+     * @returns 当前节点信息。
+     *
      */
     async getNode(domain?: string) {
         const activeDid = this.getActiveDid()
@@ -102,7 +98,7 @@ export class IdentityManager {
     /**
      * 获取历史登录过的所有账号信息。
      *
-     * @returns 返回历史账号信息列表。
+     * @returns 历史账号信息列表。
      *
      */
     getHistory() {
@@ -113,7 +109,7 @@ export class IdentityManager {
     /**
      * 获取当前激活的身份DID。
      *
-     * @returns  返回当前激活账号的信息，若没有激活账号，则返回 undefined。
+     * @returns 返回当前激活账号的信息，若没有激活账号，则返回 undefined。
      *
      */
     getActiveDid(): string | undefined {
@@ -122,9 +118,9 @@ export class IdentityManager {
     }
 
     /**
-     * 获取当前激活账号对应的身份信息。
+     * 获取当前激活账号对应的身份对象。
      *
-     * @returns 返回当前激活账号的身份信息，若没有激活身份，则返回 undefined。
+     * @returns 当前激活账号的身份对象，若没有激活身份，则返回 undefined。
      *
      */
     async getActiveIdentity() {
@@ -140,14 +136,10 @@ export class IdentityManager {
      * 获取指定 DID 对应的区块链地址。
      *
      * @param did - 用户的 DID（去中心化标识符）。
-     * @returns 返回对应的区块链地址。
+     * @returns 区块链地址详情
      *
-     * throws
-     * @example
-     * ```ts
-     * const blockAddress = accountManager.getBlockAddress(did);
-     * console.log(blockAddress); // 输出对应的区块链地址
-     * ```
+     * @throws NoPermission 没有权限
+     *
      */
     async getBlockAddress(did: string) {
         const blockAddress = this.blockAddressMap.get(did)
@@ -260,7 +252,7 @@ export class IdentityManager {
      *
      * @param password - 用户设置的密码。
      * @param template - 用于创建身份的模板。
-     * @returns 返回新创建的身份。
+     * @returns 新建的身份对象。
      *
      */
     async createIdentity(password: string, template: IdentityTemplate) {
@@ -318,6 +310,8 @@ export class IdentityManager {
             console.error(`Fail to cache password`, err)
         }
 
+        // 设置当前登陆帐户
+        this.sessionCache.set(this.loginKey, did)
         return identity
     }
 
@@ -328,7 +322,7 @@ export class IdentityManager {
      * @param password - 用户设置的密码，用于解密区块链地址。
      * @param identity - 要更新的身份。
      *
-     * @returns 返回更新身份。
+     * @returns 更新后的身份对象。
      */
     async updateIdentity(did: string, template: Partial<IdentityTemplate>, password: string) {
         const identity = await this.getIdentity(did)
@@ -354,7 +348,7 @@ export class IdentityManager {
      *
      * @param did 身份DID。
      *
-     * @returns {Promise<string>} 身份对象。
+     * @returns 身份对象。
      *
      */
     async getIdentity(did: string): Promise<Identity> {
@@ -383,7 +377,7 @@ export class IdentityManager {
      *
      * @param did 要导出的身份DID。
      *
-     * @returns {Promise<string>} JSON序列化的身份信息字符串。
+     * @returns 身份对象`json`序列化的字符串。
      *
      */
     async exportIdentity(did: string): Promise<string> {
@@ -406,7 +400,7 @@ export class IdentityManager {
      * @param content JSON序列化的身份信息字符串。
      * @param password 身份的解密密码
      *
-     * @returns {Identity} 身份信息对象
+     * @returns 身份对象
      *
      */
     async importIdentity(content: string, password: string): Promise<Identity> {
@@ -438,6 +432,8 @@ export class IdentityManager {
         this.identityMap.set(did, identity)
         this.blockAddressMap.set(did, blockAddress)
         this.setHistory(metadata.did)
+        // 设置当前登陆帐户
+        this.sessionCache.set(this.loginKey, did)
         return identity
     }
 
