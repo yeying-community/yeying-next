@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3  # 选择Node.js环境
+        uses: actions/setup-node@v4  # 选择Node.js环境
         with:
           node-version: '20'  # 配置Node.js版本
 
@@ -36,7 +36,6 @@ jobs:
       - name: check ut.ts file exists
         run: |
           pwd
-          ls -l
           find tests -iname "*.ut.ts"
 
 
@@ -56,8 +55,7 @@ jobs:
       - name: check it.ts file exists
         run: |
           pwd
-          ls -l
-          find tests -iname "*.ut.ts"
+          find tests -iname "*.it.ts"
 
       - name: start to run it test
         env:
@@ -71,6 +69,3 @@ jobs:
           echo "Using Yeying Warehouse URL: $YEYING_WAREHOUSE_URL"
           echo "Using Yeying AI URL: $YEYING_AI_URL"
           shopt -s globstar; npm run test -- tests/**/*.it.ts
-
-      - name: Generate docs
-        run: npm run docs
