@@ -24,27 +24,19 @@ import { computeHash } from '../../common/crypto'
 import { encodeHex } from '../../common/codec'
 
 /**
- * 区块提供者类，用于与区块链交互，提供数据的获取和存储功能。
- *
- * @example
- * ```ts
- * const blockProvider = new BlockProvider(authenticate, option);
- * const data = await blockProvider.get(hash);
- * console.log(data);
- * ```
+ * 用于与区块链交互，提供数据的获取和存储功能
  */
 export class BlockProvider {
     private authenticate: Authenticate
     private client: Client<typeof Block>
 
     /**
-     * 创建 BlockProvider 实例。
-     *
-     * @param option - 提供连接选项的 ProviderOption 实例。
+     * 构造函数
+     * @param option - 包含代理地址和区块地址信息的配置选项
      * @example
      * ```ts
-     * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
-     * const blockProvider = new BlockProvider(providerOption);
+     * const providerOption = { proxy: 'http://proxy.example.com', blockAddress: { identifier: 'example-did', privateKey: 'example-private-key' } }
+     * const blockProvider = new BlockProvider(providerOption)
      * ```
      */
     constructor(option: ProviderOption) {
@@ -59,7 +51,12 @@ export class BlockProvider {
     }
 
     /**
-     * 获取区块的所有者 DID。
+     * 获取当前用户的 DID（所有者）
+     * @returns 返回当前用户的 DID
+     * @example
+     * ```ts
+     * const owner = blockProvider.getOwner()
+     * ```
      */
     getOwner() {
         return this.authenticate.getDid()
@@ -67,16 +64,14 @@ export class BlockProvider {
 
     /**
      * 获取资产块数据。
-     * @param namespaceId 资产块命名空间。
-     * @param hash - 要获取的资产块哈希值。
-     *
-     * @returns 一个 Promise，解析为获取到的区块数据（Uint8Array）。
-     * @throws {Error} 如果获取区块失败，抛出错误。
-     *
+     * @param namespaceId 资产块命名空间
+     * @param hash - 要获取的资产块哈希值
+     * @returns 一个 Promise，解析为获取到的区块数据（Uint8Array）
      * @example
      * ```ts
-     * const data = await blockProvider.get('someHash');
-     * console.log(data); // 输出区块数据
+     * blockProvider.get('example-namespace', 'example-hash')
+     *   .then(data => console.log(data))
+     *   .catch(err => console.error(err))
      * ```
      */
     get(namespaceId: string, hash: string) {
@@ -105,6 +100,17 @@ export class BlockProvider {
         })
     }
 
+    /**
+     * 根据块数据生成哈希值，并创建签名的块元数据
+     * @param namespaceId - 命名空间 ID
+     * @param data - 块数据（Uint8Array）
+     * @returns 返回签名后的块元数据
+     * @example
+     * ```ts
+     * const data = new Uint8Array([1, 2, 3])
+     * const blockMetadata = await blockProvider.createBlockMetadata('example-namespace', data)
+     * ```
+     */
     async createBlockMetadata(namespaceId: string, data: Uint8Array) {
         const chunkHash = await computeHash(data) // 计算块的哈希值
         const block = create(BlockMetadataSchema, {
@@ -120,6 +126,18 @@ export class BlockProvider {
         return block
     }
 
+    /**
+     * 发送确认请求到后端服务，并验证返回的块元数据签名
+     * @param block - 块元数据对象
+     * @returns 返回确认块的响应体
+     * @example
+     * ```ts
+     * const blockMetadata = await blockProvider.createBlockMetadata('example-namespace', new Uint8Array([1, 2, 3]))
+     * blockProvider.confirm(blockMetadata)
+     *   .then(response => console.log(response))
+     *   .catch(err => console.error(err))
+     * ```
+     */
     confirm(block: BlockMetadata) {
         return new Promise<ConfirmBlockResponseBody>(async (resolve, reject) => {
             const body = create(ConfirmBlockRequestBodySchema, { block: block })
@@ -151,16 +169,16 @@ export class BlockProvider {
     }
 
     /**
-     * 存储区块数据。
-     *
-     * @param block - 要存储的区块的哈希值。
-     * @param data - 区块数据（Uint8Array）。
-     * @returns 一个 Promise，解析为存储后的区块元数据（BlockMetadata）。
-     * @throws {Error} 如果存储区块失败，抛出错误。
+     * 上传块数据,发送块数据和元数据到后端服务，并验证返回的块元数据签名
+     * @param block - 块元数据对象
+     * @param data - 块数据（Uint8Array）
+     * @returns 返回上传块的响应体
      * @example
      * ```ts
-     * const body = await blockProvider.put('someHash', 1000, someData);
-     * console.log(body); // 输出存储后的区块元数据
+     * const blockMetadata = await blockProvider.createBlockMetadata('example-namespace', new Uint8Array([1, 2, 3]))
+     * blockProvider.put(blockMetadata, new Uint8Array([1, 2, 3]))
+     *   .then(response => console.log(response))
+     *   .catch(err => console.error(err))
      * ```
      */
     put(block: BlockMetadata, data: Uint8Array) {
@@ -191,6 +209,16 @@ export class BlockProvider {
         })
     }
 
+    /**
+     * 验证块元数据的签名是否有效
+     * @param block - 块元数据对象
+     * @returns 如果签名有效，返回 true；否则返回 false
+     * @example
+     * ```ts
+     * const blockMetadata = { owner: 'example-did', signature: 'example-signature' }
+     * const isValid = await blockProvider.verifyBlockMetadata(blockMetadata)
+     * ```
+     */
     async verifyBlockMetadata(block?: BlockMetadata) {
         if (block === undefined) {
             return false

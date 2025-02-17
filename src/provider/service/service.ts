@@ -25,24 +25,20 @@ import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/messag
 import { create, toBinary } from '@bufbuild/protobuf'
 
 /**
- * ServiceProvider 类负责登记、注销、以及搜索服务。
- *
+ * 提供服务管理功能的类，支持注册、搜索和注销服务。
  */
 export class ServiceProvider {
     private authenticate: Authenticate
     private client: Client<typeof Service>
 
     /**
-     * ServiceProvider 的构造函数，初始化身份认证和客户端实例。
-     *
-     * @param option - 服务提供商的选项，包括代理设置等。
+     * 构造函数
+     * @param option - 包含代理地址和区块地址信息的配置选项
      * @example
-     *
      * ```ts
-     * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
-     * const provider = new ServiceProvider(providerOption);
+     * const providerOption = { proxy: 'http://proxy.example.com', blockAddress: { identifier: 'example-did', privateKey: 'example-private-key' } }
+     * const serviceProvider = new ServiceProvider(providerOption)
      * ```
-     *
      */
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
@@ -55,6 +51,18 @@ export class ServiceProvider {
         )
     }
 
+    /**
+     * 注册服务
+     * @param service - 服务元数据对象
+     * @returns 返回注册服务的响应体
+     * @example
+     * ```ts
+     * const serviceMetadata = { did: 'example-did', name: 'example-service', description: 'This is a service' }
+     * serviceProvider.register(serviceMetadata)
+     *   .then(response => console.log(response))
+     *   .catch(err => console.error(err))
+     * ```
+     */
     register(service: ServiceMetadata) {
         return new Promise<RegisterServiceResponseBody>(async (resolve, reject) => {
             const body = create(RegisterServiceRequestBodySchema, {
@@ -82,6 +90,20 @@ export class ServiceProvider {
         })
     }
 
+    /**
+     * 根据条件和分页参数查询服务列表
+     * @param condition - 搜索条件（部分 `SearchServiceCondition` 对象）
+     * @param page - 当前页码
+     * @param pageSize - 每页显示的条目数
+     * @returns 返回搜索服务的响应体
+     * @example
+     * ```ts
+     * const condition = { code: 'example-code', owner: 'example-owner' }
+     * serviceProvider.search(condition, 1, 10)
+     *   .then(response => console.log(response))
+     *   .catch(err => console.error(err))
+     * ```
+     */
     search(condition: Partial<SearchServiceCondition>, page: number, pageSize: number) {
         return new Promise<SearchServiceResponseBody>(async (resolve, reject) => {
             const body = create(SearchServiceRequestBodySchema, {
@@ -113,6 +135,18 @@ export class ServiceProvider {
         })
     }
 
+    /**
+     * 根据服务的 DID 和版本号发送注销请求
+     * @param did - 服务的 DID
+     * @param version - 服务的版本号
+     * @returns 返回注销服务的响应体
+     * @example
+     * ```ts
+     * serviceProvider.unregister('example-did', 1)
+     *   .then(response => console.log(response))
+     *   .catch(err => console.error(err))
+     * ```
+     */
     unregister(did: string, version: number) {
         return new Promise<UnregisterServiceResponseBody>(async (resolve, reject) => {
             const body = create(UnregisterServiceRequestBodySchema, {
