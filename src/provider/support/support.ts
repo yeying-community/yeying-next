@@ -17,27 +17,19 @@ import { create, toBinary } from '@bufbuild/protobuf'
 import { generateRandomString, generateUuid } from '../../common/string'
 
 /**
- * 支持服务提供者类，用于与支持服务进行交互，包括收集 FAQ 数据。
- *
- * @example
- * ```ts
- * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
- * const supportProvider = new SupportProvider(providerOption);
- * await supportProvider.collectFaq("general", "user@example.com", "How to use the service?");
- * ```
+ * 通过 gRPC-web 与后端服务交互，并使用 Authenticate 类进行身份验证和签名验证
  */
 export class SupportProvider {
     private authenticate: Authenticate
     private client: Client<typeof Support>
 
     /**
-     * 创建支持服务提供者的实例。
-     *
-     * @param option - 提供者配置选项，包括代理设置。
+     * 构造函数
+     * @param option - 包含代理地址和区块地址信息的配置选项
      * @example
      * ```ts
-     * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
-     * const supportProvider = new SupportProvider(providerOption);
+     * const providerOption = { proxy: 'http://proxy.example.com', blockAddress: { identifier: 'example-did', privateKey: 'example-private-key' } }
+     * const supportProvider = new SupportProvider(providerOption)
      * ```
      */
     constructor(option: ProviderOption) {
@@ -52,21 +44,16 @@ export class SupportProvider {
     }
 
     /**
-     * 收集 FAQ 数据并发送到支持服务。
-     *
-     * @param type - FAQ 类型，例如“general”。
-     * @param email - 提交 FAQ 请求的电子邮件地址。
-     * @param description - FAQ 问题的描述。
-     * @returns 一个 Promise，解析为 void，表示请求成功。
-     * @throws {InvalidArgument} 如果签名或请求头创建失败，则抛出错误。
-     * @throws {NetworkDown} 如果协议错误或响应失败，则抛出错误。
+     * 创建 FAQ 元数据，签名并发送请求到后端服务
+     * @param type - 问题类型
+     * @param email - 用户邮箱
+     * @param description - 问题描述
+     * @returns 返回收集 FAQ 的响应体
      * @example
      * ```ts
-     * try {
-     *   await supportProvider.collectFaq("general", "user@example.com", "How to use the service?");
-     * } catch (err) {
-     *   console.error(err); // 处理错误
-     * }
+     * supportProvider.collectFaq('type', 'user@example.com', 'This is a question')
+     *   .then(response => console.log(response))
+     *   .catch(err => console.error(err))
      * ```
      */
     async collectFaq(type: string, email: string, description: string) {

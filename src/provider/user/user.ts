@@ -25,27 +25,19 @@ import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { Client, createClient } from '@connectrpc/connect'
 
 /**
- * 代表了一个用户节点提供商，提供对用户的增、删、改、查操作。
- *
- * @class
+ * 提供用户管理功能的类，支持添加、查询、更新和删除用户
  */
 export class UserProvider {
-    /**
-     * 认证实例，用于进行身份验证。
-     *
-     * @private
-     */
     private authenticate: Authenticate
     private client: Client<typeof User>
 
     /**
-     * 构造函数，用于初始化 `UserProvider` 类。
-     *
-     * @param option - 提供商配置，包括代理设置。
+     * 构造函数
+     * @param option - 包含代理地址和区块地址信息的配置选项
      * @example
      * ```ts
-     * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
-     * const userProvider = new UserProvider(providerOption);
+     * const providerOption = { proxy: 'http://proxy.example.com', blockAddress: { identifier: 'example-did', privateKey: 'example-private-key' } }
+     * const userProvider = new UserProvider(providerOption)
      * ```
      */
     constructor(option: ProviderOption) {
@@ -60,17 +52,15 @@ export class UserProvider {
     }
 
     /**
-     * 成为供应商的用户。
-     *
-     * @param name - 用户名称。
-     * @param avatar - 用户头像。
-     * @returns 返回添加用户的结果。
-     * @throws 错误时抛出 `Error`。
+     * 创建用户元数据，签名并发送请求到后端服务
+     * @param name - 用户名称
+     * @param avatar - 用户头像 URL
+     * @returns 返回添加用户的响应体
      * @example
      * ```ts
-     * userProvider.add('John Doe', 'avatar.png')
-     *   .then(result => console.log(result))
-     *   .catch(err => console.error(err));
+     * userProvider.add('John Doe', 'https://example.com/avatar.jpg')
+     *   .then(response => console.log(response))
+     *   .catch(err => console.error(err))
      * ```
      */
     add(name: string, avatar: string) {
@@ -111,15 +101,13 @@ export class UserProvider {
     }
 
     /**
-     * 从用户供应商获得存储的用户详情。
-     *
-     * @returns 返回用户信息。
-     * @throws 错误时抛出 `Error`。
+     * 查询用户详情
+     * @returns 返回用户详情的响应体
      * @example
      * ```ts
      * userProvider.detail()
-     *   .then(user => console.log(user))
-     *   .catch(err => console.error(err));
+     *   .then(response => console.log(response))
+     *   .catch(err => console.error(err))
      * ```
      */
     detail() {
@@ -149,6 +137,16 @@ export class UserProvider {
         })
     }
 
+    /**
+     * 验证用户元数据的签名是否有效
+     * @param user - 用户元数据对象
+     * @returns 如果签名有效，返回 true；否则返回 false
+     * @example
+     * ```ts
+     * const userMetadata = { did: 'example-did', signature: 'example-signature' }
+     * const isValid = await userProvider.verifyUserMetadata(userMetadata)
+     * ```
+     */
     private async verifyUserMetadata(user?: UserMetadata) {
         if (user === undefined) {
             return false
@@ -164,16 +162,15 @@ export class UserProvider {
     }
 
     /**
-     * 修改用户信息。
-     *
-     * @param attributes - 需要修改的用户信息，目前支持修改avatar、name等。
-     * @returns {Promise<UserMetadata>} 返回修改后的用户信息。
-     * @throws 错误时抛出 `Error`。
+     * 更新用户信息
+     * @param user - 用户元数据对象
+     * @returns 返回更新后的用户元数据
      * @example
      * ```ts
-     * userProvider.update({name: 'Jane Doe', avatar: 'avatar2.png'})
-     *   .then(result => console.log(result))
-     *   .catch(err => console.error(err));
+     * const userMetadata = { did: 'example-did', name: 'New Name', avatar: 'https://example.com/new-avatar.jpg' }
+     * userProvider.update(userMetadata)
+     *   .then(updatedUser => console.log(updatedUser))
+     *   .catch(err => console.error(err))
      * ```
      */
     update(user: UserMetadata): Promise<UserMetadata> {
@@ -201,15 +198,13 @@ export class UserProvider {
     }
 
     /**
-     * 从当前供应商删除用户。
-     *
-     * @returns 返回删除用户的结果。
-     * @throws 错误时抛出 `Error`。
+     * 删除用户
+     * @returns 返回删除用户的响应体
      * @example
      * ```ts
      * userProvider.delete()
-     *   .then(result => console.log(result))
-     *   .catch(err => console.error(err));
+     *   .then(response => console.log(response))
+     *   .catch(err => console.error(err))
      * ```
      */
     delete() {
@@ -234,6 +229,16 @@ export class UserProvider {
         })
     }
 
+    /**
+     * 更新时间戳并签名用户元数据
+     * @param user - 用户元数据对象
+     * @returns 返回签名后的用户元数据
+     * @example
+     * ```ts
+     * const userMetadata = { did: 'example-did', name: 'New Name', avatar: 'https://example.com/new-avatar.jpg' }
+     * const signedUser = await userProvider.signUserMetadata(userMetadata)
+     * ```
+     */
     private async signUserMetadata(user: UserMetadata) {
         user.updatedAt = getCurrentUtcString()
         user.signature = ''
