@@ -26,17 +26,15 @@ import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary } from '@bufbuild/protobuf'
 
 /**
- * AssetProvider 类提供对资产的管理，包括查询、版本获取、详情查看、删除等操作。
+ * 提供对资产的管理，包括查询、版本获取、详情查看、删除等操作
  */
 export class AssetProvider {
     private authenticate: Authenticate
     private client: Client<typeof Asset>
 
     /**
-     * 创建资产供应商实例。
-     *
-     * @param option - 提供者选项，包括代理设置，身份的区块链地址等。
-     *
+     * 构造函数
+     * @param option - 提供者选项，包括代理设置，身份的区块链地址等
      * @example
      * ```ts
      * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
@@ -55,14 +53,18 @@ export class AssetProvider {
     }
 
     /**
-     * 搜索资产。
-     *
-     * @param condition - 搜索条件。
-     * @param page - 页码。
-     * @param pageSize - 每页数量。
-     *
-     * @returns Promise，解析为搜索结果。
-     *
+     * 搜索资产，根据条件和分页参数查询资产列表
+     * @param condition - 搜索条件（部分 `SearchAssetCondition` 对象）
+     * @param page - 当前页码
+     * @param pageSize - 每页显示的条目数
+     * @returns 返回搜索到的资产元数据列表
+     * @example
+     * ```ts
+     * const condition = { namespaceId: 'example-namespace', format: 'example-format' }
+     * assetProvider.search(condition, 1, 10)
+     *   .then(assets => console.log(assets))
+     *   .catch(err => console.error(err))
+     * ```
      */
     search(condition: Partial<SearchAssetCondition>, page: number, pageSize: number) {
         return new Promise<AssetMetadata[]>(async (resolve, reject) => {
@@ -129,13 +131,16 @@ export class AssetProvider {
     // }
 
     /**
-     * 获取资产的详细信息。
-     *
-     * @param namespaceId - 资产所在命名空间。
-     * @param version - 资产哈希值。
-     *
-     * @returns Promise，解析为资产元数据。
-     *
+     * 查询资产详情，根据命名空间 ID 和哈希值获取资产元数据
+     * @param namespaceId - 命名空间 ID
+     * @param hash - 资产的哈希值
+     * @returns 返回资产元数据
+     * @example
+     * ```ts
+     * assetProvider.detail('example-namespace', 'example-hash')
+     *   .then(asset => console.log(asset))
+     *   .catch(err => console.error(err))
+     * ```
      */
     detail(namespaceId: string, hash: string) {
         return new Promise<AssetMetadata>(async (resolve, reject) => {
@@ -165,12 +170,16 @@ export class AssetProvider {
     }
 
     /**
-     * 删除资产，也就是放入回收站。
-     * @param namespaceId 资产的所在空间。
-     * @param hash 资产哈希值。
-     *
-     * @returns Promise，解析为移除响应。
-     *
+     * 删除资产，根据命名空间 ID 和哈希值删除资产
+     * @param namespaceId - 命名空间 ID
+     * @param hash - 资产的哈希值
+     * @returns 返回一个已解析的 Promise
+     * @example
+     * ```ts
+     * assetProvider.delete('example-namespace', 'example-hash')
+     *   .then(() => console.log('Asset deleted'))
+     *   .catch(err => console.error(err))
+     * ```
      */
     delete(namespaceId: string, hash: string) {
         return new Promise<void>(async (resolve, reject) => {
@@ -200,13 +209,16 @@ export class AssetProvider {
     }
 
     /**
-     * 和资产仓库签约。
-     *
-     * @param asset - 要签名的资产元数据。
-     *
-     * @returns Promise，解析为签名响应。
+     * 签名资产元数据，对资产元数据进行签名，并发送签名请求到后端服务。
+     * @param asset - 资产元数据对象
+     * @returns 返回签名后的资产元数据
      * @example
-     * assetProvider.sign(assetMetadata).then(response => { console.log(response); });
+     * ```ts
+     * const assetMetadata = { namespaceId: 'example-namespace', hash: 'example-hash', owner: 'example-did' }
+     * assetProvider.sign(assetMetadata)
+     *   .then(signedAsset => console.log(signedAsset))
+     *   .catch(err => console.error(err))
+     * ```
      */
     sign(asset: AssetMetadata) {
         return new Promise<AssetMetadata>(async (resolve, reject) => {
@@ -242,10 +254,29 @@ export class AssetProvider {
         })
     }
 
+    /**
+     * 对资产元数据进行签名
+     * @param asset - 资产元数据对象
+     * @example
+     * ```ts
+     * const assetMetadata = { namespaceId: 'example-namespace', hash: 'example-hash', owner: 'example-did' }
+     * await assetProvider.signAssetMetadata(assetMetadata)
+     * ```
+     */
     private async signAssetMetadata(asset: AssetMetadata) {
         asset.signature = await this.authenticate.sign(toBinary(AssetMetadataSchema, asset))
     }
 
+    /**
+     * 验证资产元数据的签名是否有效
+     * @param asset - 资产元数据对象
+     * @returns 如果签名有效，返回 true；否则返回 false
+     * @example
+     * ```ts
+     * const assetMetadata = { owner: 'example-did', signature: 'example-signature' }
+     * const isValid = await assetProvider.verifyAssetMetadata(assetMetadata)
+     * ```
+     */
     private async verifyAssetMetadata(asset?: AssetMetadata) {
         if (asset === undefined) {
             return false

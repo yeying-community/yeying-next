@@ -12,7 +12,7 @@ import { ProviderOption } from '../common/model'
 import { AssetProvider } from './asset'
 
 /**
- * 该类用于上传资产文件，通过将文件分块后上传，每个块加密（可选）并生成哈希值，最后对整个资产进行签名。
+ * 该类用于上传资产文件，通过将文件分块后上传，每个块加密（可选）并生成哈希值，最后对整个资产进行签名
  *
  * 发送资产的SOP是：
  * 1、分块
@@ -23,16 +23,6 @@ import { AssetProvider } from './asset'
  * 6、否，读下一块
  * 7、循环直到全部发送
  * 8、签名
- *
- * @example
- * ```ts
- * const uploader = new Uploader(blockProvider, assetCipher);
- * uploader.upload(file, "uid1234").then(asset => {
- *   console.log('Asset uploaded successfully:', asset);
- * }).catch(err => {
- *   console.error('Upload failed:', err);
- * });
- * ```
  */
 export class Uploader {
     blockProvider: BlockProvider
@@ -41,13 +31,14 @@ export class Uploader {
     chunkSize: number
 
     /**
-     * 创建一个上传器实例，用于文件的分块上传。
-     *
-     * @param option {ProviderOption} 处理区块存储的提供者。
-     * @param securityAlgorithm {SecurityAlgorithm} 用于加密资产的加密器。
+     * 构造函数
+     * @param option - 包含代理地址和区块地址信息的配置选项
+     * @param securityAlgorithm - 安全算法配置，包含算法名称和 IV
      * @example
      * ```ts
-     * const uploader = new Uploader(blockProvider, assetCipher);
+     * const option = { proxy: 'http://proxy.example.com', blockAddress: { identifier: 'example-did', privateKey: 'example-private-key' } }
+     * const securityAlgorithm = { name: 'AES-GCM', iv: 'base64-encoded-iv' }
+     * const uploader = new Uploader(option, securityAlgorithm)
      * ```
      */
     constructor(option: ProviderOption, securityAlgorithm: SecurityAlgorithm) {
@@ -58,16 +49,20 @@ export class Uploader {
     }
 
     /**
-     * 上传文件。
-     *
-     * @param namespaceId 资产所在命名空间。
-     * @param file 要上传的资产文件。
-     * @param encrypted 是否对文件进行加密，默认值为 `true`。
-     * @param parent 可选，父亲哈希。
-     * @param description 可选，文件的描述。
-     *
-     * @returns {Promise<AssetMetadata>} 返回资产元数据。
-     *
+     * 上传文件,将文件分块处理，加密（可选），并逐块上传到区块链网络中
+     * @param namespaceId - 命名空间 ID
+     * @param file - 要上传的文件对象
+     * @param encrypted - 是否对文件进行加密（默认为 true）
+     * @param parentHash - 父资产的哈希值（可选）
+     * @param description - 资产描述（可选）
+     * @returns 返回生成的资产元数据
+     * @example
+     * ```ts
+     * const file = new File(['Hello, world!'], 'example.txt', { type: 'text/plain' })
+     * uploader.upload('example-namespace', file)
+     *   .then(assetMetadata => console.log(assetMetadata))
+     *   .catch(err => console.error(err))
+     * ```
      */
     upload(
         namespaceId: string,
