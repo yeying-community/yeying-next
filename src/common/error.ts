@@ -8,7 +8,7 @@ export class NetworkError extends Error {
      * @param options - 错误选项。
      */
     constructor(message?: string, options?: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -22,7 +22,7 @@ export class SignError extends Error {
      * @param options - 错误选项。
      */
     constructor(message?: string, options?: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -36,7 +36,7 @@ export class ServiceUnavailable extends Error {
      * @param options - 错误选项。
      */
     constructor(message: string, options: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -50,7 +50,7 @@ export class NotTrust extends Error {
      * @param options - 错误选项。
      */
     constructor(message: string, options: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -64,7 +64,7 @@ export class NotSupported extends Error {
      * @param options - 错误选项。
      */
     constructor(message: string, options: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -78,7 +78,7 @@ export class ResourceUsing extends Error {
      * @param options - 错误选项。
      */
     constructor(message: string, options: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -92,7 +92,7 @@ export class AlreadyExist extends Error {
      * @param options - 错误选项。
      */
     constructor(message: string, options?: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -106,7 +106,7 @@ export class InvalidStatus extends Error {
      * @param options - 错误选项。
      */
     constructor(message: string, options: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -120,7 +120,7 @@ export class InvalidArgument extends Error {
      * @param options - 错误选项。
      */
     constructor(message: string, options?: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -134,7 +134,7 @@ export class NotFound extends Error {
      * @param options - 错误选项。
      */
     constructor(message?: string, options?: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -148,7 +148,7 @@ export class UnknownError extends Error {
      * @param options - 错误选项。
      */
     constructor(message: string, options?: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -162,7 +162,7 @@ export class Cancelled extends Error {
      * @param options - 错误选项。
      */
     constructor(message: string, options: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -176,7 +176,7 @@ export class InvalidPassword extends Error {
      * @param options - 错误选项。
      */
     constructor(message?: string, options?: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -190,7 +190,7 @@ export class DataTampering extends Error {
      * @param options - 错误选项。
      */
     constructor(message?: string, options?: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -204,7 +204,7 @@ export class DataForgery extends Error {
      * @param options - 错误选项。
      */
     constructor(message: string, options?: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
 
@@ -218,6 +218,6 @@ export class NoPermission extends Error {
      * @param options - 错误选项。
      */
     constructor(message?: string, options?: ErrorOptions) {
-        super(message, options);
+        super(message, options)
     }
 }
