@@ -36,6 +36,6 @@ export class CookieCache {
      */
     delete(key: string) {
         // Set the cookie's expiration date to a time in the past to remove it
-        document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+        document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`
     }
 }
