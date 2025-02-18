@@ -17,31 +17,14 @@ import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary } from '@bufbuild/protobuf'
 
 /**
- * 邮箱验证码服务提供者，提供前端页面直接调用的接口。
- * 通过该类，用户可以发送和验证邮箱验证码。
- *
- * @example
- * ```ts
- * const mailProvider = new MailProvider(authenticate, option);
- * mailProvider.send('example@mail.com').then(response => console.log(response));
- * ```
+ * 邮箱验证码服务提供者，提供前端页面直接调用的接口
  */
 export class MailProvider {
-    /**
-     * authenticate 服务认证实例
-     * @private
-     */
     private authenticate: Authenticate
-
-    /**
-     * mailClient 邮件客户端，用于与邮件服务交互
-     * @private
-     */
     private client: Client<typeof Mail>
 
     /**
-     * 构造函数：初始化认证和邮件客户端
-     *
+     * 构造函数
      * @param option - 提供者选项，如代理设置
      * @example
      * ```ts
@@ -61,17 +44,12 @@ export class MailProvider {
     }
 
     /**
-     * 发送邮箱验证码。
-     *
+     * 发送邮箱验证码
      * @param toMail - 目标邮箱地址
      * @returns Promise - 发送请求的响应数据
      * @example
      * ```ts
-     * mailProvider.send('example@mail.com').then(response => {
-     *   console.log(response); // 发送成功的响应
-     * }).catch(err => {
-     *   console.error(err); // 错误信息
-     * });
+     * mailProvider.send('example@mail.com').then(response => console.log(response)).catch(err => console.error(err))
      * ```
      */
     send(toMail: string) {
@@ -102,8 +80,7 @@ export class MailProvider {
     }
 
     /**
-     * 校验邮箱验证码。
-     *
+     * 校验邮箱验证码
      * @param toMail - 目标邮箱地址
      * @param code - 用户输入的验证码
      * @returns Promise - 校验请求的响应数据

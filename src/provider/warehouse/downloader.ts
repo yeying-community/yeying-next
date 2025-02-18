@@ -7,17 +7,7 @@ import { SecurityAlgorithm } from '@yeying-community/yeying-web3'
 import { AssetProvider } from './asset'
 
 /**
- * Downloader 类用于下载资产数据，支持从区块提供者获取数据并进行解密。
- *
- * @example
- * ```ts
- * const downloader = new Downloader(blockProvider, assetCipher);
- * downloader.download(asset).then(blob => {
- *   // 下载成功后处理数据
- * }).catch(err => {
- *   // 处理下载错误
- * });
- * ```
+ * 用于下载资产数据，支持从区块提供者获取数据并进行解密
  */
 export class Downloader {
     blockProvider: BlockProvider
@@ -25,15 +15,14 @@ export class Downloader {
     assetCipher: AssetCipher
 
     /**
-     * 创建 Downloader 实例。
-     *
-     * @param blockProvider - 区块提供者，用于获取资产数据的块。
-     * @param assetCipher - 资产解密工具，用于解密下载的数据。
+     * 构造函数
+     * @param option - 包含代理地址和区块地址信息的配置选项
+     * @param securityAlgorithm - 安全算法配置，包含算法名称和 IV
      * @example
      * ```ts
-     * const blockProvider = new BlockProvider(...);
-     * const assetCipher = new AssetCipher(...);
-     * const downloader = new Downloader(blockProvider, assetCipher);
+     * const option = { proxy: 'http://proxy.example.com', blockAddress: { identifier: 'example-did', privateKey: 'example-private-key' } }
+     * const securityAlgorithm = { name: 'AES-GCM', iv: 'base64-encoded-iv' }
+     * const downloader = new Downloader(option, securityAlgorithm)
      * ```
      */
     constructor(option: ProviderOption, securityAlgorithm: SecurityAlgorithm) {
@@ -43,19 +32,15 @@ export class Downloader {
     }
 
     /**
-     * 下载给定资产的所有数据块，支持解密并合并为一个 Blob 对象。
-     *
-     * @param namespaceId - 需要下载的资产元数据。
-     * @returns 一个 Promise，解析为下载并解密后的 Blob 对象。
-     * @throws {Error} 如果下载过程失败，则抛出错误。
+     * 下载文件,根据命名空间 ID 和哈希值下载文件,如果文件被加密，会自动解密
+     * @param namespaceId - 命名空间 ID
+     * @param hash - 资产的哈希值
+     * @returns 返回下载的文件（Blob）
      * @example
      * ```ts
-     * const asset = new AssetMetadata(...);
-     * downloader.download(asset).then(blob => {
-     *   console.log('Download success:', blob);
-     * }).catch(err => {
-     *   console.error('Download failed:', err);
-     * });
+     * downloader.download('example-namespace', 'example-hash')
+     *   .then(file => console.log(file))
+     *   .catch(err => console.error(err))
      * ```
      */
     download(namespaceId: string, hash: string) {

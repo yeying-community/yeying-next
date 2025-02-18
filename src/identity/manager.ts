@@ -39,7 +39,7 @@ import { encodeBase64 } from '../common/codec'
 import { NodeProvider } from '../provider/node/node'
 
 /**
- * 身份管理类，用于管理用户身份、缓存数据。
+ * 管理身份，支持身份的创建、登录、登出、更新和导入导出等操作
  */
 export class IdentityManager {
     private historyKey: string = 'yeying.history.accounts' // 历史账号存储的键名
@@ -52,6 +52,13 @@ export class IdentityManager {
     private identityMap: Map<string, Identity> // 存储身份信息的映射
     private readonly durationDays: number // 默认的有效期（天）
 
+    /**
+     * 构造函数
+     * @example
+     * ```ts
+     * const identityManager = new IdentityManager()
+     * ```
+     */
     constructor() {
         // 当前登陆账号
         this.sessionCache = new SessionCache()
@@ -70,11 +77,13 @@ export class IdentityManager {
     }
 
     /**
-     * 获取当前登录用户的区块链节点信息。
-     *
-     * @param domain - 可选参数，指定节点域名。如果未提供，将使用当前浏览器的域名。
-     * @returns 当前节点信息。
-     *
+     * 获取当前节点信息
+     * @param domain - 可选的节点域名（默认为当前窗口的域名）
+     * @returns 返回节点的元数据
+     * @example
+     * ```ts
+     * const nodeMetadata = await identityManager.getNode()
+     * ```
      */
     async getNode(domain?: string) {
         const activeDid = this.getActiveDid()
@@ -96,10 +105,12 @@ export class IdentityManager {
     }
 
     /**
-     * 获取历史登录过的所有账号信息。
-     *
-     * @returns 历史账号信息列表。
-     *
+     * 获取历史登录记录
+     * @returns 返回历史登录的 DID 列表
+     * @example
+     * ```ts
+     * const history = identityManager.getHistory()
+     * ```
      */
     getHistory() {
         const history = this.accountCache.get(this.historyKey)
@@ -107,10 +118,12 @@ export class IdentityManager {
     }
 
     /**
-     * 获取当前激活的身份DID。
-     *
-     * @returns 返回当前激活账号的信息，若没有激活账号，则返回 undefined。
-     *
+     * 获取当前登录的身份 DID
+     * @returns 返回当前登录的 DID，如果未登录则返回 undefined
+     * @example
+     * ```ts
+     * const activeDid = identityManager.getActiveDid()
+     * ```
      */
     getActiveDid(): string | undefined {
         const did = this.sessionCache.get(this.loginKey)
@@ -118,10 +131,12 @@ export class IdentityManager {
     }
 
     /**
-     * 获取当前激活账号对应的身份对象。
-     *
-     * @returns 当前激活账号的身份对象，若没有激活身份，则返回 undefined。
-     *
+     * 获取当前登录的身份信息
+     * @returns 返回当前登录的身份对象，如果未登录则返回 undefined
+     * @example
+     * ```ts
+     * const activeIdentity = await identityManager.getActiveIdentity()
+     * ```
      */
     async getActiveIdentity() {
         const activeDid = this.getActiveDid()
@@ -133,13 +148,13 @@ export class IdentityManager {
     }
 
     /**
-     * 获取指定 DID 对应的区块链地址。
-     *
-     * @param did - 用户的 DID（去中心化标识符）。
-     * @returns 区块链地址详情
-     *
-     * @throws NoPermission 没有权限
-     *
+     * 获取身份的 BlockAddress
+     * @param did - 身份的 DID
+     * @returns 返回解密后的 BlockAddress
+     * @example
+     * ```ts
+     * const blockAddress = await identityManager.getBlockAddress('example-did')
+     * ```
      */
     async getBlockAddress(did: string) {
         const blockAddress = this.blockAddressMap.get(did)
@@ -181,8 +196,11 @@ export class IdentityManager {
     }
 
     /**
-     * 注销当前账号，并清理相关的登录信息。
-     *
+     * 登出当前身份
+     * @example
+     * ```ts
+     * identityManager.logout()
+     * ```
      */
     logout() {
         const activeDid = this.getActiveDid()
@@ -193,11 +211,13 @@ export class IdentityManager {
     }
 
     /**
-     * 判断身份已登陆
-     *
-     * @param did - 要检查的身份DID。
-     * @returns 如果身份已经登录，返回 true；否则返回 false。
-     *
+     * 检查是否已登录指定身份
+     * @param did - 身份的 DID
+     * @returns 如果已登录，返回 true；否则返回 false
+     * @example
+     * ```ts
+     * const isLogged = identityManager.isLogin('example-did')
+     * ```
      */
     isLogin(did: string): boolean {
         if (this.blockAddressMap.get(did) !== undefined) {
@@ -211,7 +231,16 @@ export class IdentityManager {
         return false
     }
 
-    // 登陆，解密身份信息
+    /**
+     * 登录身份,解密身份信息
+     * @param did - 身份的 DID
+     * @param password - 登录密码
+     * @returns 返回登录的身份信息
+     * @example
+     * ```ts
+     * const identity = await identityManager.login('example-did', 'example-password')
+     * ```
+     */
     async login(did: string, password: string): Promise<Identity> {
         // 加载身份信息
         const identity = await this.getIdentity(did)
@@ -248,12 +277,15 @@ export class IdentityManager {
     }
 
     /**
-     * 创建一个新的身份，并在区块链上生成地址。
-     *
-     * @param password - 用户设置的密码。
-     * @param template - 用于创建身份的模板。
-     * @returns 新建的身份对象。
-     *
+     * 创建新身份，生成 BlockAddress 并加密存储，同时缓存登录信息
+     * @param password - 身份密码
+     * @param template - 身份模板
+     * @returns 返回创建的身份信息
+     * @example
+     * ```ts
+     * const template = { code: IdentityCodeEnum.IDENTITY_CODE_PERSONAL }
+     * const identity = await identityManager.createIdentity('example-password', template)
+     * ```
      */
     async createIdentity(password: string, template: IdentityTemplate) {
         // 创建区块链地址
@@ -316,13 +348,16 @@ export class IdentityManager {
     }
 
     /**
-     * 更新身份信息。
-     *
-     * @param template - 用于更新身份的模板, 只需填写需要更新的字段即可。
-     * @param password - 用户设置的密码，用于解密区块链地址。
-     * @param identity - 要更新的身份。
-     *
-     * @returns 更新后的身份对象。
+     * 更新身份信息， 解密 BlockAddress 并使用新的模板信息更新身份
+     * @param did - 身份的 DID
+     * @param template - 部分更新的身份模板
+     * @param password - 身份密码
+     * @returns 返回更新后的身份信息
+     * @example
+     * ```ts
+     * const template = { extend: { name: 'New Name' } }
+     * const updatedIdentity = await identityManager.updateIdentity('example-did', template, 'example-password')
+     * ```
      */
     async updateIdentity(did: string, template: Partial<IdentityTemplate>, password: string) {
         const identity = await this.getIdentity(did)
@@ -344,12 +379,13 @@ export class IdentityManager {
     }
 
     /**
-     * 获得身份信息。
-     *
-     * @param did 身份DID。
-     *
-     * @returns 身份对象。
-     *
+     * 获取身份信息，如果身份已缓存，则直接返回；否则从本地缓存中加载并验证
+     * @param did - 身份的 DID
+     * @returns 返回身份信息
+     * @example
+     * ```ts
+     * const identity = await identityManager.getIdentity('example-did')
+     * ```
      */
     async getIdentity(did: string): Promise<Identity> {
         const existing = this.identityMap.get(did)
@@ -373,12 +409,13 @@ export class IdentityManager {
     }
 
     /**
-     * 导出身份信息。
-     *
-     * @param did 要导出的身份DID。
-     *
-     * @returns 身份对象`json`序列化的字符串。
-     *
+     * 导出身份信息为 JSON 字符串，验证身份的完整性和合法性后返回序列化的身份信息
+     * @param did - 身份的 DID
+     * @returns 返回身份的 JSON 字符串
+     * @example
+     * ```ts
+     * const identityJson = await identityManager.exportIdentity('example-did')
+     * ```
      */
     async exportIdentity(did: string): Promise<string> {
         const identity = this.identityCache.get(did)
@@ -395,13 +432,14 @@ export class IdentityManager {
     }
 
     /**
-     * 导入身份信息。
-     *
-     * @param content JSON序列化的身份信息字符串。
-     * @param password 身份的解密密码
-     *
-     * @returns 身份对象
-     *
+     * 导入身份信息，从 JSON 字符串导入身份，解密 BlockAddress 并缓存登录信息
+     * @param content - 身份的 JSON 字符串
+     * @param password - 身份密码
+     * @returns 返回导入的身份信息
+     * @example
+     * ```ts
+     * const identity = await identityManager.importIdentity(identityJson, 'example-password')
+     * ```
      */
     async importIdentity(content: string, password: string): Promise<Identity> {
         const identity = deserializeIdentityFromJson(content)
@@ -438,11 +476,12 @@ export class IdentityManager {
     }
 
     /**
-     * 添加身份DID到历史记录中
-     *
-     * @param did 身份DID
-     *
-     * @private
+     * 将当前登录的身份 DID 添加到历史记录中
+     * @param did - 身份的 DID
+     * @example
+     * ```ts
+     * identityManager.setHistory('example-did')
+     * ```
      */
     private setHistory(did: string) {
         const history = this.getHistory()
@@ -456,7 +495,14 @@ export class IdentityManager {
     }
 
     /**
-     * 将密码加密后缓存到会话中，密钥保存在cookie中。
+     * 缓存身份的加密密码和 Token
+     * @param did - 身份的 DID
+     * @param password - 身份密码
+     * @param securityAlgorithm - 安全算法
+     * @example
+     * ```ts
+     * await identityManager.cachePassword('example-did', 'example-password', securityAlgorithm)
+     * ```
      */
     private async cachePassword(did: string, password: string, securityAlgorithm: SecurityAlgorithm) {
         // 生成令牌，令牌存放在cookie中，令牌用来加密身份的密码，令牌一旦过期，那么身份将会失效。
@@ -469,6 +515,14 @@ export class IdentityManager {
         this.cookieCache.set(did, token, this.durationDays * 24 * 60)
     }
 
+    /**
+     * 清除身份的缓存密码和 Token
+     * @param did - 身份的 DID
+     * @example
+     * ```ts
+     * identityManager.clearPassword('example-did')
+     * ```
+     */
     private clearPassword(did: string) {
         // 缓存令牌
         this.cookieCache.delete(did)
