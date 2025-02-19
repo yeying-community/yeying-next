@@ -1,15 +1,17 @@
-import { BlockProvider } from './block'
-import { AssetCipher } from './cipher'
-import { convertDateToDateTime, convertToUtcDateTime, formatDateTime, getCurrentUtcString } from '../../common/date'
-import { readBlock } from '../../common/file'
-import { Digest, SecurityAlgorithm } from '@yeying-community/yeying-web3'
-import { decodeHex, encodeHex } from '../../common/codec'
-import { getDigitalFormatByName } from '../../common/message'
-import { AssetMetadata, AssetMetadataSchema } from '../../yeying/api/asset/asset_pb'
-import { create } from '@bufbuild/protobuf'
-import { isExisted } from '../../common/status'
-import { ProviderOption } from '../common/model'
-import { AssetProvider } from './asset'
+import {BlockProvider} from './block'
+import {AssetCipher} from './cipher'
+import {convertDateToDateTime, convertToUtcDateTime, formatDateTime, getCurrentUtcString} from '../../common/date'
+import {readBlock} from '../../common/file'
+import {Digest, SecurityAlgorithm} from '@yeying-community/yeying-web3'
+import {decodeHex, encodeHex} from '../../common/codec'
+import {getDigitalFormatByName} from '../../common/message'
+import {AssetMetadata, AssetMetadataSchema} from '../../yeying/api/asset/asset_pb'
+import {create} from '@bufbuild/protobuf'
+import {isExisted} from '../../common/status'
+import {ProviderOption} from '../common/model'
+import {AssetProvider} from './asset'
+import {ConfigProvider} from "../config/config";
+import {ConfigTypeEnum} from "../../yeying/api/config/config_pb";
 
 /**
  * 该类用于上传资产文件，通过将文件分块后上传，每个块加密（可选）并生成哈希值，最后对整个资产进行签名
@@ -28,7 +30,8 @@ export class Uploader {
     blockProvider: BlockProvider
     assetProvider: AssetProvider
     assetCipher: AssetCipher
-    chunkSize: number
+    configProvider: ConfigProvider;
+    chunkSize?: number
 
     /**
      * 构造函数
@@ -42,10 +45,10 @@ export class Uploader {
      * ```
      */
     constructor(option: ProviderOption, securityAlgorithm: SecurityAlgorithm) {
+        this.configProvider = new ConfigProvider(option)
         this.blockProvider = new BlockProvider(option)
         this.assetProvider = new AssetProvider(option)
         this.assetCipher = new AssetCipher(option.blockAddress, securityAlgorithm)
-        this.chunkSize = 1024 * 1024 // 默认每块大小为1MB
     }
 
     /**
@@ -73,6 +76,11 @@ export class Uploader {
     ): Promise<AssetMetadata> {
         return new Promise<AssetMetadata>(async (resolve, reject) => {
             try {
+                if (this.chunkSize === undefined) {
+                    const metadata = await this.configProvider.get("chunk.size", ConfigTypeEnum.CONFIG_TYPE_SYSTEM)
+                    this.chunkSize = parseInt(metadata.value)
+                }
+
                 const asset = create(AssetMetadataSchema, {
                     namespaceId: namespaceId,
                     owner: this.blockProvider.getOwner(), // 设置资产拥有者
