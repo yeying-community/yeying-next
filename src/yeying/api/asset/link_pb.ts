@@ -514,6 +514,8 @@ export type LinkMetadata = Message<"yeying.api.asset.LinkMetadata"> & {
   visitors: string;
 
   /**
+   * 资产所在命名空间
+   *
    * @generated from field: string namespaceId = 5;
    */
   namespaceId: string;
