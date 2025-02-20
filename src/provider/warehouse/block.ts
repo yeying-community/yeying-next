@@ -6,14 +6,12 @@ import {
     BlockMetadataSchema,
     ConfirmBlockRequestBodySchema,
     ConfirmBlockRequestSchema,
-    ConfirmBlockResponseBody,
     ConfirmBlockResponseBodySchema,
     GetBlockRequestBodySchema,
     GetBlockRequestSchema,
     GetBlockResponseBodySchema,
     PutBlockRequestBodySchema,
     PutBlockRequestSchema,
-    PutBlockResponseBody,
     PutBlockResponseBodySchema
 } from '../../yeying/api/asset/block_pb'
 import { getCurrentUtcString } from '../../common/date'
@@ -22,12 +20,13 @@ import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary } from '@bufbuild/protobuf'
 import { computeHash } from '../../common/crypto'
 import { encodeHex } from '../../common/codec'
+import { signBlockMetadata, verifyBlockMetadata } from '../model/model'
 
 /**
  * 用于与区块链交互，提供数据的获取和存储功能
  */
 export class BlockProvider {
-    private authenticate: Authenticate
+    private readonly authenticate: Authenticate
     private client: Client<typeof Block>
 
     /**
@@ -101,32 +100,6 @@ export class BlockProvider {
     }
 
     /**
-     * 根据块数据生成哈希值，并创建签名的块元数据
-     * @param namespaceId - 命名空间 ID
-     * @param data - 块数据（Uint8Array）
-     * @returns 返回签名后的块元数据
-     * @example
-     * ```ts
-     * const data = new Uint8Array([1, 2, 3])
-     * const blockMetadata = await blockProvider.createBlockMetadata('example-namespace', data)
-     * ```
-     */
-    async createBlockMetadata(namespaceId: string, data: Uint8Array) {
-        const chunkHash = await computeHash(data) // 计算块的哈希值
-        const block = create(BlockMetadataSchema, {
-            namespaceId: namespaceId,
-            hash: encodeHex(chunkHash),
-            owner: this.authenticate.getDid(),
-            uploader: this.authenticate.getDid(),
-            createdAt: getCurrentUtcString(),
-            size: BigInt(data.length)
-        })
-
-        block.signature = await this.authenticate.sign(toBinary(BlockMetadataSchema, block))
-        return block
-    }
-
-    /**
      * 发送确认请求到后端服务，并验证返回的块元数据签名
      * @param block - 块元数据对象
      * @returns 返回确认块的响应体
@@ -139,7 +112,7 @@ export class BlockProvider {
      * ```
      */
     confirm(block: BlockMetadata) {
-        return new Promise<ConfirmBlockResponseBody>(async (resolve, reject) => {
+        return new Promise<BlockMetadata | undefined>(async (resolve, reject) => {
             const body = create(ConfirmBlockRequestBodySchema, { block: block })
             let header
             try {
@@ -153,14 +126,11 @@ export class BlockProvider {
             try {
                 const res = await this.client.confirm(request)
                 await this.authenticate.doResponse(res, ConfirmBlockResponseBodySchema)
-                const resBody = res.body as ConfirmBlockResponseBody
-                if (resBody.block) {
-                    if (!(await this.verifyBlockMetadata(resBody.block))) {
-                        reject(new Error('invalid block metadata!'))
-                    }
+                if (res.body?.block !== undefined) {
+                    await verifyBlockMetadata(this.authenticate, res.body?.block)
                 }
 
-                return resolve(resBody)
+                return resolve(res.body?.block)
             } catch (err) {
                 console.error('Fail to put block', err)
                 return reject(err)
@@ -170,9 +140,11 @@ export class BlockProvider {
 
     /**
      * 上传块数据,发送块数据和元数据到后端服务，并验证返回的块元数据签名
-     * @param block - 块元数据对象
-     * @param data - 块数据（Uint8Array）
-     * @returns 返回上传块的响应体
+     * @param namespaceId 命名空间ID
+     * @param data 块数据
+     *
+     * @returns 资产块元信息
+     *
      * @example
      * ```ts
      * const blockMetadata = await blockProvider.createBlockMetadata('example-namespace', new Uint8Array([1, 2, 3]))
@@ -181,8 +153,24 @@ export class BlockProvider {
      *   .catch(err => console.error(err))
      * ```
      */
-    put(block: BlockMetadata, data: Uint8Array) {
-        return new Promise<PutBlockResponseBody>(async (resolve, reject) => {
+    put(namespaceId: string, data: Uint8Array) {
+        return new Promise<BlockMetadata>(async (resolve, reject) => {
+            const block = create(BlockMetadataSchema, {
+                namespaceId: namespaceId,
+                hash: encodeHex(await computeHash(data)),
+                owner: this.authenticate.getDid(),
+                uploader: this.authenticate.getDid(),
+                createdAt: getCurrentUtcString(),
+                size: BigInt(data.length)
+            })
+            await signBlockMetadata(this.authenticate, block)
+
+            // 判断这个块是否已经上传,避免重传
+            const existing = await this.confirm(block)
+            if (existing) {
+                return resolve(existing)
+            }
+
             const body = create(PutBlockRequestBodySchema, { block: block })
             let header
             try {
@@ -196,40 +184,12 @@ export class BlockProvider {
             try {
                 const res = await this.client.put(request)
                 await this.authenticate.doResponse(res, PutBlockResponseBodySchema)
-                const resBody = res.body as PutBlockResponseBody
-                if (await this.verifyBlockMetadata(resBody.block)) {
-                    resolve(resBody)
-                } else {
-                    reject(new Error('invalid block metadata!'))
-                }
+                await verifyBlockMetadata(this.authenticate, res.body?.block)
+                resolve(res.body?.block as BlockMetadata)
             } catch (err) {
                 console.error('Fail to put block', err)
                 return reject(err)
             }
         })
-    }
-
-    /**
-     * 验证块元数据的签名是否有效
-     * @param block - 块元数据对象
-     * @returns 如果签名有效，返回 true；否则返回 false
-     * @example
-     * ```ts
-     * const blockMetadata = { owner: 'example-did', signature: 'example-signature' }
-     * const isValid = await blockProvider.verifyBlockMetadata(blockMetadata)
-     * ```
-     */
-    async verifyBlockMetadata(block?: BlockMetadata) {
-        if (block === undefined) {
-            return false
-        }
-
-        const signature = block.signature
-        try {
-            block.signature = ''
-            return await this.authenticate.verify(block.owner, toBinary(BlockMetadataSchema, block), signature)
-        } finally {
-            block.signature = signature
-        }
     }
 }

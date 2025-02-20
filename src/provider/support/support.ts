@@ -1,7 +1,7 @@
-import {ProviderOption} from '../common/model'
-import {Authenticate} from '../common/authenticate'
-import {MessageHeader} from '../../yeying/api/common/message_pb'
-import {getCurrentUtcString} from '../../common/date'
+import { ProviderOption } from '../common/model'
+import { Authenticate } from '../common/authenticate'
+import { MessageHeader } from '../../yeying/api/common/message_pb'
+import { getCurrentUtcString } from '../../common/date'
 import {
     CollectSupportRequestBodySchema,
     CollectSupportRequestSchema,
@@ -11,9 +11,9 @@ import {
     Support,
     SupportCodeEnum
 } from '../../yeying/api/support/support_pb'
-import {Client, createClient} from '@connectrpc/connect'
-import {createGrpcWebTransport} from '@connectrpc/connect-web'
-import {create, toBinary} from '@bufbuild/protobuf'
+import { Client, createClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create, toBinary } from '@bufbuild/protobuf'
 
 /**
  * 通过 gRPC-web 与后端服务交互，并使用 Authenticate 类进行身份验证和签名验证
@@ -80,7 +80,7 @@ export class SupportProvider {
                 return reject(err)
             }
 
-            const request = create(CollectSupportRequestSchema, {header: header, body: body})
+            const request = create(CollectSupportRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.collect(request)
                 await this.authenticate.doResponse(res, CollectSupportResponseBodySchema)

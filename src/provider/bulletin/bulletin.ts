@@ -1,7 +1,7 @@
 import { Authenticate } from '../common/authenticate'
 import { ProviderOption } from '../common/model'
 import { LanguageCodeEnum } from '../../yeying/api/common/code_pb'
-import { DataForgery } from '../../common/error'
+import { DataTampering } from '../../common/error'
 import {
     Bulletin,
     BulletinCodeEnum,
@@ -98,7 +98,7 @@ export class BulletinProvider {
                         solution.signature = signature
                     } else {
                         // 如果签名无效，抛出数据伪造错误
-                        return reject(new DataForgery('无效的签名！'))
+                        return reject(new DataTampering('无效的签名！'))
                     }
                 }
 

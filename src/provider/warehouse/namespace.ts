@@ -1,13 +1,12 @@
 import { Authenticate } from '../common/authenticate'
 import { ProviderOption } from '../common/model'
 import { getCurrentUtcString } from '../../common/date'
-import { Client, createClient } from '@connectrpc/connect'
+import { Client, createClient, type Transport } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
-import { create, toBinary } from '@bufbuild/protobuf'
+import { create, toBinary, toJson } from '@bufbuild/protobuf'
 import {
     CreateNamespaceRequestBodySchema,
     CreateNamespaceRequestSchema,
-    CreateNamespaceResponseBody,
     CreateNamespaceResponseBodySchema,
     Namespace,
     NamespaceMetadata,
@@ -21,20 +20,19 @@ import {
 } from '../../yeying/api/asset/namespace_pb'
 import { generateUuid } from '../../common/string'
 import { RequestPageSchema } from '../../yeying/api/common/message_pb'
+import { ConfigTypeEnum } from '../../yeying/api/config/config_pb'
+import { ConfigProvider } from '../config/config'
+import { signNamespaceMetadata, verifyNamespaceMetadata } from '../model/model'
+import { NotFound } from '../../common/error'
 
 /**
- * 区块提供者类，用于与区块链交互，提供数据的获取和存储功能。
+ * 命名空间提供者类，用于管理命名空间
  *
- * @example
- * ```ts
- * const blockProvider = new BlockProvider(authenticate, option);
- * const data = await blockProvider.get(hash);
- * console.log(data);
- * ```
  */
 export class NamespaceProvider {
-    private authenticate: Authenticate
+    private readonly authenticate: Authenticate
     private client: Client<typeof Namespace>
+    private configProvider: ConfigProvider
 
     /**
      * 创建命名空间供应商。
@@ -49,13 +47,30 @@ export class NamespaceProvider {
      */
     constructor(option: ProviderOption) {
         this.authenticate = new Authenticate(option.blockAddress)
-        this.client = createClient(
-            Namespace,
-            createGrpcWebTransport({
-                baseUrl: option.proxy,
-                useBinaryFormat: true
-            })
-        )
+        const transport: Transport = createGrpcWebTransport({
+            baseUrl: option.proxy,
+            useBinaryFormat: true
+        })
+
+        this.client = createClient(Namespace, transport)
+        this.configProvider = new ConfigProvider(option)
+    }
+
+    async getDefaultNamespace() {
+        try {
+            const configMetadata = await this.configProvider.get('namespace.default', ConfigTypeEnum.CONFIG_TYPE_USER)
+            return configMetadata.value
+        } catch (err) {
+            if (err instanceof NotFound) {
+                return undefined
+            } else {
+                throw err
+            }
+        }
+    }
+
+    async setDefaultNamespace(namespaceId: string) {
+        return await this.configProvider.set('namespace.default', namespaceId)
     }
 
     /**
@@ -65,9 +80,9 @@ export class NamespaceProvider {
      * @param pageSize 页面大小。
      * @param condition 可选，搜索条件
      *
-     * @returns 当前页面的命名空间
+     * @returns 当前页面的命名空间列表
      *
-     * @throws {Error} 如果获取区块失败，抛出错误。
+     * @throws ServiceUnavailable 服务不可用
      * @example
      * ```ts
      * const data = await namespaceProvider.get('someHash');
@@ -94,15 +109,20 @@ export class NamespaceProvider {
                 const res = await this.client.search(request)
                 await this.authenticate.doResponse(res, SearchNamespaceResponseBodySchema)
                 const resBody = res.body as SearchNamespaceResponseBody
+                const namespaces: NamespaceMetadata[] = []
                 for (const n of resBody.namespaces) {
-                    if (!(await this.verifyNamespaceMetadata(n))) {
-                        reject(new Error('invalid namespace metadata!'))
+                    try {
+                        await verifyNamespaceMetadata(this.authenticate, n)
+                        namespaces.push(n)
+                    } catch (err) {
+                        console.error(`Fail to verify namespace=${JSON.stringify(toJson(NamespaceMetadataSchema, n))}`)
                     }
                 }
 
-                resolve(resBody.namespaces)
+                resolve(namespaces)
             } catch (err) {
                 console.error('Fail to search namespace', err)
+                return reject(err)
             }
         })
     }
@@ -113,15 +133,26 @@ export class NamespaceProvider {
      * @param name 命名空间名称
      * @param description 命名空间描述
      *
-     * @returns 一个 Promise，解析为获取到的区块数据（Uint8Array）。
-     * @throws {Error} 如果获取区块失败，抛出错误。
+     * @returns 命名空间元信息
+     *
+     * @throws ServiceUnavailable 服务不可用
      */
     create(name: string, description: string, uid?: string, participants?: string) {
-        return new Promise<CreateNamespaceResponseBody>(async (resolve, reject) => {
-            const namespace = await this.createNamespaceMetadata(name, description, uid, participants)
+        return new Promise<NamespaceMetadata>(async (resolve, reject) => {
+            const namespace = create(NamespaceMetadataSchema, {
+                owner: this.authenticate.getDid(),
+                uid: uid || uid === '' ? uid : generateUuid(),
+                name: name,
+                description: description,
+                participants: participants,
+                createdAt: getCurrentUtcString(),
+                updatedAt: getCurrentUtcString()
+            })
+
             const body = create(CreateNamespaceRequestBodySchema, { namespace: namespace })
             let header
             try {
+                await signNamespaceMetadata(this.authenticate, namespace)
                 header = await this.authenticate.createHeader(toBinary(CreateNamespaceRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header when creating namespace', err)
@@ -132,50 +163,12 @@ export class NamespaceProvider {
             try {
                 const res = await this.client.create(request)
                 await this.authenticate.doResponse(res, CreateNamespaceResponseBodySchema)
-                const resBody = res.body as CreateNamespaceResponseBody
-                if (resBody.namespace) {
-                    if (!(await this.verifyNamespaceMetadata(resBody.namespace))) {
-                        reject(new Error('invalid namespace metadata!'))
-                    }
-                }
-
-                return resolve(resBody)
+                await verifyNamespaceMetadata(this.authenticate, res.body?.namespace)
+                return resolve(res.body?.namespace as NamespaceMetadata)
             } catch (err) {
                 console.error('Fail to create namespace', err)
                 return reject(err)
             }
         })
-    }
-
-    async createNamespaceMetadata(name: string, description: string, uid?: string, participants?: string) {
-        const namespace = create(NamespaceMetadataSchema, {
-            owner: this.authenticate.getDid(),
-            uid: uid || uid === '' ? uid : generateUuid(),
-            name: name,
-            description: description,
-            participants: participants,
-            createdAt: getCurrentUtcString(),
-            updatedAt: getCurrentUtcString()
-        })
-        namespace.signature = await this.authenticate.sign(toBinary(NamespaceMetadataSchema, namespace))
-        return namespace
-    }
-
-    async verifyNamespaceMetadata(namespace?: NamespaceMetadata) {
-        if (namespace === undefined) {
-            return false
-        }
-
-        const signature = namespace.signature
-        try {
-            namespace.signature = ''
-            return await this.authenticate.verify(
-                namespace.owner,
-                toBinary(NamespaceMetadataSchema, namespace),
-                signature
-            )
-        } finally {
-            namespace.signature = signature
-        }
     }
 }

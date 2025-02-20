@@ -3,11 +3,12 @@ import { generateUuid } from '../../common/string'
 import { MessageHeader, MessageHeaderSchema } from '../../yeying/api/common/message_pb'
 import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
 import { BlockAddress, fromDidToPublicKey, signHashBytes, verifyHashBytes } from '@yeying-community/yeying-web3'
-import { InvalidArgument, NetworkError, NoPermission } from '../../common/error'
+import { InvalidArgument, NetworkUnavailable, NoPermission } from '../../common/error'
 import { composite } from '../../common/bytes'
 import { computeHash } from '../../common/crypto'
 import { create, toBinary } from '@bufbuild/protobuf'
 import { DescMessage } from '@bufbuild/protobuf/dist/cjs/descriptors'
+import { convertResponseStatusToError, isOk, isSuccess } from '../../common/status'
 
 /**
  * 用于身份验证的类，负责生成和验证消息头签名
@@ -138,11 +139,15 @@ export class Authenticate {
 
     /**
      * 处理响应并验证其签名
-     * @param response - 响应对象
-     * @param bodySchema - 响应体的 Protobuf 模式
+     *
+     * @param response 响应对象
+     * @param bodySchema 响应体的 Protobuf 模式
+     * @param isSuccess 判断状态是否成功函数
+     *
      * @throws {@link NetworkError} 如果响应格式错误
      * @throws {@link InvalidArgument} 如果时间戳过期
      * @throws {@link NoPermission} 如果签名无效
+     *
      * @example
      * ```typescript
      * const response = { header: { ... }, body: { ... } };
@@ -155,14 +160,18 @@ export class Authenticate {
      * }
      * ```
      */
-    async doResponse(response: any, bodySchema: DescMessage) {
+    async doResponse(response: any, bodySchema: DescMessage, isSuccess: isSuccess = isOk) {
         if (
             response === undefined ||
             response.header === undefined ||
             response.body === undefined ||
             response.body.status === undefined
         ) {
-            throw new NetworkError('protocol error!')
+            throw new NetworkUnavailable('protocol error!')
+        }
+
+        if (!isSuccess(response.body.status)) {
+            throw convertResponseStatusToError(response.body.status)
         }
 
         await this.verifyHeader(response.header, toBinary(bodySchema, response.body))

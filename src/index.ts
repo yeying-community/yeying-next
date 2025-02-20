@@ -13,7 +13,21 @@ export { Uploader } from './provider/warehouse/uploader'
 export { Downloader } from './provider/warehouse/downloader'
 export { IdentityManager } from './identity/manager'
 export { MailProvider } from './provider/mail/mail'
-export { IdentityTemplate } from '@yeying-community/yeying-web3'
+
+export {
+    Registry,
+    IdentityTemplate,
+    BlockAddress,
+    IdentityCodeEnum,
+    NetworkTypeEnum,
+    Mnemonic,
+    IdentityMetadata,
+    IdentityPersonalExtend,
+    IdentityOrganizationExtend,
+    IdentityServiceExtend,
+    IdentityApplicationExtend,
+    SecurityAlgorithm
+} from '@yeying-community/yeying-web3'
 
 export * from './yeying/api/common/code_pb'
 export * from './yeying/api/common/message_pb'
