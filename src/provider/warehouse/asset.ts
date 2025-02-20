@@ -7,7 +7,6 @@ import {
     AssetDetailRequestSchema,
     AssetDetailResponseBodySchema,
     AssetMetadata,
-    AssetMetadataSchema,
     DeleteAssetRequestBodySchema,
     DeleteAssetRequestSchema,
     DeleteAssetResponseBodySchema,
@@ -24,6 +23,8 @@ import {
 import { Client, createClient } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary } from '@bufbuild/protobuf'
+import { signAssetMetadata, verifyAssetMetadata } from '../model/model'
+import { isDeleted, isExisted } from '../../common/status'
 
 /**
  * 提供对资产的管理，包括查询、版本获取、详情查看、删除等操作
@@ -54,10 +55,15 @@ export class AssetProvider {
 
     /**
      * 搜索资产，根据条件和分页参数查询资产列表
+     *
      * @param condition - 搜索条件（部分 `SearchAssetCondition` 对象）
      * @param page - 当前页码
      * @param pageSize - 每页显示的条目数
+     *
      * @returns 返回搜索到的资产元数据列表
+     *
+     * @throws NoPermission 没有权限
+     *
      * @example
      * ```ts
      * const condition = { namespaceId: 'example-namespace', format: 'example-format' }
@@ -132,9 +138,15 @@ export class AssetProvider {
 
     /**
      * 查询资产详情，根据命名空间 ID 和哈希值获取资产元数据
+     *
      * @param namespaceId - 命名空间 ID
      * @param hash - 资产的哈希值
+     *
      * @returns 返回资产元数据
+     *
+     * @throws NotFound
+     * @throws ServiceUnavailable 服务不可用
+     *
      * @example
      * ```ts
      * assetProvider.detail('example-namespace', 'example-hash')
@@ -171,9 +183,15 @@ export class AssetProvider {
 
     /**
      * 删除资产，根据命名空间 ID 和哈希值删除资产
+     *
      * @param namespaceId - 命名空间 ID
      * @param hash - 资产的哈希值
-     * @returns 返回一个已解析的 Promise
+     *
+     * @returns 无返回
+     *
+     * @throws NoPermission 没有权限
+     * @throws ServiceUnavailable 服务不可用
+     *
      * @example
      * ```ts
      * assetProvider.delete('example-namespace', 'example-hash')
@@ -199,7 +217,7 @@ export class AssetProvider {
             const request = create(DeleteAssetRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.delete(request)
-                await this.authenticate.doResponse(res, DeleteAssetResponseBodySchema)
+                await this.authenticate.doResponse(res, DeleteAssetResponseBodySchema, isDeleted)
                 resolve()
             } catch (err) {
                 console.error('Fail to delete asset.', err)
@@ -210,8 +228,15 @@ export class AssetProvider {
 
     /**
      * 签名资产元数据，对资产元数据进行签名，并发送签名请求到后端服务。
-     * @param asset - 资产元数据对象
+     *
+     * @param asset 签约资产元数据
+     *
      * @returns 返回签名后的资产元数据
+     *
+     * @throws NoPermission 没有权限
+     * @throws NotFound 资产不存在
+     * @throws ServiceUnavailable 服务不可用
+     *
      * @example
      * ```ts
      * const assetMetadata = { namespaceId: 'example-namespace', hash: 'example-hash', owner: 'example-did' }
@@ -226,7 +251,7 @@ export class AssetProvider {
 
             let header
             try {
-                await this.signAssetMetadata(asset)
+                await signAssetMetadata(this.authenticate, asset)
                 header = await this.authenticate.createHeader(toBinary(SignAssetRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header when signing asset', err)
@@ -240,54 +265,14 @@ export class AssetProvider {
 
             try {
                 const res = await this.client.sign(request)
-                await this.authenticate.doResponse(res, SignAssetResponseBodySchema)
+                await this.authenticate.doResponse(res, SignAssetResponseBodySchema, isExisted)
                 const resBody = res.body as SignAssetResponseBody
-                if (await this.verifyAssetMetadata(resBody.asset)) {
-                    resolve(resBody?.asset as AssetMetadata)
-                } else {
-                    reject(new Error('invalid asset metadata!'))
-                }
+                await verifyAssetMetadata(this.authenticate, resBody.asset)
+                resolve(resBody?.asset as AssetMetadata)
             } catch (err) {
                 console.error('Fail to sign asset', err)
                 return reject(err)
             }
         })
-    }
-
-    /**
-     * 对资产元数据进行签名
-     * @param asset - 资产元数据对象
-     * @example
-     * ```ts
-     * const assetMetadata = { namespaceId: 'example-namespace', hash: 'example-hash', owner: 'example-did' }
-     * await assetProvider.signAssetMetadata(assetMetadata)
-     * ```
-     */
-    private async signAssetMetadata(asset: AssetMetadata) {
-        asset.signature = await this.authenticate.sign(toBinary(AssetMetadataSchema, asset))
-    }
-
-    /**
-     * 验证资产元数据的签名是否有效
-     * @param asset - 资产元数据对象
-     * @returns 如果签名有效，返回 true；否则返回 false
-     * @example
-     * ```ts
-     * const assetMetadata = { owner: 'example-did', signature: 'example-signature' }
-     * const isValid = await assetProvider.verifyAssetMetadata(assetMetadata)
-     * ```
-     */
-    private async verifyAssetMetadata(asset?: AssetMetadata) {
-        if (asset === undefined) {
-            return false
-        }
-
-        const signature = asset.signature
-        try {
-            asset.signature = ''
-            return await this.authenticate.verify(asset.owner, toBinary(AssetMetadataSchema, asset), signature)
-        } finally {
-            asset.signature = signature
-        }
     }
 }

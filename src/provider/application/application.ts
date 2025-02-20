@@ -12,7 +12,7 @@ import {
     CreateApplicationRequestSchema,
     CreateApplicationResponseBodySchema
 } from '../../yeying/api/application/application_pb'
-import { NetworkError, SignError } from '../../common/error'
+import { NetworkUnavailable } from '../../common/error'
 
 /**
  * ApplicationProvider 管理应用。
@@ -49,8 +49,11 @@ export class ApplicationProvider {
      *
      * @param duration - 有效时长，单位：天。
      * @param invitee - 可选，被邀请人身份ID。
-     * @returns 返回邀请码信息。
-     * @throws  {SignError|NetworkError}
+     *
+     * @returns 返回应用元信息。
+     *
+     * @throws  NetworkUnavailable
+     *
      * @example
      * ```ts
      * invitationProvider.create(1)
@@ -70,7 +73,7 @@ export class ApplicationProvider {
                 header = await this.authenticate.createHeader(toBinary(CreateApplicationRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header for creating application.', err)
-                return reject(new SignError())
+                return reject(err)
             }
 
             const request = create(CreateApplicationRequestSchema, { header: header, body: body })
@@ -80,7 +83,7 @@ export class ApplicationProvider {
                 resolve()
             } catch (err) {
                 console.error('Fail to create application', err)
-                return reject(new NetworkError())
+                return reject(new NetworkUnavailable())
             }
         })
     }

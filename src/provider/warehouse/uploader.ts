@@ -1,17 +1,17 @@
-import {BlockProvider} from './block'
-import {AssetCipher} from './cipher'
-import {convertDateToDateTime, convertToUtcDateTime, formatDateTime, getCurrentUtcString} from '../../common/date'
-import {readBlock} from '../../common/file'
-import {Digest, SecurityAlgorithm} from '@yeying-community/yeying-web3'
-import {decodeHex, encodeHex} from '../../common/codec'
-import {getDigitalFormatByName} from '../../common/message'
-import {AssetMetadata, AssetMetadataSchema} from '../../yeying/api/asset/asset_pb'
-import {create} from '@bufbuild/protobuf'
-import {isExisted} from '../../common/status'
-import {ProviderOption} from '../common/model'
-import {AssetProvider} from './asset'
-import {ConfigProvider} from "../config/config";
-import {ConfigTypeEnum} from "../../yeying/api/config/config_pb";
+import { BlockProvider } from './block'
+import { AssetCipher } from './cipher'
+import { convertDateToDateTime, convertToUtcDateTime, formatDateTime, getCurrentUtcString } from '../../common/date'
+import { readBlock } from '../../common/file'
+import { Digest, SecurityAlgorithm } from '@yeying-community/yeying-web3'
+import { decodeHex, encodeHex } from '../../common/codec'
+import { getDigitalFormatByName } from '../../common/message'
+import { AssetMetadata, AssetMetadataSchema } from '../../yeying/api/asset/asset_pb'
+import { create } from '@bufbuild/protobuf'
+import { isExisted } from '../../common/status'
+import { ProviderOption } from '../common/model'
+import { AssetProvider } from './asset'
+import { ConfigProvider } from '../config/config'
+import { ConfigTypeEnum } from '../../yeying/api/config/config_pb'
 
 /**
  * 该类用于上传资产文件，通过将文件分块后上传，每个块加密（可选）并生成哈希值，最后对整个资产进行签名
@@ -30,7 +30,7 @@ export class Uploader {
     blockProvider: BlockProvider
     assetProvider: AssetProvider
     assetCipher: AssetCipher
-    configProvider: ConfigProvider;
+    configProvider: ConfigProvider
     chunkSize?: number
 
     /**
@@ -77,7 +77,7 @@ export class Uploader {
         return new Promise<AssetMetadata>(async (resolve, reject) => {
             try {
                 if (this.chunkSize === undefined) {
-                    const metadata = await this.configProvider.get("chunk.size", ConfigTypeEnum.CONFIG_TYPE_SYSTEM)
+                    const metadata = await this.configProvider.get('chunk.size', ConfigTypeEnum.CONFIG_TYPE_SYSTEM)
                     this.chunkSize = parseInt(metadata.value)
                 }
 
@@ -120,24 +120,10 @@ export class Uploader {
                         data = await this.assetCipher.encrypt(data)
                     }
 
-                    const block = await this.blockProvider.createBlockMetadata(namespaceId, data)
-                    mergeDigest.update(decodeHex(block.hash)) // 更新合并哈希
-
-                    const confirmBody = await this.blockProvider.confirm(block)
-                    if (confirmBody.block) {
-                        // 已经存在，无需上传这个block
-                        console.log(`skip the block=${i}, hash=${block.hash}`)
-                        chunkList[i] = confirmBody.block.hash
-                        continue
-                    }
-
                     // 上传块数据到区块存储
-                    const body = await this.blockProvider.put(block, data)
-                    if (!isExisted(body?.status)) {
-                        return reject(new Error(`Fail to put block=${block}`))
-                    }
-
-                    chunkList[i] = body.block?.hash
+                    const block = await this.blockProvider.put(namespaceId, data)
+                    mergeDigest.update(decodeHex(block.hash)) // 更新合并哈希
+                    chunkList[i] = block?.hash
                 }
 
                 asset.chunks = chunkList // 资产块的元数据

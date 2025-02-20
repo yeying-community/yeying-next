@@ -1,21 +1,7 @@
 /**
- * 网络错误，表示与网络相关的异常情况。
+ * 网络不可用，表示与网络相关的异常情况。
  */
-export class NetworkError extends Error {
-    /**
-     * 构造函数。
-     * @param message - 错误消息。
-     * @param options - 错误选项。
-     */
-    constructor(message?: string, options?: ErrorOptions) {
-        super(message, options)
-    }
-}
-
-/**
- * 签名错误，表示签名相关操作失败。
- */
-export class SignError extends Error {
+export class NetworkUnavailable extends Error {
     /**
      * 构造函数。
      * @param message - 错误消息。
@@ -35,15 +21,15 @@ export class ServiceUnavailable extends Error {
      * @param message - 错误消息。
      * @param options - 错误选项。
      */
-    constructor(message: string, options: ErrorOptions) {
+    constructor(message?: string, options?: ErrorOptions) {
         super(message, options)
     }
 }
 
 /**
- * 不可信错误，表示操作涉及不可信的实体或数据。
+ * 证书错误，比如证书过期等。
  */
-export class NotTrust extends Error {
+export class CertificateError extends Error {
     /**
      * 构造函数。
      * @param message - 错误消息。
@@ -63,7 +49,7 @@ export class NotSupported extends Error {
      * @param message - 错误消息。
      * @param options - 错误选项。
      */
-    constructor(message: string, options: ErrorOptions) {
+    constructor(message?: string, options?: ErrorOptions) {
         super(message, options)
     }
 }
@@ -125,7 +111,7 @@ export class InvalidArgument extends Error {
 }
 
 /**
- * 未找到错误，表示目标实体或资源未找到。
+ * 不存在，表示目标实体或资源未找到。
  */
 export class NotFound extends Error {
     /**
@@ -190,20 +176,6 @@ export class DataTampering extends Error {
      * @param options - 错误选项。
      */
     constructor(message?: string, options?: ErrorOptions) {
-        super(message, options)
-    }
-}
-
-/**
- * 数据伪造错误，表示数据被伪造。
- */
-export class DataForgery extends Error {
-    /**
-     * 构造函数。
-     * @param message - 错误消息。
-     * @param options - 错误选项。
-     */
-    constructor(message: string, options?: ErrorOptions) {
         super(message, options)
     }
 }

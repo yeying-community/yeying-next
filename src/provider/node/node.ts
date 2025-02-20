@@ -1,10 +1,9 @@
 import { Authenticate } from '../common/authenticate'
 import { ProviderOption } from '../common/model'
 import { MessageHeader } from '../../yeying/api/common/message_pb'
-import { DataForgery } from '../../common/error'
+import { DataTampering } from '../../common/error'
 import {
     HealthCheckRequestSchema,
-    HealthCheckResponseBody,
     HealthCheckResponseBodySchema,
     Node,
     NodeMetadata,
@@ -16,7 +15,6 @@ import {
 import { Client, createClient } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary } from '@bufbuild/protobuf'
-import { AssetMetadata, AssetMetadataSchema } from '../../yeying/api/asset/asset_pb'
 
 /**
  * 用于与节点服务进行交互，提供健康检查和身份验证功能
@@ -106,7 +104,7 @@ export class NodeProvider {
                 if (await this.verifyNodeMetadata(body.node)) {
                     resolve(body.node as NodeMetadata)
                 } else {
-                    reject(new DataForgery('invalid signature!'))
+                    reject(new DataTampering('invalid signature!'))
                 }
             } catch (err) {
                 console.error('Fail to call whoami', err)
