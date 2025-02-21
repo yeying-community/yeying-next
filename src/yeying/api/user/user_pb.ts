@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/user/user.proto.
  */
 export const file_yeying_api_user_user: GenFile = /*@__PURE__*/
-  fileDesc("Chp5ZXlpbmcvYXBpL3VzZXIvdXNlci5wcm90bxIPeWV5aW5nLmFwaS51c2VyInIKDFVzZXJNZXRhZGF0YRILCgNkaWQYASABKAkSDAoEbmFtZRgCIAEoCRIOCgZhdmF0YXIYAyABKAkSEQoJY3JlYXRlZEF0GAQgASgJEhEKCXVwZGF0ZWRBdBgFIAEoCRIRCglzaWduYXR1cmUYBiABKAkirwEKCVVzZXJTdGF0ZRILCgNkaWQYASABKAkSKwoEcm9sZRgCIAEoDjIdLnlleWluZy5hcGkudXNlci5Vc2VyUm9sZUVudW0SLwoGc3RhdHVzGAMgASgOMh8ueWV5aW5nLmFwaS51c2VyLlVzZXJTdGF0dXNFbnVtEhEKCWNyZWF0ZWRBdBgEIAEoCRIRCgl1cGRhdGVkQXQYBSABKAkSEQoJc2lnbmF0dXJlGAYgASgJInUKDkFkZFVzZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISMQoEYm9keRgCIAEoCzIjLnlleWluZy5hcGkudXNlci5BZGRVc2VyUmVxdWVzdEJvZHkiQQoSQWRkVXNlclJlcXVlc3RCb2R5EisKBHVzZXIYASABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhIncKD0FkZFVzZXJSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjIKBGJvZHkYAiABKAsyJC55ZXlpbmcuYXBpLnVzZXIuQWRkVXNlclJlc3BvbnNlQm9keSJ1ChNBZGRVc2VyUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEisKBHVzZXIYAiABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhInsKEVVwZGF0ZVVzZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNAoEYm9keRgCIAEoCzImLnlleWluZy5hcGkudXNlci5VcGRhdGVVc2VyUmVxdWVzdEJvZHkiRAoVVXBkYXRlVXNlclJlcXVlc3RCb2R5EisKBHVzZXIYASABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhIn0KElVwZGF0ZVVzZXJSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjUKBGJvZHkYAiABKAsyJy55ZXlpbmcuYXBpLnVzZXIuVXBkYXRlVXNlclJlc3BvbnNlQm9keSJLChZVcGRhdGVVc2VyUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzIkUKEURlbGV0ZVVzZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXIifQoSRGVsZXRlVXNlclJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkudXNlci5EZWxldGVVc2VyUmVzcG9uc2VCb2R5IksKFkRlbGV0ZVVzZXJSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMiRQoRVXNlckRldGFpbFJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlciJ9ChJVc2VyRGV0YWlsUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS51c2VyLlVzZXJEZXRhaWxSZXNwb25zZUJvZHkipwEKFlVzZXJEZXRhaWxSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSKwoEdXNlchgCIAEoCzIdLnlleWluZy5hcGkudXNlci5Vc2VyTWV0YWRhdGESLQoJdXNlclN0YXRlGAMgASgLMhoueWV5aW5nLmFwaS51c2VyLlVzZXJTdGF0ZSqfAgoOVXNlclN0YXR1c0VudW0SFwoTVVNFUl9TVEFUVVNfVU5LTk9XThAAEhYKElVTRVJfU1RBVFVTX0FDVElWRRABEhcKE1VTRVJfU1RBVFVTX09GRkxJTkUQAhIXChNVU0VSX1NUQVRVU19ESVNBQkxFEAMSFAoQVVNFUl9TVEFUVVNfTE9DSxAEEhoKFlVTRVJfU1RBVFVTX1VOVkVSSUZJRUQQBRIXChNVU0VSX1NUQVRVU19ERUxFVEVEEAYSFwoTVVNFUl9TVEFUVVNfRE9STUFOVBAHEhYKElVTRVJfU1RBVFVTX0ZSRUVaRRAIEhUKEVVTRVJfU1RBVFVTX0FVRElUEAkSFwoTVVNFUl9TVEFUVVNfUkVGVVNFRBAKKlAKDFVzZXJSb2xlRW51bRIVChFVU0VSX1JPTEVfVU5LTk9XThAAEhMKD1VTRVJfUk9MRV9PV05FUhABEhQKEFVTRVJfUk9MRV9OT1JNQUwQAjLRAgoEVXNlchJKCgNBZGQSHy55ZXlpbmcuYXBpLnVzZXIuQWRkVXNlclJlcXVlc3QaIC55ZXlpbmcuYXBpLnVzZXIuQWRkVXNlclJlc3BvbnNlIgASUwoGRGV0YWlsEiIueWV5aW5nLmFwaS51c2VyLlVzZXJEZXRhaWxSZXF1ZXN0GiMueWV5aW5nLmFwaS51c2VyLlVzZXJEZXRhaWxSZXNwb25zZSIAElMKBkRlbGV0ZRIiLnlleWluZy5hcGkudXNlci5EZWxldGVVc2VyUmVxdWVzdBojLnlleWluZy5hcGkudXNlci5EZWxldGVVc2VyUmVzcG9uc2UiABJTCgZVcGRhdGUSIi55ZXlpbmcuYXBpLnVzZXIuVXBkYXRlVXNlclJlcXVlc3QaIy55ZXlpbmcuYXBpLnVzZXIuVXBkYXRlVXNlclJlc3BvbnNlIgBCEVoPeWV5aW5nL2FwaS91c2VyYgZwcm90bzM", [file_yeying_api_common_message]);
+  fileDesc("Chp5ZXlpbmcvYXBpL3VzZXIvdXNlci5wcm90bxIPeWV5aW5nLmFwaS51c2VyInIKDFVzZXJNZXRhZGF0YRILCgNkaWQYASABKAkSDAoEbmFtZRgCIAEoCRIOCgZhdmF0YXIYAyABKAkSEQoJY3JlYXRlZEF0GAQgASgJEhEKCXVwZGF0ZWRBdBgFIAEoCRIRCglzaWduYXR1cmUYBiABKAkivgEKCVVzZXJTdGF0ZRINCgVvd25lchgBIAEoCRILCgNkaWQYAiABKAkSKwoEcm9sZRgDIAEoDjIdLnlleWluZy5hcGkudXNlci5Vc2VyUm9sZUVudW0SLwoGc3RhdHVzGAQgASgOMh8ueWV5aW5nLmFwaS51c2VyLlVzZXJTdGF0dXNFbnVtEhEKCWNyZWF0ZWRBdBgFIAEoCRIRCgl1cGRhdGVkQXQYBiABKAkSEQoJc2lnbmF0dXJlGAcgASgJInUKDkFkZFVzZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISMQoEYm9keRgCIAEoCzIjLnlleWluZy5hcGkudXNlci5BZGRVc2VyUmVxdWVzdEJvZHkiQQoSQWRkVXNlclJlcXVlc3RCb2R5EisKBHVzZXIYASABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhIncKD0FkZFVzZXJSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjIKBGJvZHkYAiABKAsyJC55ZXlpbmcuYXBpLnVzZXIuQWRkVXNlclJlc3BvbnNlQm9keSJ1ChNBZGRVc2VyUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEisKBHVzZXIYAiABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhInsKEVVwZGF0ZVVzZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNAoEYm9keRgCIAEoCzImLnlleWluZy5hcGkudXNlci5VcGRhdGVVc2VyUmVxdWVzdEJvZHkiRAoVVXBkYXRlVXNlclJlcXVlc3RCb2R5EisKBHVzZXIYASABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhIn0KElVwZGF0ZVVzZXJSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjUKBGJvZHkYAiABKAsyJy55ZXlpbmcuYXBpLnVzZXIuVXBkYXRlVXNlclJlc3BvbnNlQm9keSJ4ChZVcGRhdGVVc2VyUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEisKBHVzZXIYAiABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhIkUKEURlbGV0ZVVzZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXIifQoSRGVsZXRlVXNlclJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNQoEYm9keRgCIAEoCzInLnlleWluZy5hcGkudXNlci5EZWxldGVVc2VyUmVzcG9uc2VCb2R5IksKFkRlbGV0ZVVzZXJSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMiRQoRVXNlckRldGFpbFJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlciJ9ChJVc2VyRGV0YWlsUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS51c2VyLlVzZXJEZXRhaWxSZXNwb25zZUJvZHkieAoWVXNlckRldGFpbFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxIrCgZkZXRhaWwYAiABKAsyGy55ZXlpbmcuYXBpLnVzZXIuVXNlckRldGFpbCJkCgpVc2VyRGV0YWlsEisKBHVzZXIYASABKAsyHS55ZXlpbmcuYXBpLnVzZXIuVXNlck1ldGFkYXRhEikKBXN0YXRlGAIgASgLMhoueWV5aW5nLmFwaS51c2VyLlVzZXJTdGF0ZSqfAgoOVXNlclN0YXR1c0VudW0SFwoTVVNFUl9TVEFUVVNfVU5LTk9XThAAEhYKElVTRVJfU1RBVFVTX0FDVElWRRABEhcKE1VTRVJfU1RBVFVTX09GRkxJTkUQAhIXChNVU0VSX1NUQVRVU19ESVNBQkxFEAMSFAoQVVNFUl9TVEFUVVNfTE9DSxAEEhoKFlVTRVJfU1RBVFVTX1VOVkVSSUZJRUQQBRIXChNVU0VSX1NUQVRVU19ERUxFVEVEEAYSFwoTVVNFUl9TVEFUVVNfRE9STUFOVBAHEhYKElVTRVJfU1RBVFVTX0ZSRUVaRRAIEhUKEVVTRVJfU1RBVFVTX0FVRElUEAkSFwoTVVNFUl9TVEFUVVNfUkVGVVNFRBAKKlAKDFVzZXJSb2xlRW51bRIVChFVU0VSX1JPTEVfVU5LTk9XThAAEhMKD1VTRVJfUk9MRV9PV05FUhABEhQKEFVTRVJfUk9MRV9OT1JNQUwQAjLRAgoEVXNlchJKCgNBZGQSHy55ZXlpbmcuYXBpLnVzZXIuQWRkVXNlclJlcXVlc3QaIC55ZXlpbmcuYXBpLnVzZXIuQWRkVXNlclJlc3BvbnNlIgASUwoGRGV0YWlsEiIueWV5aW5nLmFwaS51c2VyLlVzZXJEZXRhaWxSZXF1ZXN0GiMueWV5aW5nLmFwaS51c2VyLlVzZXJEZXRhaWxSZXNwb25zZSIAElMKBkRlbGV0ZRIiLnlleWluZy5hcGkudXNlci5EZWxldGVVc2VyUmVxdWVzdBojLnlleWluZy5hcGkudXNlci5EZWxldGVVc2VyUmVzcG9uc2UiABJTCgZVcGRhdGUSIi55ZXlpbmcuYXBpLnVzZXIuVXBkYXRlVXNlclJlcXVlc3QaIy55ZXlpbmcuYXBpLnVzZXIuVXBkYXRlVXNlclJlc3BvbnNlIgBCEVoPeWV5aW5nL2FwaS91c2VyYgZwcm90bzM", [file_yeying_api_common_message]);
 
 /**
  * @generated from message yeying.api.user.UserMetadata
@@ -61,32 +61,37 @@ export const UserMetadataSchema: GenMessage<UserMetadata> = /*@__PURE__*/
  */
 export type UserState = Message<"yeying.api.user.UserState"> & {
   /**
-   * @generated from field: string did = 1;
+   * @generated from field: string owner = 1;
+   */
+  owner: string;
+
+  /**
+   * @generated from field: string did = 2;
    */
   did: string;
 
   /**
-   * @generated from field: yeying.api.user.UserRoleEnum role = 2;
+   * @generated from field: yeying.api.user.UserRoleEnum role = 3;
    */
   role: UserRoleEnum;
 
   /**
-   * @generated from field: yeying.api.user.UserStatusEnum status = 3;
+   * @generated from field: yeying.api.user.UserStatusEnum status = 4;
    */
   status: UserStatusEnum;
 
   /**
-   * @generated from field: string createdAt = 4;
+   * @generated from field: string createdAt = 5;
    */
   createdAt: string;
 
   /**
-   * @generated from field: string updatedAt = 5;
+   * @generated from field: string updatedAt = 6;
    */
   updatedAt: string;
 
   /**
-   * @generated from field: string signature = 6;
+   * @generated from field: string signature = 7;
    */
   signature: string;
 };
@@ -250,6 +255,11 @@ export type UpdateUserResponseBody = Message<"yeying.api.user.UpdateUserResponse
    * @generated from field: yeying.api.common.ResponseStatus status = 1;
    */
   status?: ResponseStatus;
+
+  /**
+   * @generated from field: yeying.api.user.UserMetadata user = 2;
+   */
+  user?: UserMetadata;
 };
 
 /**
@@ -364,14 +374,9 @@ export type UserDetailResponseBody = Message<"yeying.api.user.UserDetailResponse
   status?: ResponseStatus;
 
   /**
-   * @generated from field: yeying.api.user.UserMetadata user = 2;
+   * @generated from field: yeying.api.user.UserDetail detail = 2;
    */
-  user?: UserMetadata;
-
-  /**
-   * @generated from field: yeying.api.user.UserState userState = 3;
-   */
-  userState?: UserState;
+  detail?: UserDetail;
 };
 
 /**
@@ -380,6 +385,28 @@ export type UserDetailResponseBody = Message<"yeying.api.user.UserDetailResponse
  */
 export const UserDetailResponseBodySchema: GenMessage<UserDetailResponseBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_user_user, 15);
+
+/**
+ * @generated from message yeying.api.user.UserDetail
+ */
+export type UserDetail = Message<"yeying.api.user.UserDetail"> & {
+  /**
+   * @generated from field: yeying.api.user.UserMetadata user = 1;
+   */
+  user?: UserMetadata;
+
+  /**
+   * @generated from field: yeying.api.user.UserState state = 2;
+   */
+  state?: UserState;
+};
+
+/**
+ * Describes the message yeying.api.user.UserDetail.
+ * Use `create(UserDetailSchema)` to create a new message.
+ */
+export const UserDetailSchema: GenMessage<UserDetail> = /*@__PURE__*/
+  messageDesc(file_yeying_api_user_user, 16);
 
 /**
  * @generated from enum yeying.api.user.UserStatusEnum
