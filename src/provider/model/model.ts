@@ -5,6 +5,7 @@ import { Authenticate } from '../common/authenticate'
 import { ConfigMetadata, ConfigMetadataSchema } from '../../yeying/api/config/config_pb'
 import { NamespaceMetadata, NamespaceMetadataSchema } from '../../yeying/api/asset/namespace_pb'
 import { BlockMetadata, BlockMetadataSchema } from '../../yeying/api/asset/block_pb'
+import {UserMetadata, UserMetadataSchema, UserState, UserStateSchema} from "../../yeying/api/user/user_pb";
 
 /**
  * 对资产元数据进行签名，并更新元数据的`signature`字段。
@@ -16,6 +17,7 @@ import { BlockMetadata, BlockMetadataSchema } from '../../yeying/api/asset/block
  *
  */
 export async function signAssetMetadata(authenticate: Authenticate, asset: AssetMetadata) {
+    asset.signature = ''
     asset.signature = await authenticate.sign(toBinary(AssetMetadataSchema, asset))
 }
 
@@ -56,6 +58,7 @@ export async function verifyAssetMetadata(authenticate: Authenticate, asset?: As
  *
  */
 export async function signConfigMetadata(authenticate: Authenticate, config: ConfigMetadata) {
+    config.signature = ''
     config.signature = await authenticate.sign(toBinary(ConfigMetadataSchema, config))
 }
 
@@ -96,6 +99,7 @@ export async function verifyConfigMetadata(authenticate: Authenticate, config?: 
  *
  */
 export async function signNamespaceMetadata(authenticate: Authenticate, namespace: NamespaceMetadata) {
+    namespace.signature = ''
     namespace.signature = await authenticate.sign(toBinary(NamespaceMetadataSchema, namespace))
 }
 
@@ -162,5 +166,71 @@ export async function verifyBlockMetadata(authenticate: Authenticate, block?: Bl
         }
     } finally {
         block.signature = signature
+    }
+}
+
+/**
+ * 对用户元数据进行签名，并更新元数据的`signature`字段。
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param user 用户元数据
+ *
+ * @returns 无返回
+ */
+export async function signUserMetadata(authenticate: Authenticate, user: UserMetadata) {
+    user.signature = ''
+    user.signature = await authenticate.sign(toBinary(UserMetadataSchema, user))
+}
+
+/**
+ * 验证用户元数据的签名是否有效
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param user - 用户元数据对象
+ *
+ * @returns 无返回
+ *
+ * @throws DataTampering 元数据被篡改
+ */
+export async function verifyUserMetadata(authenticate: Authenticate, user?: UserMetadata) {
+    if (user === undefined) {
+        throw new DataTampering('empty user.')
+    }
+
+    const signature = user.signature
+    try {
+        user.signature = ''
+        if (! await authenticate.verify(user.did, toBinary(UserMetadataSchema, user), signature)) {
+            throw new DataTampering('invalid user.')
+        }
+    } finally {
+        user.signature = signature
+    }
+}
+
+
+/**
+ * 验证用户状态元数据的签名是否有效
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param user - 用户状态元数据对象
+ *
+ * @returns 无返回
+ *
+ * @throws DataTampering 元数据被篡改
+ */
+export async function verifyUserState(authenticate: Authenticate, state?: UserState) {
+    if (state === undefined) {
+        throw new DataTampering('empty user state.')
+    }
+
+    const signature = state.signature
+    try {
+        state.signature = ''
+        if (! await authenticate.verify(state.owner, toBinary(UserStateSchema, state), signature)) {
+            throw new DataTampering('invalid user state.')
+        }
+    } finally {
+        state.signature = signature
     }
 }

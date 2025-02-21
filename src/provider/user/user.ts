@@ -1,34 +1,34 @@
 import {
     AddUserRequestBodySchema,
     AddUserRequestSchema,
-    AddUserResponseBody,
     AddUserResponseBodySchema,
     DeleteUserRequestSchema,
-    DeleteUserResponseBody,
     DeleteUserResponseBodySchema,
     UpdateUserRequestBodySchema,
     UpdateUserRequestSchema,
     UpdateUserResponseBodySchema,
     User,
+    UserDetail,
     UserDetailRequestSchema,
-    UserDetailResponseBody,
     UserDetailResponseBodySchema,
     UserMetadata,
     UserMetadataSchema
 } from '../../yeying/api/user/user_pb'
-import { getCurrentUtcString } from '../../common/date'
-import { Authenticate } from '../common/authenticate'
-import { MessageHeader } from '../../yeying/api/common/message_pb'
-import { ProviderOption } from '../common/model'
-import { create, toBinary } from '@bufbuild/protobuf'
-import { createGrpcWebTransport } from '@connectrpc/connect-web'
-import { Client, createClient } from '@connectrpc/connect'
+import {getCurrentUtcString} from '../../common/date'
+import {Authenticate} from '../common/authenticate'
+import {MessageHeader} from '../../yeying/api/common/message_pb'
+import {ProviderOption} from '../common/model'
+import {create, toBinary} from '@bufbuild/protobuf'
+import {createGrpcWebTransport} from '@connectrpc/connect-web'
+import {Client, createClient} from '@connectrpc/connect'
+import {signUserMetadata, verifyUserMetadata, verifyUserState} from "../model/model";
+import {isDeleted, isExisted} from "../../common/status";
 
 /**
  * 提供用户管理功能的类，支持添加、查询、更新和删除用户
  */
 export class UserProvider {
-    private authenticate: Authenticate
+    private readonly authenticate: Authenticate
     private client: Client<typeof User>
 
     /**
@@ -53,9 +53,12 @@ export class UserProvider {
 
     /**
      * 创建用户元数据，签名并发送请求到后端服务
+     *
      * @param name - 用户名称
      * @param avatar - 用户头像 URL
+     *
      * @returns 返回添加用户的响应体
+     *
      * @example
      * ```ts
      * userProvider.add('John Doe', 'https://example.com/avatar.jpg')
@@ -64,7 +67,7 @@ export class UserProvider {
      * ```
      */
     add(name: string, avatar: string) {
-        return new Promise<AddUserResponseBody>(async (resolve, reject) => {
+        return new Promise<UserMetadata>(async (resolve, reject) => {
             const user: UserMetadata = create(UserMetadataSchema, {
                 did: this.authenticate.getDid(),
                 name: name,
@@ -73,7 +76,7 @@ export class UserProvider {
                 updatedAt: getCurrentUtcString()
             })
 
-            const body = create(AddUserRequestBodySchema, { user: user })
+            const body = create(AddUserRequestBodySchema, {user: user})
             let header: MessageHeader
             try {
                 user.signature = await this.authenticate.sign(toBinary(UserMetadataSchema, user))
@@ -83,16 +86,12 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = create(AddUserRequestSchema, { header: header, body: body })
+            const request = create(AddUserRequestSchema, {header: header, body: body})
             try {
                 const res = await this.client.add(request)
-                await this.authenticate.doResponse(res, AddUserResponseBodySchema)
-                const resBody = res.body as AddUserResponseBody
-                if (await this.verifyUserMetadata(resBody.user as UserMetadata)) {
-                    resolve(resBody)
-                } else {
-                    reject(new Error('invalid user metadata!'))
-                }
+                await this.authenticate.doResponse(res, AddUserResponseBodySchema, isExisted)
+                await verifyUserMetadata(this.authenticate, res.body?.user)
+                resolve(res.body?.user as UserMetadata)
             } catch (err) {
                 console.error('Fail to add user', err)
                 return reject(err)
@@ -102,16 +101,12 @@ export class UserProvider {
 
     /**
      * 查询用户详情
+     *
      * @returns 返回用户详情的响应体
-     * @example
-     * ```ts
-     * userProvider.detail()
-     *   .then(response => console.log(response))
-     *   .catch(err => console.error(err))
-     * ```
+     *
      */
     detail() {
-        return new Promise<UserDetailResponseBody>(async (resolve, reject) => {
+        return new Promise<UserDetail>(async (resolve, reject) => {
             let header
             try {
                 header = await this.authenticate.createHeader()
@@ -120,51 +115,28 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = create(UserDetailRequestSchema, { header: header })
+            const request = create(UserDetailRequestSchema, {header: header})
             try {
                 const res = await this.client.detail(request)
                 await this.authenticate.doResponse(res, UserDetailResponseBodySchema)
-                const resBody = res.body as UserDetailResponseBody
-                if (await this.verifyUserMetadata(resBody.user)) {
-                    resolve(resBody)
-                } else {
-                    reject(new Error('invalid user metadata!'))
-                }
+                await verifyUserMetadata(this.authenticate, res.body?.detail?.user)
+                await verifyUserState(this.authenticate, res.body?.detail?.state)
+                resolve(res.body?.detail as UserDetail)
             } catch (err) {
-                console.error('Fail to get user', err)
+                console.error('Fail to get user detail.', err)
                 return reject(err)
             }
         })
     }
 
-    /**
-     * 验证用户元数据的签名是否有效
-     * @param user - 用户元数据对象
-     * @returns 如果签名有效，返回 true；否则返回 false
-     * @example
-     * ```ts
-     * const userMetadata = { did: 'example-did', signature: 'example-signature' }
-     * const isValid = await userProvider.verifyUserMetadata(userMetadata)
-     * ```
-     */
-    private async verifyUserMetadata(user?: UserMetadata) {
-        if (user === undefined) {
-            return false
-        }
-
-        const signature = user.signature
-        try {
-            user.signature = ''
-            return await this.authenticate.verify(user.did, toBinary(UserMetadataSchema, user), signature)
-        } finally {
-            user.signature = signature
-        }
-    }
 
     /**
      * 更新用户信息
-     * @param user - 用户元数据对象
+     *
+     * @param user 用户元数据对象
+     *
      * @returns 返回更新后的用户元数据
+     *
      * @example
      * ```ts
      * const userMetadata = { did: 'example-did', name: 'New Name', avatar: 'https://example.com/new-avatar.jpg' }
@@ -175,21 +147,23 @@ export class UserProvider {
      */
     update(user: UserMetadata): Promise<UserMetadata> {
         return new Promise<UserMetadata>(async (resolve, reject) => {
-            const body = create(UpdateUserRequestBodySchema, {})
+            const body = create(UpdateUserRequestBodySchema, {user: user})
             let header
             try {
-                body.user = await this.signUserMetadata(user)
+                user.updatedAt = getCurrentUtcString()
+                await signUserMetadata(this.authenticate, user)
                 header = await this.authenticate.createHeader(toBinary(UpdateUserRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header for modifying user', err)
                 return reject(err)
             }
 
-            const request = create(UpdateUserRequestSchema, { header: header, body: body })
+            const request = create(UpdateUserRequestSchema, {header: header, body: body})
             try {
                 const res = await this.client.update(request)
                 await this.authenticate.doResponse(res, UpdateUserResponseBodySchema)
-                resolve(user)
+                await verifyUserMetadata(this.authenticate, res.body?.user)
+                resolve(res.body?.user as UserMetadata)
             } catch (err) {
                 console.error('Fail to update user', err)
                 return reject(err)
@@ -199,7 +173,9 @@ export class UserProvider {
 
     /**
      * 删除用户
-     * @returns 返回删除用户的响应体
+     *
+     * @returns 无返回
+     *
      * @example
      * ```ts
      * userProvider.delete()
@@ -208,7 +184,7 @@ export class UserProvider {
      * ```
      */
     delete() {
-        return new Promise<DeleteUserResponseBody>(async (resolve, reject) => {
+        return new Promise<void>(async (resolve, reject) => {
             let header
             try {
                 header = await this.authenticate.createHeader()
@@ -217,11 +193,11 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = create(DeleteUserRequestSchema, { header: header })
+            const request = create(DeleteUserRequestSchema, {header: header})
             try {
                 const res = await this.client.delete(request)
-                await this.authenticate.doResponse(res, DeleteUserResponseBodySchema)
-                resolve(res.body as DeleteUserResponseBody)
+                await this.authenticate.doResponse(res, DeleteUserResponseBodySchema, isDeleted)
+                resolve()
             } catch (err) {
                 console.error('Fail to get user state', err)
                 return reject(err)
