@@ -1,28 +1,26 @@
-import { formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond } from '../../common/date'
-import { Authenticate } from '../common/authenticate'
-import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/message_pb'
-import { ProviderOption } from '../common/model'
-import { create, toBinary } from '@bufbuild/protobuf'
-import { createGrpcWebTransport } from '@connectrpc/connect-web'
-import { Client, createClient } from '@connectrpc/connect'
+import {formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond} from '../../common/date'
+import {Authenticate} from '../common/authenticate'
+import {MessageHeader, RequestPageSchema} from '../../yeying/api/common/message_pb'
+import {ProviderOption} from '../common/model'
+import {create, toBinary} from '@bufbuild/protobuf'
+import {createGrpcWebTransport} from '@connectrpc/connect-web'
+import {Client, createClient} from '@connectrpc/connect'
 import {
     CreateInvitationRequestBodySchema,
     CreateInvitationRequestSchema,
-    CreateInvitationResponseBody,
     CreateInvitationResponseBodySchema,
     Invitation,
     InvitationDetailRequestBodySchema,
     InvitationDetailRequestSchema,
-    InvitationDetailResponseBody,
     InvitationDetailResponseBodySchema,
     InvitationMetadata,
     InvitationMetadataSchema,
     SearchInvitationRequestBodySchema,
     SearchInvitationRequestSchema,
-    SearchInvitationResponseBody,
     SearchInvitationResponseBodySchema
 } from '../../yeying/api/invitation/invitation_pb'
-import { generateRandomString } from '../../common/string'
+import {generateRandomString} from '../../common/string'
+import {signInvitationMetadata, verifyInvitationMetadata} from "../model/model";
 
 /**
  * 邀请码提供商，创建和查询邀请码。
@@ -63,6 +61,7 @@ export class InvitationProvider {
      *
      * @param duration - 有效时长，单位：天。
      * @param invitee - 可选，被邀请人身份ID。
+     *
      * @returns 返回邀请码信息。
      * @throws 错误时抛出 `Error`。
      * @example
@@ -73,7 +72,7 @@ export class InvitationProvider {
      * ```
      */
     create(duration: number, invitee?: string) {
-        return new Promise<CreateInvitationResponseBody>(async (resolve, reject) => {
+        return new Promise<InvitationMetadata>(async (resolve, reject) => {
             const invitation: InvitationMetadata = create(InvitationMetadataSchema, {
                 code: generateRandomString(32),
                 inviter: this.authenticate.getDid(),
@@ -82,21 +81,22 @@ export class InvitationProvider {
                 expiredAt: formatDateTime(plusSecond(getCurrentUtcDateTime(), duration * 24 * 3600))
             })
 
-            const body = create(CreateInvitationRequestBodySchema, { invitation: invitation })
+            const body = create(CreateInvitationRequestBodySchema, {invitation: invitation})
             let header: MessageHeader
             try {
-                invitation.signature = await this.authenticate.sign(toBinary(InvitationMetadataSchema, invitation))
+                await signInvitationMetadata(this.authenticate, invitation)
                 header = await this.authenticate.createHeader(toBinary(CreateInvitationRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header for creating invitation', err)
                 return reject(err)
             }
 
-            const request = create(CreateInvitationRequestSchema, { header: header, body: body })
+            const request = create(CreateInvitationRequestSchema, {header: header, body: body})
             try {
                 const res = await this.client.create(request)
                 await this.authenticate.doResponse(res, CreateInvitationResponseBodySchema)
-                resolve(res.body as CreateInvitationResponseBody)
+                await verifyInvitationMetadata(this.authenticate, res.body?.invitation)
+                resolve(res.body?.invitation as InvitationMetadata)
             } catch (err) {
                 console.error('Fail to create invitation', err)
                 return reject(err)
@@ -107,8 +107,10 @@ export class InvitationProvider {
     /**
      * 搜索所有邀请码。
      *
-     * @returns 返回用户信息。
+     * @returns 返回邀请码列表。
+     *
      * @throws 错误时抛出 `Error`。
+     *
      * @example
      * ```ts
      * userProvider.get()
@@ -117,7 +119,7 @@ export class InvitationProvider {
      * ```
      */
     search(page: number, pageSize: number) {
-        return new Promise<SearchInvitationResponseBody>(async (resolve, reject) => {
+        return new Promise<InvitationMetadata[]>(async (resolve, reject) => {
             const body = create(SearchInvitationRequestBodySchema, {
                 page: create(RequestPageSchema, {
                     page: page,
@@ -133,11 +135,11 @@ export class InvitationProvider {
                 return reject(err)
             }
 
-            const request = create(SearchInvitationRequestSchema, { header: header, body: body })
+            const request = create(SearchInvitationRequestSchema, {header: header, body: body})
             try {
                 const res = await this.client.search(request)
                 await this.authenticate.doResponse(res, SearchInvitationResponseBodySchema)
-                resolve(res.body as SearchInvitationResponseBody)
+                resolve(res.body?.invitations as InvitationMetadata[])
             } catch (err) {
                 console.error('Fail to search invitation', err)
                 return reject(err)
@@ -148,7 +150,8 @@ export class InvitationProvider {
     /**
      * 获得邀请码详情。
      *
-     * @returns 返回用户状态。
+     * @returns 邀请码详情。
+     *
      * @throws 错误时抛出 `Error`。
      * @example
      * ```ts
@@ -158,7 +161,7 @@ export class InvitationProvider {
      * ```
      */
     detail(code: string) {
-        return new Promise<InvitationDetailResponseBody>(async (resolve, reject) => {
+        return new Promise<InvitationMetadata>(async (resolve, reject) => {
             const body = create(InvitationDetailRequestBodySchema, {
                 code: code
             })
@@ -170,11 +173,12 @@ export class InvitationProvider {
                 return reject(err)
             }
 
-            const request = create(InvitationDetailRequestSchema, { header: header, body: body })
+            const request = create(InvitationDetailRequestSchema, {header: header, body: body})
             try {
                 const res = await this.client.detail(request)
                 await this.authenticate.doResponse(res, InvitationDetailResponseBodySchema)
-                resolve(res.body as InvitationDetailResponseBody)
+                await verifyInvitationMetadata(this.authenticate, res.body?.invitation)
+                resolve(res.body?.invitation as InvitationMetadata)
             } catch (err) {
                 console.error('Fail to get invitation detail.', err)
                 return reject(err)

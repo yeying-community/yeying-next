@@ -6,6 +6,7 @@ import { ConfigMetadata, ConfigMetadataSchema } from '../../yeying/api/config/co
 import { NamespaceMetadata, NamespaceMetadataSchema } from '../../yeying/api/asset/namespace_pb'
 import { BlockMetadata, BlockMetadataSchema } from '../../yeying/api/asset/block_pb'
 import {UserMetadata, UserMetadataSchema, UserState, UserStateSchema} from "../../yeying/api/user/user_pb";
+import {InvitationMetadata, InvitationMetadataSchema} from "../../yeying/api/invitation/invitation_pb";
 
 /**
  * 对资产元数据进行签名，并更新元数据的`signature`字段。
@@ -186,7 +187,7 @@ export async function signUserMetadata(authenticate: Authenticate, user: UserMet
  * 验证用户元数据的签名是否有效
  *
  * @param authenticate 用于验签的认证对象
- * @param user - 用户元数据对象
+ * @param user 用户元数据对象
  *
  * @returns 无返回
  *
@@ -213,7 +214,7 @@ export async function verifyUserMetadata(authenticate: Authenticate, user?: User
  * 验证用户状态元数据的签名是否有效
  *
  * @param authenticate 用于验签的认证对象
- * @param user - 用户状态元数据对象
+ * @param user 用户状态元数据对象
  *
  * @returns 无返回
  *
@@ -232,5 +233,44 @@ export async function verifyUserState(authenticate: Authenticate, state?: UserSt
         }
     } finally {
         state.signature = signature
+    }
+}
+
+/**
+ * 对邀请码元数据进行签名，并更新元数据的`signature`字段。
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param user 邀请码元数据
+ *
+ * @returns 无返回
+ */
+export async function signInvitationMetadata(authenticate: Authenticate, invitation: InvitationMetadata) {
+    invitation.signature = ''
+    invitation.signature = await authenticate.sign(toBinary(InvitationMetadataSchema, invitation))
+}
+
+/**
+ * 验证邀请码元数据的签名是否有效
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param invitation 邀请码元数据对象
+ *
+ * @returns 无返回
+ *
+ * @throws DataTampering 元数据被篡改
+ */
+export async function verifyInvitationMetadata(authenticate: Authenticate, invitation?: InvitationMetadata) {
+    if (invitation === undefined) {
+        throw new DataTampering('empty invitation.')
+    }
+
+    const signature = invitation.signature
+    try {
+        invitation.signature = ''
+        if (! await authenticate.verify(invitation.inviter, toBinary(InvitationMetadataSchema, invitation), signature)) {
+            throw new DataTampering('invalid invitation.')
+        }
+    } finally {
+        invitation.signature = signature
     }
 }

@@ -12,7 +12,39 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/llm/provider.proto.
  */
 export const file_yeying_api_llm_provider: GenFile = /*@__PURE__*/
-  fileDesc("Ch15ZXlpbmcvYXBpL2xsbS9wcm92aWRlci5wcm90bxIOeWV5aW5nLmFwaS5sbG0iZwoQUHJvdmlkZXJNZXRhZGF0YRIMCgRuYW1lGAEgASgJEg0KBWxhYmVsGAIgASgJEjYKD3N1cHBvcnRlZE1vZGVscxgDIAMoDjIdLnlleWluZy5hcGkubGxtLk1vZGVsVHlwZUVudW0ifgoNTW9kZWxNZXRhZGF0YRIMCgRuYW1lGAEgASgJEisKBHR5cGUYAiABKA4yHS55ZXlpbmcuYXBpLmxsbS5Nb2RlbFR5cGVFbnVtEjIKCGZlYXR1cmVzGAMgAygOMiAueWV5aW5nLmFwaS5sbG0uTW9kZWxGZWF0dXJlRW51bSKCAQoVRGVsZXRlUHJvdmlkZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNwoEYm9keRgCIAEoCzIpLnlleWluZy5hcGkubGxtLkRlbGV0ZVByb3ZpZGVyUmVxdWVzdEJvZHkifgoTTGlzdFByb3ZpZGVyUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjUKBGJvZHkYAiABKAsyJy55ZXlpbmcuYXBpLmxsbS5MaXN0UHJvdmlkZXJSZXF1ZXN0Qm9keSKEAQoWRGVsZXRlUHJvdmlkZXJSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjgKBGJvZHkYAiABKAsyKi55ZXlpbmcuYXBpLmxsbS5EZWxldGVQcm92aWRlclJlc3BvbnNlQm9keSIqChlEZWxldGVQcm92aWRlclJlcXVlc3RCb2R5Eg0KBWxsbUlkGAEgASgJIk8KGkRlbGV0ZVByb3ZpZGVyUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzIoABChRMaXN0UHJvdmlkZXJSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjYKBGJvZHkYAiABKAsyKC55ZXlpbmcuYXBpLmxsbS5MaXN0UHJvdmlkZXJSZXNwb25zZUJvZHkieAoYTGlzdFByb3ZpZGVyUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEikKBGxsbXMYAiADKAsyGy55ZXlpbmcuYXBpLmxsbS5MbG1NZXRhZGF0YSIoChdMaXN0UHJvdmlkZXJSZXF1ZXN0Qm9keRINCgVsbG1JZBgBIAEoCSJ8ChJBZGRQcm92aWRlclJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI0CgRib2R5GAIgASgLMiYueWV5aW5nLmFwaS5sbG0uQWRkUHJvdmlkZXJSZXF1ZXN0Qm9keSKjAQoWQWRkUHJvdmlkZXJSZXF1ZXN0Qm9keRINCgVsbG1JZBgBIAEoCRIMCgRuYW1lGAIgASgJEikKBGNvZGUYAyABKA4yGy55ZXlpbmcuYXBpLmxsbS5MbG1Db2RlRW51bRILCgNrZXkYBCABKAkSDgoGZXh0ZW5kGAUgASgJEhEKCWNyZWF0ZWRBdBgGIAEoCRIRCgl1cGRhdGVkQXQYByABKAkifgoTQWRkUHJvdmlkZXJSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjUKBGJvZHkYAiABKAsyJy55ZXlpbmcuYXBpLmxsbS5BZGRQcm92aWRlclJlc3BvbnNlQm9keSJMChdBZGRQcm92aWRlclJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cyLJAQoLTGxtTWV0YWRhdGESDQoFb3duZXIYASABKAkSDQoFbGxtSWQYAiABKAkSDAoEbmFtZRgDIAEoCRIpCgRjb2RlGAQgASgOMhsueWV5aW5nLmFwaS5sbG0uTGxtQ29kZUVudW0SLQoGc3RhdHVzGAUgASgOMh0ueWV5aW5nLmFwaS5sbG0uTGxtU3RhdHVzRW51bRIOCgZleHRlbmQYBiABKAkSEQoJY3JlYXRlZEF0GAcgASgJEhEKCXVwZGF0ZWRBdBgIIAEoCSrEAQoNTW9kZWxUeXBlRW51bRIWChJNT0RFTF9UWVBFX1VOS05PV04QABISCg5NT0RFTF9UWVBFX0xMTRABEh0KGU1PREVMX1RZUEVfVEVYVF9FTUJFRERJTkcQAhIVChFNT0RFTF9UWVBFX1JFUkFOSxADEhoKFk1PREVMX1RZUEVfU1BFRUNIMlRFWFQQBBIaChZNT0RFTF9UWVBFX1RFWFQyU1BFRUNIEAUSGQoVTU9ERUxfVFlQRV9NT0RFUkFUSU9OEAYqsQEKEE1vZGVsRmVhdHVyZUVudW0SHwobTU9ERUxfRkVBVFVSRV9BR0VOVF9USE9VR0hUEAASGAoUTU9ERUxfRkVBVFVSRV9WSVNJT04QAhIbChdNT0RFTF9GRUFUVVJFX1RPT0xfQ0FMTBADEiEKHU1PREVMX0ZFQVRVUkVfTVVMVElfVE9PTF9DQUxMEAQSIgoeTU9ERUxfRkVBVFVSRV9TVFJFQU1fVE9PTF9DQUxMEAUqdwoPTWVzc2FnZVJvbGVFbnVtEhgKFE1FU1NBR0VfUk9MRV9VTktOT1dOEAASGgoWTUVTU0FHRV9ST0xFX0FTU0lTVEFOVBABEhUKEU1FU1NBR0VfUk9MRV9VU0VSEAISFwoTTUVTU0FHRV9ST0xFX1NZU1RFTRADKmMKC0xsbUNvZGVFbnVtEhQKEExMTV9DT0RFX1VOS05PV04QABITCg9MTE1fQ09ERV9PUEVOQUkQARITCg9MTE1fQ09ERV9HRU1JTkkQAhIUChBMTE1fQ09ERV9aSElQVUFJEAMqXQoNTGxtU3RhdHVzRW51bRIWChJMTE1fU1RBVFVTX1VOS05PV04QABIaChZMTE1fU1RBVFVTX0RFQUNUSVZBVEVEEAESGAoUTExNX1NUQVRVU19BQ1RJVkFURUQQAjKMAgoIUHJvdmlkZXISUAoDQWRkEiIueWV5aW5nLmFwaS5sbG0uQWRkUHJvdmlkZXJSZXF1ZXN0GiMueWV5aW5nLmFwaS5sbG0uQWRkUHJvdmlkZXJSZXNwb25zZSIAElkKBkRlbGV0ZRIlLnlleWluZy5hcGkubGxtLkRlbGV0ZVByb3ZpZGVyUmVxdWVzdBomLnlleWluZy5hcGkubGxtLkRlbGV0ZVByb3ZpZGVyUmVzcG9uc2UiABJTCgRMaXN0EiMueWV5aW5nLmFwaS5sbG0uTGlzdFByb3ZpZGVyUmVxdWVzdBokLnlleWluZy5hcGkubGxtLkxpc3RQcm92aWRlclJlc3BvbnNlIgBCEFoOeWV5aW5nL2FwaS9sbG1iBnByb3RvMw", [file_yeying_api_common_message]);
+  fileDesc("Ch15ZXlpbmcvYXBpL2xsbS9wcm92aWRlci5wcm90bxIOeWV5aW5nLmFwaS5sbG0iggEKE1Byb3ZpZGVyRGVzY3JpcHRpb24SDAoEbmFtZRgBIAEoCRITCgtkZXNjcmlwdGlvbhgCIAEoCRI6ChNzdXBwb3J0ZWRNb2RlbFR5cGVzGAMgAygOMh0ueWV5aW5nLmFwaS5sbG0uTW9kZWxUeXBlRW51bRIMCgRpY29uGAQgASgJImcKEFByb3ZpZGVyTWV0YWRhdGESDAoEbmFtZRgBIAEoCRINCgVsYWJlbBgCIAEoCRI2Cg9zdXBwb3J0ZWRNb2RlbHMYAyADKA4yHS55ZXlpbmcuYXBpLmxsbS5Nb2RlbFR5cGVFbnVtIn4KDU1vZGVsTWV0YWRhdGESDAoEbmFtZRgBIAEoCRIrCgR0eXBlGAIgASgOMh0ueWV5aW5nLmFwaS5sbG0uTW9kZWxUeXBlRW51bRIyCghmZWF0dXJlcxgDIAMoDjIgLnlleWluZy5hcGkubGxtLk1vZGVsRmVhdHVyZUVudW0iggEKFURlbGV0ZVByb3ZpZGVyUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjcKBGJvZHkYAiABKAsyKS55ZXlpbmcuYXBpLmxsbS5EZWxldGVQcm92aWRlclJlcXVlc3RCb2R5IlIKHkxpc3RQcm92aWRlckRlc2NyaXB0aW9uUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyIpYBCh9MaXN0UHJvdmlkZXJEZXNjcmlwdGlvblJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISQQoEYm9keRgCIAEoCzIzLnlleWluZy5hcGkubGxtLkxpc3RQcm92aWRlckRlc2NyaXB0aW9uUmVzcG9uc2VCb2R5IpABCiNMaXN0UHJvdmlkZXJEZXNjcmlwdGlvblJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxI2Cglwcm92aWRlcnMYAiADKAsyIy55ZXlpbmcuYXBpLmxsbS5Qcm92aWRlckRlc2NyaXB0aW9uIoQBChZEZWxldGVQcm92aWRlclJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISOAoEYm9keRgCIAEoCzIqLnlleWluZy5hcGkubGxtLkRlbGV0ZVByb3ZpZGVyUmVzcG9uc2VCb2R5IioKGURlbGV0ZVByb3ZpZGVyUmVxdWVzdEJvZHkSDQoFbGxtSWQYASABKAkiTwoaRGVsZXRlUHJvdmlkZXJSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMifAoSQWRkUHJvdmlkZXJSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISNAoEYm9keRgCIAEoCzImLnlleWluZy5hcGkubGxtLkFkZFByb3ZpZGVyUmVxdWVzdEJvZHkiowEKFkFkZFByb3ZpZGVyUmVxdWVzdEJvZHkSDQoFbGxtSWQYASABKAkSDAoEbmFtZRgCIAEoCRIpCgRjb2RlGAMgASgOMhsueWV5aW5nLmFwaS5sbG0uTGxtQ29kZUVudW0SCwoDa2V5GAQgASgJEg4KBmV4dGVuZBgFIAEoCRIRCgljcmVhdGVkQXQYBiABKAkSEQoJdXBkYXRlZEF0GAcgASgJIn4KE0FkZFByb3ZpZGVyUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI1CgRib2R5GAIgASgLMicueWV5aW5nLmFwaS5sbG0uQWRkUHJvdmlkZXJSZXNwb25zZUJvZHkiTAoXQWRkUHJvdmlkZXJSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMiyQEKC0xsbU1ldGFkYXRhEg0KBW93bmVyGAEgASgJEg0KBWxsbUlkGAIgASgJEgwKBG5hbWUYAyABKAkSKQoEY29kZRgEIAEoDjIbLnlleWluZy5hcGkubGxtLkxsbUNvZGVFbnVtEi0KBnN0YXR1cxgFIAEoDjIdLnlleWluZy5hcGkubGxtLkxsbVN0YXR1c0VudW0SDgoGZXh0ZW5kGAYgASgJEhEKCWNyZWF0ZWRBdBgHIAEoCRIRCgl1cGRhdGVkQXQYCCABKAkq1wEKDU1vZGVsVHlwZUVudW0SFgoSTU9ERUxfVFlQRV9VTktOT1dOEAASEgoOTU9ERUxfVFlQRV9MTE0QARIdChlNT0RFTF9UWVBFX1RFWFRfRU1CRURESU5HEAISFQoRTU9ERUxfVFlQRV9SRVJBTksQAxIaChZNT0RFTF9UWVBFX1NQRUVDSDJURVhUEAQSEgoOTU9ERUxfVFlQRV9UVFMQBRIZChVNT0RFTF9UWVBFX01PREVSQVRJT04QBhIZChVNT0RFTF9UWVBFX1RFWFQySU1BR0UQByqxAQoQTW9kZWxGZWF0dXJlRW51bRIfChtNT0RFTF9GRUFUVVJFX0FHRU5UX1RIT1VHSFQQABIYChRNT0RFTF9GRUFUVVJFX1ZJU0lPThACEhsKF01PREVMX0ZFQVRVUkVfVE9PTF9DQUxMEAMSIQodTU9ERUxfRkVBVFVSRV9NVUxUSV9UT09MX0NBTEwQBBIiCh5NT0RFTF9GRUFUVVJFX1NUUkVBTV9UT09MX0NBTEwQBSp3Cg9NZXNzYWdlUm9sZUVudW0SGAoUTUVTU0FHRV9ST0xFX1VOS05PV04QABIaChZNRVNTQUdFX1JPTEVfQVNTSVNUQU5UEAESFQoRTUVTU0FHRV9ST0xFX1VTRVIQAhIXChNNRVNTQUdFX1JPTEVfU1lTVEVNEAMqYwoLTGxtQ29kZUVudW0SFAoQTExNX0NPREVfVU5LTk9XThAAEhMKD0xMTV9DT0RFX09QRU5BSRABEhMKD0xMTV9DT0RFX0dFTUlOSRACEhQKEExMTV9DT0RFX1pISVBVQUkQAypdCg1MbG1TdGF0dXNFbnVtEhYKEkxMTV9TVEFUVVNfVU5LTk9XThAAEhoKFkxMTV9TVEFUVVNfREVBQ1RJVkFURUQQARIYChRMTE1fU1RBVFVTX0FDVElWQVRFRBACMqICCghQcm92aWRlchJpCgRMaXN0Ei4ueWV5aW5nLmFwaS5sbG0uTGlzdFByb3ZpZGVyRGVzY3JpcHRpb25SZXF1ZXN0Gi8ueWV5aW5nLmFwaS5sbG0uTGlzdFByb3ZpZGVyRGVzY3JpcHRpb25SZXNwb25zZSIAElAKA0FkZBIiLnlleWluZy5hcGkubGxtLkFkZFByb3ZpZGVyUmVxdWVzdBojLnlleWluZy5hcGkubGxtLkFkZFByb3ZpZGVyUmVzcG9uc2UiABJZCgZEZWxldGUSJS55ZXlpbmcuYXBpLmxsbS5EZWxldGVQcm92aWRlclJlcXVlc3QaJi55ZXlpbmcuYXBpLmxsbS5EZWxldGVQcm92aWRlclJlc3BvbnNlIgBCEFoOeWV5aW5nL2FwaS9sbG1iBnByb3RvMw", [file_yeying_api_common_message]);
+
+/**
+ * @generated from message yeying.api.llm.ProviderDescription
+ */
+export type ProviderDescription = Message<"yeying.api.llm.ProviderDescription"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string description = 2;
+   */
+  description: string;
+
+  /**
+   * @generated from field: repeated yeying.api.llm.ModelTypeEnum supportedModelTypes = 3;
+   */
+  supportedModelTypes: ModelTypeEnum[];
+
+  /**
+   * @generated from field: string icon = 4;
+   */
+  icon: string;
+};
+
+/**
+ * Describes the message yeying.api.llm.ProviderDescription.
+ * Use `create(ProviderDescriptionSchema)` to create a new message.
+ */
+export const ProviderDescriptionSchema: GenMessage<ProviderDescription> = /*@__PURE__*/
+  messageDesc(file_yeying_api_llm_provider, 0);
 
 /**
  * @generated from message yeying.api.llm.ProviderMetadata
@@ -39,7 +71,7 @@ export type ProviderMetadata = Message<"yeying.api.llm.ProviderMetadata"> & {
  * Use `create(ProviderMetadataSchema)` to create a new message.
  */
 export const ProviderMetadataSchema: GenMessage<ProviderMetadata> = /*@__PURE__*/
-  messageDesc(file_yeying_api_llm_provider, 0);
+  messageDesc(file_yeying_api_llm_provider, 1);
 
 /**
  * @generated from message yeying.api.llm.ModelMetadata
@@ -66,7 +98,7 @@ export type ModelMetadata = Message<"yeying.api.llm.ModelMetadata"> & {
  * Use `create(ModelMetadataSchema)` to create a new message.
  */
 export const ModelMetadataSchema: GenMessage<ModelMetadata> = /*@__PURE__*/
-  messageDesc(file_yeying_api_llm_provider, 1);
+  messageDesc(file_yeying_api_llm_provider, 2);
 
 /**
  * @generated from message yeying.api.llm.DeleteProviderRequest
@@ -88,29 +120,68 @@ export type DeleteProviderRequest = Message<"yeying.api.llm.DeleteProviderReques
  * Use `create(DeleteProviderRequestSchema)` to create a new message.
  */
 export const DeleteProviderRequestSchema: GenMessage<DeleteProviderRequest> = /*@__PURE__*/
-  messageDesc(file_yeying_api_llm_provider, 2);
+  messageDesc(file_yeying_api_llm_provider, 3);
 
 /**
- * @generated from message yeying.api.llm.ListProviderRequest
+ * @generated from message yeying.api.llm.ListProviderDescriptionRequest
  */
-export type ListProviderRequest = Message<"yeying.api.llm.ListProviderRequest"> & {
+export type ListProviderDescriptionRequest = Message<"yeying.api.llm.ListProviderDescriptionRequest"> & {
+  /**
+   * @generated from field: yeying.api.common.MessageHeader header = 1;
+   */
+  header?: MessageHeader;
+};
+
+/**
+ * Describes the message yeying.api.llm.ListProviderDescriptionRequest.
+ * Use `create(ListProviderDescriptionRequestSchema)` to create a new message.
+ */
+export const ListProviderDescriptionRequestSchema: GenMessage<ListProviderDescriptionRequest> = /*@__PURE__*/
+  messageDesc(file_yeying_api_llm_provider, 4);
+
+/**
+ * @generated from message yeying.api.llm.ListProviderDescriptionResponse
+ */
+export type ListProviderDescriptionResponse = Message<"yeying.api.llm.ListProviderDescriptionResponse"> & {
   /**
    * @generated from field: yeying.api.common.MessageHeader header = 1;
    */
   header?: MessageHeader;
 
   /**
-   * @generated from field: yeying.api.llm.ListProviderRequestBody body = 2;
+   * @generated from field: yeying.api.llm.ListProviderDescriptionResponseBody body = 2;
    */
-  body?: ListProviderRequestBody;
+  body?: ListProviderDescriptionResponseBody;
 };
 
 /**
- * Describes the message yeying.api.llm.ListProviderRequest.
- * Use `create(ListProviderRequestSchema)` to create a new message.
+ * Describes the message yeying.api.llm.ListProviderDescriptionResponse.
+ * Use `create(ListProviderDescriptionResponseSchema)` to create a new message.
  */
-export const ListProviderRequestSchema: GenMessage<ListProviderRequest> = /*@__PURE__*/
-  messageDesc(file_yeying_api_llm_provider, 3);
+export const ListProviderDescriptionResponseSchema: GenMessage<ListProviderDescriptionResponse> = /*@__PURE__*/
+  messageDesc(file_yeying_api_llm_provider, 5);
+
+/**
+ * @generated from message yeying.api.llm.ListProviderDescriptionResponseBody
+ */
+export type ListProviderDescriptionResponseBody = Message<"yeying.api.llm.ListProviderDescriptionResponseBody"> & {
+  /**
+   * @generated from field: yeying.api.common.ResponseStatus status = 1;
+   */
+  status?: ResponseStatus;
+
+  /**
+   * @generated from field: repeated yeying.api.llm.ProviderDescription providers = 2;
+   */
+  providers: ProviderDescription[];
+};
+
+/**
+ * Describes the message yeying.api.llm.ListProviderDescriptionResponseBody.
+ * Use `create(ListProviderDescriptionResponseBodySchema)` to create a new message.
+ */
+export const ListProviderDescriptionResponseBodySchema: GenMessage<ListProviderDescriptionResponseBody> = /*@__PURE__*/
+  messageDesc(file_yeying_api_llm_provider, 6);
 
 /**
  * @generated from message yeying.api.llm.DeleteProviderResponse
@@ -132,7 +203,7 @@ export type DeleteProviderResponse = Message<"yeying.api.llm.DeleteProviderRespo
  * Use `create(DeleteProviderResponseSchema)` to create a new message.
  */
 export const DeleteProviderResponseSchema: GenMessage<DeleteProviderResponse> = /*@__PURE__*/
-  messageDesc(file_yeying_api_llm_provider, 4);
+  messageDesc(file_yeying_api_llm_provider, 7);
 
 /**
  * @generated from message yeying.api.llm.DeleteProviderRequestBody
@@ -149,7 +220,7 @@ export type DeleteProviderRequestBody = Message<"yeying.api.llm.DeleteProviderRe
  * Use `create(DeleteProviderRequestBodySchema)` to create a new message.
  */
 export const DeleteProviderRequestBodySchema: GenMessage<DeleteProviderRequestBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_llm_provider, 5);
+  messageDesc(file_yeying_api_llm_provider, 8);
 
 /**
  * @generated from message yeying.api.llm.DeleteProviderResponseBody
@@ -166,67 +237,6 @@ export type DeleteProviderResponseBody = Message<"yeying.api.llm.DeleteProviderR
  * Use `create(DeleteProviderResponseBodySchema)` to create a new message.
  */
 export const DeleteProviderResponseBodySchema: GenMessage<DeleteProviderResponseBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_llm_provider, 6);
-
-/**
- * @generated from message yeying.api.llm.ListProviderResponse
- */
-export type ListProviderResponse = Message<"yeying.api.llm.ListProviderResponse"> & {
-  /**
-   * @generated from field: yeying.api.common.MessageHeader header = 1;
-   */
-  header?: MessageHeader;
-
-  /**
-   * @generated from field: yeying.api.llm.ListProviderResponseBody body = 2;
-   */
-  body?: ListProviderResponseBody;
-};
-
-/**
- * Describes the message yeying.api.llm.ListProviderResponse.
- * Use `create(ListProviderResponseSchema)` to create a new message.
- */
-export const ListProviderResponseSchema: GenMessage<ListProviderResponse> = /*@__PURE__*/
-  messageDesc(file_yeying_api_llm_provider, 7);
-
-/**
- * @generated from message yeying.api.llm.ListProviderResponseBody
- */
-export type ListProviderResponseBody = Message<"yeying.api.llm.ListProviderResponseBody"> & {
-  /**
-   * @generated from field: yeying.api.common.ResponseStatus status = 1;
-   */
-  status?: ResponseStatus;
-
-  /**
-   * @generated from field: repeated yeying.api.llm.LlmMetadata llms = 2;
-   */
-  llms: LlmMetadata[];
-};
-
-/**
- * Describes the message yeying.api.llm.ListProviderResponseBody.
- * Use `create(ListProviderResponseBodySchema)` to create a new message.
- */
-export const ListProviderResponseBodySchema: GenMessage<ListProviderResponseBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_llm_provider, 8);
-
-/**
- * @generated from message yeying.api.llm.ListProviderRequestBody
- */
-export type ListProviderRequestBody = Message<"yeying.api.llm.ListProviderRequestBody"> & {
-  /**
-   * @generated from field: string llmId = 1;
-   */
-  llmId: string;
-};
-
-/**
- * Describes the message yeying.api.llm.ListProviderRequestBody.
- * Use `create(ListProviderRequestBodySchema)` to create a new message.
- */
-export const ListProviderRequestBodySchema: GenMessage<ListProviderRequestBody> = /*@__PURE__*/
   messageDesc(file_yeying_api_llm_provider, 9);
 
 /**
@@ -429,9 +439,9 @@ export enum ModelTypeEnum {
   /**
    * 文字转语音
    *
-   * @generated from enum value: MODEL_TYPE_TEXT2SPEECH = 5;
+   * @generated from enum value: MODEL_TYPE_TTS = 5;
    */
-  MODEL_TYPE_TEXT2SPEECH = 5,
+  MODEL_TYPE_TTS = 5,
 
   /**
    * 审查
@@ -439,6 +449,13 @@ export enum ModelTypeEnum {
    * @generated from enum value: MODEL_TYPE_MODERATION = 6;
    */
   MODEL_TYPE_MODERATION = 6,
+
+  /**
+   * 审查
+   *
+   * @generated from enum value: MODEL_TYPE_TEXT2IMAGE = 7;
+   */
+  MODEL_TYPE_TEXT2IMAGE = 7,
 }
 
 /**
@@ -602,7 +619,17 @@ export const LlmStatusEnumSchema: GenEnum<LlmStatusEnum> = /*@__PURE__*/
  */
 export const Provider: GenService<{
   /**
-   * 添加供应商
+   * 供应商描述列表
+   *
+   * @generated from rpc yeying.api.llm.Provider.List
+   */
+  list: {
+    methodKind: "unary";
+    input: typeof ListProviderDescriptionRequestSchema;
+    output: typeof ListProviderDescriptionResponseSchema;
+  },
+  /**
+   * 添加供应商配置
    *
    * @generated from rpc yeying.api.llm.Provider.Add
    */
@@ -620,16 +647,6 @@ export const Provider: GenService<{
     methodKind: "unary";
     input: typeof DeleteProviderRequestSchema;
     output: typeof DeleteProviderResponseSchema;
-  },
-  /**
-   * 获得供应商列表
-   *
-   * @generated from rpc yeying.api.llm.Provider.List
-   */
-  list: {
-    methodKind: "unary";
-    input: typeof ListProviderRequestSchema;
-    output: typeof ListProviderResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_yeying_api_llm_provider, 0);
