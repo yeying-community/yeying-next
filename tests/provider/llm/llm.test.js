@@ -19,7 +19,7 @@ const identity = {
 const provider = {proxy: 'http://localhost:8541'}
 
 
-describe('Llm', () => {
+describe('Provider', () => {
   it('add', async () => {
     const llmProvider = new LlmProvider(new Authenticate(identity.blockAddress), provider)
     const uuid = 'bc9805ba-4448-45cf-af13-109a225e1771'
