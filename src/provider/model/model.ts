@@ -7,6 +7,13 @@ import { NamespaceMetadata, NamespaceMetadataSchema } from '../../yeying/api/ass
 import { BlockMetadata, BlockMetadataSchema } from '../../yeying/api/asset/block_pb'
 import {UserMetadata, UserMetadataSchema, UserState, UserStateSchema} from "../../yeying/api/user/user_pb";
 import {InvitationMetadata, InvitationMetadataSchema} from "../../yeying/api/invitation/invitation_pb";
+import {
+    ProviderMetadata,
+    ProviderMetadataSchema,
+    ProviderState,
+    ProviderStateSchema
+} from "../../yeying/api/llm/provider_pb";
+import {SessionMetadata, SessionMetadataSchema} from "../../yeying/api/session/session_pb";
 
 /**
  * 对资产元数据进行签名，并更新元数据的`signature`字段。
@@ -240,7 +247,7 @@ export async function verifyUserState(authenticate: Authenticate, state?: UserSt
  * 对邀请码元数据进行签名，并更新元数据的`signature`字段。
  *
  * @param authenticate 用于验签的认证对象
- * @param user 邀请码元数据
+ * @param invitation 邀请码元数据
  *
  * @returns 无返回
  */
@@ -272,5 +279,100 @@ export async function verifyInvitationMetadata(authenticate: Authenticate, invit
         }
     } finally {
         invitation.signature = signature
+    }
+}
+
+/**
+ * 对大模型供应商元数据进行签名，并更新元数据的`signature`字段。
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param provider 供应商元数据
+ *
+ * @returns 无返回
+ */
+export async function signProviderMetadata(authenticate: Authenticate, provider: ProviderMetadata) {
+    provider.signature = ''
+    provider.signature = await authenticate.sign(toBinary(ProviderMetadataSchema, provider))
+}
+
+/**
+ * 验证大模型供应商元数据的签名是否有效
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param provider 供应商元数据对象
+ *
+ * @returns 无返回
+ *
+ * @throws DataTampering 元数据被篡改
+ */
+export async function verifyProviderMetadata(authenticate: Authenticate, provider?: ProviderMetadata) {
+    if (provider === undefined) {
+        throw new DataTampering('empty provider.')
+    }
+
+    const signature = provider.signature
+    try {
+        provider.signature = ''
+        if (! await authenticate.verify(provider.owner, toBinary(ProviderMetadataSchema, provider), signature)) {
+            throw new DataTampering('invalid provider.')
+        }
+    } finally {
+        provider.signature = signature
+    }
+}
+
+export async function verifyProviderState(authenticate: Authenticate, state?: ProviderState) {
+    if (state === undefined) {
+        throw new DataTampering('empty provider state.')
+    }
+
+    const signature = state.signature
+    try {
+        state.signature = ''
+        if (! await authenticate.verify(state.serviceDid, toBinary(ProviderStateSchema, state), signature)) {
+            throw new DataTampering('invalid provider state.')
+        }
+    } finally {
+        state.signature = signature
+    }
+}
+
+
+/**
+ * 对会话元数据进行签名，并更新元数据的`signature`字段。
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param provider 会话元数据
+ *
+ * @returns 无返回
+ */
+export async function signSessionMetadata(authenticate: Authenticate, provider: SessionMetadata) {
+    provider.signature = ''
+    provider.signature = await authenticate.sign(toBinary(SessionMetadataSchema, provider))
+}
+
+/**
+ * 验证会话元数据的签名是否有效
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param session 会话元数据对象
+ *
+ * @returns 无返回
+ *
+ * @throws DataTampering 元数据被篡改
+ */
+export async function verifySessionMetadata(authenticate: Authenticate, session?: SessionMetadata) {
+    if (session === undefined) {
+        throw new DataTampering('empty session.')
+    }
+
+    const signature = session.signature
+    try {
+        session.signature = ''
+        if (! await authenticate.verify(session.owner, toBinary(SessionMetadataSchema, session), signature)) {
+            throw new DataTampering('invalid session.')
+        }
+    } finally {
+        session.signature = signature
     }
 }
