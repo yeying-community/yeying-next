@@ -13,6 +13,8 @@ export { Uploader } from './provider/warehouse/uploader'
 export { Downloader } from './provider/warehouse/downloader'
 export { IdentityManager } from './identity/manager'
 export { MailProvider } from './provider/mail/mail'
+export { ProviderProvider } from './provider/llm/provider'
+export { SessionProvider } from './provider/session/session'
 
 export {
     Registry,
