@@ -1,12 +1,12 @@
-import {Authenticate} from "../common/authenticate";
-import {Client, createClient} from "@connectrpc/connect";
-import {ProviderOption} from "../common/model";
-import {createGrpcWebTransport} from "@connectrpc/connect-web";
-import {create, toBinary, toJson} from "@bufbuild/protobuf";
-import {generateUuid} from "../../common/string";
-import {getCurrentUtcString} from "../../common/date";
-import {signSessionMetadata, verifySessionMetadata} from "../model/model";
-import {isDeleted} from "../../common/status";
+import { Authenticate } from '../common/authenticate'
+import { Client, createClient } from '@connectrpc/connect'
+import { ProviderOption } from '../common/model'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create, toBinary, toJson } from '@bufbuild/protobuf'
+import { generateUuid } from '../../common/string'
+import { getCurrentUtcString } from '../../common/date'
+import { signSessionMetadata, verifySessionMetadata } from '../model/model'
+import { isDeleted } from '../../common/status'
 import {
     CreateSessionRequestBodySchema,
     CreateSessionRequestSchema,
@@ -28,8 +28,8 @@ import {
     UpdateSessionRequestBodySchema,
     UpdateSessionRequestSchema,
     UpdateSessionResponseBodySchema
-} from "../../yeying/api/session/session_pb";
-import {RequestPageSchema} from "../../yeying/api/common/message_pb";
+} from '../../yeying/api/session/session_pb'
+import { RequestPageSchema } from '../../yeying/api/common/message_pb'
 
 /**
  * 会话提供商，增加配置创建和查询邀请码。
@@ -88,12 +88,12 @@ export class SessionProvider {
                 name: name,
                 uid: uid ? uid : generateUuid(),
                 description: description,
-                config: JSON.stringify({"templateId": templateId}),
+                config: JSON.stringify({ templateId: templateId }),
                 createdAt: getCurrentUtcString(),
-                updatedAt: getCurrentUtcString(),
+                updatedAt: getCurrentUtcString()
             })
 
-            const body = create(CreateSessionRequestBodySchema, {session: session})
+            const body = create(CreateSessionRequestBodySchema, { session: session })
             let header
             try {
                 await signSessionMetadata(this.authenticate, session)
@@ -103,8 +103,7 @@ export class SessionProvider {
                 return reject(err)
             }
 
-
-            const request = create(CreateSessionRequestSchema, {header: header, body: body})
+            const request = create(CreateSessionRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.create(request)
                 await this.authenticate.doResponse(res, CreateSessionResponseBodySchema)
@@ -138,11 +137,11 @@ export class SessionProvider {
             const body = create(SearchSessionRequestBodySchema, {
                 condition: create(SearchSessionConditionSchema, {
                     uid: uid,
-                    name: name,
+                    name: name
                 }),
                 page: create(RequestPageSchema, {
                     page: page,
-                    pageSize: pageSize,
+                    pageSize: pageSize
                 })
             })
 
@@ -154,7 +153,7 @@ export class SessionProvider {
                 return reject(err)
             }
 
-            const request = create(SearchSessionRequestSchema, {header: header, body: body})
+            const request = create(SearchSessionRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.search(request)
                 await this.authenticate.doResponse(res, SearchSessionResponseBodySchema)
@@ -165,7 +164,10 @@ export class SessionProvider {
                             await verifySessionMetadata(this.authenticate, session)
                             sessions.push(session)
                         } catch (err) {
-                            console.error(`Fail to verify session=${toJson(SessionMetadataSchema, session)} when searching session`, err)
+                            console.error(
+                                `Fail to verify session=${toJson(SessionMetadataSchema, session)} when searching session`,
+                                err
+                            )
                         }
                     }
                 }
@@ -192,7 +194,7 @@ export class SessionProvider {
      */
     delete(uid: string) {
         return new Promise<void>(async (resolve, reject) => {
-            const body = create(DeleteSessionRequestBodySchema, {uid: uid})
+            const body = create(DeleteSessionRequestBodySchema, { uid: uid })
             let header
             try {
                 header = await this.authenticate.createHeader(toBinary(DeleteSessionRequestBodySchema, body))
@@ -201,7 +203,7 @@ export class SessionProvider {
                 return reject(err)
             }
 
-            const request = create(DeleteSessionRequestSchema, {header: header, body: body})
+            const request = create(DeleteSessionRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.delete(request)
                 await this.authenticate.doResponse(res, DeleteSessionResponseBodySchema, isDeleted)
@@ -228,7 +230,7 @@ export class SessionProvider {
      */
     detail(uid: string) {
         return new Promise<SessionDetail>(async (resolve, reject) => {
-            const body = create(SessionDetailRequestBodySchema, {uid: uid})
+            const body = create(SessionDetailRequestBodySchema, { uid: uid })
             let header
             try {
                 header = await this.authenticate.createHeader(toBinary(SessionDetailRequestBodySchema, body))
@@ -237,7 +239,7 @@ export class SessionProvider {
                 return reject(err)
             }
 
-            const request = create(SessionDetailRequestSchema, {header: header, body: body})
+            const request = create(SessionDetailRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.detail(request)
                 await this.authenticate.doResponse(res, SessionDetailResponseBodySchema)
@@ -266,7 +268,7 @@ export class SessionProvider {
      */
     update(session: SessionMetadata) {
         return new Promise<SessionMetadata>(async (resolve, reject) => {
-            const body = create(UpdateSessionRequestBodySchema, {session: session})
+            const body = create(UpdateSessionRequestBodySchema, { session: session })
             let header
             try {
                 session.updatedAt = getCurrentUtcString()
@@ -277,8 +279,7 @@ export class SessionProvider {
                 return reject(err)
             }
 
-
-            const request = create(UpdateSessionRequestSchema, {header: header, body: body})
+            const request = create(UpdateSessionRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.update(request)
                 await this.authenticate.doResponse(res, UpdateSessionResponseBodySchema)

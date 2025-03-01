@@ -18,19 +18,25 @@ import {
     SignAssetRequestBodySchema,
     SignAssetRequestSchema,
     SignAssetResponseBody,
-    SignAssetResponseBodySchema
+    SignAssetResponseBodySchema,
+    UpdateAssetRequestBodySchema,
+    UpdateAssetRequestSchema,
+    UpdateAssetResponseBody,
+    UpdateAssetResponseBodySchema
 } from '../../yeying/api/asset/asset_pb'
 import { Client, createClient } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { create, toBinary } from '@bufbuild/protobuf'
 import { signAssetMetadata, verifyAssetMetadata } from '../model/model'
 import { isDeleted, isExisted } from '../../common/status'
+import { isBlank } from '../../common/string'
+import { getCurrentUtcString } from '../../common/date'
 
 /**
  * 提供对资产的管理，包括查询、版本获取、详情查看、删除等操作
  */
 export class AssetProvider {
-    private authenticate: Authenticate
+    private readonly authenticate: Authenticate
     private client: Client<typeof Asset>
 
     /**
@@ -77,6 +83,7 @@ export class AssetProvider {
             const requestPage = create(RequestPageSchema, { page: page, pageSize: pageSize })
             const c = create(SearchAssetConditionSchema, {
                 namespaceId: condition.namespaceId,
+                name: condition.name,
                 format: condition.format,
                 hash: condition.hash
             })
@@ -102,39 +109,57 @@ export class AssetProvider {
         })
     }
 
-    // /**
-    //  * 获取资产的版本信息。
-    //  * @param uid - 资产的唯一标识符。
-    //  * @param page - 页码。
-    //  * @param pageSize - 每页数量。
-    //  * @returns Promise，解析为版本响应。
-    //  * @example
-    //  * assetProvider.version('assetUid', 1, 10).then(response => { console.log(response); });
-    //  */
-    // version(uid: string, page: number, pageSize: number) {
-    //     return new Promise<AssetVersionResponseBody>(async (resolve, reject) => {
-    //         const requestPage = create(RequestPageSchema, { page: page, pageSize: pageSize })
-    //         const body = create(AssetVersionRequestBodySchema, { uid: uid, page: requestPage })
-    //
-    //         let header
-    //         try {
-    //             header = await this.authenticate.createHeader(toBinary(AssetVersionRequestBodySchema, body))
-    //         } catch (err) {
-    //             console.error('Fail to create header when getting asset version', err)
-    //             return reject(err)
-    //         }
-    //
-    //         const request = create(AssetVersionRequestSchema, { header: header, body: body })
-    //         try {
-    //             const res = await this.client.version(request)
-    //             await this.authenticate.doResponse(res, AssetVersionResponseBodySchema)
-    //             resolve(res.body as AssetVersionResponseBody)
-    //         } catch (err) {
-    //             console.error('Fail to get version for asset', err)
-    //             return reject(err)
-    //         }
-    //     })
-    // }
+    /**
+     * 更新资产的信息。
+     *
+     */
+    update(asset: Partial<AssetMetadata>) {
+        return new Promise<AssetMetadata>(async (resolve, reject) => {
+            let existing: AssetMetadata
+            try {
+                existing = await this.detail(asset.namespaceId as string, asset.hash as string)
+            } catch (err) {
+                console.error('Fail to get asset detail when updating asset.', err)
+                return reject(err)
+            }
+
+            if (!isBlank(asset.name)) {
+                existing.name = <string>asset.name
+            }
+
+            if (asset.description) {
+                existing.description = asset.description
+            }
+
+            if (asset.format) {
+                existing.format = asset.format
+            }
+
+            const body = create(UpdateAssetRequestBodySchema, { asset: existing })
+
+            let header
+            try {
+                existing.updatedAt = getCurrentUtcString()
+                await signAssetMetadata(this.authenticate, existing)
+                header = await this.authenticate.createHeader(toBinary(UpdateAssetRequestBodySchema, body))
+            } catch (err) {
+                console.error('Fail to create header when updating asset.', err)
+                return reject(err)
+            }
+
+            const request = create(UpdateAssetRequestSchema, { header: header, body: body })
+            try {
+                const res = await this.client.update(request)
+                await this.authenticate.doResponse(res, UpdateAssetResponseBodySchema)
+                const resBody = res.body as UpdateAssetResponseBody
+                await verifyAssetMetadata(this.authenticate, resBody.asset)
+                resolve(resBody.asset as AssetMetadata)
+            } catch (err) {
+                console.error(`Fail to update asset=${JSON.stringify(asset)}`, err)
+                return reject(err)
+            }
+        })
+    }
 
     /**
      * 查询资产详情，根据命名空间 ID 和哈希值获取资产元数据

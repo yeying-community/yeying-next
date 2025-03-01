@@ -5,15 +5,15 @@ import { Authenticate } from '../common/authenticate'
 import { ConfigMetadata, ConfigMetadataSchema } from '../../yeying/api/config/config_pb'
 import { NamespaceMetadata, NamespaceMetadataSchema } from '../../yeying/api/asset/namespace_pb'
 import { BlockMetadata, BlockMetadataSchema } from '../../yeying/api/asset/block_pb'
-import {UserMetadata, UserMetadataSchema, UserState, UserStateSchema} from "../../yeying/api/user/user_pb";
-import {InvitationMetadata, InvitationMetadataSchema} from "../../yeying/api/invitation/invitation_pb";
+import { UserMetadata, UserMetadataSchema, UserState, UserStateSchema } from '../../yeying/api/user/user_pb'
+import { InvitationMetadata, InvitationMetadataSchema } from '../../yeying/api/invitation/invitation_pb'
 import {
     ProviderMetadata,
     ProviderMetadataSchema,
     ProviderState,
     ProviderStateSchema
-} from "../../yeying/api/llm/provider_pb";
-import {SessionMetadata, SessionMetadataSchema} from "../../yeying/api/session/session_pb";
+} from '../../yeying/api/llm/provider_pb'
+import { SessionMetadata, SessionMetadataSchema } from '../../yeying/api/session/session_pb'
 
 /**
  * 对资产元数据进行签名，并更新元数据的`signature`字段。
@@ -208,14 +208,13 @@ export async function verifyUserMetadata(authenticate: Authenticate, user?: User
     const signature = user.signature
     try {
         user.signature = ''
-        if (! await authenticate.verify(user.did, toBinary(UserMetadataSchema, user), signature)) {
+        if (!(await authenticate.verify(user.did, toBinary(UserMetadataSchema, user), signature))) {
             throw new DataTampering('invalid user.')
         }
     } finally {
         user.signature = signature
     }
 }
-
 
 /**
  * 验证用户状态元数据的签名是否有效
@@ -235,7 +234,7 @@ export async function verifyUserState(authenticate: Authenticate, state?: UserSt
     const signature = state.signature
     try {
         state.signature = ''
-        if (! await authenticate.verify(state.owner, toBinary(UserStateSchema, state), signature)) {
+        if (!(await authenticate.verify(state.owner, toBinary(UserStateSchema, state), signature))) {
             throw new DataTampering('invalid user state.')
         }
     } finally {
@@ -274,7 +273,9 @@ export async function verifyInvitationMetadata(authenticate: Authenticate, invit
     const signature = invitation.signature
     try {
         invitation.signature = ''
-        if (! await authenticate.verify(invitation.inviter, toBinary(InvitationMetadataSchema, invitation), signature)) {
+        if (
+            !(await authenticate.verify(invitation.inviter, toBinary(InvitationMetadataSchema, invitation), signature))
+        ) {
             throw new DataTampering('invalid invitation.')
         }
     } finally {
@@ -313,7 +314,7 @@ export async function verifyProviderMetadata(authenticate: Authenticate, provide
     const signature = provider.signature
     try {
         provider.signature = ''
-        if (! await authenticate.verify(provider.owner, toBinary(ProviderMetadataSchema, provider), signature)) {
+        if (!(await authenticate.verify(provider.owner, toBinary(ProviderMetadataSchema, provider), signature))) {
             throw new DataTampering('invalid provider.')
         }
     } finally {
@@ -329,14 +330,13 @@ export async function verifyProviderState(authenticate: Authenticate, state?: Pr
     const signature = state.signature
     try {
         state.signature = ''
-        if (! await authenticate.verify(state.serviceDid, toBinary(ProviderStateSchema, state), signature)) {
+        if (!(await authenticate.verify(state.serviceDid, toBinary(ProviderStateSchema, state), signature))) {
             throw new DataTampering('invalid provider state.')
         }
     } finally {
         state.signature = signature
     }
 }
-
 
 /**
  * 对会话元数据进行签名，并更新元数据的`signature`字段。
@@ -369,7 +369,7 @@ export async function verifySessionMetadata(authenticate: Authenticate, session?
     const signature = session.signature
     try {
         session.signature = ''
-        if (! await authenticate.verify(session.owner, toBinary(SessionMetadataSchema, session), signature)) {
+        if (!(await authenticate.verify(session.owner, toBinary(SessionMetadataSchema, session), signature))) {
             throw new DataTampering('invalid session.')
         }
     } finally {

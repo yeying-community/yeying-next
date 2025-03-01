@@ -10,6 +10,7 @@ import {toJson} from "@bufbuild/protobuf";
 import {NamespaceProvider} from "../../../src/provider/warehouse/namespace";
 import {computeHash} from "../../../src/common/crypto";
 import {encodeHex, encodeString} from "../../../src/common/codec";
+import {generateRandomString} from "../../../src/common/string";
 
 
 const content: string = "hello, yeying community!"
@@ -76,6 +77,13 @@ describe('Asset', () => {
         const asset = await assetProvider.detail(namespaceId, hash)
         console.log(`Success to get detail, hash=${hash}, version=${asset.version}, asset=${asset}`)
         assert.equal(asset.name, "test")
+    })
+
+    it('update', async () => {
+        const newName = generateRandomString(10)
+        const asset = await assetProvider.update({namespaceId: namespaceId, hash: hash, name: newName})
+        console.log(`Success to update asset, namespaceId=${namespaceId}, hash=${hash}`)
+        assert.equal(asset.name, newName)
     })
 
     it('delete', async () => {

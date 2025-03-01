@@ -1,5 +1,5 @@
-import {Authenticate} from "../common/authenticate";
-import {Client, createClient} from "@connectrpc/connect";
+import { Authenticate } from '../common/authenticate'
+import { Client, createClient } from '@connectrpc/connect'
 import {
     AddProviderRequestBodySchema,
     AddProviderRequestSchema,
@@ -22,19 +22,20 @@ import {
     ProviderMetadataSchema,
     ProviderModelsRequestSchema,
     ProviderModelsResponseBodySchema,
-    QuotaTypeEnum, SearchProviderConditionSchema,
+    QuotaTypeEnum,
+    SearchProviderConditionSchema,
     SearchProviderRequestBodySchema,
     SearchProviderRequestSchema,
     SearchProviderResponseBodySchema
-} from "../../yeying/api/llm/provider_pb";
-import {ProviderOption} from "../common/model";
-import {createGrpcWebTransport} from "@connectrpc/connect-web";
-import {create, toBinary, toJson} from "@bufbuild/protobuf";
-import {generateUuid} from "../../common/string";
-import {getCurrentUtcString} from "../../common/date";
-import {signProviderMetadata, verifyProviderMetadata, verifyProviderState} from "../model/model";
-import {isDeleted, isExisted} from "../../common/status";
-import {RequestPageSchema} from "../../yeying/api/common/message_pb";
+} from '../../yeying/api/llm/provider_pb'
+import { ProviderOption } from '../common/model'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create, toBinary, toJson } from '@bufbuild/protobuf'
+import { generateUuid } from '../../common/string'
+import { getCurrentUtcString } from '../../common/date'
+import { signProviderMetadata, verifyProviderMetadata, verifyProviderState } from '../model/model'
+import { isDeleted, isExisted } from '../../common/status'
+import { RequestPageSchema } from '../../yeying/api/common/message_pb'
 
 /**
  * 大模型提供商。
@@ -88,7 +89,7 @@ export class ProviderProvider {
                 return reject(err)
             }
 
-            const request = create(ProviderDescriptionsRequestSchema, {header: header})
+            const request = create(ProviderDescriptionsRequestSchema, { header: header })
             try {
                 const res = await this.client.descriptions(request)
                 await this.authenticate.doResponse(res, ProviderDescriptionsResponseBodySchema)
@@ -124,7 +125,7 @@ export class ProviderProvider {
                 return reject(err)
             }
 
-            const request = create(ProviderModelsRequestSchema, {header: header})
+            const request = create(ProviderModelsRequestSchema, { header: header })
             try {
                 const res = await this.client.models(request)
                 await this.authenticate.doResponse(res, ProviderModelsResponseBodySchema)
@@ -161,12 +162,12 @@ export class ProviderProvider {
                 code: code,
                 quotaType: QuotaTypeEnum.QUOTA_TYPE_PAID,
                 quotaLimit: BigInt(0),
-                config: JSON.stringify({key: key}),
+                config: JSON.stringify({ key: key }),
                 createdAt: getCurrentUtcString(),
-                updatedAt: getCurrentUtcString(),
+                updatedAt: getCurrentUtcString()
             })
 
-            const body = create(AddProviderRequestBodySchema, {provider: provider})
+            const body = create(AddProviderRequestBodySchema, { provider: provider })
             let header
             try {
                 await signProviderMetadata(this.authenticate, provider)
@@ -176,7 +177,7 @@ export class ProviderProvider {
                 return reject(err)
             }
 
-            const request = create(AddProviderRequestSchema, {header: header, body: body})
+            const request = create(AddProviderRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.add(request)
                 await this.authenticate.doResponse(res, AddProviderResponseBodySchema, isExisted)
@@ -207,12 +208,12 @@ export class ProviderProvider {
     search(page: number, pageSize: number, code?: ProviderCodeEnum) {
         return new Promise<ProviderMetadata[]>(async (resolve, reject) => {
             const condition = create(SearchProviderConditionSchema, {
-                code: code,
+                code: code
             })
 
             const body = create(SearchProviderRequestBodySchema, {
                 condition: condition,
-                page: create(RequestPageSchema, {page: page, pageSize: pageSize}),
+                page: create(RequestPageSchema, { page: page, pageSize: pageSize })
             })
 
             let header
@@ -223,8 +224,7 @@ export class ProviderProvider {
                 return reject(err)
             }
 
-
-            const request = create(SearchProviderRequestSchema, {header: header, body: body})
+            const request = create(SearchProviderRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.search(request)
                 await this.authenticate.doResponse(res, SearchProviderResponseBodySchema)
@@ -235,7 +235,10 @@ export class ProviderProvider {
                             await verifyProviderMetadata(this.authenticate, provider)
                             providers.push(provider)
                         } catch (err) {
-                            console.error(`Fail to verify provider=${toJson(ProviderMetadataSchema, provider)} when searching`, err)
+                            console.error(
+                                `Fail to verify provider=${toJson(ProviderMetadataSchema, provider)} when searching`,
+                                err
+                            )
                         }
                     }
                 }
@@ -262,7 +265,7 @@ export class ProviderProvider {
      */
     delete(uid: string) {
         return new Promise<void>(async (resolve, reject) => {
-            const body = create(DeleteProviderRequestBodySchema, {uid: uid})
+            const body = create(DeleteProviderRequestBodySchema, { uid: uid })
             let header
             try {
                 header = await this.authenticate.createHeader(toBinary(DeleteProviderRequestBodySchema, body))
@@ -271,7 +274,7 @@ export class ProviderProvider {
                 return reject(err)
             }
 
-            const request = create(DeleteProviderRequestSchema, {header: header, body: body})
+            const request = create(DeleteProviderRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.delete(request)
                 await this.authenticate.doResponse(res, DeleteProviderResponseBodySchema, isDeleted)
@@ -298,7 +301,7 @@ export class ProviderProvider {
      */
     detail(uid: string) {
         return new Promise<ProviderDetail>(async (resolve, reject) => {
-            const body = create(ProviderDetailRequestBodySchema, {uid: uid})
+            const body = create(ProviderDetailRequestBodySchema, { uid: uid })
             let header
             try {
                 header = await this.authenticate.createHeader(toBinary(ProviderDetailRequestBodySchema, body))
@@ -307,8 +310,7 @@ export class ProviderProvider {
                 return reject(err)
             }
 
-
-            const request = create(ProviderDetailRequestSchema, {header: header, body: body})
+            const request = create(ProviderDetailRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.detail(request)
                 await this.authenticate.doResponse(res, ProviderDetailResponseBodySchema)

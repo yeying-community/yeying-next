@@ -14,15 +14,15 @@ import {
     UserMetadata,
     UserMetadataSchema
 } from '../../yeying/api/user/user_pb'
-import {getCurrentUtcString} from '../../common/date'
-import {Authenticate} from '../common/authenticate'
-import {MessageHeader} from '../../yeying/api/common/message_pb'
-import {ProviderOption} from '../common/model'
-import {create, toBinary} from '@bufbuild/protobuf'
-import {createGrpcWebTransport} from '@connectrpc/connect-web'
-import {Client, createClient} from '@connectrpc/connect'
-import {signUserMetadata, verifyUserMetadata, verifyUserState} from "../model/model";
-import {isDeleted, isExisted} from "../../common/status";
+import { getCurrentUtcString } from '../../common/date'
+import { Authenticate } from '../common/authenticate'
+import { MessageHeader } from '../../yeying/api/common/message_pb'
+import { ProviderOption } from '../common/model'
+import { create, toBinary } from '@bufbuild/protobuf'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { Client, createClient } from '@connectrpc/connect'
+import { signUserMetadata, verifyUserMetadata, verifyUserState } from '../model/model'
+import { isDeleted, isExisted } from '../../common/status'
 
 /**
  * 提供用户管理功能的类，支持添加、查询、更新和删除用户
@@ -76,7 +76,7 @@ export class UserProvider {
                 updatedAt: getCurrentUtcString()
             })
 
-            const body = create(AddUserRequestBodySchema, {user: user})
+            const body = create(AddUserRequestBodySchema, { user: user })
             let header: MessageHeader
             try {
                 user.signature = await this.authenticate.sign(toBinary(UserMetadataSchema, user))
@@ -86,7 +86,7 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = create(AddUserRequestSchema, {header: header, body: body})
+            const request = create(AddUserRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.add(request)
                 await this.authenticate.doResponse(res, AddUserResponseBodySchema, isExisted)
@@ -115,7 +115,7 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = create(UserDetailRequestSchema, {header: header})
+            const request = create(UserDetailRequestSchema, { header: header })
             try {
                 const res = await this.client.detail(request)
                 await this.authenticate.doResponse(res, UserDetailResponseBodySchema)
@@ -128,7 +128,6 @@ export class UserProvider {
             }
         })
     }
-
 
     /**
      * 更新用户信息
@@ -147,7 +146,7 @@ export class UserProvider {
      */
     update(user: UserMetadata): Promise<UserMetadata> {
         return new Promise<UserMetadata>(async (resolve, reject) => {
-            const body = create(UpdateUserRequestBodySchema, {user: user})
+            const body = create(UpdateUserRequestBodySchema, { user: user })
             let header
             try {
                 user.updatedAt = getCurrentUtcString()
@@ -158,7 +157,7 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = create(UpdateUserRequestSchema, {header: header, body: body})
+            const request = create(UpdateUserRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.update(request)
                 await this.authenticate.doResponse(res, UpdateUserResponseBodySchema)
@@ -193,7 +192,7 @@ export class UserProvider {
                 return reject(err)
             }
 
-            const request = create(DeleteUserRequestSchema, {header: header})
+            const request = create(DeleteUserRequestSchema, { header: header })
             try {
                 const res = await this.client.delete(request)
                 await this.authenticate.doResponse(res, DeleteUserResponseBodySchema, isDeleted)

@@ -541,7 +541,7 @@ export const SessionMetadataSchema: GenMessage<SessionMetadata> = /*@__PURE__*/
  */
 export const Session: GenService<{
   /**
-   * 添加会话
+   * 创建会话
    *
    * @generated from rpc yeying.api.session.Session.Create
    */
