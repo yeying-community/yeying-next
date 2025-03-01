@@ -19,7 +19,7 @@ export class ArchiveProvider {
      * @example
      * ```ts
      * const providerOption = { proxy: <proxy url>, blockAddress: <your block address> };
-     * const mailProvider = new MailProvider(providerOption);
+     * const mailProvider = new ArchiveProvider(providerOption);
      * ```
      */
     constructor(option: ProviderOption) {
@@ -49,7 +49,7 @@ export class ArchiveProvider {
                 // 创建消息头
                 header = await this.authenticate.createHeader(toBinary(ArchiveListRequestBodySchema, body))
             } catch (err) {
-                console.error('Fail to create header for sending mail', err)
+                console.error('Fail to create header for list Archive', err)
                 return reject(err)
             }
 
