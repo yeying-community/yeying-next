@@ -1,10 +1,10 @@
-import {formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond} from '../../common/date'
-import {Authenticate} from '../common/authenticate'
-import {MessageHeader, RequestPageSchema} from '../../yeying/api/common/message_pb'
-import {ProviderOption} from '../common/model'
-import {create, toBinary} from '@bufbuild/protobuf'
-import {createGrpcWebTransport} from '@connectrpc/connect-web'
-import {Client, createClient} from '@connectrpc/connect'
+import { formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond } from '../../common/date'
+import { Authenticate } from '../common/authenticate'
+import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/message_pb'
+import { ProviderOption } from '../common/model'
+import { create, toBinary } from '@bufbuild/protobuf'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { Client, createClient } from '@connectrpc/connect'
 import {
     CreateInvitationRequestBodySchema,
     CreateInvitationRequestSchema,
@@ -19,8 +19,8 @@ import {
     SearchInvitationRequestSchema,
     SearchInvitationResponseBodySchema
 } from '../../yeying/api/invitation/invitation_pb'
-import {generateRandomString} from '../../common/string'
-import {signInvitationMetadata, verifyInvitationMetadata} from "../model/model";
+import { generateRandomString } from '../../common/string'
+import { signInvitationMetadata, verifyInvitationMetadata } from '../model/model'
 
 /**
  * 邀请码提供商，创建和查询邀请码。
@@ -81,7 +81,7 @@ export class InvitationProvider {
                 expiredAt: formatDateTime(plusSecond(getCurrentUtcDateTime(), duration * 24 * 3600))
             })
 
-            const body = create(CreateInvitationRequestBodySchema, {invitation: invitation})
+            const body = create(CreateInvitationRequestBodySchema, { invitation: invitation })
             let header: MessageHeader
             try {
                 await signInvitationMetadata(this.authenticate, invitation)
@@ -91,7 +91,7 @@ export class InvitationProvider {
                 return reject(err)
             }
 
-            const request = create(CreateInvitationRequestSchema, {header: header, body: body})
+            const request = create(CreateInvitationRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.create(request)
                 await this.authenticate.doResponse(res, CreateInvitationResponseBodySchema)
@@ -135,7 +135,7 @@ export class InvitationProvider {
                 return reject(err)
             }
 
-            const request = create(SearchInvitationRequestSchema, {header: header, body: body})
+            const request = create(SearchInvitationRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.search(request)
                 await this.authenticate.doResponse(res, SearchInvitationResponseBodySchema)
@@ -173,7 +173,7 @@ export class InvitationProvider {
                 return reject(err)
             }
 
-            const request = create(InvitationDetailRequestSchema, {header: header, body: body})
+            const request = create(InvitationDetailRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.detail(request)
                 await this.authenticate.doResponse(res, InvitationDetailResponseBodySchema)

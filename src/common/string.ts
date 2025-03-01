@@ -2,11 +2,12 @@ export function isValidString(s: any) {
     return s !== undefined && s !== null && typeof s === 'string'
 }
 
-// export function isBlank(str) {
-//   // 白空格字符: 空格(" "), Tab制表符(\t), 空操作符(\0), 垂直制表符(\v), 换页符(\f)
-//   // 行结束符: 换行符(\n), 回车符(\r)
-//   return str === undefined || str === null || str.trim().length === 0
-// }
+export function isBlank(s?: string) {
+    // 白空格字符: 空格(" "), Tab制表符(\t), 空操作符(\0), 垂直制表符(\v), 换页符(\f)
+    // 行结束符: 换行符(\n), 回车符(\r)
+    return s === undefined || s === null || s.trim().length === 0
+}
+
 //
 // export function encodeString(str) {
 //   return new TextEncoder().encode(str)
