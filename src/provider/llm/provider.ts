@@ -100,6 +100,20 @@ export class ProviderProvider {
         })
     }
 
+    /**
+     * 获取模型列表
+     * @param providerCode - 可选，提供商代码枚举
+     * @param modelType - 可选，模型类型枚举
+     * @returns Promise - 返回包含模型元数据的Promise
+     * @example
+     * ```ts
+     * modelProvider.models().then(models => {
+     *   console.log(models); // 返回的模型元数据列表
+     * }).catch(err => {
+     *   console.error(err); // 错误信息
+     * });
+     * ```
+     */
     models(providerCode?: ProviderCodeEnum, modelType?: ModelTypeEnum) {
         return new Promise<ModelMetadata[]>(async (resolve, reject) => {
             let header
@@ -122,6 +136,22 @@ export class ProviderProvider {
         })
     }
 
+    /**
+     * 添加提供者
+     * @param name - 提供者名称
+     * @param code - 提供者代码枚举
+     * @param key - 提供者的密钥
+     * @param uid - 可选，提供者的唯一标识符，若不提供则自动生成
+     * @returns Promise - 返回包含提供者元数据的Promise
+     * @example
+     * ```ts
+     * providerService.add('ExampleProvider', ProviderCodeEnum.EXAMPLE, 'example-key').then(provider => {
+     *   console.log(provider); // 返回的提供者元数据
+     * }).catch(err => {
+     *   console.error(err); // 错误信息
+     * });
+     * ```
+     */
     add(name: string, code: ProviderCodeEnum, key: string, uid?: string) {
         return new Promise<ProviderMetadata>(async (resolve, reject) => {
             const provider = create(ProviderMetadataSchema, {
@@ -159,6 +189,21 @@ export class ProviderProvider {
         })
     }
 
+    /**
+     * 搜索提供者
+     * @param page - 页码
+     * @param pageSize - 每页大小
+     * @param code - 可选，提供者代码枚举
+     * @returns Promise - 返回包含提供者元数据的Promise
+     * @example
+     * ```ts
+     * providerService.search(1, 10, ProviderCodeEnum.EXAMPLE).then(providers => {
+     *   console.log(providers); // 返回的提供者元数据列表
+     * }).catch(err => {
+     *   console.error(err); // 错误信息
+     * });
+     * ```
+     */
     search(page: number, pageSize: number, code?: ProviderCodeEnum) {
         return new Promise<ProviderMetadata[]>(async (resolve, reject) => {
             const condition = create(SearchProviderConditionSchema, {
@@ -202,6 +247,19 @@ export class ProviderProvider {
         })
     }
 
+    /**
+     * 删除提供者
+     * @param uid - 提供者的唯一标识符
+     * @returns Promise - 返回一个空的Promise，表示删除操作完成
+     * @example
+     * ```ts
+     * providerService.delete('provider-uid').then(() => {
+     *   console.log('Provider deleted successfully');
+     * }).catch(err => {
+     *   console.error(err); // 错误信息
+     * });
+     * ```
+     */
     delete(uid: string) {
         return new Promise<void>(async (resolve, reject) => {
             const body = create(DeleteProviderRequestBodySchema, {uid: uid})
@@ -225,6 +283,19 @@ export class ProviderProvider {
         })
     }
 
+    /**
+     * 获取提供者详情
+     * @param uid - 提供者的唯一标识符
+     * @returns Promise - 返回包含提供者详情的Promise
+     * @example
+     * ```ts
+     * providerService.detail('provider-uid').then(detail => {
+     *   console.log(detail); // 返回的提供者详情
+     * }).catch(err => {
+     *   console.error(err); // 错误信息
+     * });
+     * ```
+     */
     detail(uid: string) {
         return new Promise<ProviderDetail>(async (resolve, reject) => {
             const body = create(ProviderDetailRequestBodySchema, {uid: uid})

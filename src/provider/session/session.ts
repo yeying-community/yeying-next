@@ -65,6 +65,22 @@ export class SessionProvider {
         )
     }
 
+    /**
+     * 创建会话
+     * @param name - 会话的名称
+     * @param templateId - 会话模板ID（可选）
+     * @param description - 会话的描述信息（可选）
+     * @param uid - 会话的唯一标识符（可选，若未提供将自动生成）
+     * @returns Promise - 返回包含会话元数据的Promise
+     * @example
+     * ```ts
+     * sessionService.create('Session Name', 'template-123', 'This is a session description').then(session => {
+     *   console.log(session); // 返回的会话元数据
+     * }).catch(err => {
+     *   console.error(err); // 错误信息
+     * });
+     * ```
+     */
     create(name: string, templateId?: string, description?: string, uid?: string) {
         return new Promise<SessionMetadata>(async (resolve, reject) => {
             const session = create(SessionMetadataSchema, {
@@ -101,6 +117,22 @@ export class SessionProvider {
         })
     }
 
+    /**
+     * 搜索会话
+     * @param page - 页码，默认为1
+     * @param pageSize - 每页大小，默认为10
+     * @param uid - 可选，会话的唯一标识符
+     * @param name - 可选，会话名称
+     * @returns Promise - 返回包含会话元数据的Promise
+     * @example
+     * ```ts
+     * sessionService.search(1, 10, 'session-uid', 'session-name').then(sessions => {
+     *   console.log(sessions); // 返回的会话元数据列表
+     * }).catch(err => {
+     *   console.error(err); // 错误信息
+     * });
+     * ```
+     */
     search(page: number = 1, pageSize: number = 10, uid?: string, name?: string) {
         return new Promise<SessionMetadata[]>(async (resolve, reject) => {
             const body = create(SearchSessionRequestBodySchema, {
@@ -145,6 +177,19 @@ export class SessionProvider {
         })
     }
 
+    /**
+     * 删除会话
+     * @param uid - 会话的唯一标识符
+     * @returns Promise - 返回一个空的Promise，表示删除操作完成
+     * @example
+     * ```ts
+     * sessionService.delete('session-uid').then(() => {
+     *   console.log('Session deleted successfully');
+     * }).catch(err => {
+     *   console.error(err); // 错误信息
+     * });
+     * ```
+     */
     delete(uid: string) {
         return new Promise<void>(async (resolve, reject) => {
             const body = create(DeleteSessionRequestBodySchema, {uid: uid})
@@ -168,6 +213,19 @@ export class SessionProvider {
         })
     }
 
+    /**
+     * 获取会话详情
+     * @param uid - 会话的唯一标识符
+     * @returns Promise - 返回包含会话详情的Promise
+     * @example
+     * ```ts
+     * sessionService.detail('session-uid').then(detail => {
+     *   console.log(detail); // 返回的会话详情
+     * }).catch(err => {
+     *   console.error(err); // 错误信息
+     * });
+     * ```
+     */
     detail(uid: string) {
         return new Promise<SessionDetail>(async (resolve, reject) => {
             const body = create(SessionDetailRequestBodySchema, {uid: uid})
@@ -193,6 +251,19 @@ export class SessionProvider {
         })
     }
 
+    /**
+     * 更新会话
+     * @param session - 会话元数据
+     * @returns Promise - 返回包含更新后会话元数据的Promise
+     * @example
+     * ```ts
+     * sessionService.update(session).then(updatedSession => {
+     *   console.log(updatedSession); // 返回的更新后会话元数据
+     * }).catch(err => {
+     *   console.error(err); // 错误信息
+     * });
+     * ```
+     */
     update(session: SessionMetadata) {
         return new Promise<SessionMetadata>(async (resolve, reject) => {
             const body = create(UpdateSessionRequestBodySchema, {session: session})
