@@ -1,4 +1,4 @@
-import {getBlockAddress, getProviderProxy} from "../common/common";
+import {getBlockAddress, getIdentity, getProviderProxy} from "../common/common";
 import {ProviderOption} from "../../../src/provider/common/model";
 import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
 import {ServiceProvider} from "../../../src/provider/service/service";
@@ -7,15 +7,17 @@ import {deserializeIdentityFromJson} from "@yeying-community/yeying-web3";
 import {convertServiceMetadataFromIdentity} from "../../../src/provider/service/model";
 import {isDeleted, isExisted, isOk} from "../../../src/common/status";
 import {ServiceMetadataSchema} from "../../../src/yeying/api/service/service_pb";
+import {UserProvider} from "../../../src";
 
-const provider: ProviderOption = {
+const identity = getIdentity()
+const providerOption: ProviderOption = {
     proxy: getProviderProxy(ServiceCodeEnum.SERVICE_CODE_NODE),
-    blockAddress: getBlockAddress(),
+    blockAddress: identity.blockAddress,
 }
 
-const identity = {
+const serviceIdentity = {
     "metadata": {
-        "parent": "did:ethr:0x7e4:0x0396be3542029111627e1d08c65a740fcda7b8a341a618ebfe92bace61c0fd5506",
+        "parent": identity.blockAddress.identifier,
         "version": 0,
         "network": "NETWORK_TYPE_YEYING",
         "did": "did:ethr:0x07e4:0x03b2a2d5655d348c2fbef1ea90351cdef508b6982209d918316b6482d2d4f40fc0",
@@ -41,10 +43,15 @@ const identity = {
     }
 }
 
+beforeAll(async () => {
+    const userProvider = new UserProvider(providerOption)
+    await userProvider.add(identity.metadata.name, identity.metadata.avatar)
+})
+
 describe('Service', () => {
     it('register', async () => {
-        const serviceProvider = new ServiceProvider(provider)
-        const metadata = convertServiceMetadataFromIdentity(deserializeIdentityFromJson(JSON.stringify(identity)))
+        const serviceProvider = new ServiceProvider(providerOption)
+        const metadata = convertServiceMetadataFromIdentity(deserializeIdentityFromJson(JSON.stringify(serviceIdentity)))
         const body = await serviceProvider.register(metadata)
         assert.isTrue(isExisted(body.status))
         assert.deepEqual(metadata, body.service)
@@ -52,20 +59,20 @@ describe('Service', () => {
     })
 
     it('search', async () => {
-        const serviceProvider = new ServiceProvider(provider)
+        const serviceProvider = new ServiceProvider(providerOption)
         const body = await serviceProvider.search({code: ServiceCodeEnum.SERVICE_CODE_MCP}, 1, 10)
         assert.isTrue(isOk(body.status))
         const existing = body.services.find(i => {
             console.log(`Success to get node identity=${i.name}, did=${i.did}`)
-            return identity.metadata.did === i.did
+            return serviceIdentity.metadata.did === i.did
         })
         assert.isDefined(existing)
     })
 
     it('unregister', async () => {
-        const serviceProvider = new ServiceProvider(provider)
-        const body = await serviceProvider.unregister(identity.metadata.did, identity.metadata.version)
+        const serviceProvider = new ServiceProvider(providerOption)
+        const body = await serviceProvider.unregister(serviceIdentity.metadata.did, serviceIdentity.metadata.version)
         assert.isTrue(isDeleted(body.status))
-        console.log(`Success to unregister service=${identity.metadata.did}, version=${identity.metadata.version}`)
+        console.log(`Success to unregister service=${serviceIdentity.metadata.did}, version=${serviceIdentity.metadata.version}`)
     })
 })

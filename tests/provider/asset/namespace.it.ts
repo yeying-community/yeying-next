@@ -1,20 +1,17 @@
 import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
-import {getBlockAddress, getDefaultNamespace, getProviderProxy} from "../common/common";
-import {ProviderOption} from "../../../src";
+import {getDefaultNamespace, getIdentity, getProviderProxy} from "../common/common";
+import {ProviderOption, UserProvider} from "../../../src";
 import {NamespaceProvider} from "../../../src/provider/warehouse/namespace";
 
-
-// @ts-ignore
-let namespaceProvider: NamespaceProvider = undefined
+const identity = getIdentity()
+const providerOption: ProviderOption = {
+    proxy: getProviderProxy(ServiceCodeEnum.SERVICE_CODE_WAREHOUSE),
+    blockAddress: identity.blockAddress,
+}
 
 beforeAll(async () => {
-    console.log("start")
-    const provider: ProviderOption = {
-        proxy: getProviderProxy(ServiceCodeEnum.SERVICE_CODE_WAREHOUSE),
-        blockAddress: getBlockAddress(),
-    }
-
-    namespaceProvider = new NamespaceProvider(provider)
+    const userProvider = new UserProvider(providerOption)
+    await userProvider.add(identity.metadata.name, identity.metadata.avatar)
 });
 
 afterAll(() => {
@@ -23,6 +20,7 @@ afterAll(() => {
 
 describe('Namespace', () => {
     it('default namespace', async () => {
+        const namespaceProvider = new NamespaceProvider(providerOption)
         const defaultNamespaceId: string = getDefaultNamespace()
         let namespaceId = await namespaceProvider.getDefaultNamespace()
         if (namespaceId) {
