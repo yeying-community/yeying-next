@@ -70,7 +70,7 @@ export class Uploader {
     upload(
         namespaceId: string,
         file: File,
-        encrypted: boolean = true,
+        encrypted: boolean = false,
         parentHash?: string,
         description?: string
     ): Promise<AssetMetadata> {
