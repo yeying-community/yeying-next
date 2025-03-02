@@ -1,46 +1,43 @@
 import {DigitalFormatEnum, ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
-import {createTestFile, getBlockAddress, getProviderProxy, getSecurityAlgorithm} from "../common/common";
+import {createTestFile, getIdentity, getNamespace, getProviderProxy} from "../common/common";
 import {AssetProvider} from "../../../src/provider/warehouse/asset";
 import {Uploader} from "../../../src/provider/warehouse/uploader";
 import {SearchAssetCondition} from "../../../src/yeying/api/asset/asset_pb";
-import {ProviderOption} from "../../../src";
+import {ProviderOption, UserProvider} from "../../../src";
 import {toJson} from "@bufbuild/protobuf";
 import {NamespaceProvider} from "../../../src/provider/warehouse/namespace";
 import {RecycleProvider} from "../../../src/provider/warehouse/recycle";
 import {DeletedAssetMetadataSchema} from "../../../src/yeying/api/asset/recycle_pb";
 
-// @ts-ignore
-let assetProvider: AssetProvider = undefined
-// @ts-ignore
-let recycleProvider: RecycleProvider = undefined
-// @ts-ignore
-let namespaceProvider: NamespaceProvider = undefined
-// @ts-ignore
-let file: File = undefined
+const identity = getIdentity()
+const providerOption: ProviderOption = {
+    proxy: getProviderProxy(ServiceCodeEnum.SERVICE_CODE_WAREHOUSE),
+    blockAddress: identity.blockAddress,
+}
+const namespace = getNamespace()
+
+let file: File = createTestFile("recycle.txt", 1024 * 1024 + 1)
+
 // @ts-ignore
 let asset: AssetMetadata = undefined
 
 beforeAll(async () => {
-    console.log("start")
-    const provider: ProviderOption = {
-        proxy: getProviderProxy(ServiceCodeEnum.SERVICE_CODE_WAREHOUSE),
-        blockAddress: getBlockAddress(),
-    }
+    const userProvider = new UserProvider(providerOption)
+    await userProvider.add(identity.metadata.name, identity.metadata.avatar)
 
-    file = createTestFile("recycle.txt", 1024 * 1024 + 1)
-    recycleProvider = new RecycleProvider(provider)
-    namespaceProvider = new NamespaceProvider(provider)
-    assetProvider = new AssetProvider(provider)
+    const namespaceProvider = new NamespaceProvider(providerOption)
+    await namespaceProvider.create(namespace.name, "", namespace.uid)
 
-    const namespaceId: string = '7227c65a-cdf5-41b5-864a-dd92151b0e97'
-    await namespaceProvider.create("recycle_test", "test", namespaceId)
-    const uploader: Uploader = new Uploader(provider, getSecurityAlgorithm())
-    asset = await uploader.upload(namespaceId, file, false)
+    const uploader: Uploader = new Uploader(providerOption, identity.securityConfig.algorithm)
+    asset = await uploader.upload(namespace.uid, file, false)
+
+    const assetProvider = new AssetProvider(providerOption)
     await assetProvider.delete(asset.namespaceId, asset.hash)
 });
 
 describe('Recycle', () => {
     it('search from trash', async () => {
+        const recycleProvider = new RecycleProvider(providerOption)
         const condition: Partial<SearchAssetCondition> = {
             format: DigitalFormatEnum.DIGITAL_FORMAT_TEXT,
             namespaceId: asset.namespaceId,
@@ -54,12 +51,16 @@ describe('Recycle', () => {
     })
 
     it('recover from trash', async () => {
+        const recycleProvider = new RecycleProvider(providerOption)
         await recycleProvider.recover(asset.namespaceId, asset.hash)
         console.log(`Success to recover from trash, namespaceId=${asset.namespaceId}, hash=${asset.hash}`)
     })
 
     it('remove from trash', async () => {
+        const assetProvider = new AssetProvider(providerOption)
         await assetProvider.delete(asset.namespaceId, asset.hash)
+
+        const recycleProvider = new RecycleProvider(providerOption)
         await recycleProvider.remove(asset.namespaceId, asset.hash)
         console.log(`Success to remove from trash, namespaceId=${asset.namespaceId}, hash=${asset.hash}`)
     })
