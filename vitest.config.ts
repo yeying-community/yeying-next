@@ -11,6 +11,5 @@ export default defineConfig({
     testTimeout: 60000, // 超时时间 60 秒
   },
 })
-
 // 加载环境变量
 dotenv.config({ path: path.resolve(__dirname, '.env') });
