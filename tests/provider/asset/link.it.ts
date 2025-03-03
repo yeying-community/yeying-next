@@ -9,6 +9,7 @@ import {
     UrlMetadataSchema,
     UserProvider, VisitorMetadataSchema
 } from "../../../src";
+
 import {NamespaceProvider} from "../../../src/provider/warehouse/namespace";
 import {LinkProvider} from "../../../src/provider/warehouse/link";
 import {LinkMetadataSchema, LinkTypeEnum} from "../../../src/yeying/api/asset/link_pb";
@@ -24,15 +25,16 @@ const providerOption: ProviderOption = {
 const file: File = createTestFile("link.txt", 1024 * 1024 + 1)
 let asset: AssetMetadata | undefined = undefined
 
+
 beforeAll(async () => {
     const userProvider = new UserProvider(providerOption)
     await userProvider.add(identity.metadata.name, identity.metadata.avatar)
 
     const namespaceProvider = new NamespaceProvider(providerOption)
     await namespaceProvider.create(namespace.name, "", namespace.uid)
-
     const uploader = new Uploader(providerOption, identity.securityConfig.algorithm)
     asset = await uploader.upload(namespace.uid, file, false)
+
 });
 
 afterAll(() => {
