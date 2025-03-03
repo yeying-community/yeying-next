@@ -22,7 +22,7 @@ const providerOption: ProviderOption = {
     blockAddress: identity.blockAddress,
 }
 
-const file: File = createTestFile("link.txt", 1024 * 1024 + 1)
+const file: File = createTestFile("link.txt", 1024 * 1024 + 10)
 let asset: AssetMetadata | undefined = undefined
 
 
