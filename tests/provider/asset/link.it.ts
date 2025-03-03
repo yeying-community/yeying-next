@@ -34,7 +34,6 @@ beforeAll(async () => {
     await namespaceProvider.create(namespace.name, "", namespace.uid)
     const uploader = new Uploader(providerOption, identity.securityConfig.algorithm)
     asset = await uploader.upload(namespace.uid, file, false)
-
 });
 
 afterAll(() => {
