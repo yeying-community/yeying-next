@@ -14,6 +14,7 @@ export { Downloader } from './provider/warehouse/downloader'
 export { IdentityManager } from './identity/manager'
 export { MailProvider } from './provider/mail/mail'
 export { ProviderProvider } from './provider/llm/provider'
+export { LlmProvider } from './provider/llm/llm'
 export { SessionProvider } from './provider/session/session'
 
 export {

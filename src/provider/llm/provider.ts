@@ -47,7 +47,7 @@ export class ProviderProvider {
      *
      * @private
      */
-    private authenticate: Authenticate
+    private readonly authenticate: Authenticate
     private client: Client<typeof Provider>
 
     /**
@@ -57,7 +57,7 @@ export class ProviderProvider {
      * @example
      * ```ts
      * const option = { proxy: <proxy url>, blockAddress: <your block address> };
-     * const llmProvider = new LlmProvider(providerOption);
+     * const providerProvider = new ProviderProvider(providerOption);
      * ```
      */
     constructor(option: ProviderOption) {

@@ -1,36 +1,39 @@
 import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
-import {createTestFile, getBlockAddress, getProviderProxy, getSecurityAlgorithm} from "../common/common";
-import {AssetMetadata, ProviderOption, Uploader} from "../../../src";
+import {createTestFile, getIdentity, getNamespace, getProviderProxy} from "../common/common";
+import {
+    AssetMetadata,
+    LinkMetadata,
+    ProviderOption,
+    Uploader,
+    UrlMetadata,
+    UrlMetadataSchema,
+    UserProvider, VisitorMetadataSchema
+} from "../../../src";
+
 import {NamespaceProvider} from "../../../src/provider/warehouse/namespace";
 import {LinkProvider} from "../../../src/provider/warehouse/link";
 import {LinkMetadataSchema, LinkTypeEnum} from "../../../src/yeying/api/asset/link_pb";
 import {toJson} from "@bufbuild/protobuf";
 
+const namespace = getNamespace()
+const identity = getIdentity()
+const providerOption: ProviderOption = {
+    proxy: getProviderProxy(ServiceCodeEnum.SERVICE_CODE_WAREHOUSE),
+    blockAddress: identity.blockAddress,
+}
 
-// @ts-ignore
-let linkProvider: LinkProvider = undefined
-// @ts-ignore
-let namespaceProvider: NamespaceProvider = undefined
-// @ts-ignore
-let file: File = undefined
-// @ts-ignore
-let asset: AssetMetadata = undefined
+const file: File = createTestFile("link.txt", 1024 * 1024 + 10)
+let asset: AssetMetadata | undefined = undefined
+
 
 beforeAll(async () => {
-    console.log("start")
-    const provider: ProviderOption = {
-        proxy: getProviderProxy(ServiceCodeEnum.SERVICE_CODE_WAREHOUSE),
-        blockAddress: getBlockAddress(),
-    }
+    const userProvider = new UserProvider(providerOption)
+    await userProvider.add(identity.metadata.name, identity.metadata.avatar)
 
-    file = createTestFile("link.txt", 1024 * 1024 + 1)
-    linkProvider = new LinkProvider(provider)
-    namespaceProvider = new NamespaceProvider(provider)
-    const namespaceId = '952399be-acd5-47f5-94a1-2b84a324e3c4'
-
-    await namespaceProvider.create("link_test", "test", namespaceId)
-    const uploader = new Uploader(provider, getSecurityAlgorithm())
-    asset = await uploader.upload(namespaceId, file, false)
+    const namespaceProvider = new NamespaceProvider(providerOption)
+    await namespaceProvider.create(namespace.name, "", namespace.uid)
+    const uploader = new Uploader(providerOption, identity.securityConfig.algorithm)
+    asset = await uploader.upload(namespace.uid, file, false)
 });
 
 afterAll(() => {
@@ -39,13 +42,42 @@ afterAll(() => {
 
 describe('Link', () => {
     it('create', async () => {
-        console.log(`Try to create link for asset=${asset.hash}`)
-        const [link, url] = await linkProvider.create(
-            asset.namespaceId,
-            asset.hash,
+        const a = asset as AssetMetadata
+        const linkProvider = new LinkProvider(providerOption)
+        console.log(`Try to create link for asset=${a.hash}`)
+        const detail = await linkProvider.create(
+            a.namespaceId,
+            a.hash,
             24 * 3600,
             LinkTypeEnum.LINK_STATUS_PUBLIC)
-        console.log(`Success to get link=${JSON.stringify(toJson(LinkMetadataSchema, link))}`)
-        console.log(`Success to get url=${url.url}`)
+        assert.isDefined(detail)
+        console.log(`Success to get link=${JSON.stringify(toJson(LinkMetadataSchema, detail.link as LinkMetadata))}`)
+        console.log(`Success to get url=${JSON.stringify(toJson(UrlMetadataSchema, detail.url as UrlMetadata))}`)
+    })
+
+    it('search', async () => {
+        const linkProvider = new LinkProvider(providerOption)
+        const links = await linkProvider.search()
+        assert.isAtLeast(links.length, 1)
+    })
+
+    it('detail', async () => {
+        const linkProvider = new LinkProvider(providerOption)
+        const links = await linkProvider.search(1, 10, {hash: asset?.hash})
+        assert.isAtLeast(links.length, 1)
+        const detail = await linkProvider.detail(links[0].uid)
+        console.log(`Success to get link=${JSON.stringify(toJson(LinkMetadataSchema, detail.link as LinkMetadata))}`)
+        console.log(`Success to get url=${JSON.stringify(toJson(UrlMetadataSchema, detail.url as UrlMetadata))}`)
+    })
+
+    it('visitor', async () => {
+        const linkProvider = new LinkProvider(providerOption)
+        const links = await linkProvider.search(1, 10, {hash: asset?.hash})
+        assert.isAtLeast(links.length, 1)
+
+        const visitors = await linkProvider.visitors(links[0].uid)
+        for (const visitor of visitors) {
+            console.log(`Success to get visitor=${JSON.stringify(toJson(VisitorMetadataSchema, visitor))}`)
+        }
     })
 })

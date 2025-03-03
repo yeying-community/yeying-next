@@ -14,6 +14,13 @@ import {
     ProviderStateSchema
 } from '../../yeying/api/llm/provider_pb'
 import { SessionMetadata, SessionMetadataSchema } from '../../yeying/api/session/session_pb'
+import {
+    LinkMetadata,
+    LinkMetadataSchema,
+    UrlMetadata,
+    UrlMetadataSchema,
+    VisitorMetadata, VisitorMetadataSchema
+} from "../../yeying/api/asset/link_pb";
 
 /**
  * 对资产元数据进行签名，并更新元数据的`signature`字段。
@@ -374,5 +381,87 @@ export async function verifySessionMetadata(authenticate: Authenticate, session?
         }
     } finally {
         session.signature = signature
+    }
+}
+
+
+/**
+ * 对分享链接元数据进行签名，并更新元数据的`signature`字段。
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param provider 分享链接元数据
+ *
+ * @returns 无返回
+ */
+export async function signLinkMetadata(authenticate: Authenticate, provider: LinkMetadata) {
+    provider.signature = ''
+    provider.signature = await authenticate.sign(toBinary(LinkMetadataSchema, provider))
+}
+
+/**
+ * 验证分享链接元数据的签名是否有效
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param session 分享链接元数据对象
+ *
+ * @returns 无返回
+ *
+ * @throws DataTampering 元数据被篡改
+ */
+export async function verifyLinkMetadata(authenticate: Authenticate, link?: LinkMetadata) {
+    if (link === undefined) {
+        throw new DataTampering('empty link.')
+    }
+
+    const signature = link.signature
+    try {
+        link.signature = ''
+        if (!(await authenticate.verify(link.owner, toBinary(LinkMetadataSchema, link), signature))) {
+            throw new DataTampering('invalid link.')
+        }
+    } finally {
+        link.signature = signature
+    }
+}
+
+/**
+ * 验证链接访问地址元数据的签名是否有效
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param session 链接访问地址元数据对象
+ *
+ * @returns 无返回
+ *
+ * @throws DataTampering 元数据被篡改
+ */
+export async function verifyUrlMetadata(authenticate: Authenticate, url?: UrlMetadata) {
+    if (url === undefined) {
+        throw new DataTampering('empty url.')
+    }
+
+    const signature = url.signature
+    try {
+        url.signature = ''
+        if (!(await authenticate.verify(url.serviceDid, toBinary(UrlMetadataSchema, url), signature))) {
+            throw new DataTampering('invalid url.')
+        }
+    } finally {
+        url.signature = signature
+    }
+}
+
+export async function verifyVisitorMetadata(authenticate: Authenticate, visitor?: VisitorMetadata) {
+    if (visitor === undefined) {
+        throw new DataTampering('empty visitor.')
+    }
+
+    const signature = visitor.signature
+    try {
+        visitor.signature = ''
+        if (!(await authenticate.verify(visitor.did, toBinary(VisitorMetadataSchema, visitor), signature))) {
+            throw new DataTampering('invalid visitor.')
+        }
+    } finally {
+        visitor.signature = signature
     }
 }

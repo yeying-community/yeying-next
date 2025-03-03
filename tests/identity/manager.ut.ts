@@ -30,7 +30,10 @@ describe('Identity', () => {
         const password = '123456'
         const identity = await manager.createIdentity(password, template)
         const metadata = identity.metadata as IdentityMetadata
+
         console.log(`Success to create identity=${metadata.did}`)
+        console.log(`BlockAddress=${JSON.stringify(await manager.getBlockAddress(metadata.did))}`)
+        console.log(`Security=${JSON.stringify(identity.securityConfig)}`)
         const result = await manager.importIdentity(await manager.exportIdentity(metadata.did), password)
         expect(result).toStrictEqual(identity)
     })

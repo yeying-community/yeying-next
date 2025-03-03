@@ -6,7 +6,7 @@ import { create, toBinary, toJson } from '@bufbuild/protobuf'
 import { generateUuid } from '../../common/string'
 import { getCurrentUtcString } from '../../common/date'
 import { signSessionMetadata, verifySessionMetadata } from '../model/model'
-import { isDeleted } from '../../common/status'
+import {isDeleted, isExisted} from '../../common/status'
 import {
     CreateSessionRequestBodySchema,
     CreateSessionRequestSchema,
@@ -106,7 +106,7 @@ export class SessionProvider {
             const request = create(CreateSessionRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.create(request)
-                await this.authenticate.doResponse(res, CreateSessionResponseBodySchema)
+                await this.authenticate.doResponse(res, CreateSessionResponseBodySchema, isExisted)
                 await verifySessionMetadata(this.authenticate, res.body?.session)
                 resolve(res.body?.session as SessionMetadata)
             } catch (err) {

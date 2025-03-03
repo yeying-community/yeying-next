@@ -77,7 +77,7 @@ export class AlreadyExist extends Error {
      * @param message - 错误消息。
      * @param options - 错误选项。
      */
-    constructor(message: string, options?: ErrorOptions) {
+    constructor(message?: string, options?: ErrorOptions) {
         super(message, options)
     }
 }
@@ -91,7 +91,7 @@ export class InvalidStatus extends Error {
      * @param message - 错误消息。
      * @param options - 错误选项。
      */
-    constructor(message: string, options: ErrorOptions) {
+    constructor(message?: string, options?: ErrorOptions) {
         super(message, options)
     }
 }
@@ -105,7 +105,7 @@ export class InvalidArgument extends Error {
      * @param message - 错误消息。
      * @param options - 错误选项。
      */
-    constructor(message: string, options?: ErrorOptions) {
+    constructor(message?: string, options?: ErrorOptions) {
         super(message, options)
     }
 }
