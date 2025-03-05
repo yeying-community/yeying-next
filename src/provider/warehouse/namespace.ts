@@ -112,7 +112,7 @@ export class NamespaceProvider {
                 const namespaces: NamespaceMetadata[] = []
                 for (const n of resBody.namespaces) {
                     try {
-                        await verifyNamespaceMetadata(this.authenticate, n)
+                        await verifyNamespaceMetadata(n)
                         namespaces.push(n)
                     } catch (err) {
                         console.error(`Fail to verify namespace=${JSON.stringify(toJson(NamespaceMetadataSchema, n))}`)
@@ -163,7 +163,7 @@ export class NamespaceProvider {
             try {
                 const res = await this.client.create(request)
                 await this.authenticate.doResponse(res, CreateNamespaceResponseBodySchema)
-                await verifyNamespaceMetadata(this.authenticate, res.body?.namespace)
+                await verifyNamespaceMetadata(res.body?.namespace)
                 return resolve(res.body?.namespace as NamespaceMetadata)
             } catch (err) {
                 console.error('Fail to create namespace', err)

@@ -88,7 +88,7 @@ export class BulletinProvider {
                     const signature = solution.signature
                     solution.signature = ''
 
-                    const passed = await this.authenticate.verify(
+                    const passed = await Authenticate.verify(
                         solution.publisher,
                         toBinary(SolutionMetadataSchema, solution),
                         signature
