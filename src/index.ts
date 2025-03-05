@@ -33,6 +33,8 @@ export {
     SecurityAlgorithm
 } from '@yeying-community/yeying-web3'
 
+export * from './yeying/api/llm/provider_pb'
+export * from './yeying/api/llm/llm_pb'
 export * from './yeying/api/common/code_pb'
 export * from './yeying/api/common/message_pb'
 export * from './yeying/api/asset/asset_pb'
