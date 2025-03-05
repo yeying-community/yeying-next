@@ -6,15 +6,17 @@ import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegen
 import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv1";
 import type { MessageHeader, RequestPage, ResponsePage, ResponseStatus } from "../common/message_pb";
 import { file_yeying_api_common_message } from "../common/message_pb";
-import type { ApiCodeEnum, ServiceCodeEnum } from "../common/code_pb";
+import type { ServiceCodeEnum } from "../common/code_pb";
 import { file_yeying_api_common_code } from "../common/code_pb";
+import type { ServiceMetadata } from "../common/model_pb";
+import { file_yeying_api_common_model } from "../common/model_pb";
 import type { Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file yeying/api/service/service.proto.
  */
 export const file_yeying_api_service_service: GenFile = /*@__PURE__*/
-  fileDesc("CiB5ZXlpbmcvYXBpL3NlcnZpY2Uvc2VydmljZS5wcm90bxISeWV5aW5nLmFwaS5zZXJ2aWNlIogBChZSZWdpc3RlclNlcnZpY2VSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISPAoEYm9keRgCIAEoCzIuLnlleWluZy5hcGkuc2VydmljZS5SZWdpc3RlclNlcnZpY2VSZXF1ZXN0Qm9keSJSChpSZWdpc3RlclNlcnZpY2VSZXF1ZXN0Qm9keRI0CgdzZXJ2aWNlGAEgASgLMiMueWV5aW5nLmFwaS5zZXJ2aWNlLlNlcnZpY2VNZXRhZGF0YSKKAQoXUmVnaXN0ZXJTZXJ2aWNlUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI9CgRib2R5GAIgASgLMi8ueWV5aW5nLmFwaS5zZXJ2aWNlLlJlZ2lzdGVyU2VydmljZVJlc3BvbnNlQm9keSKGAQobUmVnaXN0ZXJTZXJ2aWNlUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEjQKB3NlcnZpY2UYAiABKAsyIy55ZXlpbmcuYXBpLnNlcnZpY2UuU2VydmljZU1ldGFkYXRhIoQBChRTZWFyY2hTZXJ2aWNlUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjoKBGJvZHkYAiABKAsyLC55ZXlpbmcuYXBpLnNlcnZpY2UuU2VhcmNoU2VydmljZVJlcXVlc3RCb2R5IocBChhTZWFyY2hTZXJ2aWNlUmVxdWVzdEJvZHkSPQoJY29uZGl0aW9uGAEgASgLMioueWV5aW5nLmFwaS5zZXJ2aWNlLlNlYXJjaFNlcnZpY2VDb25kaXRpb24SLAoEcGFnZRgCIAEoCzIeLnlleWluZy5hcGkuY29tbW9uLlJlcXVlc3RQYWdlIlkKFlNlYXJjaFNlcnZpY2VDb25kaXRpb24SMAoEY29kZRgBIAEoDjIiLnlleWluZy5hcGkuY29tbW9uLlNlcnZpY2VDb2RlRW51bRINCgVvd25lchgCIAEoCSKGAQoVU2VhcmNoU2VydmljZVJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISOwoEYm9keRgCIAEoCzItLnlleWluZy5hcGkuc2VydmljZS5TZWFyY2hTZXJ2aWNlUmVzcG9uc2VCb2R5IrQBChlTZWFyY2hTZXJ2aWNlUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEjUKCHNlcnZpY2VzGAIgAygLMiMueWV5aW5nLmFwaS5zZXJ2aWNlLlNlcnZpY2VNZXRhZGF0YRItCgRwYWdlGAMgASgLMh8ueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VQYWdlIowBChhVbnJlZ2lzdGVyU2VydmljZVJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI+CgRib2R5GAIgASgLMjAueWV5aW5nLmFwaS5zZXJ2aWNlLlVucmVnaXN0ZXJTZXJ2aWNlUmVxdWVzdEJvZHkiPAocVW5yZWdpc3RlclNlcnZpY2VSZXF1ZXN0Qm9keRILCgNkaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoDSKOAQoZVW5yZWdpc3RlclNlcnZpY2VSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEj8KBGJvZHkYAiABKAsyMS55ZXlpbmcuYXBpLnNlcnZpY2UuVW5yZWdpc3RlclNlcnZpY2VSZXNwb25zZUJvZHkiiAEKHVVucmVnaXN0ZXJTZXJ2aWNlUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEjQKB3NlcnZpY2UYAiABKAsyIy55ZXlpbmcuYXBpLnNlcnZpY2UuU2VydmljZU1ldGFkYXRhIskCCg9TZXJ2aWNlTWV0YWRhdGESDQoFb3duZXIYASABKAkSDwoHbmV0d29yaxgCIAEoCRIPCgdhZGRyZXNzGAMgASgJEgsKA2RpZBgEIAEoCRIPCgd2ZXJzaW9uGAUgASgNEgwKBG5hbWUYBiABKAkSEwoLZGVzY3JpcHRpb24YByABKAkSMAoEY29kZRgIIAEoDjIiLnlleWluZy5hcGkuY29tbW9uLlNlcnZpY2VDb2RlRW51bRIsCgRhcGlzGAkgAygOMh4ueWV5aW5nLmFwaS5jb21tb24uQXBpQ29kZUVudW0SDQoFcHJveHkYCiABKAkSDAoEZ3JwYxgLIAEoCRIOCgZhdmF0YXIYDCABKAkSEQoJY3JlYXRlZEF0GA0gASgJEhEKCXVwZGF0ZWRBdBgOIAEoCRIRCglzaWduYXR1cmUYDyABKAkyvgIKB1NlcnZpY2USZQoIUmVnaXN0ZXISKi55ZXlpbmcuYXBpLnNlcnZpY2UuUmVnaXN0ZXJTZXJ2aWNlUmVxdWVzdBorLnlleWluZy5hcGkuc2VydmljZS5SZWdpc3RlclNlcnZpY2VSZXNwb25zZSIAEl8KBlNlYXJjaBIoLnlleWluZy5hcGkuc2VydmljZS5TZWFyY2hTZXJ2aWNlUmVxdWVzdBopLnlleWluZy5hcGkuc2VydmljZS5TZWFyY2hTZXJ2aWNlUmVzcG9uc2UiABJrCgpVbnJlZ2lzdGVyEiwueWV5aW5nLmFwaS5zZXJ2aWNlLlVucmVnaXN0ZXJTZXJ2aWNlUmVxdWVzdBotLnlleWluZy5hcGkuc2VydmljZS5VbnJlZ2lzdGVyU2VydmljZVJlc3BvbnNlIgBCFFoSeWV5aW5nL2FwaS9zZXJ2aWNlYgZwcm90bzM", [file_yeying_api_common_message, file_yeying_api_common_code]);
+  fileDesc("CiB5ZXlpbmcvYXBpL3NlcnZpY2Uvc2VydmljZS5wcm90bxISeWV5aW5nLmFwaS5zZXJ2aWNlIogBChZSZWdpc3RlclNlcnZpY2VSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISPAoEYm9keRgCIAEoCzIuLnlleWluZy5hcGkuc2VydmljZS5SZWdpc3RlclNlcnZpY2VSZXF1ZXN0Qm9keSJRChpSZWdpc3RlclNlcnZpY2VSZXF1ZXN0Qm9keRIzCgdzZXJ2aWNlGAEgASgLMiIueWV5aW5nLmFwaS5jb21tb24uU2VydmljZU1ldGFkYXRhIooBChdSZWdpc3RlclNlcnZpY2VSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEj0KBGJvZHkYAiABKAsyLy55ZXlpbmcuYXBpLnNlcnZpY2UuUmVnaXN0ZXJTZXJ2aWNlUmVzcG9uc2VCb2R5IoUBChtSZWdpc3RlclNlcnZpY2VSZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMSMwoHc2VydmljZRgCIAEoCzIiLnlleWluZy5hcGkuY29tbW9uLlNlcnZpY2VNZXRhZGF0YSKEAQoUU2VhcmNoU2VydmljZVJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI6CgRib2R5GAIgASgLMiwueWV5aW5nLmFwaS5zZXJ2aWNlLlNlYXJjaFNlcnZpY2VSZXF1ZXN0Qm9keSKHAQoYU2VhcmNoU2VydmljZVJlcXVlc3RCb2R5Ej0KCWNvbmRpdGlvbhgBIAEoCzIqLnlleWluZy5hcGkuc2VydmljZS5TZWFyY2hTZXJ2aWNlQ29uZGl0aW9uEiwKBHBhZ2UYAiABKAsyHi55ZXlpbmcuYXBpLmNvbW1vbi5SZXF1ZXN0UGFnZSJZChZTZWFyY2hTZXJ2aWNlQ29uZGl0aW9uEjAKBGNvZGUYASABKA4yIi55ZXlpbmcuYXBpLmNvbW1vbi5TZXJ2aWNlQ29kZUVudW0SDQoFb3duZXIYAiABKAkihgEKFVNlYXJjaFNlcnZpY2VSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEjsKBGJvZHkYAiABKAsyLS55ZXlpbmcuYXBpLnNlcnZpY2UuU2VhcmNoU2VydmljZVJlc3BvbnNlQm9keSKzAQoZU2VhcmNoU2VydmljZVJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxI0CghzZXJ2aWNlcxgCIAMoCzIiLnlleWluZy5hcGkuY29tbW9uLlNlcnZpY2VNZXRhZGF0YRItCgRwYWdlGAMgASgLMh8ueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VQYWdlIowBChhVbnJlZ2lzdGVyU2VydmljZVJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchI+CgRib2R5GAIgASgLMjAueWV5aW5nLmFwaS5zZXJ2aWNlLlVucmVnaXN0ZXJTZXJ2aWNlUmVxdWVzdEJvZHkiPAocVW5yZWdpc3RlclNlcnZpY2VSZXF1ZXN0Qm9keRILCgNkaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoDSKOAQoZVW5yZWdpc3RlclNlcnZpY2VSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEj8KBGJvZHkYAiABKAsyMS55ZXlpbmcuYXBpLnNlcnZpY2UuVW5yZWdpc3RlclNlcnZpY2VSZXNwb25zZUJvZHkihwEKHVVucmVnaXN0ZXJTZXJ2aWNlUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEjMKB3NlcnZpY2UYAiABKAsyIi55ZXlpbmcuYXBpLmNvbW1vbi5TZXJ2aWNlTWV0YWRhdGEyvgIKB1NlcnZpY2USZQoIUmVnaXN0ZXISKi55ZXlpbmcuYXBpLnNlcnZpY2UuUmVnaXN0ZXJTZXJ2aWNlUmVxdWVzdBorLnlleWluZy5hcGkuc2VydmljZS5SZWdpc3RlclNlcnZpY2VSZXNwb25zZSIAEl8KBlNlYXJjaBIoLnlleWluZy5hcGkuc2VydmljZS5TZWFyY2hTZXJ2aWNlUmVxdWVzdBopLnlleWluZy5hcGkuc2VydmljZS5TZWFyY2hTZXJ2aWNlUmVzcG9uc2UiABJrCgpVbnJlZ2lzdGVyEiwueWV5aW5nLmFwaS5zZXJ2aWNlLlVucmVnaXN0ZXJTZXJ2aWNlUmVxdWVzdBotLnlleWluZy5hcGkuc2VydmljZS5VbnJlZ2lzdGVyU2VydmljZVJlc3BvbnNlIgBCFFoSeWV5aW5nL2FwaS9zZXJ2aWNlYgZwcm90bzM", [file_yeying_api_common_message, file_yeying_api_common_code, file_yeying_api_common_model]);
 
 /**
  * @generated from message yeying.api.service.RegisterServiceRequest
@@ -43,7 +45,7 @@ export const RegisterServiceRequestSchema: GenMessage<RegisterServiceRequest> = 
  */
 export type RegisterServiceRequestBody = Message<"yeying.api.service.RegisterServiceRequestBody"> & {
   /**
-   * @generated from field: yeying.api.service.ServiceMetadata service = 1;
+   * @generated from field: yeying.api.common.ServiceMetadata service = 1;
    */
   service?: ServiceMetadata;
 };
@@ -87,7 +89,7 @@ export type RegisterServiceResponseBody = Message<"yeying.api.service.RegisterSe
   status?: ResponseStatus;
 
   /**
-   * @generated from field: yeying.api.service.ServiceMetadata service = 2;
+   * @generated from field: yeying.api.common.ServiceMetadata service = 2;
    */
   service?: ServiceMetadata;
 };
@@ -197,7 +199,7 @@ export type SearchServiceResponseBody = Message<"yeying.api.service.SearchServic
   status?: ResponseStatus;
 
   /**
-   * @generated from field: repeated yeying.api.service.ServiceMetadata services = 2;
+   * @generated from field: repeated yeying.api.common.ServiceMetadata services = 2;
    */
   services: ServiceMetadata[];
 
@@ -290,7 +292,7 @@ export type UnregisterServiceResponseBody = Message<"yeying.api.service.Unregist
   status?: ResponseStatus;
 
   /**
-   * @generated from field: yeying.api.service.ServiceMetadata service = 2;
+   * @generated from field: yeying.api.common.ServiceMetadata service = 2;
    */
   service?: ServiceMetadata;
 };
@@ -303,134 +305,15 @@ export const UnregisterServiceResponseBodySchema: GenMessage<UnregisterServiceRe
   messageDesc(file_yeying_api_service_service, 12);
 
 /**
- * @generated from message yeying.api.service.ServiceMetadata
- */
-export type ServiceMetadata = Message<"yeying.api.service.ServiceMetadata"> & {
-  /**
-   * 服务所有者 
-   *
-   * @generated from field: string owner = 1;
-   */
-  owner: string;
-
-  /**
-   * 服务所在网络 
-   *
-   * @generated from field: string network = 2;
-   */
-  network: string;
-
-  /**
-   * 服务所在网络地址 
-   *
-   * @generated from field: string address = 3;
-   */
-  address: string;
-
-  /**
-   * 服务身份 
-   *
-   * @generated from field: string did = 4;
-   */
-  did: string;
-
-  /**
-   * 服务版本 
-   *
-   * @generated from field: uint32 version = 5;
-   */
-  version: number;
-
-  /**
-   * 服务名称 
-   *
-   * @generated from field: string name = 6;
-   */
-  name: string;
-
-  /**
-   * 服务名称 
-   *
-   * @generated from field: string description = 7;
-   */
-  description: string;
-
-  /**
-   * 服务编码 
-   *
-   * @generated from field: yeying.api.common.ServiceCodeEnum code = 8;
-   */
-  code: ServiceCodeEnum;
-
-  /**
-   * 服务apis 
-   *
-   * @generated from field: repeated yeying.api.common.ApiCodeEnum apis = 9;
-   */
-  apis: ApiCodeEnum[];
-
-  /**
-   * 服务代理 
-   *
-   * @generated from field: string proxy = 10;
-   */
-  proxy: string;
-
-  /**
-   * 服务grpc地址 
-   *
-   * @generated from field: string grpc = 11;
-   */
-  grpc: string;
-
-  /**
-   * 服务头像 
-   *
-   * @generated from field: string avatar = 12;
-   */
-  avatar: string;
-
-  /**
-   * 服务创建时间点 
-   *
-   * @generated from field: string createdAt = 13;
-   */
-  createdAt: string;
-
-  /**
-   * 服务修改时间点 
-   *
-   * @generated from field: string updatedAt = 14;
-   */
-  updatedAt: string;
-
-  /**
-   * 签名
-   *
-   * @generated from field: string signature = 15;
-   */
-  signature: string;
-};
-
-/**
- * Describes the message yeying.api.service.ServiceMetadata.
- * Use `create(ServiceMetadataSchema)` to create a new message.
- */
-export const ServiceMetadataSchema: GenMessage<ServiceMetadata> = /*@__PURE__*/
-  messageDesc(file_yeying_api_service_service, 13);
-
-/**
  * *
- * 节点提供服务登记、注销和查询的服务。每个服务都有一个身份，实际向节点登记的是身份信息。构建自己的服务，除了事先开发服务意外，需要以下几件事：
- * 1、创建服务身份
- * 2、使用身份启动服务
- * 3、选择节点登记服务
- * 4、应用绑定该服务
+ * 节点提供服务登记、注销和查询的服务。
  *
  * @generated from service yeying.api.service.Service
  */
 export const Service: GenService<{
   /**
+   * 注册服务
+   *
    * @generated from rpc yeying.api.service.Service.Register
    */
   register: {
@@ -439,6 +322,8 @@ export const Service: GenService<{
     output: typeof RegisterServiceResponseSchema;
   },
   /**
+   * 搜索服务
+   *
    * @generated from rpc yeying.api.service.Service.Search
    */
   search: {
@@ -447,6 +332,8 @@ export const Service: GenService<{
     output: typeof SearchServiceResponseSchema;
   },
   /**
+   * 注销服务
+   *
    * @generated from rpc yeying.api.service.Service.Unregister
    */
   unregister: {

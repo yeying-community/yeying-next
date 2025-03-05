@@ -107,8 +107,8 @@ export class SessionProvider {
             try {
                 const res = await this.client.create(request)
                 await this.authenticate.doResponse(res, CreateSessionResponseBodySchema, isExisted)
-                await verifySessionMetadata(this.authenticate, res.body?.session)
-                resolve(res.body?.session as SessionMetadata)
+                await verifySessionMetadata(res.body?.session)
+                return resolve(res.body?.session as SessionMetadata)
             } catch (err) {
                 console.error('Fail to create session.', err)
                 return reject(err)
@@ -161,7 +161,7 @@ export class SessionProvider {
                 if (res.body?.sessions !== undefined) {
                     for (const session of res.body.sessions) {
                         try {
-                            await verifySessionMetadata(this.authenticate, session)
+                            await verifySessionMetadata(session)
                             sessions.push(session)
                         } catch (err) {
                             console.error(
@@ -244,8 +244,8 @@ export class SessionProvider {
                 const res = await this.client.detail(request)
                 await this.authenticate.doResponse(res, SessionDetailResponseBodySchema)
                 const detail = res.body?.detail as SessionDetail
-                await verifySessionMetadata(this.authenticate, detail.session)
-                resolve(detail)
+                await verifySessionMetadata(detail.session)
+                return resolve(detail)
             } catch (err) {
                 console.error('Fail to get session detail.', err)
                 return reject(err)
@@ -283,8 +283,8 @@ export class SessionProvider {
             try {
                 const res = await this.client.update(request)
                 await this.authenticate.doResponse(res, UpdateSessionResponseBodySchema)
-                await verifySessionMetadata(this.authenticate, res.body?.session)
-                resolve(res.body?.session as SessionMetadata)
+                await verifySessionMetadata(res.body?.session)
+                return resolve(res.body?.session as SessionMetadata)
             } catch (err) {
                 console.error('Fail to update session.', err)
                 return reject(err)

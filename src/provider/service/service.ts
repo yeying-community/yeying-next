@@ -12,8 +12,6 @@ import {
     SearchServiceResponseBody,
     SearchServiceResponseBodySchema,
     Service,
-    ServiceMetadata,
-    ServiceMetadataSchema,
     UnregisterServiceRequestBodySchema,
     UnregisterServiceRequestSchema,
     UnregisterServiceResponseBody,
@@ -23,6 +21,8 @@ import { Client, createClient } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/message_pb'
 import { create, toBinary } from '@bufbuild/protobuf'
+import {ServiceMetadata, ServiceMetadataSchema} from "../../yeying/api/common/model_pb";
+import {isExisted} from "../../common/status";
 
 /**
  * 提供服务管理功能的类，支持注册、搜索和注销服务。
@@ -81,7 +81,7 @@ export class ServiceProvider {
             const request = create(RegisterServiceRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.register(request)
-                await this.authenticate.doResponse(res, RegisterServiceResponseBodySchema)
+                await this.authenticate.doResponse(res, RegisterServiceResponseBodySchema, isExisted)
                 resolve(res.body as RegisterServiceResponseBody)
             } catch (err) {
                 console.error('Fail to register service', err)

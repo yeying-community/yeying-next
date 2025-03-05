@@ -99,8 +99,8 @@ export class LinkProvider {
             try {
                 const res = await this.client.create(request)
                 await this.authenticate.doResponse(res, CreateLinkResponseBodySchema)
-                await verifyLinkMetadata(this.authenticate, res.body?.detail?.link)
-                await verifyUrlMetadata(this.authenticate, res.body?.detail?.url)
+                await verifyLinkMetadata(res.body?.detail?.link)
+                await verifyUrlMetadata(res.body?.detail?.url)
                 resolve(res?.body?.detail as LinkDetail)
             } catch (err) {
                 console.error('Fail to create link for asset', err)
@@ -144,7 +144,7 @@ export class LinkProvider {
                 const links = []
                 for (const link of (res.body?.links as LinkMetadata[])) {
                     try {
-                        await verifyLinkMetadata(this.authenticate, link)
+                        await verifyLinkMetadata(link)
                         links.push(link)
                     } catch (err) {
                         console.error(`Invalid link=${JSON.stringify(toJson(LinkMetadataSchema, link))} when searching.`, err)
@@ -183,8 +183,8 @@ export class LinkProvider {
             try {
                 const res = await this.client.detail(request)
                 await this.authenticate.doResponse(res, LinkDetailResponseBodySchema)
-                await verifyLinkMetadata(this.authenticate, res.body?.detail?.link)
-                await verifyUrlMetadata(this.authenticate, res.body?.detail?.url)
+                await verifyLinkMetadata(res.body?.detail?.link)
+                await verifyUrlMetadata(res.body?.detail?.url)
                 resolve(res.body?.detail as LinkDetail)
             } catch (err) {
                 console.error('Fail to get link detail.', err)
@@ -227,7 +227,7 @@ export class LinkProvider {
                 for (const visitor of (res.body?.visitors as VisitorMetadata[])) {
                     if (visitor.did) {
                         try {
-                            await verifyVisitorMetadata(this.authenticate, visitor)
+                            await verifyVisitorMetadata(visitor)
                             visitors.push(visitor)
                         } catch (err) {
                             console.error(`Fail to verify visitor metadata: ${JSON.stringify(toJson(VisitorMetadataSchema, visitor))}`, err)

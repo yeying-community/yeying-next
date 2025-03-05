@@ -8,13 +8,15 @@ import type { MessageHeader, RequestPage, ResponsePage, ResponseStatus } from ".
 import { file_yeying_api_common_message } from "../common/message_pb";
 import type { ApplicationCodeEnum, ApplicationStatusEnum } from "../common/code_pb";
 import { file_yeying_api_common_code } from "../common/code_pb";
+import type { ApplicationMetadata } from "../common/model_pb";
+import { file_yeying_api_common_model } from "../common/model_pb";
 import type { Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file yeying/api/application/application.proto.
  */
 export const file_yeying_api_application_application: GenFile = /*@__PURE__*/
-  fileDesc("Cih5ZXlpbmcvYXBpL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLnByb3RvEhZ5ZXlpbmcuYXBpLmFwcGxpY2F0aW9uIpABChhTZWFyY2hBcHBsaWNhdGlvblJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJCCgRib2R5GAIgASgLMjQueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5TZWFyY2hBcHBsaWNhdGlvblJlcXVlc3RCb2R5IogBChxTZWFyY2hBcHBsaWNhdGlvblJlcXVlc3RCb2R5EjoKCWNvbmRpdGlvbhgBIAEoCzInLnlleWluZy5hcGkuYXBwbGljYXRpb24uU2VhcmNoQ29uZGl0aW9uEiwKBHBhZ2UYAiABKAsyHi55ZXlpbmcuYXBpLmNvbW1vbi5SZXF1ZXN0UGFnZSKQAQoPU2VhcmNoQ29uZGl0aW9uEjQKBGNvZGUYASABKA4yJi55ZXlpbmcuYXBpLmNvbW1vbi5BcHBsaWNhdGlvbkNvZGVFbnVtEjgKBnN0YXR1cxgCIAEoDjIoLnlleWluZy5hcGkuY29tbW9uLkFwcGxpY2F0aW9uU3RhdHVzRW51bRINCgVvd25lchgDIAEoCSKSAQoZU2VhcmNoQXBwbGljYXRpb25SZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEkMKBGJvZHkYAiABKAsyNS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLlNlYXJjaEFwcGxpY2F0aW9uUmVzcG9uc2VCb2R5IsQBCh1TZWFyY2hBcHBsaWNhdGlvblJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxJBCgxhcHBsaWNhdGlvbnMYAiADKAsyKy55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uTWV0YWRhdGESLQoEcGFnZRgDIAEoCzIfLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlUGFnZSKQAQoYQ3JlYXRlQXBwbGljYXRpb25SZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISQgoEYm9keRgCIAEoCzI0LnlleWluZy5hcGkuYXBwbGljYXRpb24uQ3JlYXRlQXBwbGljYXRpb25SZXF1ZXN0Qm9keSJgChxDcmVhdGVBcHBsaWNhdGlvblJlcXVlc3RCb2R5EkAKC2FwcGxpY2F0aW9uGAEgASgLMisueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5BcHBsaWNhdGlvbk1ldGFkYXRhIpIBChlDcmVhdGVBcHBsaWNhdGlvblJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISQwoEYm9keRgCIAEoCzI1LnlleWluZy5hcGkuYXBwbGljYXRpb24uQ3JlYXRlQXBwbGljYXRpb25SZXNwb25zZUJvZHkiUgodQ3JlYXRlQXBwbGljYXRpb25SZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMikAEKGEFwcGxpY2F0aW9uRGV0YWlsUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEkIKBGJvZHkYAiABKAsyNC55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uRGV0YWlsUmVxdWVzdEJvZHkiPAocQXBwbGljYXRpb25EZXRhaWxSZXF1ZXN0Qm9keRILCgNkaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoDSKSAQoZQXBwbGljYXRpb25EZXRhaWxSZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEkMKBGJvZHkYAiABKAsyNS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uRGV0YWlsUmVzcG9uc2VCb2R5ItEBCh1BcHBsaWNhdGlvbkRldGFpbFJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxI7CglhcHBTdGF0dXMYAyABKA4yKC55ZXlpbmcuYXBpLmNvbW1vbi5BcHBsaWNhdGlvblN0YXR1c0VudW0SQAoLYXBwbGljYXRpb24YAiABKAsyKy55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uTWV0YWRhdGEikgEKGU9mZmxpbmVBcHBsaWNhdGlvblJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJDCgRib2R5GAIgASgLMjUueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PZmZsaW5lQXBwbGljYXRpb25SZXF1ZXN0Qm9keSI9Ch1PZmZsaW5lQXBwbGljYXRpb25SZXF1ZXN0Qm9keRILCgNkaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoDSKUAQoaT2ZmbGluZUFwcGxpY2F0aW9uUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJECgRib2R5GAIgASgLMjYueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PZmZsaW5lQXBwbGljYXRpb25SZXNwb25zZUJvZHkiUwoeT2ZmbGluZUFwcGxpY2F0aW9uUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzIpABChhPbmxpbmVBcHBsaWNhdGlvblJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJCCgRib2R5GAIgASgLMjQueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PbmxpbmVBcHBsaWNhdGlvblJlcXVlc3RCb2R5IjwKHE9ubGluZUFwcGxpY2F0aW9uUmVxdWVzdEJvZHkSCwoDZGlkGAEgASgJEg8KB3ZlcnNpb24YAiABKA0ikgEKGU9ubGluZUFwcGxpY2F0aW9uUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJDCgRib2R5GAIgASgLMjUueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PbmxpbmVBcHBsaWNhdGlvblJlc3BvbnNlQm9keSJSCh1PbmxpbmVBcHBsaWNhdGlvblJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cyJRChFBcHBsaWNhdGlvbkV4dGVuZBI8Cghjb21tZW50cxgBIAMoCzIqLnlleWluZy5hcGkuYXBwbGljYXRpb24uQXBwbGljYXRpb25Db21tZW50IlkKEkFwcGxpY2F0aW9uQ29tbWVudBIPCgdhdWRpdG9yGAEgASgJEg8KB2NvbW1lbnQYAiABKAkSDgoGcGFzc2VkGAMgASgIEhEKCXNpZ25hdHVyZRgEIAEoCSLMAgoTQXBwbGljYXRpb25NZXRhZGF0YRINCgVvd25lchgBIAEoCRIPCgduZXR3b3JrGAIgASgJEg8KB2FkZHJlc3MYAyABKAkSCwoDZGlkGAQgASgJEg8KB3ZlcnNpb24YBSABKA0SDAoEaGFzaBgGIAEoCRIMCgRuYW1lGAcgASgJEjQKBGNvZGUYCCABKA4yJi55ZXlpbmcuYXBpLmNvbW1vbi5BcHBsaWNhdGlvbkNvZGVFbnVtEhMKC2Rlc2NyaXB0aW9uGAkgASgJEhAKCGxvY2F0aW9uGAogASgJEhQKDHNlcnZpY2VDb2RlcxgLIAEoCRIOCgZhdmF0YXIYDCABKAkSDgoGZXh0ZW5kGA0gASgJEhEKCWNyZWF0ZWRBdBgOIAEoCRIRCgl1cGRhdGVkQXQYDyABKAkSEQoJc2lnbmF0dXJlGBAgASgJIpABChhEZWxldGVBcHBsaWNhdGlvblJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJCCgRib2R5GAIgASgLMjQueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5EZWxldGVBcHBsaWNhdGlvblJlcXVlc3RCb2R5IjwKHERlbGV0ZUFwcGxpY2F0aW9uUmVxdWVzdEJvZHkSCwoDZGlkGAEgASgJEg8KB3ZlcnNpb24YAiABKA0ikgEKGURlbGV0ZUFwcGxpY2F0aW9uUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJDCgRib2R5GAIgASgLMjUueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5EZWxldGVBcHBsaWNhdGlvblJlc3BvbnNlQm9keSJSCh1EZWxldGVBcHBsaWNhdGlvblJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cyKOAQoXQXVkaXRBcHBsaWNhdGlvblJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJBCgRib2R5GAIgASgLMjMueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5BdWRpdEFwcGxpY2F0aW9uUmVxdWVzdEJvZHkiWgobQXVkaXRBcHBsaWNhdGlvblJlcXVlc3RCb2R5EjsKB2NvbW1lbnQYASABKAsyKi55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uQ29tbWVudCJNChhBdWRpdEFwcGxpY2F0aW9uUmVzcG9uc2USMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMypAYKC0FwcGxpY2F0aW9uEm8KBlNlYXJjaBIwLnlleWluZy5hcGkuYXBwbGljYXRpb24uU2VhcmNoQXBwbGljYXRpb25SZXF1ZXN0GjEueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5TZWFyY2hBcHBsaWNhdGlvblJlc3BvbnNlIgASbAoFQXVkaXQSLy55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkF1ZGl0QXBwbGljYXRpb25SZXF1ZXN0GjAueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5BdWRpdEFwcGxpY2F0aW9uUmVzcG9uc2UiABJvCgZDcmVhdGUSMC55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkNyZWF0ZUFwcGxpY2F0aW9uUmVxdWVzdBoxLnlleWluZy5hcGkuYXBwbGljYXRpb24uQ3JlYXRlQXBwbGljYXRpb25SZXNwb25zZSIAEm8KBkRldGFpbBIwLnlleWluZy5hcGkuYXBwbGljYXRpb24uQXBwbGljYXRpb25EZXRhaWxSZXF1ZXN0GjEueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5BcHBsaWNhdGlvbkRldGFpbFJlc3BvbnNlIgAScgoHT2ZmbGluZRIxLnlleWluZy5hcGkuYXBwbGljYXRpb24uT2ZmbGluZUFwcGxpY2F0aW9uUmVxdWVzdBoyLnlleWluZy5hcGkuYXBwbGljYXRpb24uT2ZmbGluZUFwcGxpY2F0aW9uUmVzcG9uc2UiABJvCgZPbmxpbmUSMC55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLk9ubGluZUFwcGxpY2F0aW9uUmVxdWVzdBoxLnlleWluZy5hcGkuYXBwbGljYXRpb24uT25saW5lQXBwbGljYXRpb25SZXNwb25zZSIAEm8KBkRlbGV0ZRIwLnlleWluZy5hcGkuYXBwbGljYXRpb24uRGVsZXRlQXBwbGljYXRpb25SZXF1ZXN0GjEueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5EZWxldGVBcHBsaWNhdGlvblJlc3BvbnNlIgBCGFoWeWV5aW5nL2FwaS9hcHBsaWNhdGlvbmIGcHJvdG8z", [file_yeying_api_common_message, file_yeying_api_common_code]);
+  fileDesc("Cih5ZXlpbmcvYXBpL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLnByb3RvEhZ5ZXlpbmcuYXBpLmFwcGxpY2F0aW9uIpABChhTZWFyY2hBcHBsaWNhdGlvblJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJCCgRib2R5GAIgASgLMjQueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5TZWFyY2hBcHBsaWNhdGlvblJlcXVlc3RCb2R5IogBChxTZWFyY2hBcHBsaWNhdGlvblJlcXVlc3RCb2R5EjoKCWNvbmRpdGlvbhgBIAEoCzInLnlleWluZy5hcGkuYXBwbGljYXRpb24uU2VhcmNoQ29uZGl0aW9uEiwKBHBhZ2UYAiABKAsyHi55ZXlpbmcuYXBpLmNvbW1vbi5SZXF1ZXN0UGFnZSKQAQoPU2VhcmNoQ29uZGl0aW9uEjQKBGNvZGUYASABKA4yJi55ZXlpbmcuYXBpLmNvbW1vbi5BcHBsaWNhdGlvbkNvZGVFbnVtEjgKBnN0YXR1cxgCIAEoDjIoLnlleWluZy5hcGkuY29tbW9uLkFwcGxpY2F0aW9uU3RhdHVzRW51bRINCgVvd25lchgDIAEoCSKSAQoZU2VhcmNoQXBwbGljYXRpb25SZXNwb25zZRIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEkMKBGJvZHkYAiABKAsyNS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLlNlYXJjaEFwcGxpY2F0aW9uUmVzcG9uc2VCb2R5Ir8BCh1TZWFyY2hBcHBsaWNhdGlvblJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cxI8CgxhcHBsaWNhdGlvbnMYAiADKAsyJi55ZXlpbmcuYXBpLmNvbW1vbi5BcHBsaWNhdGlvbk1ldGFkYXRhEi0KBHBhZ2UYAyABKAsyHy55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVBhZ2UikAEKGENyZWF0ZUFwcGxpY2F0aW9uUmVxdWVzdBIwCgZoZWFkZXIYASABKAsyIC55ZXlpbmcuYXBpLmNvbW1vbi5NZXNzYWdlSGVhZGVyEkIKBGJvZHkYAiABKAsyNC55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkNyZWF0ZUFwcGxpY2F0aW9uUmVxdWVzdEJvZHkiWwocQ3JlYXRlQXBwbGljYXRpb25SZXF1ZXN0Qm9keRI7CgthcHBsaWNhdGlvbhgBIAEoCzImLnlleWluZy5hcGkuY29tbW9uLkFwcGxpY2F0aW9uTWV0YWRhdGEikgEKGUNyZWF0ZUFwcGxpY2F0aW9uUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJDCgRib2R5GAIgASgLMjUueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5DcmVhdGVBcHBsaWNhdGlvblJlc3BvbnNlQm9keSJSCh1DcmVhdGVBcHBsaWNhdGlvblJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cyKQAQoYQXBwbGljYXRpb25EZXRhaWxSZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISQgoEYm9keRgCIAEoCzI0LnlleWluZy5hcGkuYXBwbGljYXRpb24uQXBwbGljYXRpb25EZXRhaWxSZXF1ZXN0Qm9keSI8ChxBcHBsaWNhdGlvbkRldGFpbFJlcXVlc3RCb2R5EgsKA2RpZBgBIAEoCRIPCgd2ZXJzaW9uGAIgASgNIpIBChlBcHBsaWNhdGlvbkRldGFpbFJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISQwoEYm9keRgCIAEoCzI1LnlleWluZy5hcGkuYXBwbGljYXRpb24uQXBwbGljYXRpb25EZXRhaWxSZXNwb25zZUJvZHkizAEKHUFwcGxpY2F0aW9uRGV0YWlsUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzEjsKC2FwcGxpY2F0aW9uGAIgASgLMiYueWV5aW5nLmFwaS5jb21tb24uQXBwbGljYXRpb25NZXRhZGF0YRI7CglhcHBTdGF0dXMYAyABKA4yKC55ZXlpbmcuYXBpLmNvbW1vbi5BcHBsaWNhdGlvblN0YXR1c0VudW0ikgEKGU9mZmxpbmVBcHBsaWNhdGlvblJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJDCgRib2R5GAIgASgLMjUueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PZmZsaW5lQXBwbGljYXRpb25SZXF1ZXN0Qm9keSI9Ch1PZmZsaW5lQXBwbGljYXRpb25SZXF1ZXN0Qm9keRILCgNkaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoDSKUAQoaT2ZmbGluZUFwcGxpY2F0aW9uUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJECgRib2R5GAIgASgLMjYueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PZmZsaW5lQXBwbGljYXRpb25SZXNwb25zZUJvZHkiUwoeT2ZmbGluZUFwcGxpY2F0aW9uUmVzcG9uc2VCb2R5EjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzIpABChhPbmxpbmVBcHBsaWNhdGlvblJlcXVlc3QSMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJCCgRib2R5GAIgASgLMjQueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PbmxpbmVBcHBsaWNhdGlvblJlcXVlc3RCb2R5IjwKHE9ubGluZUFwcGxpY2F0aW9uUmVxdWVzdEJvZHkSCwoDZGlkGAEgASgJEg8KB3ZlcnNpb24YAiABKA0ikgEKGU9ubGluZUFwcGxpY2F0aW9uUmVzcG9uc2USMAoGaGVhZGVyGAEgASgLMiAueWV5aW5nLmFwaS5jb21tb24uTWVzc2FnZUhlYWRlchJDCgRib2R5GAIgASgLMjUueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PbmxpbmVBcHBsaWNhdGlvblJlc3BvbnNlQm9keSJSCh1PbmxpbmVBcHBsaWNhdGlvblJlc3BvbnNlQm9keRIxCgZzdGF0dXMYASABKAsyIS55ZXlpbmcuYXBpLmNvbW1vbi5SZXNwb25zZVN0YXR1cyJRChFBcHBsaWNhdGlvbkV4dGVuZBI8Cghjb21tZW50cxgBIAMoCzIqLnlleWluZy5hcGkuYXBwbGljYXRpb24uQXBwbGljYXRpb25Db21tZW50IlkKEkFwcGxpY2F0aW9uQ29tbWVudBIPCgdhdWRpdG9yGAEgASgJEg8KB2NvbW1lbnQYAiABKAkSDgoGcGFzc2VkGAMgASgIEhEKCXNpZ25hdHVyZRgEIAEoCSKQAQoYRGVsZXRlQXBwbGljYXRpb25SZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISQgoEYm9keRgCIAEoCzI0LnlleWluZy5hcGkuYXBwbGljYXRpb24uRGVsZXRlQXBwbGljYXRpb25SZXF1ZXN0Qm9keSI8ChxEZWxldGVBcHBsaWNhdGlvblJlcXVlc3RCb2R5EgsKA2RpZBgBIAEoCRIPCgd2ZXJzaW9uGAIgASgNIpIBChlEZWxldGVBcHBsaWNhdGlvblJlc3BvbnNlEjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISQwoEYm9keRgCIAEoCzI1LnlleWluZy5hcGkuYXBwbGljYXRpb24uRGVsZXRlQXBwbGljYXRpb25SZXNwb25zZUJvZHkiUgodRGVsZXRlQXBwbGljYXRpb25SZXNwb25zZUJvZHkSMQoGc3RhdHVzGAEgASgLMiEueWV5aW5nLmFwaS5jb21tb24uUmVzcG9uc2VTdGF0dXMijgEKF0F1ZGl0QXBwbGljYXRpb25SZXF1ZXN0EjAKBmhlYWRlchgBIAEoCzIgLnlleWluZy5hcGkuY29tbW9uLk1lc3NhZ2VIZWFkZXISQQoEYm9keRgCIAEoCzIzLnlleWluZy5hcGkuYXBwbGljYXRpb24uQXVkaXRBcHBsaWNhdGlvblJlcXVlc3RCb2R5IloKG0F1ZGl0QXBwbGljYXRpb25SZXF1ZXN0Qm9keRI7Cgdjb21tZW50GAEgASgLMioueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5BcHBsaWNhdGlvbkNvbW1lbnQiTQoYQXVkaXRBcHBsaWNhdGlvblJlc3BvbnNlEjEKBnN0YXR1cxgBIAEoCzIhLnlleWluZy5hcGkuY29tbW9uLlJlc3BvbnNlU3RhdHVzMqQGCgtBcHBsaWNhdGlvbhJvCgZTZWFyY2gSMC55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLlNlYXJjaEFwcGxpY2F0aW9uUmVxdWVzdBoxLnlleWluZy5hcGkuYXBwbGljYXRpb24uU2VhcmNoQXBwbGljYXRpb25SZXNwb25zZSIAEmwKBUF1ZGl0Ei8ueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5BdWRpdEFwcGxpY2F0aW9uUmVxdWVzdBowLnlleWluZy5hcGkuYXBwbGljYXRpb24uQXVkaXRBcHBsaWNhdGlvblJlc3BvbnNlIgASbwoGQ3JlYXRlEjAueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5DcmVhdGVBcHBsaWNhdGlvblJlcXVlc3QaMS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkNyZWF0ZUFwcGxpY2F0aW9uUmVzcG9uc2UiABJvCgZEZXRhaWwSMC55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkFwcGxpY2F0aW9uRGV0YWlsUmVxdWVzdBoxLnlleWluZy5hcGkuYXBwbGljYXRpb24uQXBwbGljYXRpb25EZXRhaWxSZXNwb25zZSIAEnIKB09mZmxpbmUSMS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLk9mZmxpbmVBcHBsaWNhdGlvblJlcXVlc3QaMi55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLk9mZmxpbmVBcHBsaWNhdGlvblJlc3BvbnNlIgASbwoGT25saW5lEjAueWV5aW5nLmFwaS5hcHBsaWNhdGlvbi5PbmxpbmVBcHBsaWNhdGlvblJlcXVlc3QaMS55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLk9ubGluZUFwcGxpY2F0aW9uUmVzcG9uc2UiABJvCgZEZWxldGUSMC55ZXlpbmcuYXBpLmFwcGxpY2F0aW9uLkRlbGV0ZUFwcGxpY2F0aW9uUmVxdWVzdBoxLnlleWluZy5hcGkuYXBwbGljYXRpb24uRGVsZXRlQXBwbGljYXRpb25SZXNwb25zZSIAQhhaFnlleWluZy9hcGkvYXBwbGljYXRpb25iBnByb3RvMw", [file_yeying_api_common_message, file_yeying_api_common_code, file_yeying_api_common_model]);
 
 /**
  * @generated from message yeying.api.application.SearchApplicationRequest
@@ -119,7 +121,7 @@ export type SearchApplicationResponseBody = Message<"yeying.api.application.Sear
   status?: ResponseStatus;
 
   /**
-   * @generated from field: repeated yeying.api.application.ApplicationMetadata applications = 2;
+   * @generated from field: repeated yeying.api.common.ApplicationMetadata applications = 2;
    */
   applications: ApplicationMetadata[];
 
@@ -163,7 +165,7 @@ export const CreateApplicationRequestSchema: GenMessage<CreateApplicationRequest
  */
 export type CreateApplicationRequestBody = Message<"yeying.api.application.CreateApplicationRequestBody"> & {
   /**
-   * @generated from field: yeying.api.application.ApplicationMetadata application = 1;
+   * @generated from field: yeying.api.common.ApplicationMetadata application = 1;
    */
   application?: ApplicationMetadata;
 };
@@ -290,14 +292,14 @@ export type ApplicationDetailResponseBody = Message<"yeying.api.application.Appl
   status?: ResponseStatus;
 
   /**
+   * @generated from field: yeying.api.common.ApplicationMetadata application = 2;
+   */
+  application?: ApplicationMetadata;
+
+  /**
    * @generated from field: yeying.api.common.ApplicationStatusEnum appStatus = 3;
    */
   appStatus: ApplicationStatusEnum;
-
-  /**
-   * @generated from field: yeying.api.application.ApplicationMetadata application = 2;
-   */
-  application?: ApplicationMetadata;
 };
 
 /**
@@ -533,130 +535,6 @@ export const ApplicationCommentSchema: GenMessage<ApplicationComment> = /*@__PUR
   messageDesc(file_yeying_api_application_application, 22);
 
 /**
- * @generated from message yeying.api.application.ApplicationMetadata
- */
-export type ApplicationMetadata = Message<"yeying.api.application.ApplicationMetadata"> & {
-  /**
-   * 应用所有者 
-   *
-   * @generated from field: string owner = 1;
-   */
-  owner: string;
-
-  /**
-   * 身份所在网络 
-   *
-   * @generated from field: string network = 2;
-   */
-  network: string;
-
-  /**
-   * 身份地址 
-   *
-   * @generated from field: string address = 3;
-   */
-  address: string;
-
-  /**
-   * 应用身份 
-   *
-   * @generated from field: string did = 4;
-   */
-  did: string;
-
-  /**
-   * 应用版本 
-   *
-   * @generated from field: uint32 version = 5;
-   */
-  version: number;
-
-  /**
-   * 应用哈希 
-   *
-   * @generated from field: string hash = 6;
-   */
-  hash: string;
-
-  /**
-   * 应用名称 
-   *
-   * @generated from field: string name = 7;
-   */
-  name: string;
-
-  /**
-   * 应用编号 
-   *
-   * @generated from field: yeying.api.common.ApplicationCodeEnum code = 8;
-   */
-  code: ApplicationCodeEnum;
-
-  /**
-   * 应用描述 
-   *
-   * @generated from field: string description = 9;
-   */
-  description: string;
-
-  /**
-   * 访问路径 
-   *
-   * @generated from field: string location = 10;
-   */
-  location: string;
-
-  /**
-   * 应用依赖的服务编码，用,隔开 
-   *
-   * @generated from field: string serviceCodes = 11;
-   */
-  serviceCodes: string;
-
-  /**
-   * 应用头像 
-   *
-   * @generated from field: string avatar = 12;
-   */
-  avatar: string;
-
-  /**
-   * 应用扩展信息 
-   *
-   * @generated from field: string extend = 13;
-   */
-  extend: string;
-
-  /**
-   * 应用创建时间 
-   *
-   * @generated from field: string createdAt = 14;
-   */
-  createdAt: string;
-
-  /**
-   * 应用更新时间 
-   *
-   * @generated from field: string updatedAt = 15;
-   */
-  updatedAt: string;
-
-  /**
-   * 签名
-   *
-   * @generated from field: string signature = 16;
-   */
-  signature: string;
-};
-
-/**
- * Describes the message yeying.api.application.ApplicationMetadata.
- * Use `create(ApplicationMetadataSchema)` to create a new message.
- */
-export const ApplicationMetadataSchema: GenMessage<ApplicationMetadata> = /*@__PURE__*/
-  messageDesc(file_yeying_api_application_application, 23);
-
-/**
  * @generated from message yeying.api.application.DeleteApplicationRequest
  */
 export type DeleteApplicationRequest = Message<"yeying.api.application.DeleteApplicationRequest"> & {
@@ -676,7 +554,7 @@ export type DeleteApplicationRequest = Message<"yeying.api.application.DeleteApp
  * Use `create(DeleteApplicationRequestSchema)` to create a new message.
  */
 export const DeleteApplicationRequestSchema: GenMessage<DeleteApplicationRequest> = /*@__PURE__*/
-  messageDesc(file_yeying_api_application_application, 24);
+  messageDesc(file_yeying_api_application_application, 23);
 
 /**
  * @generated from message yeying.api.application.DeleteApplicationRequestBody
@@ -698,7 +576,7 @@ export type DeleteApplicationRequestBody = Message<"yeying.api.application.Delet
  * Use `create(DeleteApplicationRequestBodySchema)` to create a new message.
  */
 export const DeleteApplicationRequestBodySchema: GenMessage<DeleteApplicationRequestBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_application_application, 25);
+  messageDesc(file_yeying_api_application_application, 24);
 
 /**
  * @generated from message yeying.api.application.DeleteApplicationResponse
@@ -720,7 +598,7 @@ export type DeleteApplicationResponse = Message<"yeying.api.application.DeleteAp
  * Use `create(DeleteApplicationResponseSchema)` to create a new message.
  */
 export const DeleteApplicationResponseSchema: GenMessage<DeleteApplicationResponse> = /*@__PURE__*/
-  messageDesc(file_yeying_api_application_application, 26);
+  messageDesc(file_yeying_api_application_application, 25);
 
 /**
  * @generated from message yeying.api.application.DeleteApplicationResponseBody
@@ -737,7 +615,7 @@ export type DeleteApplicationResponseBody = Message<"yeying.api.application.Dele
  * Use `create(DeleteApplicationResponseBodySchema)` to create a new message.
  */
 export const DeleteApplicationResponseBodySchema: GenMessage<DeleteApplicationResponseBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_application_application, 27);
+  messageDesc(file_yeying_api_application_application, 26);
 
 /**
  * @generated from message yeying.api.application.AuditApplicationRequest
@@ -759,7 +637,7 @@ export type AuditApplicationRequest = Message<"yeying.api.application.AuditAppli
  * Use `create(AuditApplicationRequestSchema)` to create a new message.
  */
 export const AuditApplicationRequestSchema: GenMessage<AuditApplicationRequest> = /*@__PURE__*/
-  messageDesc(file_yeying_api_application_application, 28);
+  messageDesc(file_yeying_api_application_application, 27);
 
 /**
  * @generated from message yeying.api.application.AuditApplicationRequestBody
@@ -776,7 +654,7 @@ export type AuditApplicationRequestBody = Message<"yeying.api.application.AuditA
  * Use `create(AuditApplicationRequestBodySchema)` to create a new message.
  */
 export const AuditApplicationRequestBodySchema: GenMessage<AuditApplicationRequestBody> = /*@__PURE__*/
-  messageDesc(file_yeying_api_application_application, 29);
+  messageDesc(file_yeying_api_application_application, 28);
 
 /**
  * @generated from message yeying.api.application.AuditApplicationResponse
@@ -793,7 +671,7 @@ export type AuditApplicationResponse = Message<"yeying.api.application.AuditAppl
  * Use `create(AuditApplicationResponseSchema)` to create a new message.
  */
 export const AuditApplicationResponseSchema: GenMessage<AuditApplicationResponse> = /*@__PURE__*/
-  messageDesc(file_yeying_api_application_application, 30);
+  messageDesc(file_yeying_api_application_application, 29);
 
 /**
  * *

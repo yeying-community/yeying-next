@@ -181,8 +181,8 @@ export class ProviderProvider {
             try {
                 const res = await this.client.add(request)
                 await this.authenticate.doResponse(res, AddProviderResponseBodySchema, isExisted)
-                await verifyProviderMetadata(this.authenticate, res.body?.provider)
-                resolve(res.body?.provider as ProviderMetadata)
+                await verifyProviderMetadata(res.body?.provider)
+                return resolve(res.body?.provider as ProviderMetadata)
             } catch (err) {
                 console.error('Fail to add provider.', err)
                 return reject(err)
@@ -232,7 +232,7 @@ export class ProviderProvider {
                 if (res.body?.providers !== undefined) {
                     for (const provider of res.body.providers) {
                         try {
-                            await verifyProviderMetadata(this.authenticate, provider)
+                            await verifyProviderMetadata(provider)
                             providers.push(provider)
                         } catch (err) {
                             console.error(
@@ -314,9 +314,9 @@ export class ProviderProvider {
             try {
                 const res = await this.client.detail(request)
                 await this.authenticate.doResponse(res, ProviderDetailResponseBodySchema)
-                await verifyProviderMetadata(this.authenticate, res.body?.detail?.provider)
-                await verifyProviderState(this.authenticate, res.body?.detail?.state)
-                resolve(res.body?.detail as ProviderDetail)
+                await verifyProviderMetadata(res.body?.detail?.provider)
+                await verifyProviderState(res.body?.detail?.state)
+                return resolve(res.body?.detail as ProviderDetail)
             } catch (err) {
                 console.error('Fail to get provider detail.', err)
                 return reject(err)
