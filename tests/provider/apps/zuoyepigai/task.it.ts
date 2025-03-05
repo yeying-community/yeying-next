@@ -4,10 +4,10 @@ import {ServiceCodeEnum} from "../../../../src/yeying/api/common/code_pb";
 import {TaskProvider} from "../../../../src/provider/apps/zuoyepigai/task";
 import {isOk} from "../../../../src/common/status";
 import { create } from '@bufbuild/protobuf'
-import { 
+import {
     TaskMetaSchema
  } from '../../../../src/yeying/api/apps/zuoyepigai/task_pb'
-import { NIL, v4 as uuidv4 } from 'uuid';
+import {generateUuid} from "../../../../src/common/string";
 
 const provider: ProviderOption = {
     proxy: getProviderProxy(ServiceCodeEnum.SERVICE_CODE_AI),
@@ -42,11 +42,11 @@ describe('Task', () => {
         console.log(provider.proxy)
         const taskProvider = new TaskProvider(provider)
         const taskMeta = create(TaskMetaSchema, {
-            uid: uuidv4(),
+            uid: generateUuid(),
             name: "task_" + Date.now(),
             description: "test data",
-            tagUid: uuidv4(),
-            userUid: uuidv4(),
+            tagUid: generateUuid(),
+            userUid: generateUuid(),
         })
         console.log(taskMeta)
         const body = await taskProvider.add(taskMeta)
@@ -65,8 +65,8 @@ describe('Task', () => {
             uid: "9b2fe8b7-c8d3-49b7-b0a6-542a9b7b99f8",
             name: "task_" + Date.now(),
             description: "test data",
-            tagUid: uuidv4(),
-            userUid: uuidv4(),
+            tagUid: generateUuid(),
+            userUid: generateUuid(),
             isDeleted: true
         })
         console.log(taskMeta)

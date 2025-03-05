@@ -95,8 +95,8 @@ export class InvitationProvider {
             try {
                 const res = await this.client.create(request)
                 await this.authenticate.doResponse(res, CreateInvitationResponseBodySchema)
-                await verifyInvitationMetadata(this.authenticate, res.body?.invitation)
-                resolve(res.body?.invitation as InvitationMetadata)
+                await verifyInvitationMetadata(res.body?.invitation)
+                return resolve(res.body?.invitation as InvitationMetadata)
             } catch (err) {
                 console.error('Fail to create invitation', err)
                 return reject(err)
@@ -177,8 +177,8 @@ export class InvitationProvider {
             try {
                 const res = await this.client.detail(request)
                 await this.authenticate.doResponse(res, InvitationDetailResponseBodySchema)
-                await verifyInvitationMetadata(this.authenticate, res.body?.invitation)
-                resolve(res.body?.invitation as InvitationMetadata)
+                await verifyInvitationMetadata(res.body?.invitation)
+                return resolve(res.body?.invitation as InvitationMetadata)
             } catch (err) {
                 console.error('Fail to get invitation detail.', err)
                 return reject(err)

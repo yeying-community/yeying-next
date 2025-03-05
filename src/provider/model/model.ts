@@ -21,6 +21,12 @@ import {
     UrlMetadataSchema,
     VisitorMetadata, VisitorMetadataSchema
 } from "../../yeying/api/asset/link_pb";
+import {
+    ApplicationMetadata,
+    ApplicationMetadataSchema,
+    ServiceMetadata,
+    ServiceMetadataSchema
+} from "../../yeying/api/common/model_pb";
 
 /**
  * 对资产元数据进行签名，并更新元数据的`signature`字段。
@@ -39,7 +45,6 @@ export async function signAssetMetadata(authenticate: Authenticate, asset: Asset
 /**
  * 验证资产元数据的签名是否有效
  *
- * @param authenticate 用于验签的认证对象
  * @param asset 资产元数据
  *
  * @returns 无返回
@@ -47,7 +52,7 @@ export async function signAssetMetadata(authenticate: Authenticate, asset: Asset
  * @throws DataTampering 元数据被篡改
  *
  */
-export async function verifyAssetMetadata(authenticate: Authenticate, asset?: AssetMetadata) {
+export async function verifyAssetMetadata(asset?: AssetMetadata) {
     if (asset === undefined) {
         throw new DataTampering('empty asset.')
     }
@@ -55,7 +60,7 @@ export async function verifyAssetMetadata(authenticate: Authenticate, asset?: As
     const signature = asset.signature
     try {
         asset.signature = ''
-        if (!(await authenticate.verify(asset.owner, toBinary(AssetMetadataSchema, asset), signature))) {
+        if (!(await Authenticate.verify(asset.owner, toBinary(AssetMetadataSchema, asset), signature))) {
             throw new DataTampering('invalid asset.')
         }
     } finally {
@@ -80,7 +85,6 @@ export async function signConfigMetadata(authenticate: Authenticate, config: Con
 /**
  * 验证配置元数据的签名是否有效
  *
- * @param authenticate 用于验签的认证对象
  * @param config 配置元数据
  *
  * @returns 无返回
@@ -88,7 +92,7 @@ export async function signConfigMetadata(authenticate: Authenticate, config: Con
  * @throws DataTampering 元数据被篡改
  *
  */
-export async function verifyConfigMetadata(authenticate: Authenticate, config?: ConfigMetadata) {
+export async function verifyConfigMetadata(config?: ConfigMetadata) {
     if (config === undefined) {
         throw new DataTampering('empty config')
     }
@@ -96,7 +100,7 @@ export async function verifyConfigMetadata(authenticate: Authenticate, config?: 
     const signature = config.signature
     try {
         config.signature = ''
-        if (!(await authenticate.verify(config.owner, toBinary(ConfigMetadataSchema, config), signature))) {
+        if (!(await Authenticate.verify(config.owner, toBinary(ConfigMetadataSchema, config), signature))) {
             throw new DataTampering('invalid config')
         }
     } finally {
@@ -121,7 +125,6 @@ export async function signNamespaceMetadata(authenticate: Authenticate, namespac
 /**
  * 验证命名空间元数据的签名是否有效
  *
- * @param authenticate 用于验签的认证对象
  * @param namespace 命名空间元数据
  *
  * @returns 无返回
@@ -129,7 +132,7 @@ export async function signNamespaceMetadata(authenticate: Authenticate, namespac
  * @throws DataTampering 元数据被篡改
  *
  */
-export async function verifyNamespaceMetadata(authenticate: Authenticate, namespace?: NamespaceMetadata) {
+export async function verifyNamespaceMetadata(namespace?: NamespaceMetadata) {
     if (namespace === undefined) {
         throw new DataTampering('empty namespace')
     }
@@ -137,7 +140,7 @@ export async function verifyNamespaceMetadata(authenticate: Authenticate, namesp
     const signature = namespace.signature
     try {
         namespace.signature = ''
-        if (!(await authenticate.verify(namespace.owner, toBinary(NamespaceMetadataSchema, namespace), signature))) {
+        if (!(await Authenticate.verify(namespace.owner, toBinary(NamespaceMetadataSchema, namespace), signature))) {
             throw new DataTampering('invalid namespace')
         }
     } finally {
@@ -160,7 +163,6 @@ export async function signBlockMetadata(authenticate: Authenticate, block: Block
 /**
  * 验证块元数据的签名是否有效
  *
- * @param authenticate 用于验签的认证对象
  * @param block 资产块元信息
  *
  * @returns 无返回
@@ -168,7 +170,7 @@ export async function signBlockMetadata(authenticate: Authenticate, block: Block
  * @throws DataTampering 元数据被篡改
  *
  */
-export async function verifyBlockMetadata(authenticate: Authenticate, block?: BlockMetadata) {
+export async function verifyBlockMetadata(block?: BlockMetadata) {
     if (block === undefined) {
         throw new DataTampering('empty block')
     }
@@ -176,7 +178,7 @@ export async function verifyBlockMetadata(authenticate: Authenticate, block?: Bl
     const signature = block.signature
     try {
         block.signature = ''
-        if (!(await authenticate.verify(block.owner, toBinary(BlockMetadataSchema, block), signature))) {
+        if (!(await Authenticate.verify(block.owner, toBinary(BlockMetadataSchema, block), signature))) {
             throw new DataTampering('invalid block')
         }
     } finally {
@@ -200,14 +202,13 @@ export async function signUserMetadata(authenticate: Authenticate, user: UserMet
 /**
  * 验证用户元数据的签名是否有效
  *
- * @param authenticate 用于验签的认证对象
  * @param user 用户元数据对象
  *
  * @returns 无返回
  *
  * @throws DataTampering 元数据被篡改
  */
-export async function verifyUserMetadata(authenticate: Authenticate, user?: UserMetadata) {
+export async function verifyUserMetadata(user?: UserMetadata) {
     if (user === undefined) {
         throw new DataTampering('empty user.')
     }
@@ -215,7 +216,7 @@ export async function verifyUserMetadata(authenticate: Authenticate, user?: User
     const signature = user.signature
     try {
         user.signature = ''
-        if (!(await authenticate.verify(user.did, toBinary(UserMetadataSchema, user), signature))) {
+        if (!(await Authenticate.verify(user.did, toBinary(UserMetadataSchema, user), signature))) {
             throw new DataTampering('invalid user.')
         }
     } finally {
@@ -226,14 +227,13 @@ export async function verifyUserMetadata(authenticate: Authenticate, user?: User
 /**
  * 验证用户状态元数据的签名是否有效
  *
- * @param authenticate 用于验签的认证对象
  * @param user 用户状态元数据对象
  *
  * @returns 无返回
  *
  * @throws DataTampering 元数据被篡改
  */
-export async function verifyUserState(authenticate: Authenticate, state?: UserState) {
+export async function verifyUserState(state?: UserState) {
     if (state === undefined) {
         throw new DataTampering('empty user state.')
     }
@@ -241,7 +241,7 @@ export async function verifyUserState(authenticate: Authenticate, state?: UserSt
     const signature = state.signature
     try {
         state.signature = ''
-        if (!(await authenticate.verify(state.owner, toBinary(UserStateSchema, state), signature))) {
+        if (!(await Authenticate.verify(state.owner, toBinary(UserStateSchema, state), signature))) {
             throw new DataTampering('invalid user state.')
         }
     } finally {
@@ -265,14 +265,13 @@ export async function signInvitationMetadata(authenticate: Authenticate, invitat
 /**
  * 验证邀请码元数据的签名是否有效
  *
- * @param authenticate 用于验签的认证对象
  * @param invitation 邀请码元数据对象
  *
  * @returns 无返回
  *
  * @throws DataTampering 元数据被篡改
  */
-export async function verifyInvitationMetadata(authenticate: Authenticate, invitation?: InvitationMetadata) {
+export async function verifyInvitationMetadata(invitation?: InvitationMetadata) {
     if (invitation === undefined) {
         throw new DataTampering('empty invitation.')
     }
@@ -281,7 +280,7 @@ export async function verifyInvitationMetadata(authenticate: Authenticate, invit
     try {
         invitation.signature = ''
         if (
-            !(await authenticate.verify(invitation.inviter, toBinary(InvitationMetadataSchema, invitation), signature))
+            !(await Authenticate.verify(invitation.inviter, toBinary(InvitationMetadataSchema, invitation), signature))
         ) {
             throw new DataTampering('invalid invitation.')
         }
@@ -306,14 +305,13 @@ export async function signProviderMetadata(authenticate: Authenticate, provider:
 /**
  * 验证大模型供应商元数据的签名是否有效
  *
- * @param authenticate 用于验签的认证对象
  * @param provider 供应商元数据对象
  *
  * @returns 无返回
  *
  * @throws DataTampering 元数据被篡改
  */
-export async function verifyProviderMetadata(authenticate: Authenticate, provider?: ProviderMetadata) {
+export async function verifyProviderMetadata(provider?: ProviderMetadata) {
     if (provider === undefined) {
         throw new DataTampering('empty provider.')
     }
@@ -321,7 +319,7 @@ export async function verifyProviderMetadata(authenticate: Authenticate, provide
     const signature = provider.signature
     try {
         provider.signature = ''
-        if (!(await authenticate.verify(provider.owner, toBinary(ProviderMetadataSchema, provider), signature))) {
+        if (!(await Authenticate.verify(provider.owner, toBinary(ProviderMetadataSchema, provider), signature))) {
             throw new DataTampering('invalid provider.')
         }
     } finally {
@@ -329,7 +327,17 @@ export async function verifyProviderMetadata(authenticate: Authenticate, provide
     }
 }
 
-export async function verifyProviderState(authenticate: Authenticate, state?: ProviderState) {
+
+/**
+ * 验证大模型供应商状态元数据的签名是否有效
+ *
+ * @param provider 供应商状态元数据对象
+ *
+ * @returns 无返回
+ *
+ * @throws DataTampering 元数据被篡改
+ */
+export async function verifyProviderState(state?: ProviderState) {
     if (state === undefined) {
         throw new DataTampering('empty provider state.')
     }
@@ -337,7 +345,7 @@ export async function verifyProviderState(authenticate: Authenticate, state?: Pr
     const signature = state.signature
     try {
         state.signature = ''
-        if (!(await authenticate.verify(state.serviceDid, toBinary(ProviderStateSchema, state), signature))) {
+        if (!(await Authenticate.verify(state.serviceDid, toBinary(ProviderStateSchema, state), signature))) {
             throw new DataTampering('invalid provider state.')
         }
     } finally {
@@ -361,14 +369,13 @@ export async function signSessionMetadata(authenticate: Authenticate, provider: 
 /**
  * 验证会话元数据的签名是否有效
  *
- * @param authenticate 用于验签的认证对象
  * @param session 会话元数据对象
  *
  * @returns 无返回
  *
  * @throws DataTampering 元数据被篡改
  */
-export async function verifySessionMetadata(authenticate: Authenticate, session?: SessionMetadata) {
+export async function verifySessionMetadata(session?: SessionMetadata) {
     if (session === undefined) {
         throw new DataTampering('empty session.')
     }
@@ -376,7 +383,7 @@ export async function verifySessionMetadata(authenticate: Authenticate, session?
     const signature = session.signature
     try {
         session.signature = ''
-        if (!(await authenticate.verify(session.owner, toBinary(SessionMetadataSchema, session), signature))) {
+        if (!(await Authenticate.verify(session.owner, toBinary(SessionMetadataSchema, session), signature))) {
             throw new DataTampering('invalid session.')
         }
     } finally {
@@ -389,26 +396,25 @@ export async function verifySessionMetadata(authenticate: Authenticate, session?
  * 对分享链接元数据进行签名，并更新元数据的`signature`字段。
  *
  * @param authenticate 用于验签的认证对象
- * @param provider 分享链接元数据
+ * @param link 分享链接元数据
  *
  * @returns 无返回
  */
-export async function signLinkMetadata(authenticate: Authenticate, provider: LinkMetadata) {
-    provider.signature = ''
-    provider.signature = await authenticate.sign(toBinary(LinkMetadataSchema, provider))
+export async function signLinkMetadata(authenticate: Authenticate, link: LinkMetadata) {
+    link.signature = ''
+    link.signature = await authenticate.sign(toBinary(LinkMetadataSchema, link))
 }
 
 /**
  * 验证分享链接元数据的签名是否有效
  *
- * @param authenticate 用于验签的认证对象
  * @param session 分享链接元数据对象
  *
  * @returns 无返回
  *
  * @throws DataTampering 元数据被篡改
  */
-export async function verifyLinkMetadata(authenticate: Authenticate, link?: LinkMetadata) {
+export async function verifyLinkMetadata(link?: LinkMetadata) {
     if (link === undefined) {
         throw new DataTampering('empty link.')
     }
@@ -416,7 +422,7 @@ export async function verifyLinkMetadata(authenticate: Authenticate, link?: Link
     const signature = link.signature
     try {
         link.signature = ''
-        if (!(await authenticate.verify(link.owner, toBinary(LinkMetadataSchema, link), signature))) {
+        if (!(await Authenticate.verify(link.owner, toBinary(LinkMetadataSchema, link), signature))) {
             throw new DataTampering('invalid link.')
         }
     } finally {
@@ -427,14 +433,13 @@ export async function verifyLinkMetadata(authenticate: Authenticate, link?: Link
 /**
  * 验证链接访问地址元数据的签名是否有效
  *
- * @param authenticate 用于验签的认证对象
  * @param session 链接访问地址元数据对象
  *
  * @returns 无返回
  *
  * @throws DataTampering 元数据被篡改
  */
-export async function verifyUrlMetadata(authenticate: Authenticate, url?: UrlMetadata) {
+export async function verifyUrlMetadata(url?: UrlMetadata) {
     if (url === undefined) {
         throw new DataTampering('empty url.')
     }
@@ -442,7 +447,7 @@ export async function verifyUrlMetadata(authenticate: Authenticate, url?: UrlMet
     const signature = url.signature
     try {
         url.signature = ''
-        if (!(await authenticate.verify(url.serviceDid, toBinary(UrlMetadataSchema, url), signature))) {
+        if (!(await Authenticate.verify(url.serviceDid, toBinary(UrlMetadataSchema, url), signature))) {
             throw new DataTampering('invalid url.')
         }
     } finally {
@@ -450,7 +455,7 @@ export async function verifyUrlMetadata(authenticate: Authenticate, url?: UrlMet
     }
 }
 
-export async function verifyVisitorMetadata(authenticate: Authenticate, visitor?: VisitorMetadata) {
+export async function verifyVisitorMetadata(visitor?: VisitorMetadata) {
     if (visitor === undefined) {
         throw new DataTampering('empty visitor.')
     }
@@ -458,10 +463,75 @@ export async function verifyVisitorMetadata(authenticate: Authenticate, visitor?
     const signature = visitor.signature
     try {
         visitor.signature = ''
-        if (!(await authenticate.verify(visitor.did, toBinary(VisitorMetadataSchema, visitor), signature))) {
+        if (!(await Authenticate.verify(visitor.did, toBinary(VisitorMetadataSchema, visitor), signature))) {
             throw new DataTampering('invalid visitor.')
         }
     } finally {
         visitor.signature = signature
+    }
+}
+
+
+/**
+ * 对应用元数据进行签名，并更新元数据的`signature`字段。
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param application 应用元数据
+ *
+ * @returns 无返回
+ */
+export async function signApplicationMetadata(authenticate: Authenticate, application: ApplicationMetadata) {
+    application.signature = ''
+    application.signature = await authenticate.sign(toBinary(ApplicationMetadataSchema, application))
+}
+
+/**
+ * 验证应用元数据的签名是否有效
+ *
+ * @param application 应用元数据对象
+ *
+ * @returns 无返回
+ *
+ * @throws DataTampering 元数据被篡改
+ */
+export async function verifyApplicationMetadata(application?: ApplicationMetadata) {
+    if (application === undefined) {
+        throw new DataTampering('empty application.')
+    }
+
+    const signature = application.signature
+    try {
+        application.signature = ''
+        if (!(await Authenticate.verify(application.owner, toBinary(ApplicationMetadataSchema, application), signature))) {
+            throw new DataTampering('invalid application.')
+        }
+    } finally {
+        application.signature = signature
+    }
+}
+
+
+/**
+ * 验证服务元数据的签名是否有效
+ *
+ * @param service 服务元数据对象
+ *
+ * @returns 无返回
+ *
+ * @throws DataTampering 元数据被篡改
+ */
+export async function verifyServiceMetadata(service?: ServiceMetadata) {
+    if (service === undefined) {
+        throw new DataTampering('empty service.')
+    }
+
+    const signature = service.signature
+    try {
+        service.signature = ''
+        if (!(await Authenticate.verify(service.did, toBinary(ServiceMetadataSchema, service), signature))) {
+            throw new DataTampering('invalid service.')
+        }
+    } finally {
+        service.signature = signature
     }
 }

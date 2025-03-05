@@ -96,7 +96,7 @@ export class Authenticate {
      * console.log(isValid); // 输出: true 或 false
      * ```
      */
-    async verify(did: string, data: Uint8Array, signature: string) {
+    static async verify(did: string, data: Uint8Array, signature: string) {
         const hashBytes = await computeHash(data)
         return await verifyHashBytes(fromDidToPublicKey(did), hashBytes, signature)
     }
@@ -131,7 +131,7 @@ export class Authenticate {
             body === undefined
                 ? toBinary(MessageHeaderSchema, header)
                 : composite(toBinary(MessageHeaderSchema, header), body)
-        const success = this.verify(header.did, data, signature)
+        const success = await Authenticate.verify(header.did, data, signature)
         if (!success) {
             throw new NoPermission('Invalid signature')
         }
