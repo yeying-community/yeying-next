@@ -16,6 +16,7 @@ export { MailProvider } from './provider/mail/mail'
 export { ProviderProvider } from './provider/llm/provider'
 export { LlmProvider } from './provider/llm/llm'
 export { SessionProvider } from './provider/session/session'
+export { ApplicationManager } from './application/manager'
 
 export {
     Registry,

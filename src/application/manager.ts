@@ -8,7 +8,7 @@ import {
     ServiceMetadataSchema
 } from "../yeying/api/common/model_pb";
 
-export class ServiceManager {
+export class ApplicationManager {
     // 前端域名
     domain: string
 

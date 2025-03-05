@@ -502,7 +502,7 @@ export async function verifyApplicationMetadata(application?: ApplicationMetadat
     const signature = application.signature
     try {
         application.signature = ''
-        if (!(await Authenticate.verify(application.owner, toBinary(ApplicationMetadataSchema, application), signature))) {
+        if (!(await Authenticate.verify(application.did, toBinary(ApplicationMetadataSchema, application), signature))) {
             throw new DataTampering('invalid application.')
         }
     } finally {
