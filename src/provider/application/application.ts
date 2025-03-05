@@ -6,13 +6,12 @@ import { MessageHeader } from '../../yeying/api/common/message_pb'
 import { create, toBinary } from '@bufbuild/protobuf'
 import {
     Application,
-    ApplicationMetadata,
-    ApplicationMetadataSchema,
     CreateApplicationRequestBodySchema,
     CreateApplicationRequestSchema,
     CreateApplicationResponseBodySchema
 } from '../../yeying/api/application/application_pb'
 import { NetworkUnavailable } from '../../common/error'
+import {ApplicationMetadata, ApplicationMetadataSchema} from "../../yeying/api/common/model_pb";
 
 /**
  * ApplicationProvider 管理应用。

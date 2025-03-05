@@ -6,8 +6,8 @@ import {toJson} from "@bufbuild/protobuf";
 import {deserializeIdentityFromJson} from "@yeying-community/yeying-web3";
 import {convertServiceMetadataFromIdentity} from "../../../src/provider/service/model";
 import {isDeleted, isExisted, isOk} from "../../../src/common/status";
-import {ServiceMetadataSchema} from "../../../src/yeying/api/service/service_pb";
 import {UserProvider} from "../../../src";
+import {ServiceMetadataSchema} from "../../../src/yeying/api/common/model_pb";
 
 const identity = getIdentity()
 const providerOption: ProviderOption = {
