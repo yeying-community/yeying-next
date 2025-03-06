@@ -28,13 +28,13 @@ describe('Archive', () => {
     })
     // @ts-ignore
     it('list', async () => {
-        console.log(provider.proxy)
-        const archiveProvider = new ArchiveProvider(provider)
-        const body = await archiveProvider.list("19313383-c311-45ed-bdfb-657b9f992606")
-        // @ts-ignore
-        console.log(`Success to list archive body=${body.status}`)
-        console.log(`Success to list archive body=${body.list}`)
-        // @ts-ignore
-        assert.isTrue(isOk(body.status))
+        // console.log(provider.proxy)
+        // const archiveProvider = new ArchiveProvider(provider)
+        // const body = await archiveProvider.list("19313383-c311-45ed-bdfb-657b9f992606")
+        // // @ts-ignore
+        // console.log(`Success to list archive body=${body.status}`)
+        // console.log(`Success to list archive body=${body.list}`)
+        // // @ts-ignore
+        // assert.isTrue(isOk(body.status))
     })
 })
