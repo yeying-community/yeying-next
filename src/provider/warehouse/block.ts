@@ -17,10 +17,11 @@ import {
 import { getCurrentUtcString } from '../../common/date'
 import { Client, createClient } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
-import { create, toBinary } from '@bufbuild/protobuf'
+import {create, toBinary, toJson} from '@bufbuild/protobuf'
 import { computeHash } from '../../common/crypto'
 import { encodeHex } from '../../common/codec'
 import { signBlockMetadata, verifyBlockMetadata } from '../model/model'
+import {isExisted} from "../../common/status";
 
 /**
  * 用于与区块链交互，提供数据的获取和存储功能
@@ -127,7 +128,7 @@ export class BlockProvider {
                 const res = await this.client.confirm(request)
                 await this.authenticate.doResponse(res, ConfirmBlockResponseBodySchema)
                 if (res.body?.block !== undefined) {
-                    await verifyBlockMetadata(this.authenticate, res.body?.block)
+                    await verifyBlockMetadata(res.body?.block)
                 }
 
                 return resolve(res.body?.block)
@@ -183,11 +184,11 @@ export class BlockProvider {
             const request = create(PutBlockRequestSchema, { header: header, body: body, data: data })
             try {
                 const res = await this.client.put(request)
-                await this.authenticate.doResponse(res, PutBlockResponseBodySchema)
-                await verifyBlockMetadata(this.authenticate, res.body?.block)
-                resolve(res.body?.block as BlockMetadata)
+                await this.authenticate.doResponse(res, PutBlockResponseBodySchema, isExisted)
+                await verifyBlockMetadata(res.body?.block)
+                return resolve(res.body?.block as BlockMetadata)
             } catch (err) {
-                console.error('Fail to put block', err)
+                console.error(`Fail to put block=${JSON.stringify(toJson(BlockMetadataSchema,block))}`, err)
                 return reject(err)
             }
         })

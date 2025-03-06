@@ -4,6 +4,7 @@ dist
 .DS_Store
 *.bak
 .env
+.env.*
 coverage/
 output/
 _book

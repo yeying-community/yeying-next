@@ -1,20 +1,18 @@
-import { Authenticate } from '../common/authenticate'
-import { ProviderOption } from '../common/model'
-import { MessageHeader } from '../../yeying/api/common/message_pb'
-import { DataTampering } from '../../common/error'
+import {Authenticate} from '../common/authenticate'
+import {ProviderOption} from '../common/model'
+import {MessageHeader} from '../../yeying/api/common/message_pb'
 import {
     HealthCheckRequestSchema,
     HealthCheckResponseBodySchema,
     Node,
-    NodeMetadata,
-    NodeMetadataSchema,
     WhoamiRequestSchema,
-    WhoamiResponseBody,
     WhoamiResponseBodySchema
 } from '../../yeying/api/node/node_pb'
-import { Client, createClient } from '@connectrpc/connect'
-import { createGrpcWebTransport } from '@connectrpc/connect-web'
-import { create, toBinary } from '@bufbuild/protobuf'
+import {Client, createClient} from '@connectrpc/connect'
+import {createGrpcWebTransport} from '@connectrpc/connect-web'
+import {create} from '@bufbuild/protobuf'
+import {ServiceMetadata} from "../../yeying/api/common/model_pb";
+import {verifyServiceMetadata} from "../model/model";
 
 /**
  * 用于与节点服务进行交互，提供健康检查和身份验证功能
@@ -87,7 +85,7 @@ export class NodeProvider {
      * ```
      */
     whoami() {
-        return new Promise<NodeMetadata>(async (resolve, reject) => {
+        return new Promise<ServiceMetadata>(async (resolve, reject) => {
             let header: MessageHeader
             try {
                 header = await this.authenticate.createHeader()
@@ -100,42 +98,12 @@ export class NodeProvider {
             try {
                 const res = await this.client.whoami(request)
                 await this.authenticate.doResponse(res, WhoamiResponseBodySchema)
-                const body = res.body as WhoamiResponseBody
-                if (await this.verifyNodeMetadata(body.node)) {
-                    resolve(body.node as NodeMetadata)
-                } else {
-                    reject(new DataTampering('invalid signature!'))
-                }
+                await verifyServiceMetadata(res.body?.service)
+                resolve(res.body?.service as ServiceMetadata)
             } catch (err) {
                 console.error('Fail to call whoami', err)
                 return reject(err)
             }
         })
-    }
-
-    /**
-     * 验证节点元数据的签名是否有效
-     * @param node - 要验证的节点元数据
-     * @returns 如果签名有效，返回 true；否则返回 false
-     * @example
-     * ```ts
-     * const nodeMetadata = { did: 'example-did', signature: 'example-signature' };
-     * nodeProvider.verifyNodeMetadata(nodeMetadata)
-     *     .then(isValid => console.log('Signature valid:', isValid))
-     *     .catch(err => console.error('Failed to verify signature', err));
-     * ```
-     */
-    private async verifyNodeMetadata(node?: NodeMetadata) {
-        if (node === undefined) {
-            return false
-        }
-
-        const signature = node.signature
-        try {
-            node.signature = ''
-            return await this.authenticate.verify(node.did, toBinary(NodeMetadataSchema, node), signature)
-        } finally {
-            node.signature = signature
-        }
     }
 }

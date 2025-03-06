@@ -46,6 +46,7 @@ jobs:
           YEYING_WAREHOUSE_URL: ${{ vars.YEYING_WAREHOUSE_URL }}
           YEYING_AI_URL: ${{ vars.YEYING_AI_URL }}
           TONGYI_DASHSCOPE_API_KEY: ${{ vars.TONGYI_DASHSCOPE_API_KEY }}
+          YEYING_PORTAL_URL: ${{ vars.YEYING_PORTAL_URL }}
         run: |
           echo "Using Yeying Node URL: $YEYING_NODE_URL"
           echo "Using Yeying Agent URL: $YEYING_AGENT_URL"
@@ -65,6 +66,7 @@ jobs:
           YEYING_WAREHOUSE_URL: ${{ vars.YEYING_WAREHOUSE_URL }}
           YEYING_AI_URL: ${{ vars.YEYING_AI_URL }}
           TONGYI_DASHSCOPE_API_KEY: ${{ vars.TONGYI_DASHSCOPE_API_KEY }}
+          YEYING_PORTAL_URL: ${{ vars.YEYING_PORTAL_URL }}
         run: |
           echo "Using Yeying Node URL: $YEYING_NODE_URL"
           echo "Using Yeying Agent URL: $YEYING_AGENT_URL"

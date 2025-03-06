@@ -152,7 +152,7 @@ export class AssetProvider {
                 const res = await this.client.update(request)
                 await this.authenticate.doResponse(res, UpdateAssetResponseBodySchema)
                 const resBody = res.body as UpdateAssetResponseBody
-                await verifyAssetMetadata(this.authenticate, resBody.asset)
+                await verifyAssetMetadata(resBody.asset)
                 resolve(resBody.asset as AssetMetadata)
             } catch (err) {
                 console.error(`Fail to update asset=${JSON.stringify(asset)}`, err)
@@ -292,7 +292,7 @@ export class AssetProvider {
                 const res = await this.client.sign(request)
                 await this.authenticate.doResponse(res, SignAssetResponseBodySchema, isExisted)
                 const resBody = res.body as SignAssetResponseBody
-                await verifyAssetMetadata(this.authenticate, resBody.asset)
+                await verifyAssetMetadata(resBody.asset)
                 resolve(resBody?.asset as AssetMetadata)
             } catch (err) {
                 console.error('Fail to sign asset', err)
