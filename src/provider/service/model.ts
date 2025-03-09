@@ -27,7 +27,7 @@ export function convertServiceMetadataFromIdentity(identity: Identity) {
         did: metadata.did,
         version: metadata.version,
         code: ServiceCodeEnum[extend.code as keyof typeof ServiceCodeEnum],
-        apis: extend.apis.split(',').map((a) => ApiCodeEnum[a as keyof typeof ApiCodeEnum]),
+        apiCodes: extend.apiCodes.split(',').map((a) => ApiCodeEnum[a as keyof typeof ApiCodeEnum]),
         proxy: extend.proxy,
         grpc: extend.grpc,
         avatar: metadata.avatar,
