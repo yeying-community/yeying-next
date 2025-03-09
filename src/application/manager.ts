@@ -1,6 +1,6 @@
-import {fromBinary, fromJson} from "@bufbuild/protobuf";
+import {fromBinary, fromJson, toJson} from "@bufbuild/protobuf";
 import {decodeBase64} from "../common/codec";
-import {verifyApplicationMetadata} from "../provider/model/model";
+import {verifyApplicationMetadata, verifyServiceMetadata} from "../provider/model/model";
 import {
     ApplicationMetadata,
     ApplicationMetadataSchema,
@@ -32,7 +32,12 @@ export class ApplicationManager {
         const services: ServiceMetadata[] = []
         for (const node of registry.nodes) {
             const service = fromBinary(ServiceMetadataSchema, decodeBase64(node))
-            services.push(service)
+            try {
+                await verifyServiceMetadata(service)
+                services.push(service)
+            } catch (err) {
+                console.error(`Invalid service metadata=${JSON.stringify(toJson(ServiceMetadataSchema, service))} when getting registry.`, err)
+            }
         }
         return services;
     }

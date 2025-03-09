@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file yeying/api/common/model.proto.
  */
 export const file_yeying_api_common_model: GenFile = /*@__PURE__*/
-  fileDesc("Ch15ZXlpbmcvYXBpL2NvbW1vbi9tb2RlbC5wcm90bxIReWV5aW5nLmFwaS5jb21tb24izAIKE0FwcGxpY2F0aW9uTWV0YWRhdGESDQoFb3duZXIYASABKAkSDwoHbmV0d29yaxgCIAEoCRIPCgdhZGRyZXNzGAMgASgJEgsKA2RpZBgEIAEoCRIPCgd2ZXJzaW9uGAUgASgNEgwKBGhhc2gYBiABKAkSDAoEbmFtZRgHIAEoCRI0CgRjb2RlGAggASgOMiYueWV5aW5nLmFwaS5jb21tb24uQXBwbGljYXRpb25Db2RlRW51bRITCgtkZXNjcmlwdGlvbhgJIAEoCRIQCghsb2NhdGlvbhgKIAEoCRIUCgxzZXJ2aWNlQ29kZXMYCyABKAkSDgoGYXZhdGFyGAwgASgJEg4KBmV4dGVuZBgNIAEoCRIRCgljcmVhdGVkQXQYDiABKAkSEQoJdXBkYXRlZEF0GA8gASgJEhEKCXNpZ25hdHVyZRgQIAEoCSLJAgoPU2VydmljZU1ldGFkYXRhEg0KBW93bmVyGAEgASgJEg8KB25ldHdvcmsYAiABKAkSDwoHYWRkcmVzcxgDIAEoCRILCgNkaWQYBCABKAkSDwoHdmVyc2lvbhgFIAEoDRIMCgRuYW1lGAYgASgJEhMKC2Rlc2NyaXB0aW9uGAcgASgJEjAKBGNvZGUYCCABKA4yIi55ZXlpbmcuYXBpLmNvbW1vbi5TZXJ2aWNlQ29kZUVudW0SLAoEYXBpcxgJIAMoDjIeLnlleWluZy5hcGkuY29tbW9uLkFwaUNvZGVFbnVtEg0KBXByb3h5GAogASgJEgwKBGdycGMYCyABKAkSDgoGYXZhdGFyGAwgASgJEhEKCWNyZWF0ZWRBdBgNIAEoCRIRCgl1cGRhdGVkQXQYDiABKAkSEQoJc2lnbmF0dXJlGA8gASgJQhNaEXlleWluZy9hcGkvY29tbW9uYgZwcm90bzM", [file_yeying_api_common_code]);
+  fileDesc("Ch15ZXlpbmcvYXBpL2NvbW1vbi9tb2RlbC5wcm90bxIReWV5aW5nLmFwaS5jb21tb24i4AIKE0FwcGxpY2F0aW9uTWV0YWRhdGESDQoFb3duZXIYASABKAkSDwoHbmV0d29yaxgCIAEoCRIPCgdhZGRyZXNzGAMgASgJEgsKA2RpZBgEIAEoCRIPCgd2ZXJzaW9uGAUgASgNEgwKBGhhc2gYBiABKAkSDAoEbmFtZRgHIAEoCRI0CgRjb2RlGAggASgOMiYueWV5aW5nLmFwaS5jb21tb24uQXBwbGljYXRpb25Db2RlRW51bRITCgtkZXNjcmlwdGlvbhgJIAEoCRIQCghsb2NhdGlvbhgKIAEoCRI4CgxzZXJ2aWNlQ29kZXMYCyADKA4yIi55ZXlpbmcuYXBpLmNvbW1vbi5TZXJ2aWNlQ29kZUVudW0SDgoGYXZhdGFyGAwgASgJEhEKCWNyZWF0ZWRBdBgNIAEoCRIRCgl1cGRhdGVkQXQYDiABKAkSEQoJc2lnbmF0dXJlGA8gASgJIs0CCg9TZXJ2aWNlTWV0YWRhdGESDQoFb3duZXIYASABKAkSDwoHbmV0d29yaxgCIAEoCRIPCgdhZGRyZXNzGAMgASgJEgsKA2RpZBgEIAEoCRIPCgd2ZXJzaW9uGAUgASgNEgwKBG5hbWUYBiABKAkSEwoLZGVzY3JpcHRpb24YByABKAkSMAoEY29kZRgIIAEoDjIiLnlleWluZy5hcGkuY29tbW9uLlNlcnZpY2VDb2RlRW51bRIwCghhcGlDb2RlcxgJIAMoDjIeLnlleWluZy5hcGkuY29tbW9uLkFwaUNvZGVFbnVtEg0KBXByb3h5GAogASgJEgwKBGdycGMYCyABKAkSDgoGYXZhdGFyGAwgASgJEhEKCWNyZWF0ZWRBdBgNIAEoCRIRCgl1cGRhdGVkQXQYDiABKAkSEQoJc2lnbmF0dXJlGA8gASgJQhNaEXlleWluZy9hcGkvY29tbW9uYgZwcm90bzM", [file_yeying_api_common_code]);
 
 /**
  * @generated from message yeying.api.common.ApplicationMetadata
@@ -91,9 +91,9 @@ export type ApplicationMetadata = Message<"yeying.api.common.ApplicationMetadata
   /**
    * 应用依赖的服务编码，用,隔开 
    *
-   * @generated from field: string serviceCodes = 11;
+   * @generated from field: repeated yeying.api.common.ServiceCodeEnum serviceCodes = 11;
    */
-  serviceCodes: string;
+  serviceCodes: ServiceCodeEnum[];
 
   /**
    * 应用头像 
@@ -103,30 +103,23 @@ export type ApplicationMetadata = Message<"yeying.api.common.ApplicationMetadata
   avatar: string;
 
   /**
-   * 应用扩展信息 
-   *
-   * @generated from field: string extend = 13;
-   */
-  extend: string;
-
-  /**
    * 应用创建时间 
    *
-   * @generated from field: string createdAt = 14;
+   * @generated from field: string createdAt = 13;
    */
   createdAt: string;
 
   /**
    * 应用更新时间 
    *
-   * @generated from field: string updatedAt = 15;
+   * @generated from field: string updatedAt = 14;
    */
   updatedAt: string;
 
   /**
    * 签名
    *
-   * @generated from field: string signature = 16;
+   * @generated from field: string signature = 15;
    */
   signature: string;
 };
@@ -201,9 +194,9 @@ export type ServiceMetadata = Message<"yeying.api.common.ServiceMetadata"> & {
   /**
    * 服务apis 
    *
-   * @generated from field: repeated yeying.api.common.ApiCodeEnum apis = 9;
+   * @generated from field: repeated yeying.api.common.ApiCodeEnum apiCodes = 9;
    */
-  apis: ApiCodeEnum[];
+  apiCodes: ApiCodeEnum[];
 
   /**
    * 服务代理 

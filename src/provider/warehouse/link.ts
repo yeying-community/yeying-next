@@ -19,7 +19,7 @@ import {
     SearchLinkConditionSchema,
     SearchLinkRequestBodySchema,
     SearchLinkRequestSchema,
-    SearchLinkResponseBodySchema,
+    SearchLinkResponseBodySchema, UpdateLinkRequestBodySchema,
     VisitorMetadata,
     VisitorMetadataSchema
 } from '../../yeying/api/asset/link_pb'

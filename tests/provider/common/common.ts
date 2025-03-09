@@ -1,4 +1,4 @@
-import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
+import {ApplicationCodeEnum, ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
 import {BlockAddress} from "@yeying-community/yeying-web3";
 import {ProviderCodeEnum} from "../../../src/yeying/api/llm/provider_pb";
 
@@ -58,6 +58,15 @@ export function getBlockAddress(): BlockAddress {
         publicKey: '0x0396be3542029111627e1d08c65a740fcda7b8a341a618ebfe92bace61c0fd5506',
         address: '0x6256583430f59D8d526a0a694e7d37ea1956d0AC',
         mnemonic: undefined
+    }
+}
+
+export function getApplicationAddress(code: ApplicationCodeEnum) {
+    switch (code) {
+        case ApplicationCodeEnum.APPLICATION_CODE_PORTAL:
+            return process.env.YEYING_PORTAL_URL ? process.env.YEYING_PORTAL_URL as string : "http://localhost:8451"
+        default:
+            throw new Error(`Unknown application=${code}`)
     }
 }
 

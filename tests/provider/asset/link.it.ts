@@ -49,7 +49,7 @@ describe('Link', () => {
             a.namespaceId,
             a.hash,
             24 * 3600,
-            LinkTypeEnum.LINK_STATUS_PUBLIC)
+            LinkTypeEnum.LINK_TYPE_PUBLIC)
         assert.isDefined(detail)
         console.log(`Success to get link=${JSON.stringify(toJson(LinkMetadataSchema, detail.link as LinkMetadata))}`)
         console.log(`Success to get url=${JSON.stringify(toJson(UrlMetadataSchema, detail.url as UrlMetadata))}`)

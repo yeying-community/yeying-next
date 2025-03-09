@@ -1,6 +1,6 @@
 import {ApplicationManager} from "../../src/application/manager";
 import {ApplicationCodeEnum} from "../../src";
-import {getApplicationAddress} from "./common";
+import {getApplicationAddress} from "../provider/common/common";
 
 describe('Application', () => {
     it('metadata', async () => {

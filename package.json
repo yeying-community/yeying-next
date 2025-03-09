@@ -22,7 +22,7 @@
     "@bufbuild/protobuf": "^2.2.3",
     "@connectrpc/connect-web": "^2.0.1",
     "@types/luxon": "^3.4.2",
-    "@yeying-community/yeying-web3": "^0.0.30",
+    "@yeying-community/yeying-web3": "^0.0.31",
     "google-protobuf": "^3.21.4",
     "grpc-web": "^1.5.0",
     "luxon": "^3.5.0",
