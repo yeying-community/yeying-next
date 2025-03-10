@@ -22,7 +22,7 @@ import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/message_pb'
 import {create, toBinary, toJson} from '@bufbuild/protobuf'
 import {ServiceMetadata, ServiceMetadataSchema} from "../../yeying/api/common/model_pb";
-import {isExisted} from "../../common/status";
+import {isDeleted, isExisted} from "../../common/status";
 import {verifyServiceMetadata} from "../model/model";
 
 /**
@@ -65,14 +65,13 @@ export class ServiceProvider {
      * ```
      */
     register(service: ServiceMetadata) {
-        return new Promise<RegisterServiceResponseBody>(async (resolve, reject) => {
+        return new Promise<ServiceMetadata>(async (resolve, reject) => {
             const body = create(RegisterServiceRequestBodySchema, {
                 service: service
             })
 
             let header: MessageHeader
             try {
-                service.signature = await this.authenticate.sign(toBinary(ServiceMetadataSchema, service))
                 header = await this.authenticate.createHeader(toBinary(RegisterServiceRequestBodySchema, body))
             } catch (err) {
                 console.error('Fail to create header for registering service.', err)
@@ -83,7 +82,7 @@ export class ServiceProvider {
             try {
                 const res = await this.client.register(request)
                 await this.authenticate.doResponse(res, RegisterServiceResponseBodySchema, isExisted)
-                resolve(res.body as RegisterServiceResponseBody)
+                resolve(res.body?.service as ServiceMetadata)
             } catch (err) {
                 console.error('Fail to register service', err)
                 return reject(err)
@@ -148,18 +147,15 @@ export class ServiceProvider {
 
     /**
      * 根据服务的 DID 和版本号发送注销请求
+     *
      * @param did - 服务的 DID
      * @param version - 服务的版本号
+     *
      * @returns 返回注销服务的响应体
-     * @example
-     * ```ts
-     * serviceProvider.unregister('example-did', 1)
-     *   .then(response => console.log(response))
-     *   .catch(err => console.error(err))
-     * ```
+     *
      */
     unregister(did: string, version: number) {
-        return new Promise<UnregisterServiceResponseBody>(async (resolve, reject) => {
+        return new Promise<void>(async (resolve, reject) => {
             const body = create(UnregisterServiceRequestBodySchema, {
                 did: did,
                 version: version
@@ -176,8 +172,8 @@ export class ServiceProvider {
             const request = create(UnregisterServiceRequestSchema, { header: header, body: body })
             try {
                 const res = await this.client.unregister(request)
-                await this.authenticate.doResponse(res, UnregisterServiceResponseBodySchema)
-                resolve(res.body as UnregisterServiceResponseBody)
+                await this.authenticate.doResponse(res, UnregisterServiceResponseBodySchema, isDeleted)
+                resolve()
             } catch (err) {
                 console.error('Fail to unregister service', err)
                 return reject(err)

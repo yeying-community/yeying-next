@@ -15,30 +15,3 @@ export interface ProviderOption {
      */
     blockAddress: BlockAddress
 }
-
-/**
- * 将字符串类型的认证类型转换为对应的枚举值
- * @param type - 字符串类型的认证类型
- * @returns 转换后的 AuthenticateTypeEnum
- * @example
- * ```ts
- * const authType = convertAuthenticateTypeFrom('AUTHENTICATE_TYPE_CERT')
- * ```
- */
-export function convertAuthenticateTypeFrom(type: string) {
-    const v = AuthenticateTypeEnum[type as keyof typeof AuthenticateTypeEnum]
-    return v !== undefined ? v : AuthenticateTypeEnum.AUTHENTICATE_TYPE_UNKNOWN
-}
-
-/**
- * 将认证类型枚举值转换为字符串
- * @param type - 认证类型枚举值
- * @returns 转换后的 AuthenticateTypeEnum
- * @example
- * ```ts
- * const authenticateString = convertAuthenticateTypeTo(AuthenticateTypeEnum.AUTHENTICATE_TYPE_CERT);
- * ```
- */
-export function convertAuthenticateTypeTo(type: AuthenticateTypeEnum) {
-    return AuthenticateTypeEnum[type] || AuthenticateTypeEnum[AuthenticateTypeEnum.AUTHENTICATE_TYPE_UNKNOWN]
-}
