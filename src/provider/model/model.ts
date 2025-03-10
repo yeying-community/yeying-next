@@ -510,6 +510,18 @@ export async function verifyApplicationMetadata(application?: ApplicationMetadat
     }
 }
 
+/**
+ * 对服务元数据进行签名，并更新元数据的`signature`字段。
+ *
+ * @param authenticate 用于验签的认证对象
+ * @param service 服务元数据
+ *
+ * @returns 无返回
+ */
+export async function signServiceMetadata(authenticate: Authenticate, service: ServiceMetadata) {
+    service.signature = ''
+    service.signature = await authenticate.sign(toBinary(ServiceMetadataSchema, service))
+}
 
 /**
  * 验证服务元数据的签名是否有效
