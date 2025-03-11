@@ -1,6 +1,6 @@
 import {ApplicationManager} from "../../src/application/manager";
 import {ApplicationCodeEnum, ServiceCodeEnum} from "../../src";
-import {ServiceManager} from "../../src/service/service";
+import {ServiceManager} from "../../src/service/manager";
 import {getApplicationAddress, getBlockAddress} from "../provider/common/common";
 
 describe('Service', () => {
