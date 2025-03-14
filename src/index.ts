@@ -11,12 +11,14 @@ export { RecycleProvider } from './provider/warehouse/recycle'
 export { NamespaceProvider } from './provider/warehouse/namespace'
 export { Uploader } from './provider/warehouse/uploader'
 export { Downloader } from './provider/warehouse/downloader'
-export { IdentityManager } from './identity/manager'
 export { MailProvider } from './provider/mail/mail'
 export { ProviderProvider } from './provider/llm/provider'
 export { LlmProvider } from './provider/llm/llm'
 export { SessionProvider } from './provider/session/session'
+
+export { IdentityManager } from './identity/manager'
 export { ApplicationManager } from './application/manager'
+export { ServiceManager } from './service/manager'
 
 export {
     Registry,
@@ -35,17 +37,23 @@ export {
 
 export * from './yeying/api/llm/provider_pb'
 export * from './yeying/api/llm/llm_pb'
-// export * from './yeying/api/common/code_pb'
-export { 
-    ApplicationCodeEnum, 
+export {
+    ApiCodeEnum,
+    ApplicationCodeEnum,
+    ImageFormatEnum,
     CipherTypeEnum, 
     DigitalFormatEnum, 
     LanguageCodeEnum, 
-    ServiceCodeEnum 
+    ServiceCodeEnum,
+    ContentFormatEnum,
+    SessionSceneEnum,
+    SessionRoleEnum,
+    ParticipantTypeEnum,
+    ApplicationStatusEnum,
+    AuthenticateTypeEnum,
 } from './yeying/api/common/code_pb';
 export * from './yeying/api/common/message_pb'
 export * from './yeying/api/asset/asset_pb'
-// export * from './yeying/api/asset/link_pb'
 export { LinkMetadataSchema, UrlMetadataSchema } from './yeying/api/asset/link_pb';
 export * from './yeying/api/asset/recycle_pb'
 export * from './yeying/api/asset/namespace_pb'
