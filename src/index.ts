@@ -54,7 +54,7 @@ export {
 } from './yeying/api/common/code_pb';
 export * from './yeying/api/common/message_pb'
 export * from './yeying/api/asset/asset_pb'
-export { LinkMetadataSchema, UrlMetadataSchema } from './yeying/api/asset/link_pb';
+export { LinkMetadata, UrlMetadata } from './yeying/api/asset/link_pb';
 export * from './yeying/api/asset/recycle_pb'
 export * from './yeying/api/asset/namespace_pb'
 export * from './yeying/api/bulletin/bulletin_pb'

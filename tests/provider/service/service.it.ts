@@ -24,7 +24,7 @@ const serviceTemplate = {
         "code": "SERVICE_CODE_MCP",
         "proxy": "http://localhost:8741",
         "grpc": "localhost:9401",
-        "apiCodes": "API_CODE_USER,API_CODE_LLM"
+        "apiCodes": "API_CODE_USER,API_CODE_LLM_SERVICE"
     }
 }
 
