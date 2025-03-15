@@ -4,7 +4,7 @@ import {getApplicationAddress} from "../provider/common/common";
 
 describe('Application', () => {
     it('metadata', async () => {
-        const applicationManager = new ApplicationManager(getApplicationAddress(ApplicationCodeEnum.APPLICATION_CODE_PORTAL));
+        const applicationManager = new ApplicationManager(getApplicationAddress(ApplicationCodeEnum.APPLICATION_CODE_MARKET));
         const portal = await applicationManager.whoami()
         expect(portal).toBeDefined()
         const services = await applicationManager.registry()

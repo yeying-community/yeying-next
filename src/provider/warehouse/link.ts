@@ -3,7 +3,7 @@ import {Client, createClient} from '@connectrpc/connect'
 import {
     CreateLinkRequestBodySchema,
     CreateLinkRequestSchema,
-    CreateLinkResponseBodySchema,
+    CreateLinkResponseBodySchema, DisableLinkRequestBodySchema, DisableLinkRequestSchema, DisableLinkResponseBodySchema,
     Link,
     LinkDetail,
     LinkDetailRequestBodySchema,
@@ -60,6 +60,7 @@ export class LinkProvider {
      * 创建资产分享链接
      *
      * @param namespaceId 资产命名空间
+     * @param name 分享链接的名称
      * @param hash 要分享的资产哈希值
      * @param duration 分享链接有效时长，单位是秒
      * @param type 分享链接类型
@@ -68,13 +69,16 @@ export class LinkProvider {
      * @returns 链接的状态和元信息
      *
      */
-    create(namespaceId: string, hash: string, duration: number, type: LinkTypeEnum, visitors: string[] = []) {
+    create(namespaceId: string, name: string, hash: string, duration: number, type: LinkTypeEnum, visitors: string[] = [], description?: string) {
         return new Promise<LinkDetail>(async (resolve, reject) => {
             const link = create(LinkMetadataSchema, {
                 namespaceId: namespaceId,
+                name: name,
+                description: description,
                 owner: this.authenticate.getDid(),
                 uid: generateUuid(),
                 createdAt: getCurrentUtcString(),
+                startedAt: getCurrentUtcString(),
                 expiredAt: formatDateTime(plusSecond(getCurrentUtcDateTime(), duration)),
                 hash: hash,
                 type: type,
@@ -183,11 +187,45 @@ export class LinkProvider {
             try {
                 const res = await this.client.detail(request)
                 await this.authenticate.doResponse(res, LinkDetailResponseBodySchema)
-                await verifyLinkMetadata(res.body?.detail?.link)
-                await verifyUrlMetadata(res.body?.detail?.url)
-                resolve(res.body?.detail as LinkDetail)
+                const detail = res.body?.detail as LinkDetail
+                await verifyLinkMetadata(detail.link)
+                await verifyUrlMetadata(detail.url)
+                resolve(detail)
             } catch (err) {
                 console.error('Fail to get link detail.', err)
+                return reject(err)
+            }
+        })
+    }
+
+    /**
+     * 取消资产分享
+     *
+     * @param uid 分享链接唯一ID
+     *
+     * @returns 分享链接详情
+     *
+     */
+    disable(uid: string) {
+        return new Promise<void>(async (resolve, reject) => {
+            const body = create(DisableLinkRequestBodySchema, {linkId: uid})
+
+            let header
+            try {
+                header = await this.authenticate.createHeader(toBinary(DisableLinkRequestBodySchema, body))
+            } catch (err) {
+                console.error('Fail to create header when disabling link', err)
+                return reject(err)
+            }
+
+            const request = create(DisableLinkRequestSchema, {header: header, body: body})
+
+            try {
+                const res = await this.client.disable(request)
+                await this.authenticate.doResponse(res, DisableLinkResponseBodySchema)
+                resolve()
+            } catch (err) {
+                console.error('Fail to disable link.', err)
                 return reject(err)
             }
         })

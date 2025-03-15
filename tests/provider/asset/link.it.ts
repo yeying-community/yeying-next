@@ -1,19 +1,18 @@
 import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
 import {createTestFile, getIdentity, getNamespace, getProviderProxy} from "../common/common";
-import {
-    AssetMetadata,
-    LinkMetadata,
-    ProviderOption,
-    Uploader,
-    UrlMetadata,
-    UrlMetadataSchema,
-    UserProvider, VisitorMetadataSchema
-} from "../../../src";
+
 
 import {NamespaceProvider} from "../../../src/provider/warehouse/namespace";
 import {LinkProvider} from "../../../src/provider/warehouse/link";
-import {LinkMetadataSchema, LinkTypeEnum} from "../../../src/yeying/api/asset/link_pb";
+import {
+    LinkMetadata,
+    LinkMetadataSchema,
+    LinkTypeEnum,
+    UrlMetadata, UrlMetadataSchema,
+    VisitorMetadataSchema
+} from "../../../src/yeying/api/asset/link_pb";
 import {toJson} from "@bufbuild/protobuf";
+import {AssetMetadata, ProviderOption, Uploader, UserProvider} from "../../../src";
 
 const namespace = getNamespace()
 const identity = getIdentity()
@@ -47,6 +46,7 @@ describe('Link', () => {
         console.log(`Try to create link for asset=${a.hash}`)
         const detail = await linkProvider.create(
             a.namespaceId,
+            a.name,
             a.hash,
             24 * 3600,
             LinkTypeEnum.LINK_TYPE_PUBLIC)
@@ -68,6 +68,14 @@ describe('Link', () => {
         const detail = await linkProvider.detail(links[0].uid)
         console.log(`Success to get link=${JSON.stringify(toJson(LinkMetadataSchema, detail.link as LinkMetadata))}`)
         console.log(`Success to get url=${JSON.stringify(toJson(UrlMetadataSchema, detail.url as UrlMetadata))}`)
+    })
+
+    it('disable', async () => {
+        const linkProvider = new LinkProvider(providerOption)
+        const links = await linkProvider.search(1, 10, {hash: asset?.hash})
+        assert.isAtLeast(links.length, 1)
+        await linkProvider.disable(links[0].uid)
+        console.log(`Success to disable url=${links[0].uid}`)
     })
 
     it('visitor', async () => {

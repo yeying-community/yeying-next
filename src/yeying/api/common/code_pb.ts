@@ -16,7 +16,7 @@ import { enumDesc, fileDesc } from "@bufbuild/protobuf/codegenv1";
  * Describes the file yeying/api/common/code.proto.
  */
 export const file_yeying_api_common_code: GenFile = /*@__PURE__*/
-  fileDesc("Chx5ZXlpbmcvYXBpL2NvbW1vbi9jb2RlLnByb3RvEhF5ZXlpbmcuYXBpLmNvbW1vbiqeAgoQUmVzcG9uc2VDb2RlRW51bRIZChVSRVNQT05TRV9DT0RFX1VOS05PV04QABIGCgJPSxABEhQKEElOVkFMSURfQVJHVU1FTlQQAhITCg9VTkFVVEhFTlRJQ0FURUQQAxIVChFQRVJNSVNTSU9OX0RFTklFRBAEEg0KCU5PVF9GT1VORBAFEhIKDkFMUkVBRFlfRVhJU1RTEAYSEgoOTElNSVRfRVhDRUVERUQQBxIPCgtVTkFWQUlMQUJMRRAIEhEKDVVOS05PV05fRVJST1IQCRIRCg1ORVRXT1JLX0VSUk9SEAoSEAoMSU5WQUxJRF9DRVJUEAsSEQoNTk9UX1NVUFBPUlRFRBAMEhIKDkRBVEFfQ09SUlVQVEVEEA0qrAEKEkNvbnRyYWN0U3RhdHVzRW51bRIbChdDT05UUkFDVF9TVEFUVVNfVU5LTk9XThAAEh8KG0NPTlRSQUNUX1NUQVRVU19JTkFDVElWQVRFRBABEh0KGUNPTlRSQUNUX1NUQVRVU19BQ1RJVkFURUQQAhIbChdDT05UUkFDVF9TVEFUVVNfRVhQSVJFRBADEhwKGENPTlRSQUNUX1NUQVRVU19DQU5DRUxFRBAEKl8KEExhbmd1YWdlQ29kZUVudW0SGQoVTEFOR1VBR0VfQ09ERV9VTktOT1dOEAASFwoTTEFOR1VBR0VfQ09ERV9aSF9DSBABEhcKE0xBTkdVQUdFX0NPREVfRU5fVVMQAiqAAgoLQXBpQ29kZUVudW0SFAoQQVBJX0NPREVfVU5LTk9XThAAEhEKDUFQSV9DT0RFX1VTRVIQARIVChFBUElfQ09ERV9JREVOVElUWRACEhAKDEFQSV9DT0RFX0xMTRADEhIKDkFQSV9DT0RFX0FTU0VUEAQSGAoUQVBJX0NPREVfQ0VSVElGSUNBVEUQBRIUChBBUElfQ09ERV9TVE9SQUdFEAYSGAoUQVBJX0NPREVfQVBQTElDQVRJT04QBxISCg5BUElfQ09ERV9FVkVOVBAIEhcKE0FQSV9DT0RFX0lOVklUQVRJT04QCRIUChBBUElfQ09ERV9TRVJWSUNFEAoqoQEKD1NlcnZpY2VDb2RlRW51bRIYChRTRVJWSUNFX0NPREVfVU5LTk9XThAAEhUKEVNFUlZJQ0VfQ09ERV9OT0RFEAESGgoWU0VSVklDRV9DT0RFX1dBUkVIT1VTRRACEhYKElNFUlZJQ0VfQ09ERV9BR0VOVBADEhQKEFNFUlZJQ0VfQ09ERV9NQ1AQBBITCg9TRVJWSUNFX0NPREVfQUkQBSpBCg9JbWFnZUZvcm1hdEVudW0SGAoUSU1BR0VfRk9STUFUX1VOS05PV04QABIUChBJTUFHRV9GT1JNQVRfUE5HEAEqyQEKEURpZ2l0YWxGb3JtYXRFbnVtEhoKFkRJR0lUQUxfRk9STUFUX1VOS05PV04QABIXChNESUdJVEFMX0ZPUk1BVF9URVhUEAESGAoURElHSVRBTF9GT1JNQVRfSU1BR0UQAhIYChRESUdJVEFMX0ZPUk1BVF9WSURFTxADEhgKFERJR0lUQUxfRk9STUFUX0FVRElPEAQSFgoSRElHSVRBTF9GT1JNQVRfQVBQEAUSGQoURElHSVRBTF9GT1JNQVRfT1RIRVIQkE4qYgoRQ29udGVudEZvcm1hdEVudW0SGgoWQ09OVEVOVF9GT1JNQVRfVU5LTk9XThAAEhYKEkNPTlRFTlRfRk9STUFUX1VSTBABEhkKFUNPTlRFTlRfRk9STUFUX0JBU0U2NBACKoMBChBTZXNzaW9uU2NlbmVFbnVtEhkKFVNFU1NJT05fU0NFTkVfVU5LTk9XThAAEhoKFlNFU1NJT05fU0NFTkVfRElBTE9HVUUQARIZChVTRVNTSU9OX1NDRU5FX0RSQVdJTkcQAhIdChlTRVNTSU9OX1NDRU5FX1RSQU5TTEFUSU9OEAMqYQoPU2Vzc2lvblJvbGVFbnVtEhgKFFNFU1NJT05fUk9MRV9VTktOT1dOEAASHAoYU0VTU0lPTl9ST0xFX1BBUlRJQ0lQQU5UEAESFgoSU0VTU0lPTl9ST0xFX0FETUlOEAIqbgoTUGFydGljaXBhbnRUeXBlRW51bRIcChhQQVJUSUNJUEFOVF9UWVBFX1VOS05PV04QABIcChhQQVJUSUNJUEFOVF9UWVBFX1NFUlZJQ0UQARIbChdQQVJUSUNJUEFOVF9UWVBFX1BFT1BMRRACKpcBChVBcHBsaWNhdGlvblN0YXR1c0VudW0SHgoaQVBQTElDQVRJT05fU1RBVFVTX1VOS05PV04QABIeChpBUFBMSUNBVElPTl9TVEFUVVNfQ1JFQVRFRBABEh4KGkFQUExJQ0FUSU9OX1NUQVRVU19BVURJVEVEEAISHgoaQVBQTElDQVRJT05fU1RBVFVTX1JFRlVTRUQQAyqGAgoTQXBwbGljYXRpb25Db2RlRW51bRIcChhBUFBMSUNBVElPTl9DT0RFX1VOS05PV04QABIbChdBUFBMSUNBVElPTl9DT0RFX1BPUlRBTBABEhoKFkFQUExJQ0FUSU9OX0NPREVfU1RPUkUQAhIeChpBUFBMSUNBVElPTl9DT0RFX0tOT1dMRURHRRADEh4KGkFQUExJQ0FUSU9OX0NPREVfV0FSRUhPVVNFEAQSGwoXQVBQTElDQVRJT05fQ09ERV9LRUVQRVIQBRIbChdBUFBMSUNBVElPTl9DT0RFX1NPQ0lBTBAGEh4KGkFQUExJQ0FUSU9OX0NPREVfV09SS0JFTkNIEAcqRgoOQ2lwaGVyVHlwZUVudW0SFwoTQ0lQSEVSX1RZUEVfVU5LTk9XThAAEhsKF0NJUEhFUl9UWVBFX0FFU19HQ01fMjU2EAEqbgoUQXV0aGVudGljYXRlVHlwZUVudW0SHQoZQVVUSEVOVElDQVRFX1RZUEVfVU5LTk9XThAAEhoKFkFVVEhFTlRJQ0FURV9UWVBFX0NFUlQQARIbChdBVVRIRU5USUNBVEVfVFlQRV9UT0tFThACQhNaEXlleWluZy9hcGkvY29tbW9uYgZwcm90bzM");
+  fileDesc("Chx5ZXlpbmcvYXBpL2NvbW1vbi9jb2RlLnByb3RvEhF5ZXlpbmcuYXBpLmNvbW1vbiqeAgoQUmVzcG9uc2VDb2RlRW51bRIZChVSRVNQT05TRV9DT0RFX1VOS05PV04QABIGCgJPSxABEhQKEElOVkFMSURfQVJHVU1FTlQQAhITCg9VTkFVVEhFTlRJQ0FURUQQAxIVChFQRVJNSVNTSU9OX0RFTklFRBAEEg0KCU5PVF9GT1VORBAFEhIKDkFMUkVBRFlfRVhJU1RTEAYSEgoOTElNSVRfRVhDRUVERUQQBxIPCgtVTkFWQUlMQUJMRRAIEhEKDVVOS05PV05fRVJST1IQCRIRCg1ORVRXT1JLX0VSUk9SEAoSEAoMSU5WQUxJRF9DRVJUEAsSEQoNTk9UX1NVUFBPUlRFRBAMEhIKDkRBVEFfQ09SUlVQVEVEEA0qrAEKEkNvbnRyYWN0U3RhdHVzRW51bRIbChdDT05UUkFDVF9TVEFUVVNfVU5LTk9XThAAEh8KG0NPTlRSQUNUX1NUQVRVU19JTkFDVElWQVRFRBABEh0KGUNPTlRSQUNUX1NUQVRVU19BQ1RJVkFURUQQAhIbChdDT05UUkFDVF9TVEFUVVNfRVhQSVJFRBADEhwKGENPTlRSQUNUX1NUQVRVU19DQU5DRUxFRBAEKl8KEExhbmd1YWdlQ29kZUVudW0SGQoVTEFOR1VBR0VfQ09ERV9VTktOT1dOEAASFwoTTEFOR1VBR0VfQ09ERV9aSF9DSBABEhcKE0xBTkdVQUdFX0NPREVfRU5fVVMQAirmAQoTQXBwbGljYXRpb25Db2RlRW51bRIcChhBUFBMSUNBVElPTl9DT0RFX1VOS05PV04QABIbChdBUFBMSUNBVElPTl9DT0RFX01BUktFVBABEhoKFkFQUExJQ0FUSU9OX0NPREVfQVNTRVQQAhIeChpBUFBMSUNBVElPTl9DT0RFX0tOT1dMRURHRRADEhsKF0FQUExJQ0FUSU9OX0NPREVfS0VFUEVSEAQSGwoXQVBQTElDQVRJT05fQ09ERV9TT0NJQUwQBRIeChpBUFBMSUNBVElPTl9DT0RFX1dPUktCRU5DSBAGKqEBCg9TZXJ2aWNlQ29kZUVudW0SGAoUU0VSVklDRV9DT0RFX1VOS05PV04QABIVChFTRVJWSUNFX0NPREVfTk9ERRABEhoKFlNFUlZJQ0VfQ09ERV9XQVJFSE9VU0UQAhIWChJTRVJWSUNFX0NPREVfQUdFTlQQAxIUChBTRVJWSUNFX0NPREVfTUNQEAQSEwoPU0VSVklDRV9DT0RFX0FJEAUqmAMKC0FwaUNvZGVFbnVtEhQKEEFQSV9DT0RFX1VOS05PV04QABIRCg1BUElfQ09ERV9VU0VSEAESFQoRQVBJX0NPREVfSURFTlRJVFkQAhIYChRBUElfQ09ERV9MTE1fU0VSVklDRRADEhkKFUFQSV9DT0RFX0xMTV9QUk9WSURFUhAEEhoKFkFQSV9DT0RFX0FTU0VUX1NFUlZJQ0UQBRIYChRBUElfQ09ERV9BU1NFVF9CTE9DSxAGEhcKE0FQSV9DT0RFX0FTU0VUX0xJTksQBxIcChhBUElfQ09ERV9BU1NFVF9OQU1FU1BBQ0UQCBIaChZBUElfQ09ERV9BU1NFVF9SRUNZQ0xFEAkSGAoUQVBJX0NPREVfQ0VSVElGSUNBVEUQChIUChBBUElfQ09ERV9TVE9SQUdFEAsSGAoUQVBJX0NPREVfQVBQTElDQVRJT04QDBISCg5BUElfQ09ERV9FVkVOVBANEhcKE0FQSV9DT0RFX0lOVklUQVRJT04QDhIUChBBUElfQ09ERV9TRVJWSUNFEA8qQQoPSW1hZ2VGb3JtYXRFbnVtEhgKFElNQUdFX0ZPUk1BVF9VTktOT1dOEAASFAoQSU1BR0VfRk9STUFUX1BORxABKskBChFEaWdpdGFsRm9ybWF0RW51bRIaChZESUdJVEFMX0ZPUk1BVF9VTktOT1dOEAASFwoTRElHSVRBTF9GT1JNQVRfVEVYVBABEhgKFERJR0lUQUxfRk9STUFUX0lNQUdFEAISGAoURElHSVRBTF9GT1JNQVRfVklERU8QAxIYChRESUdJVEFMX0ZPUk1BVF9BVURJTxAEEhYKEkRJR0lUQUxfRk9STUFUX0FQUBAFEhkKFERJR0lUQUxfRk9STUFUX09USEVSEJBOKmIKEUNvbnRlbnRGb3JtYXRFbnVtEhoKFkNPTlRFTlRfRk9STUFUX1VOS05PV04QABIWChJDT05URU5UX0ZPUk1BVF9VUkwQARIZChVDT05URU5UX0ZPUk1BVF9CQVNFNjQQAiqDAQoQU2Vzc2lvblNjZW5lRW51bRIZChVTRVNTSU9OX1NDRU5FX1VOS05PV04QABIaChZTRVNTSU9OX1NDRU5FX0RJQUxPR1VFEAESGQoVU0VTU0lPTl9TQ0VORV9EUkFXSU5HEAISHQoZU0VTU0lPTl9TQ0VORV9UUkFOU0xBVElPThADKmEKD1Nlc3Npb25Sb2xlRW51bRIYChRTRVNTSU9OX1JPTEVfVU5LTk9XThAAEhwKGFNFU1NJT05fUk9MRV9QQVJUSUNJUEFOVBABEhYKElNFU1NJT05fUk9MRV9BRE1JThACKm4KE1BhcnRpY2lwYW50VHlwZUVudW0SHAoYUEFSVElDSVBBTlRfVFlQRV9VTktOT1dOEAASHAoYUEFSVElDSVBBTlRfVFlQRV9TRVJWSUNFEAESGwoXUEFSVElDSVBBTlRfVFlQRV9QRU9QTEUQAiqXAQoVQXBwbGljYXRpb25TdGF0dXNFbnVtEh4KGkFQUExJQ0FUSU9OX1NUQVRVU19VTktOT1dOEAASHgoaQVBQTElDQVRJT05fU1RBVFVTX0NSRUFURUQQARIeChpBUFBMSUNBVElPTl9TVEFUVVNfQVVESVRFRBACEh4KGkFQUExJQ0FUSU9OX1NUQVRVU19SRUZVU0VEEAMqRgoOQ2lwaGVyVHlwZUVudW0SFwoTQ0lQSEVSX1RZUEVfVU5LTk9XThAAEhsKF0NJUEhFUl9UWVBFX0FFU19HQ01fMjU2EAEqbgoUQXV0aGVudGljYXRlVHlwZUVudW0SHQoZQVVUSEVOVElDQVRFX1RZUEVfVU5LTk9XThAAEhoKFkFVVEhFTlRJQ0FURV9UWVBFX0NFUlQQARIbChdBVVRIRU5USUNBVEVfVFlQRV9UT0tFThACQhNaEXlleWluZy9hcGkvY29tbW9uYgZwcm90bzM");
 
 /**
  * *
@@ -248,97 +248,69 @@ export const LanguageCodeEnumSchema: GenEnum<LanguageCodeEnum> = /*@__PURE__*/
   enumDesc(file_yeying_api_common_code, 2);
 
 /**
- * API编码，针对服务做一些原子的、标准化的工作，方便第三方接入区块链网络，也方便服务使用者集成使用
+ * 应用编码，每个应用都有一个类别，每个应用都可以绑定都个服务编码。
  *
- * @generated from enum yeying.api.common.ApiCodeEnum
+ * @generated from enum yeying.api.common.ApplicationCodeEnum
  */
-export enum ApiCodeEnum {
+export enum ApplicationCodeEnum {
   /**
    * 未知编码，是一种占位符
    *
-   * @generated from enum value: API_CODE_UNKNOWN = 0;
+   * @generated from enum value: APPLICATION_CODE_UNKNOWN = 0;
    */
-  API_CODE_UNKNOWN = 0,
+  APPLICATION_CODE_UNKNOWN = 0,
 
   /**
-   * 用户服务
+   * 社区集市，提供应用、服务以及智能合约的发布、上线、下线等服务，用户可以在应用集市组装自己的应用；
    *
-   * @generated from enum value: API_CODE_USER = 1;
+   * @generated from enum value: APPLICATION_CODE_MARKET = 1;
    */
-  API_CODE_USER = 1,
+  APPLICATION_CODE_MARKET = 1,
 
   /**
-   * 身份服务
+   * 资产应用
    *
-   * @generated from enum value: API_CODE_IDENTITY = 2;
+   * @generated from enum value: APPLICATION_CODE_ASSET = 2;
    */
-  API_CODE_IDENTITY = 2,
+  APPLICATION_CODE_ASSET = 2,
 
   /**
-   * 大模型服务
+   * 知识库应用
    *
-   * @generated from enum value: API_CODE_LLM = 3;
+   * @generated from enum value: APPLICATION_CODE_KNOWLEDGE = 3;
    */
-  API_CODE_LLM = 3,
+  APPLICATION_CODE_KNOWLEDGE = 3,
 
   /**
-   * 资产服务
+   * 智能管家应用，包括钱包
    *
-   * @generated from enum value: API_CODE_ASSET = 4;
+   * @generated from enum value: APPLICATION_CODE_KEEPER = 4;
    */
-  API_CODE_ASSET = 4,
+  APPLICATION_CODE_KEEPER = 4,
 
   /**
-   * 证书服务
+   * 社交应用
    *
-   * @generated from enum value: API_CODE_CERTIFICATE = 5;
+   * @generated from enum value: APPLICATION_CODE_SOCIAL = 5;
    */
-  API_CODE_CERTIFICATE = 5,
+  APPLICATION_CODE_SOCIAL = 5,
 
   /**
-   * 存储服务
+   * 工作台应用
    *
-   * @generated from enum value: API_CODE_STORAGE = 6;
+   * @generated from enum value: APPLICATION_CODE_WORKBENCH = 6;
    */
-  API_CODE_STORAGE = 6,
-
-  /**
-   * 应用仓库
-   *
-   * @generated from enum value: API_CODE_APPLICATION = 7;
-   */
-  API_CODE_APPLICATION = 7,
-
-  /**
-   * 事件服务
-   *
-   * @generated from enum value: API_CODE_EVENT = 8;
-   */
-  API_CODE_EVENT = 8,
-
-  /**
-   * 邀请码服务
-   *
-   * @generated from enum value: API_CODE_INVITATION = 9;
-   */
-  API_CODE_INVITATION = 9,
-
-  /**
-   * 服务接口
-   *
-   * @generated from enum value: API_CODE_SERVICE = 10;
-   */
-  API_CODE_SERVICE = 10,
+  APPLICATION_CODE_WORKBENCH = 6,
 }
 
 /**
- * Describes the enum yeying.api.common.ApiCodeEnum.
+ * Describes the enum yeying.api.common.ApplicationCodeEnum.
  */
-export const ApiCodeEnumSchema: GenEnum<ApiCodeEnum> = /*@__PURE__*/
+export const ApplicationCodeEnumSchema: GenEnum<ApplicationCodeEnum> = /*@__PURE__*/
   enumDesc(file_yeying_api_common_code, 3);
 
 /**
- * 服务编码
+ * 服务编码，每个服务都可以绑定多个API编码，对外提供多套服务接口
  *
  * @generated from enum yeying.api.common.ServiceCodeEnum
  */
@@ -372,7 +344,7 @@ export enum ServiceCodeEnum {
   SERVICE_CODE_AGENT = 3,
 
   /**
-   * 模型服务供应商
+   * 模型上下文供应商
    *
    * @generated from enum value: SERVICE_CODE_MCP = 4;
    */
@@ -391,6 +363,131 @@ export enum ServiceCodeEnum {
  */
 export const ServiceCodeEnumSchema: GenEnum<ServiceCodeEnum> = /*@__PURE__*/
   enumDesc(file_yeying_api_common_code, 4);
+
+/**
+ * API编码，针对服务做一些原子的、标准化的工作，方便第三方接入区块链网络，也方便服务使用者集成使用
+ *
+ * @generated from enum yeying.api.common.ApiCodeEnum
+ */
+export enum ApiCodeEnum {
+  /**
+   * 未知编码，是一种占位符
+   *
+   * @generated from enum value: API_CODE_UNKNOWN = 0;
+   */
+  API_CODE_UNKNOWN = 0,
+
+  /**
+   * 用户服务
+   *
+   * @generated from enum value: API_CODE_USER = 1;
+   */
+  API_CODE_USER = 1,
+
+  /**
+   * 身份服务
+   *
+   * @generated from enum value: API_CODE_IDENTITY = 2;
+   */
+  API_CODE_IDENTITY = 2,
+
+  /**
+   * 大模型服务API
+   *
+   * @generated from enum value: API_CODE_LLM_SERVICE = 3;
+   */
+  API_CODE_LLM_SERVICE = 3,
+
+  /**
+   * 大模型供应商API
+   *
+   * @generated from enum value: API_CODE_LLM_PROVIDER = 4;
+   */
+  API_CODE_LLM_PROVIDER = 4,
+
+  /**
+   * 资产服务API
+   *
+   * @generated from enum value: API_CODE_ASSET_SERVICE = 5;
+   */
+  API_CODE_ASSET_SERVICE = 5,
+
+  /**
+   * 资产块API
+   *
+   * @generated from enum value: API_CODE_ASSET_BLOCK = 6;
+   */
+  API_CODE_ASSET_BLOCK = 6,
+
+  /**
+   * 资产链接API
+   *
+   * @generated from enum value: API_CODE_ASSET_LINK = 7;
+   */
+  API_CODE_ASSET_LINK = 7,
+
+  /**
+   * 资产命名空间API
+   *
+   * @generated from enum value: API_CODE_ASSET_NAMESPACE = 8;
+   */
+  API_CODE_ASSET_NAMESPACE = 8,
+
+  /**
+   * 资产回收站API
+   *
+   * @generated from enum value: API_CODE_ASSET_RECYCLE = 9;
+   */
+  API_CODE_ASSET_RECYCLE = 9,
+
+  /**
+   * 证书服务
+   *
+   * @generated from enum value: API_CODE_CERTIFICATE = 10;
+   */
+  API_CODE_CERTIFICATE = 10,
+
+  /**
+   * 存储服务
+   *
+   * @generated from enum value: API_CODE_STORAGE = 11;
+   */
+  API_CODE_STORAGE = 11,
+
+  /**
+   * 应用仓库
+   *
+   * @generated from enum value: API_CODE_APPLICATION = 12;
+   */
+  API_CODE_APPLICATION = 12,
+
+  /**
+   * 事件服务
+   *
+   * @generated from enum value: API_CODE_EVENT = 13;
+   */
+  API_CODE_EVENT = 13,
+
+  /**
+   * 邀请码服务
+   *
+   * @generated from enum value: API_CODE_INVITATION = 14;
+   */
+  API_CODE_INVITATION = 14,
+
+  /**
+   * 服务接口
+   *
+   * @generated from enum value: API_CODE_SERVICE = 15;
+   */
+  API_CODE_SERVICE = 15,
+}
+
+/**
+ * Describes the enum yeying.api.common.ApiCodeEnum.
+ */
+export const ApiCodeEnumSchema: GenEnum<ApiCodeEnum> = /*@__PURE__*/
+  enumDesc(file_yeying_api_common_code, 5);
 
 /**
  * 图片格式
@@ -417,7 +514,7 @@ export enum ImageFormatEnum {
  * Describes the enum yeying.api.common.ImageFormatEnum.
  */
 export const ImageFormatEnumSchema: GenEnum<ImageFormatEnum> = /*@__PURE__*/
-  enumDesc(file_yeying_api_common_code, 5);
+  enumDesc(file_yeying_api_common_code, 6);
 
 /**
  * 数字格式
@@ -479,7 +576,7 @@ export enum DigitalFormatEnum {
  * Describes the enum yeying.api.common.DigitalFormatEnum.
  */
 export const DigitalFormatEnumSchema: GenEnum<DigitalFormatEnum> = /*@__PURE__*/
-  enumDesc(file_yeying_api_common_code, 6);
+  enumDesc(file_yeying_api_common_code, 7);
 
 /**
  * 内容格式
@@ -507,7 +604,7 @@ export enum ContentFormatEnum {
  * Describes the enum yeying.api.common.ContentFormatEnum.
  */
 export const ContentFormatEnumSchema: GenEnum<ContentFormatEnum> = /*@__PURE__*/
-  enumDesc(file_yeying_api_common_code, 7);
+  enumDesc(file_yeying_api_common_code, 8);
 
 /**
  * 会话场景
@@ -548,7 +645,7 @@ export enum SessionSceneEnum {
  * Describes the enum yeying.api.common.SessionSceneEnum.
  */
 export const SessionSceneEnumSchema: GenEnum<SessionSceneEnum> = /*@__PURE__*/
-  enumDesc(file_yeying_api_common_code, 8);
+  enumDesc(file_yeying_api_common_code, 9);
 
 /**
  * 会话角色
@@ -582,7 +679,7 @@ export enum SessionRoleEnum {
  * Describes the enum yeying.api.common.SessionRoleEnum.
  */
 export const SessionRoleEnumSchema: GenEnum<SessionRoleEnum> = /*@__PURE__*/
-  enumDesc(file_yeying_api_common_code, 9);
+  enumDesc(file_yeying_api_common_code, 10);
 
 /**
  * 参与类型
@@ -616,7 +713,7 @@ export enum ParticipantTypeEnum {
  * Describes the enum yeying.api.common.ParticipantTypeEnum.
  */
 export const ParticipantTypeEnumSchema: GenEnum<ParticipantTypeEnum> = /*@__PURE__*/
-  enumDesc(file_yeying_api_common_code, 10);
+  enumDesc(file_yeying_api_common_code, 11);
 
 /**
  * 应用状态
@@ -657,75 +754,6 @@ export enum ApplicationStatusEnum {
  * Describes the enum yeying.api.common.ApplicationStatusEnum.
  */
 export const ApplicationStatusEnumSchema: GenEnum<ApplicationStatusEnum> = /*@__PURE__*/
-  enumDesc(file_yeying_api_common_code, 11);
-
-/**
- * 应用编码
- *
- * @generated from enum yeying.api.common.ApplicationCodeEnum
- */
-export enum ApplicationCodeEnum {
-  /**
-   * 未知编码，是一种占位符
-   *
-   * @generated from enum value: APPLICATION_CODE_UNKNOWN = 0;
-   */
-  APPLICATION_CODE_UNKNOWN = 0,
-
-  /**
-   * 社区门户
-   *
-   * @generated from enum value: APPLICATION_CODE_PORTAL = 1;
-   */
-  APPLICATION_CODE_PORTAL = 1,
-
-  /**
-   * 应用商店
-   *
-   * @generated from enum value: APPLICATION_CODE_STORE = 2;
-   */
-  APPLICATION_CODE_STORE = 2,
-
-  /**
-   * 知识库应用
-   *
-   * @generated from enum value: APPLICATION_CODE_KNOWLEDGE = 3;
-   */
-  APPLICATION_CODE_KNOWLEDGE = 3,
-
-  /**
-   * 资产仓库应用
-   *
-   * @generated from enum value: APPLICATION_CODE_WAREHOUSE = 4;
-   */
-  APPLICATION_CODE_WAREHOUSE = 4,
-
-  /**
-   * 智能管家应用，包括钱包
-   *
-   * @generated from enum value: APPLICATION_CODE_KEEPER = 5;
-   */
-  APPLICATION_CODE_KEEPER = 5,
-
-  /**
-   * 社交应用
-   *
-   * @generated from enum value: APPLICATION_CODE_SOCIAL = 6;
-   */
-  APPLICATION_CODE_SOCIAL = 6,
-
-  /**
-   * 工作台应用
-   *
-   * @generated from enum value: APPLICATION_CODE_WORKBENCH = 7;
-   */
-  APPLICATION_CODE_WORKBENCH = 7,
-}
-
-/**
- * Describes the enum yeying.api.common.ApplicationCodeEnum.
- */
-export const ApplicationCodeEnumSchema: GenEnum<ApplicationCodeEnum> = /*@__PURE__*/
   enumDesc(file_yeying_api_common_code, 12);
 
 /**
