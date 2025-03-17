@@ -27,6 +27,7 @@ import {
     ServiceMetadata,
     ServiceMetadataSchema
 } from "../../yeying/api/common/model_pb";
+import {SolutionMetadata, SolutionMetadataSchema} from "../../yeying/api/bulletin/bulletin_pb";
 
 /**
  * 对资产元数据进行签名，并更新元数据的`signature`字段。
@@ -545,5 +546,22 @@ export async function verifyServiceMetadata(service?: ServiceMetadata) {
         }
     } finally {
         service.signature = signature
+    }
+}
+
+
+export async function verifySolutionMetadata(solution?: SolutionMetadata) {
+    if (solution === undefined) {
+        throw new DataTampering('empty solution.')
+    }
+
+    const signature = solution.signature
+    try {
+        solution.signature = ''
+        if (!(await Authenticate.verify(solution.publisher, toBinary(SolutionMetadataSchema, solution), signature))) {
+            throw new DataTampering('invalid solution.')
+        }
+    } finally {
+        solution.signature = signature
     }
 }
