@@ -8,13 +8,14 @@ import {
     BulletinListRequestBodySchema,
     BulletinListRequestSchema,
     BulletinListResponseBody,
-    BulletinListResponseBodySchema,
+    BulletinListResponseBodySchema, SolutionMetadata,
     SolutionMetadataSchema
 } from '../../yeying/api/bulletin/bulletin_pb'
 import { Client, createClient } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/message_pb'
-import { create, toBinary } from '@bufbuild/protobuf'
+import {create, toBinary, toJson} from '@bufbuild/protobuf'
+import {verifySolutionMetadata, verifyVisitorMetadata} from "../model/model";
 
 /**
  * 通过 gRPC-web 与后端服务交互，并使用 Authenticate 类进行身份验证和签名验证。
@@ -57,7 +58,7 @@ export class BulletinProvider {
      * ```
      */
     async list(language: LanguageCodeEnum, page: number, pageSize: number) {
-        return new Promise<BulletinListResponseBody>(async (resolve, reject) => {
+        return new Promise<SolutionMetadata[]>(async (resolve, reject) => {
             const requestPage = create(RequestPageSchema, {
                 page: page,
                 pageSize: pageSize
@@ -84,25 +85,17 @@ export class BulletinProvider {
                 await this.authenticate.doResponse(res, BulletinListResponseBodySchema)
                 const body = res.body as BulletinListResponseBody
                 // 验证解决方案信息的签名
+                const solutions = []
                 for (let solution of body.solutions) {
-                    const signature = solution.signature
-                    solution.signature = ''
-
-                    const passed = await Authenticate.verify(
-                        solution.publisher,
-                        toBinary(SolutionMetadataSchema, solution),
-                        signature
-                    )
-
-                    if (passed) {
-                        solution.signature = signature
-                    } else {
-                        // 如果签名无效，抛出数据伪造错误
-                        return reject(new DataTampering('无效的签名！'))
+                    try {
+                        await verifySolutionMetadata(solution)
+                        solutions.push(solution)
+                    } catch (err) {
+                        console.error(`Invalid solution=${JSON.stringify(toJson(SolutionMetadataSchema, solution))}`)
                     }
                 }
 
-                resolve(body)
+                resolve(solutions)
             } catch (err) {
                 console.error('Fail to BulletinList solutions', err)
                 return reject(err)
