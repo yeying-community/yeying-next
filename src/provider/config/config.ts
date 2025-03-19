@@ -46,7 +46,6 @@ export class ConfigProvider {
      * @returns 配置元信息
      *
      * @throws ServiceUnavailable 服务不可用
-     * @throws NetworkError 网络不可用
      *
      */
     get(key: string, type: ConfigTypeEnum = ConfigTypeEnum.CONFIG_TYPE_USER) {

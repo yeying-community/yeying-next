@@ -144,7 +144,6 @@ export class Authenticate {
      * @param bodySchema 响应体的 Protobuf 模式
      * @param isSuccess 判断状态是否成功函数
      *
-     * @throws {@link NetworkError} 如果响应格式错误
      * @throws {@link InvalidArgument} 如果时间戳过期
      * @throws {@link NoPermission} 如果签名无效
      *
