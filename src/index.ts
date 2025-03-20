@@ -15,10 +15,15 @@ export { MailProvider } from './provider/mail/mail'
 export { ProviderProvider } from './provider/llm/provider'
 export { LlmProvider } from './provider/llm/llm'
 export { SessionProvider } from './provider/session/session'
+export { AssetCipher } from './provider/warehouse/cipher'
+export { BlockProvider } from './provider/warehouse/block'
+export { ConfigProvider } from './provider/config/config'
+
 
 export { IdentityManager } from './identity/manager'
 export { ApplicationManager } from './application/manager'
 export { ServiceManager } from './service/manager'
+export { isSuccess } from './common/status'
 
 export {
     Registry,
@@ -35,8 +40,25 @@ export {
     SecurityAlgorithm
 } from '@yeying-community/yeying-web3'
 
-export * from './yeying/api/llm/provider_pb'
-export * from './yeying/api/llm/llm_pb'
+export {
+	ServiceMetadata,
+	ApplicationMetadata
+} from './yeying/api/common/model_pb'
+
+// export * from './yeying/api/llm/provider_pb'
+export {
+	ProviderMetadata,
+	ProviderDescription,
+    ProviderState, 
+    QuotaTypeEnum,
+	ProviderDetail,
+	ModelMetadata,
+	ProviderCodeEnum,
+	ModelTypeEnum,
+    ModelFeatureEnum,
+    ProviderStatusEnum
+} from './yeying/api/llm/provider_pb'
+// export * from './yeying/api/llm/llm_pb'
 export {
     ApiCodeEnum,
     ApplicationCodeEnum,
@@ -51,15 +73,67 @@ export {
     ParticipantTypeEnum,
     ApplicationStatusEnum,
     AuthenticateTypeEnum,
+    ResponseCodeEnum
 } from './yeying/api/common/code_pb';
-export * from './yeying/api/common/message_pb'
-export * from './yeying/api/asset/asset_pb'
-export { LinkMetadata, UrlMetadata, VisitorMetadata, LinkDetail, LinkTypeEnum } from './yeying/api/asset/link_pb';
-export * from './yeying/api/asset/recycle_pb'
-export * from './yeying/api/asset/namespace_pb'
-export * from './yeying/api/bulletin/bulletin_pb'
+// export * from './yeying/api/common/message_pb'
+export {
+    MessageHeader,
+    ResponseStatus
+} from './yeying/api/common/message_pb'
+// export * from './yeying/api/asset/asset_pb'
+export { 
+    AssetMetadata,
+    SearchAssetCondition
+} from './yeying/api/asset/asset_pb';
+export {
+    LinkMetadata,
+    UrlMetadata,
+    VisitorMetadata,
+    LinkDetail,
+    LinkTypeEnum,
+    UrlStatusEnum,
+    SearchLinkCondition
+} from './yeying/api/asset/link_pb';
+// export * from './yeying/api/asset/recycle_pb'
+export {
+    DeletedAssetMetadata
+} from './yeying/api/asset/recycle_pb'
+// export * from './yeying/api/asset/namespace_pb'
+export {
+    NamespaceMetadata,
+    SearchNamespaceCondition
+} from './yeying/api/asset/namespace_pb'
+// export * from './yeying/api/bulletin/bulletin_pb'
+export { 
+    SolutionMetadata,
+    SolutionCard
+} from './yeying/api/bulletin/bulletin_pb'
 export * from './yeying/api/node/node_pb'
-export * from './yeying/api/user/user_pb'
-export * from './yeying/api/support/support_pb'
-export * from './yeying/api/mail/mail_pb'
+// export * from './yeying/api/user/user_pb'
+export {
+    UserMetadata,
+    UserDetail,
+    UserState,
+    UserRoleEnum,
+    UserStatusEnum
+} from './yeying/api/user/user_pb'
+// export * from './yeying/api/support/support_pb'
+export {
+    CollectSupportResponseBody
+} from './yeying/api/support/support_pb'
+// export * from './yeying/api/mail/mail_pb'
+export {
+    SendMailResponseBody,
+    VerifyMailResponseBody
+} from './yeying/api/mail/mail_pb'
 export * from './common/error'
+export { 
+    ConfigMetadata,
+    ConfigTypeEnum
+} from './yeying/api/config/config_pb'
+export {
+    SessionMetadata,
+    SessionDetail
+} from './yeying/api/session/session_pb'
+export { SearchServiceCondition } from './yeying/api/service/service_pb'
+export { BlockMetadata } from './yeying/api/asset/block_pb';

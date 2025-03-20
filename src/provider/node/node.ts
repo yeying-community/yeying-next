@@ -76,7 +76,6 @@ export class NodeProvider {
     /**
      * 获取当前节点的元数据并验证其签名
      * @returns 返回一个 Promise，解析为 NodeMetadata
-     * @throws {@link DataForgery} 如果签名验证失败
      * @example
      * ```ts
      * nodeProvider.whoami()
