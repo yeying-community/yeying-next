@@ -5,11 +5,9 @@ import {
     Mail,
     SendMailRequestBodySchema,
     SendMailRequestSchema,
-    SendMailResponseBody,
     SendMailResponseBodySchema,
     VerifyMailRequestBodySchema,
     VerifyMailRequestSchema,
-    VerifyMailResponseBody,
     VerifyMailResponseBodySchema
 } from '../../yeying/api/mail/mail_pb'
 import { Client, createClient } from '@connectrpc/connect'
@@ -53,7 +51,7 @@ export class MailProvider {
      * ```
      */
     send(toMail: string) {
-        return new Promise<SendMailResponseBody>(async (resolve, reject) => {
+        return new Promise<void>(async (resolve, reject) => {
             const body = create(SendMailRequestBodySchema, {
                 toMail: toMail
             })
@@ -71,7 +69,7 @@ export class MailProvider {
             try {
                 const res = await this.client.send(request)
                 await this.authenticate.doResponse(res, SendMailResponseBodySchema)
-                resolve(res.body as SendMailResponseBody)
+                resolve()
             } catch (err) {
                 console.error('Fail to send mail', err)
                 return reject(err)
@@ -94,7 +92,7 @@ export class MailProvider {
      * ```
      */
     verify(toMail: string, code: string) {
-        return new Promise<VerifyMailResponseBody>(async (resolve, reject) => {
+        return new Promise<void>(async (resolve, reject) => {
             const body = create(VerifyMailRequestBodySchema, {
                 toMail: toMail,
                 code: code
@@ -112,7 +110,7 @@ export class MailProvider {
             try {
                 const res = await this.client.verify(request)
                 await this.authenticate.doResponse(res, VerifyMailResponseBodySchema)
-                resolve(res.body as VerifyMailResponseBody)
+                resolve()
             } catch (err) {
                 console.error('Fail to verify email code', err)
                 return reject(err)

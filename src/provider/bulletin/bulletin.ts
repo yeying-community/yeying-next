@@ -8,14 +8,15 @@ import {
     BulletinListRequestBodySchema,
     BulletinListRequestSchema,
     BulletinListResponseBody,
-    BulletinListResponseBodySchema, SolutionMetadata,
+    BulletinListResponseBodySchema,
+    SolutionMetadata,
     SolutionMetadataSchema
 } from '../../yeying/api/bulletin/bulletin_pb'
 import { Client, createClient } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/message_pb'
-import {create, toBinary, toJson} from '@bufbuild/protobuf'
-import {verifySolutionMetadata, verifyVisitorMetadata} from "../model/model";
+import { create, toBinary, toJson } from '@bufbuild/protobuf'
+import { verifySolutionMetadata, verifyVisitorMetadata } from '../model/model'
 
 /**
  * 通过 gRPC-web 与后端服务交互，并使用 Authenticate 类进行身份验证和签名验证。

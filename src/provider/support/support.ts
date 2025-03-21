@@ -5,8 +5,8 @@ import { getCurrentUtcString } from '../../common/date'
 import {
     CollectSupportRequestBodySchema,
     CollectSupportRequestSchema,
-    CollectSupportResponseBody,
     CollectSupportResponseBodySchema,
+    FaqMetadata,
     FaqMetadataSchema,
     Support,
     SupportCodeEnum
@@ -56,7 +56,7 @@ export class SupportProvider {
      * ```
      */
     async collectFaq(type: string, email: string, description: string) {
-        return new Promise<CollectSupportResponseBody>(async (resolve, reject) => {
+        return new Promise<FaqMetadata>(async (resolve, reject) => {
             const faq = create(FaqMetadataSchema, {
                 did: this.authenticate.getDid(),
                 type: type,
@@ -84,7 +84,7 @@ export class SupportProvider {
             try {
                 const res = await this.client.collect(request)
                 await this.authenticate.doResponse(res, CollectSupportResponseBodySchema)
-                resolve(res.body as CollectSupportResponseBody)
+                resolve(faq)
             } catch (err) {
                 console.error('Fail to collect faq', err)
                 return reject(err)

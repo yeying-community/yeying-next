@@ -20,10 +20,10 @@ import {
 import { Client, createClient } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
 import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/message_pb'
-import {create, toBinary, toJson} from '@bufbuild/protobuf'
-import {ServiceMetadata, ServiceMetadataSchema} from "../../yeying/api/common/model_pb";
-import {isDeleted, isExisted} from "../../common/status";
-import {verifyServiceMetadata} from "../model/model";
+import { create, toBinary, toJson } from '@bufbuild/protobuf'
+import { ServiceMetadata, ServiceMetadataSchema } from '../../yeying/api/common/model_pb'
+import { isDeleted, isExisted } from '../../common/status'
+import { verifyServiceMetadata } from '../model/model'
 
 /**
  * 提供服务管理功能的类，支持注册、搜索和注销服务。
@@ -128,12 +128,15 @@ export class ServiceProvider {
                 const res = await this.client.search(request)
                 await this.authenticate.doResponse(res, SearchServiceResponseBodySchema)
                 const services = []
-                for (const service of (res.body?.services as ServiceMetadata[])) {
+                for (const service of res.body?.services as ServiceMetadata[]) {
                     try {
                         await verifyServiceMetadata(service)
                         services.push(service)
                     } catch (err) {
-                        console.error(`Invalid service metadata=${JSON.stringify(toJson(ServiceMetadataSchema, service))} when searching services.`, err)
+                        console.error(
+                            `Invalid service metadata=${JSON.stringify(toJson(ServiceMetadataSchema, service))} when searching services.`,
+                            err
+                        )
                     }
                 }
 

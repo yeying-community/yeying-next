@@ -1,9 +1,9 @@
-import {Authenticate} from '../common/authenticate'
-import {ProviderOption} from '../common/model'
-import {Client, createClient} from '@connectrpc/connect'
-import {createGrpcWebTransport} from '@connectrpc/connect-web'
-import {MessageHeader, RequestPageSchema} from '../../yeying/api/common/message_pb'
-import {create, toBinary, toJson} from '@bufbuild/protobuf'
+import { Authenticate } from '../common/authenticate'
+import { ProviderOption } from '../common/model'
+import { Client, createClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { MessageHeader, RequestPageSchema } from '../../yeying/api/common/message_pb'
+import { create, toBinary, toJson } from '@bufbuild/protobuf'
 import {
     Application,
     CreateApplicationRequestBodySchema,
@@ -18,10 +18,10 @@ import {
     SearchApplicationResponseBodySchema,
     SearchCondition
 } from '../../yeying/api/application/application_pb'
-import {NetworkUnavailable} from '../../common/error'
-import {ApplicationMetadata, ApplicationMetadataSchema} from "../../yeying/api/common/model_pb";
-import {signApplicationMetadata, verifyApplicationMetadata} from "../model/model";
-import {isDeleted, isExisted} from "../../common/status";
+import { NetworkUnavailable } from '../../common/error'
+import { ApplicationMetadata, ApplicationMetadataSchema } from '../../yeying/api/common/model_pb'
+import { signApplicationMetadata, verifyApplicationMetadata } from '../model/model'
+import { isDeleted, isExisted } from '../../common/status'
 
 /**
  * ApplicationProvider 管理应用。
@@ -106,8 +106,8 @@ export class ApplicationProvider {
     search(page: number, pageSize: number, condition?: SearchCondition) {
         return new Promise<ApplicationMetadata[]>(async (resolve, reject) => {
             const body = create(SearchApplicationRequestBodySchema, {
-                page: create(RequestPageSchema, {page: page, pageSize: pageSize}),
-                condition: condition,
+                page: create(RequestPageSchema, { page: page, pageSize: pageSize }),
+                condition: condition
             })
 
             let header: MessageHeader
@@ -129,7 +129,10 @@ export class ApplicationProvider {
                         await verifyApplicationMetadata(application)
                         applications.push(application)
                     } catch (err) {
-                        console.error(`invalid application=${JSON.stringify(toJson(ApplicationMetadataSchema, application))} when searching application.`, err)
+                        console.error(
+                            `invalid application=${JSON.stringify(toJson(ApplicationMetadataSchema, application))} when searching application.`,
+                            err
+                        )
                     }
                 }
                 resolve(applications)
@@ -144,7 +147,7 @@ export class ApplicationProvider {
         return new Promise<void>(async (resolve, reject) => {
             const body = create(DeleteApplicationRequestBodySchema, {
                 did: did,
-                version: version,
+                version: version
             })
 
             let header: MessageHeader

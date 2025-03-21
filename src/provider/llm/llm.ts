@@ -1,8 +1,8 @@
-import {Authenticate} from '../common/authenticate'
-import {Client, createClient} from '@connectrpc/connect'
-import {ProviderOption} from '../common/model'
-import {createGrpcWebTransport} from '@connectrpc/connect-web'
-import {create, toBinary} from '@bufbuild/protobuf'
+import { Authenticate } from '../common/authenticate'
+import { Client, createClient } from '@connectrpc/connect'
+import { ProviderOption } from '../common/model'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create, toBinary } from '@bufbuild/protobuf'
 import {
     CompleteRequestBodySchema,
     CompleteRequestSchema,
@@ -11,7 +11,7 @@ import {
     Llm,
     MessageRoleEnum,
     PromptSchema
-} from "../../yeying/api/llm/llm_pb";
+} from '../../yeying/api/llm/llm_pb'
 
 /**
  * 大模型提供商。
@@ -60,14 +60,20 @@ export class LlmProvider {
      * @throws NetworkUnavailable 网络不可用
      *
      */
-    async* complete(sessionId: string, content: string, model: string, providerId?: string, promptId?: string): AsyncGenerator<string> {
+    async *complete(
+        sessionId: string,
+        content: string,
+        model: string,
+        providerId?: string,
+        promptId?: string
+    ): AsyncGenerator<string> {
         const body = create(CompleteRequestBodySchema, {
             providerId: providerId,
             promptId: promptId,
             sessionId: sessionId,
             model: model,
-            prompts: [create(PromptSchema, {role: MessageRoleEnum.MESSAGE_ROLE_USER, content: content})],
-            stream: true,
+            prompts: [create(PromptSchema, { role: MessageRoleEnum.MESSAGE_ROLE_USER, content: content })],
+            stream: true
         })
 
         let header
@@ -78,18 +84,18 @@ export class LlmProvider {
             throw err
         }
 
-        const request = create(CompleteRequestSchema, {header: header, body: body})
+        const request = create(CompleteRequestSchema, { header: header, body: body })
         try {
             for await (const res of this.client.complete(request)) {
                 switch (res.data.case) {
-                    case "head":
+                    case 'head':
                         await this.authenticate.doResponse(res.data.value, CompleteResponseHeadBodySchema)
                         break
-                    case "body":
+                    case 'body':
                         const value = res.data.value
                         yield value.content
                         break
-                    case "tail":
+                    case 'tail':
                         await this.authenticate.doResponse(res.data.value, CompleteResponseTailBodySchema)
                         break
                     default:

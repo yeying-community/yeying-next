@@ -1,9 +1,12 @@
-import {Authenticate} from '../common/authenticate'
-import {Client, createClient} from '@connectrpc/connect'
+import { Authenticate } from '../common/authenticate'
+import { Client, createClient } from '@connectrpc/connect'
 import {
     CreateLinkRequestBodySchema,
     CreateLinkRequestSchema,
-    CreateLinkResponseBodySchema, DisableLinkRequestBodySchema, DisableLinkRequestSchema, DisableLinkResponseBodySchema,
+    CreateLinkResponseBodySchema,
+    DisableLinkRequestBodySchema,
+    DisableLinkRequestSchema,
+    DisableLinkResponseBodySchema,
     Link,
     LinkDetail,
     LinkDetailRequestBodySchema,
@@ -19,17 +22,18 @@ import {
     SearchLinkConditionSchema,
     SearchLinkRequestBodySchema,
     SearchLinkRequestSchema,
-    SearchLinkResponseBodySchema, UpdateLinkRequestBodySchema,
+    SearchLinkResponseBodySchema,
+    UpdateLinkRequestBodySchema,
     VisitorMetadata,
     VisitorMetadataSchema
 } from '../../yeying/api/asset/link_pb'
-import {ProviderOption} from '../common/model'
-import {createGrpcWebTransport} from '@connectrpc/connect-web'
-import {create, toBinary, toJson} from '@bufbuild/protobuf'
-import {generateUuid} from '../../common/string'
-import {formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond} from '../../common/date'
-import {RequestPageSchema} from "../../yeying/api/common/message_pb";
-import {signLinkMetadata, verifyLinkMetadata, verifyUrlMetadata, verifyVisitorMetadata} from "../model/model";
+import { ProviderOption } from '../common/model'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create, toBinary, toJson } from '@bufbuild/protobuf'
+import { generateUuid } from '../../common/string'
+import { formatDateTime, getCurrentUtcDateTime, getCurrentUtcString, plusSecond } from '../../common/date'
+import { RequestPageSchema } from '../../yeying/api/common/message_pb'
+import { signLinkMetadata, verifyLinkMetadata, verifyUrlMetadata, verifyVisitorMetadata } from '../model/model'
 
 /**
  * LinkProvider 类提供对资产分享链接的管理
@@ -69,7 +73,15 @@ export class LinkProvider {
      * @returns 链接的状态和元信息
      *
      */
-    create(namespaceId: string, name: string, hash: string, duration: number, type: LinkTypeEnum, visitors: string[] = [], description?: string) {
+    create(
+        namespaceId: string,
+        name: string,
+        hash: string,
+        duration: number,
+        type: LinkTypeEnum,
+        visitors: string[] = [],
+        description?: string
+    ) {
         return new Promise<LinkDetail>(async (resolve, reject) => {
             const link = create(LinkMetadataSchema, {
                 namespaceId: namespaceId,
@@ -98,7 +110,7 @@ export class LinkProvider {
                 return reject(err)
             }
 
-            const request = create(CreateLinkRequestSchema, {header: header, body: body})
+            const request = create(CreateLinkRequestSchema, { header: header, body: body })
 
             try {
                 const res = await this.client.create(request)
@@ -127,9 +139,9 @@ export class LinkProvider {
         return new Promise<LinkMetadata[]>(async (resolve, reject) => {
             const body = create(SearchLinkRequestBodySchema, {
                 condition: create(SearchLinkConditionSchema, {
-                    hash: condition ? condition.hash : undefined,
+                    hash: condition ? condition.hash : undefined
                 }),
-                page: create(RequestPageSchema, {page: page, pageSize: pageSize}),
+                page: create(RequestPageSchema, { page: page, pageSize: pageSize })
             })
 
             let header
@@ -140,18 +152,21 @@ export class LinkProvider {
                 return reject(err)
             }
 
-            const request = create(SearchLinkRequestSchema, {header: header, body: body})
+            const request = create(SearchLinkRequestSchema, { header: header, body: body })
 
             try {
                 const res = await this.client.search(request)
                 await this.authenticate.doResponse(res, SearchLinkResponseBodySchema)
                 const links = []
-                for (const link of (res.body?.links as LinkMetadata[])) {
+                for (const link of res.body?.links as LinkMetadata[]) {
                     try {
                         await verifyLinkMetadata(link)
                         links.push(link)
                     } catch (err) {
-                        console.error(`Invalid link=${JSON.stringify(toJson(LinkMetadataSchema, link))} when searching.`, err)
+                        console.error(
+                            `Invalid link=${JSON.stringify(toJson(LinkMetadataSchema, link))} when searching.`,
+                            err
+                        )
                     }
                 }
                 resolve(links)
@@ -172,7 +187,7 @@ export class LinkProvider {
      */
     detail(uid: string) {
         return new Promise<LinkDetail>(async (resolve, reject) => {
-            const body = create(LinkDetailRequestBodySchema, {uid: uid})
+            const body = create(LinkDetailRequestBodySchema, { uid: uid })
 
             let header
             try {
@@ -182,7 +197,7 @@ export class LinkProvider {
                 return reject(err)
             }
 
-            const request = create(LinkDetailRequestSchema, {header: header, body: body})
+            const request = create(LinkDetailRequestSchema, { header: header, body: body })
 
             try {
                 const res = await this.client.detail(request)
@@ -208,7 +223,7 @@ export class LinkProvider {
      */
     disable(uid: string) {
         return new Promise<void>(async (resolve, reject) => {
-            const body = create(DisableLinkRequestBodySchema, {linkId: uid})
+            const body = create(DisableLinkRequestBodySchema, { linkId: uid })
 
             let header
             try {
@@ -218,7 +233,7 @@ export class LinkProvider {
                 return reject(err)
             }
 
-            const request = create(DisableLinkRequestSchema, {header: header, body: body})
+            const request = create(DisableLinkRequestSchema, { header: header, body: body })
 
             try {
                 const res = await this.client.disable(request)
@@ -245,7 +260,7 @@ export class LinkProvider {
         return new Promise<VisitorMetadata[]>(async (resolve, reject) => {
             const body = create(LinkVisitorRequestBodySchema, {
                 uid: uid,
-                page: create(RequestPageSchema, {page: page, pageSize: pageSize})
+                page: create(RequestPageSchema, { page: page, pageSize: pageSize })
             })
 
             let header
@@ -256,19 +271,22 @@ export class LinkProvider {
                 return reject(err)
             }
 
-            const request = create(LinkVisitorRequestSchema, {header: header, body: body})
+            const request = create(LinkVisitorRequestSchema, { header: header, body: body })
 
             try {
                 const res = await this.client.visitor(request)
                 await this.authenticate.doResponse(res, LinkVisitorResponseBodySchema)
                 const visitors = []
-                for (const visitor of (res.body?.visitors as VisitorMetadata[])) {
+                for (const visitor of res.body?.visitors as VisitorMetadata[]) {
                     if (visitor.did) {
                         try {
                             await verifyVisitorMetadata(visitor)
                             visitors.push(visitor)
                         } catch (err) {
-                            console.error(`Fail to verify visitor metadata: ${JSON.stringify(toJson(VisitorMetadataSchema, visitor))}`, err)
+                            console.error(
+                                `Fail to verify visitor metadata: ${JSON.stringify(toJson(VisitorMetadataSchema, visitor))}`,
+                                err
+                            )
                         }
                     } else {
                         visitors.push(visitor)

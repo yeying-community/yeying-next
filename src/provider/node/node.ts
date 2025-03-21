@@ -1,6 +1,6 @@
-import {Authenticate} from '../common/authenticate'
-import {ProviderOption} from '../common/model'
-import {MessageHeader} from '../../yeying/api/common/message_pb'
+import { Authenticate } from '../common/authenticate'
+import { ProviderOption } from '../common/model'
+import { MessageHeader } from '../../yeying/api/common/message_pb'
 import {
     HealthCheckRequestSchema,
     HealthCheckResponseBodySchema,
@@ -8,11 +8,11 @@ import {
     WhoamiRequestSchema,
     WhoamiResponseBodySchema
 } from '../../yeying/api/node/node_pb'
-import {Client, createClient} from '@connectrpc/connect'
-import {createGrpcWebTransport} from '@connectrpc/connect-web'
-import {create} from '@bufbuild/protobuf'
-import {ServiceMetadata} from "../../yeying/api/common/model_pb";
-import {verifyServiceMetadata} from "../model/model";
+import { Client, createClient } from '@connectrpc/connect'
+import { createGrpcWebTransport } from '@connectrpc/connect-web'
+import { create } from '@bufbuild/protobuf'
+import { ServiceMetadata } from '../../yeying/api/common/model_pb'
+import { verifyServiceMetadata } from '../model/model'
 
 /**
  * 用于与节点服务进行交互，提供健康检查和身份验证功能
