@@ -1,14 +1,16 @@
-import {getIdentity, getProviderProxy} from "../common/common";
+import {getProviderProxy} from "../common/common";
 import {ProviderOption} from "../../../src/provider/common/model";
 import {LanguageCodeEnum, ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
 import {ServiceProvider} from "../../../src/provider/service/service";
+import {UserProvider} from "../../../src/provider/user/user";
+import {IdentityManager} from "../../../src/identity/manager";
 import {toJson} from "@bufbuild/protobuf";
 import {IdentityCodeEnum, IdentityMetadata, NetworkTypeEnum, SecurityAlgorithm} from "@yeying-community/yeying-web3";
 import {convertServiceMetadataFromIdentity} from "../../../src/identity/model";
-import {Authenticate, IdentityManager, UserProvider} from "../../../src";
 import {ServiceMetadata, ServiceMetadataSchema} from "../../../src/yeying/api/common/model_pb";
 import {signServiceMetadata} from "../../../src/provider/model/model";
 import {decryptBlockAddress} from "../../../src/common/crypto";
+import {Authenticate} from "../../../src/provider/common/authenticate";
 
 let providerOption: ProviderOption | undefined
 
