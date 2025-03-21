@@ -19,15 +19,16 @@ import {
     LinkMetadataSchema,
     UrlMetadata,
     UrlMetadataSchema,
-    VisitorMetadata, VisitorMetadataSchema
-} from "../../yeying/api/asset/link_pb";
+    VisitorMetadata,
+    VisitorMetadataSchema
+} from '../../yeying/api/asset/link_pb'
 import {
     ApplicationMetadata,
     ApplicationMetadataSchema,
     ServiceMetadata,
     ServiceMetadataSchema
-} from "../../yeying/api/common/model_pb";
-import {SolutionMetadata, SolutionMetadataSchema} from "../../yeying/api/bulletin/bulletin_pb";
+} from '../../yeying/api/common/model_pb'
+import { SolutionMetadata, SolutionMetadataSchema } from '../../yeying/api/bulletin/bulletin_pb'
 
 /**
  * 对资产元数据进行签名，并更新元数据的`signature`字段。
@@ -328,7 +329,6 @@ export async function verifyProviderMetadata(provider?: ProviderMetadata) {
     }
 }
 
-
 /**
  * 验证大模型供应商状态元数据的签名是否有效
  *
@@ -391,7 +391,6 @@ export async function verifySessionMetadata(session?: SessionMetadata) {
         session.signature = signature
     }
 }
-
 
 /**
  * 对分享链接元数据进行签名，并更新元数据的`signature`字段。
@@ -472,7 +471,6 @@ export async function verifyVisitorMetadata(visitor?: VisitorMetadata) {
     }
 }
 
-
 /**
  * 对应用元数据进行签名，并更新元数据的`signature`字段。
  *
@@ -503,7 +501,9 @@ export async function verifyApplicationMetadata(application?: ApplicationMetadat
     const signature = application.signature
     try {
         application.signature = ''
-        if (!(await Authenticate.verify(application.did, toBinary(ApplicationMetadataSchema, application), signature))) {
+        if (
+            !(await Authenticate.verify(application.did, toBinary(ApplicationMetadataSchema, application), signature))
+        ) {
             throw new DataTampering('invalid application.')
         }
     } finally {
@@ -548,7 +548,6 @@ export async function verifyServiceMetadata(service?: ServiceMetadata) {
         service.signature = signature
     }
 }
-
 
 export async function verifySolutionMetadata(solution?: SolutionMetadata) {
     if (solution === undefined) {

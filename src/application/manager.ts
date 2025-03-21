@@ -1,12 +1,12 @@
-import {fromBinary, fromJson, toJson} from "@bufbuild/protobuf";
-import {decodeBase64} from "../common/codec";
-import {verifyApplicationMetadata, verifyServiceMetadata} from "../provider/model/model";
+import { fromBinary, fromJson, toJson } from '@bufbuild/protobuf'
+import { decodeBase64 } from '../common/codec'
+import { verifyApplicationMetadata, verifyServiceMetadata } from '../provider/model/model'
 import {
     ApplicationMetadata,
     ApplicationMetadataSchema,
     ServiceMetadata,
     ServiceMetadataSchema
-} from "../yeying/api/common/model_pb";
+} from '../yeying/api/common/model_pb'
 
 export class ApplicationManager {
     // 前端域名
@@ -36,9 +36,12 @@ export class ApplicationManager {
                 await verifyServiceMetadata(service)
                 services.push(service)
             } catch (err) {
-                console.error(`Invalid service metadata=${JSON.stringify(toJson(ServiceMetadataSchema, service))} when getting registry.`, err)
+                console.error(
+                    `Invalid service metadata=${JSON.stringify(toJson(ServiceMetadataSchema, service))} when getting registry.`,
+                    err
+                )
             }
         }
-        return services;
+        return services
     }
 }

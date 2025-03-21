@@ -17,11 +17,11 @@ import {
 import { getCurrentUtcString } from '../../common/date'
 import { Client, createClient } from '@connectrpc/connect'
 import { createGrpcWebTransport } from '@connectrpc/connect-web'
-import {create, toBinary, toJson} from '@bufbuild/protobuf'
+import { create, toBinary, toJson } from '@bufbuild/protobuf'
 import { computeHash } from '../../common/crypto'
 import { encodeHex } from '../../common/codec'
 import { signBlockMetadata, verifyBlockMetadata } from '../model/model'
-import {isExisted} from "../../common/status";
+import { isExisted } from '../../common/status'
 
 /**
  * 用于与区块链交互，提供数据的获取和存储功能
@@ -188,7 +188,7 @@ export class BlockProvider {
                 await verifyBlockMetadata(res.body?.block)
                 return resolve(res.body?.block as BlockMetadata)
             } catch (err) {
-                console.error(`Fail to put block=${JSON.stringify(toJson(BlockMetadataSchema,block))}`, err)
+                console.error(`Fail to put block=${JSON.stringify(toJson(BlockMetadataSchema, block))}`, err)
                 return reject(err)
             }
         })

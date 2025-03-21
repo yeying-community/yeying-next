@@ -1,7 +1,7 @@
 import { Identity, IdentityCodeEnum, NetworkTypeEnum } from '@yeying-community/yeying-web3'
 import { create } from '@bufbuild/protobuf'
-import {ApiCodeEnum, ApplicationCodeEnum, ServiceCodeEnum} from '../yeying/api/common/code_pb'
-import {ApplicationMetadataSchema, ServiceMetadataSchema} from "../yeying/api/common/model_pb";
+import { ApiCodeEnum, ApplicationCodeEnum, ServiceCodeEnum } from '../yeying/api/common/code_pb'
+import { ApplicationMetadataSchema, ServiceMetadataSchema } from '../yeying/api/common/model_pb'
 
 export function convertApplicationMetadataFromIdentity(identity: Identity) {
     const metadata = identity.metadata

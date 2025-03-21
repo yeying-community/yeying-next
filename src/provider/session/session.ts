@@ -6,7 +6,7 @@ import { create, toBinary, toJson } from '@bufbuild/protobuf'
 import { generateUuid } from '../../common/string'
 import { getCurrentUtcString } from '../../common/date'
 import { signSessionMetadata, verifySessionMetadata } from '../model/model'
-import {isDeleted, isExisted} from '../../common/status'
+import { isDeleted, isExisted } from '../../common/status'
 import {
     CreateSessionRequestBodySchema,
     CreateSessionRequestSchema,
