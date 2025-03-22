@@ -51,6 +51,7 @@ export {
     ModelFeatureEnum,
     ProviderStatusEnum
 } from './yeying/api/llm/provider_pb'
+export { Content, ContentTypeEnum } from './yeying/api/llm/llm_pb'
 export {
     ApiCodeEnum,
     ApplicationCodeEnum,
