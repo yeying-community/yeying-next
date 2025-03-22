@@ -3,6 +3,8 @@ import {ProviderOption} from "../../../src/provider/common/model";
 import {ServiceCodeEnum} from "../../../src/yeying/api/common/code_pb";
 import {LlmProvider} from "../../../src/provider/llm/llm";
 import {ProviderProvider, SessionProvider, UserProvider} from "../../../src";
+import {ContentSchema, ContentTypeEnum} from "../../../src/yeying/api/llm/llm_pb";
+import {create} from "@bufbuild/protobuf";
 
 const identity = getIdentity();
 const providerOption: ProviderOption = {
@@ -27,7 +29,12 @@ beforeAll(async () => {
 describe('Llm', () => {
     it('complete', {timeout: 300000}, async () => {
         const llmProvider = new LlmProvider(providerOption)
-        const generator = llmProvider.complete(session.uid, "how to make money for programmer", "", provider.uid)
+        const contents = [
+            create(ContentSchema, {type: ContentTypeEnum.CONTENT_TYPE_TEXT, data: "how to make money for programmer"})
+        ]
+
+        const model = ""
+        const generator = llmProvider.complete(session.uid, contents , model, provider.uid)
         for await (const s of generator) {
             console.log(`Recv text=${s}`);
         }
