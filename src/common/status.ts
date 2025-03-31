@@ -1,8 +1,3 @@
-// import code_pkg from '../yeying/api/common/code_pb.cjs'
-// import {AlreadyExist, NetworkDown, NotFound, NotTrust, ServiceUnavailable} from './error.js'
-//
-// const {ResponseCodeEnum} = code_pkg
-
 import { ResponseStatus } from '../yeying/api/common/message_pb'
 import { ResponseCodeEnum } from '../yeying/api/common/code_pb'
 import {

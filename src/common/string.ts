@@ -8,15 +8,6 @@ export function isBlank(s?: string) {
     return s === undefined || s === null || s.trim().length === 0
 }
 
-//
-// export function encodeString(str) {
-//   return new TextEncoder().encode(str)
-// }
-//
-// export function decodeString(bytes) {
-//   return new TextDecoder().decode(bytes)
-// }
-//
 export function generateRandomString(length: number = 17) {
     let randomString = ''
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
