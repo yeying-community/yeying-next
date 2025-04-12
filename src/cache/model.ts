@@ -17,7 +17,3 @@ export interface Table {
     // 索引列
     indexes: Index[]
 }
-
-export function getShareDbName() {
-    return 'db-common'
-}

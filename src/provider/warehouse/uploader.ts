@@ -1,17 +1,16 @@
-import { BlockProvider } from './block'
-import { AssetCipher } from './cipher'
-import { convertDateToDateTime, convertToUtcDateTime, formatDateTime, getCurrentUtcString } from '../../common/date'
-import { readBlock } from '../../common/file'
-import { Digest, SecurityAlgorithm } from '@yeying-community/yeying-web3'
-import { decodeHex, encodeHex } from '../../common/codec'
-import { getDigitalFormatByName } from '../../common/message'
-import { AssetMetadata, AssetMetadataSchema } from '../../yeying/api/asset/asset_pb'
-import { create } from '@bufbuild/protobuf'
-import { isExisted } from '../../common/status'
-import { ProviderOption } from '../common/model'
-import { AssetProvider } from './asset'
-import { ConfigProvider } from '../config/config'
-import { ConfigTypeEnum } from '../../yeying/api/config/config_pb'
+import {BlockProvider} from './block'
+import {AssetCipher} from './cipher'
+import {convertDateToDateTime, convertToUtcDateTime, formatDateTime, getCurrentUtcString} from '../../common/date'
+import {readBlock} from '../../common/file'
+import {Digest, SecurityAlgorithm} from '@yeying-community/yeying-web3'
+import {decodeHex, encodeHex} from '../../common/codec'
+import {getDigitalFormatByName} from '../../common/message'
+import {AssetMetadata, AssetMetadataSchema} from '../../yeying/api/asset/asset_pb'
+import {create} from '@bufbuild/protobuf'
+import {ProviderOption} from '../common/model'
+import {AssetProvider} from './asset'
+import {ConfigProvider} from '../config/config'
+import {ConfigTypeEnum} from '../../yeying/api/config/config_pb'
 
 /**
  * 该类用于上传资产文件，通过将文件分块后上传，每个块加密（可选）并生成哈希值，最后对整个资产进行签名
@@ -35,11 +34,18 @@ export class Uploader {
 
     /**
      * 构造函数
+     *
      * @param option - 包含代理地址和区块地址信息的配置选项
      * @param securityAlgorithm - 安全算法配置，包含算法名称和 IV
+     *
      * @example
+     *
      * ```ts
-     * const option = { proxy: 'http://proxy.example.com', blockAddress: { identifier: 'example-did', privateKey: 'example-private-key' } }
+     * const option = {
+     *   proxy: 'http://proxy.example.com',
+     *   blockAddress: { identifier: 'example-did', privateKey: 'example-private-key' }
+     * }
+     *
      * const securityAlgorithm = { name: 'AES-GCM', iv: 'base64-encoded-iv' }
      * const uploader = new Uploader(option, securityAlgorithm)
      * ```

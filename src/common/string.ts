@@ -30,7 +30,7 @@ export function generateRandomString(length: number = 17) {
 //   return result
 // }
 
-export function generateUuid() {
+export function generateUuid(): string {
     // 创建一个 16 字节的随机数组缓冲区
     const buffer = new Uint8Array(16)
     crypto.getRandomValues(buffer)
