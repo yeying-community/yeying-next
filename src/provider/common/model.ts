@@ -1,5 +1,4 @@
-import { AuthenticateTypeEnum } from '../../yeying/api/common/code_pb'
-import { BlockAddress } from '@yeying-community/yeying-web3'
+import {BlockAddress} from '@yeying-community/yeying-web3'
 
 /**
  * 提供商选项接口，包含代理配置

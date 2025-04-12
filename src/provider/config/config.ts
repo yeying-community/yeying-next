@@ -23,7 +23,7 @@ import { getCurrentUtcString } from '../../common/date'
  * 管理配置
  */
 export class ConfigProvider {
-    private authenticate: Authenticate
+    private readonly authenticate: Authenticate
     private client: Client<typeof Config>
 
     constructor(option: ProviderOption) {
