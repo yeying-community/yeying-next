@@ -16,23 +16,22 @@ export function createDynamicWorker(processor: string, dependencies: string[] = 
     import { createGrpcWebTransport } from '${getModulePath('@connectrpc/connect-web')}';
     import { createClient } from '${getModulePath('@connectrpc/connect')}';
     import { create, toBinary } from '${getModulePath('@bufbuild/protobuf')}';
-  `;
+  `
 
-    const code = WORKER_TEMPLATE
-        .replace('{{IMPORTS}}', imports)
+    const code = WORKER_TEMPLATE.replace('{{IMPORTS}}', imports)
         .replace('{{DEPENDENCIES}}', dependencies.join('\n'))
-        .replace('{{CLASS_CODE}}', processor);
+        .replace('{{CLASS_CODE}}', processor)
     console.log(`processor:${code}`)
-    const blob = new Blob([code], {type: 'application/javascript'});
-    return new Worker(URL.createObjectURL(blob), {type: 'module'});
+    const blob = new Blob([code], { type: 'application/javascript' })
+    return new Worker(URL.createObjectURL(blob), { type: 'module' })
 }
 
 function getModulePath(pkg: string): string {
-    return `https://esm.sh/${pkg}@latest?target=esnext`;
+    return `https://esm.sh/${pkg}@latest?target=esnext`
 }
 
 function getLocalModulePath(relativePath: string): string {
-    return new URL(relativePath, import.meta.url).pathname;
+    return new URL(relativePath, import.meta.url).pathname
 }
 
 export const WORKER_TEMPLATE = `
@@ -74,4 +73,4 @@ export const WORKER_TEMPLATE = `
       self.postMessage({ id: id, processType: 'ERROR', data: error.message });
     }
   };
-`;
+`

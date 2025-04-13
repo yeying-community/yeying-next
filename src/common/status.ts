@@ -29,8 +29,6 @@ export function convertResponseStatusToError(status: ResponseStatus): Error {
     }
 }
 
-export type isSuccess = (status?: ResponseStatus) => boolean
-
 export function isOk(status?: ResponseStatus) {
     return status !== undefined && status.code === ResponseCodeEnum.OK
 }
