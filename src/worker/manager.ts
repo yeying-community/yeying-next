@@ -1,9 +1,9 @@
-import {createDynamicWorker} from "./template";
-import {DownloadProcessor, UploadProcessor} from "./processor/asset";
-import {CallbackFunction, CommandMessage, CommandType, ProcessMessage, WorkerType} from "./model/common";
-import {StateProcessor} from "./processor/state";
-import {generateUuid} from "../common/string";
-import {getDownloadDependencies, getUploadDependencies} from "./model/asset";
+import { createDynamicWorker } from './template'
+import { DownloadProcessor, UploadProcessor } from './processor/asset'
+import { CallbackFunction, CommandMessage, CommandType, ProcessMessage, WorkerType } from './model/common'
+import { StateProcessor } from './processor/state'
+import { generateUuid } from '../common/string'
+import { getDownloadDependencies, getUploadDependencies } from './model/asset'
 
 /**
  *
@@ -17,31 +17,30 @@ import {getDownloadDependencies, getUploadDependencies} from "./model/asset";
  */
 
 export class WorkerManager {
-    private worker: Worker;
+    private worker: Worker
 
-    private callbacks: Map<string, CallbackFunction> = new Map<string, CallbackFunction>();
+    private callbacks: Map<string, CallbackFunction> = new Map<string, CallbackFunction>()
 
     constructor(type: WorkerType) {
         switch (type) {
-            case "UPLOAD_ASSET":
+            case 'UPLOAD_ASSET':
                 this.worker = createDynamicWorker(UploadProcessor.toString(), getUploadDependencies())
                 break
-            case "DOWNLOAD_ASSET":
-                this.worker = createDynamicWorker(DownloadProcessor.toString(), getDownloadDependencies());
+            case 'DOWNLOAD_ASSET':
+                this.worker = createDynamicWorker(DownloadProcessor.toString(), getDownloadDependencies())
                 break
-            case "SYNC_STATE":
-                this.worker = createDynamicWorker(StateProcessor.toString());
+            case 'SYNC_STATE':
+                this.worker = createDynamicWorker(StateProcessor.toString())
                 break
             default:
-                throw new Error(`Unsupported type: ${type}`);
+                throw new Error(`Unsupported type: ${type}`)
         }
 
-        this.worker.onmessage = this.handleMessage.bind(this);
+        this.worker.onmessage = this.handleMessage.bind(this)
         this.worker.onerror = (err) => {
-            console.error('Worker error:', err.message);
+            console.error('Worker error:', err.message)
         }
     }
-
 
     /**
      * 在主线程中处理各种响应消息
@@ -52,18 +51,18 @@ export class WorkerManager {
      */
     private handleMessage(e: MessageEvent) {
         console.log(`response =${JSON.stringify(e.data)}`)
-        const {id, processType} = e.data;
+        const { id, processType } = e.data
         try {
             switch (processType) {
                 case 'PROGRESS':
-                    this.callbacks.get(id)?.progress?.(e.data);
-                    break;
+                    this.callbacks.get(id)?.progress?.(e.data)
+                    break
                 default:
-                    this.callbacks.get(id)?.callback?.(e.data);
-                    break;
+                    this.callbacks.get(id)?.callback?.(e.data)
+                    break
             }
         } finally {
-            this.callbacks.delete(id);
+            this.callbacks.delete(id)
         }
     }
 
@@ -74,7 +73,7 @@ export class WorkerManager {
      * @param payload
      */
     static createCommand(commandType: CommandType, payload: any): CommandMessage {
-        return {id: generateUuid(), commandType: commandType, payload: payload}
+        return { id: generateUuid(), commandType: commandType, payload: payload }
     }
 
     /**
@@ -87,11 +86,11 @@ export class WorkerManager {
     async command(command: CommandMessage): Promise<ProcessMessage> {
         return new Promise((resolve, reject) => {
             this.callbacks.set(command.id, {
-                callback: (m: ProcessMessage) => m.processType !== 'ERROR' ? resolve(m) : reject(m),
-                progress: command.progress,
-            });
+                callback: (m: ProcessMessage) => (m.processType !== 'ERROR' ? resolve(m) : reject(m)),
+                progress: command.progress
+            })
 
-            this.worker.postMessage(command);
-        });
+            this.worker.postMessage(command)
+        })
     }
 }

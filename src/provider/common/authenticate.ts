@@ -7,8 +7,7 @@ import { InvalidArgument, NetworkUnavailable, NoPermission } from '../../common/
 import { composite } from '../../common/bytes'
 import { computeHash } from '../../common/crypto'
 import { create, toBinary } from '@bufbuild/protobuf'
-import { DescMessage } from '@bufbuild/protobuf/dist/cjs/descriptors'
-import { convertResponseStatusToError, isOk, isSuccess } from '../../common/status'
+import { convertResponseStatusToError, isOk } from '../../common/status'
 
 /**
  * 用于身份验证的类，负责生成和验证消息头签名
@@ -159,7 +158,7 @@ export class Authenticate {
      * }
      * ```
      */
-    async doResponse(response: any, bodySchema: DescMessage, isSuccess: isSuccess = isOk) {
+    async doResponse(response: any, bodySchema: any, isSuccess: Function = isOk) {
         if (
             response === undefined ||
             response.header === undefined ||
