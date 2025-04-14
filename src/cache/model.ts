@@ -11,7 +11,7 @@ export interface Table {
     // 表名
     name: string
     // 主键
-    key?: string
+    key: string
     // 主键是否自增
     autoIncrement?: boolean
     // 索引列
