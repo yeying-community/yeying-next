@@ -1,14 +1,4 @@
-import { CipherTypeEnum, DigitalFormatEnum, LanguageCodeEnum } from '../yeying/api/common/code_pb'
-
-export function convertIdentityCodeFrom(s: string) {
-    const v = CipherTypeEnum[s as keyof typeof CipherTypeEnum]
-    return v !== undefined ? v : CipherTypeEnum.CIPHER_TYPE_UNKNOWN
-}
-
-export function convertLanguageCodeTo(code: LanguageCodeEnum): string {
-    // @ts-ignore
-    return Object.keys(LanguageCodeEnum).find((s) => LanguageCodeEnum[s] === code)
-}
+import { CipherTypeEnum, DigitalFormatEnum } from '@yeying-community/yeying-client-ts'
 
 export function convertCipherTypeFrom(s: string): CipherTypeEnum {
     const ff = s as keyof typeof CipherTypeEnum

@@ -5,8 +5,9 @@ import {
     IdentityTemplate,
     NetworkTypeEnum
 } from "@yeying-community/yeying-web3";
-import {IdentityManager, LanguageCodeEnum} from "../../src";
+import {IdentityManager} from "../../src";
 import {expect} from "vitest";
+import {LanguageCodeEnum} from "@yeying-community/yeying-client-ts";
 
 describe('Identity', () => {
     // 申请

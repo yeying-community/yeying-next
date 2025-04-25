@@ -1,47 +1,39 @@
-import { fromBinary, fromJson, toJson } from '@bufbuild/protobuf'
-import { decodeBase64 } from '../common/codec'
-import { verifyApplicationMetadata, verifyServiceMetadata } from '../provider/model/model'
-import {
-    ApplicationMetadata,
-    ApplicationMetadataSchema,
-    ServiceMetadata,
-    ServiceMetadataSchema
-} from '../yeying/api/common/model_pb'
+import { ApplicationState } from '../state/application'
+import { NotFound } from '../common/error'
+import { digest, encodeHex, encodeString } from '@yeying-community/yeying-web3'
+import { Myself } from './myself'
 
 export class ApplicationManager {
-    // 前端域名
-    domain: string
+    myself: Myself
 
-    constructor(domain?: string) {
-        this.domain = domain ? domain : window.location.protocol + '//' + window.location.host
+    // 应用状态
+    stateMap: Map<string, ApplicationState>
+
+    constructor(myself?: Myself) {
+        this.stateMap = new Map<string, ApplicationState>()
+        this.myself = myself ? myself : new Myself()
     }
 
-    async whoami(): Promise<ApplicationMetadata> {
-        const whoamiUrl = this.domain + '/whoami'
-        const response = await fetch(whoamiUrl)
-        const result = await response.json()
-        const application = fromJson(ApplicationMetadataSchema, result)
-        await verifyApplicationMetadata(application)
-        return application
-    }
-
-    async registry(): Promise<ServiceMetadata[]> {
-        const registryUrl = this.domain + '/registry'
-        const response = await fetch(registryUrl)
-        const registry = await response.json()
-        const services: ServiceMetadata[] = []
-        for (const node of registry.nodes) {
-            const service = fromBinary(ServiceMetadataSchema, decodeBase64(node))
-            try {
-                await verifyServiceMetadata(service)
-                services.push(service)
-            } catch (err) {
-                console.error(
-                    `Invalid service metadata=${JSON.stringify(toJson(ServiceMetadataSchema, service))} when getting registry.`,
-                    err
-                )
-            }
+    /**
+     * 获得当前应用的状态
+     */
+    async getCurrentState(did: string): Promise<ApplicationState> {
+        if (did === undefined) {
+            throw new NotFound('No select Identity for application state')
         }
-        return services
+
+        // 检查当前身份是否发生变化，检查缓存是否存在，如果存在，则返回当前缓存中的状态信息
+        const currentState = this.stateMap.get(did)
+        if (currentState) {
+            return currentState
+        }
+
+        const metadata = await this.myself.whoami()
+        const stateId = encodeHex(await digest(encodeString(`${did}${metadata.did}`)))
+
+        // 给当前应用和身份创建命名空间
+        const newState = new ApplicationState(stateId, metadata)
+        this.stateMap.set(did, newState)
+        return newState
     }
 }

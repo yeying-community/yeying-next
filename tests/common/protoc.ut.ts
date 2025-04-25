@@ -1,5 +1,5 @@
-import {CipherTypeEnum} from "../../src/yeying/api/common/code_pb";
 import {expect} from "vitest";
+import {CipherTypeEnum} from "@yeying-community/yeying-client-ts";
 
 describe('Protoc', () => {
     it('enum', async () => {

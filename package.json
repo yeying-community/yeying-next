@@ -21,11 +21,8 @@
   "dependencies": {
     "@bufbuild/protobuf": "^2.2.3",
     "@connectrpc/connect-web": "^2.0.1",
-    "@types/luxon": "^3.4.2",
-    "@yeying-community/yeying-web3": "^0.0.31",
-    "google-protobuf": "^3.21.4",
-    "grpc-web": "^1.5.0",
-    "luxon": "^3.5.0",
+    "@yeying-community/yeying-client-ts": "^1.0.3",
+    "@yeying-community/yeying-web3": "^0.0.34",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
@@ -37,7 +34,6 @@
     "happy-dom": "^16.3.0",
     "prettier": "^3.4.2",
     "rollup": "^4.28.1",
-    "rollup-plugin-typescript2": "^0.36.0",
     "typedoc": "^0.27.6",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
