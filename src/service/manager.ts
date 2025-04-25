@@ -1,21 +1,19 @@
-import { ApplicationManager } from '../application/manager'
-import { ServiceCodeEnum } from '../yeying/api/common/code_pb'
-import { ServiceProvider } from '../provider/service/service'
 import { BlockAddress } from '@yeying-community/yeying-web3'
 import { NotFound } from '../common/error'
-import { ServiceMetadata } from '../yeying/api/common/model_pb'
+import { ServiceCodeEnum, ServiceMetadata, ServiceProvider } from '@yeying-community/yeying-client-ts'
+import { Myself } from '../application/myself'
 
 /**
  * 从当前应用的注册表搜索服务元信息，注册表通常存储在节点服务中
  *
  */
 export class ServiceManager {
-    applicationManager: ApplicationManager
+    myself: Myself
     blockAddress: BlockAddress
 
-    constructor(blockAddress: BlockAddress, applicationManager?: ApplicationManager) {
-        this.applicationManager = applicationManager ? applicationManager : new ApplicationManager()
+    constructor(blockAddress: BlockAddress, myself: Myself) {
         this.blockAddress = blockAddress
+        this.myself = myself ? myself : new Myself()
     }
 
     /**
@@ -44,7 +42,7 @@ export class ServiceManager {
      *
      */
     async getCurrentNodeService() {
-        const nodes = await this.applicationManager.registry()
+        const nodes = await this.myself.registry()
         if (nodes === undefined || nodes.length === 0) {
             throw new NotFound('There is no node service!')
         } else {

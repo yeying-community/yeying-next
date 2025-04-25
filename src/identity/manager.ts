@@ -6,20 +6,20 @@
 // 4、对于不再端上使用的身份，能够一键清理不留痕迹；
 import { SessionCache } from '../cache/session'
 import { LocalCache } from '../cache/local'
-import { DataTampering, InvalidArgument, InvalidPassword, NoPermission, NotFound } from '../common/error'
+import { DataTampering, InvalidPassword, NoPermission, NotFound } from '../common/error'
 
 import {
     BlockAddress,
-    createBlockAddress,
     createIdentity,
+    decryptBlockAddress,
     deserializeIdentityFromJson,
+    digest,
+    encodeBase64,
+    encodeHex,
+    encodeString,
+    generateIv,
     Identity,
-    IdentityApplicationExtend,
-    IdentityCodeEnum,
     IdentityMetadata,
-    IdentityOrganizationExtend,
-    IdentityPersonalExtend,
-    IdentityServiceExtend,
     IdentityTemplate,
     SecurityAlgorithm,
     serializeIdentityToJson,
@@ -27,16 +27,9 @@ import {
     verifyIdentity
 } from '@yeying-community/yeying-web3'
 import { CookieCache } from '../cache/cookie'
-import {
-    decryptBlockAddress,
-    decryptString,
-    encryptBlockAddress,
-    encryptString,
-    generateIv,
-    generateSecurityAlgorithm
-} from '../common/crypto'
-import { encodeBase64 } from '../common/codec'
-import { NodeProvider } from '../provider/node/node'
+import { IdentityState } from '../state/identity'
+import { decryptString, encryptString } from '../common/crypto'
+import { NodeProvider } from '@yeying-community/yeying-client-ts'
 
 /**
  * 管理身份，支持身份的创建、登录、登出、更新和导入导出等操作
@@ -51,6 +44,7 @@ export class IdentityManager {
     private blockAddressMap: Map<string, BlockAddress> // 存储区块链地址的映射
     private identityMap: Map<string, Identity> // 存储身份信息的映射
     private readonly durationDays: number // 默认的有效期（天）
+    private stateMap: Map<string, IdentityState> // 身份状态信息
 
     /**
      * 构造函数
@@ -74,6 +68,31 @@ export class IdentityManager {
         this.identityMap = new Map<string, Identity>()
         // 默认密码保存有效期是7天
         this.durationDays = 7
+        // 身份状态信息
+        this.stateMap = new Map<string, IdentityState>()
+    }
+
+    /**
+     * 获得当前身份状态
+     */
+    async getCurrentState(): Promise<IdentityState> {
+        const currentDid = this.getActiveDid()
+        if (currentDid === undefined) {
+            throw new NotFound('No select Identity for identity state')
+        }
+
+        // 检查当前身份是否发生变化，检查缓存是否存在，如果存在，则返回当前缓存中的状态信息
+        const currentState = this.stateMap.get(currentDid)
+        if (currentState) {
+            return currentState
+        }
+
+        const stateId = encodeHex(await digest(encodeString(`${currentDid}`)))
+
+        // 给当前应用和身份创建命名空间
+        const newState = new IdentityState(stateId, this)
+        this.stateMap.set(currentDid, newState)
+        return newState
     }
 
     /**
@@ -174,18 +193,11 @@ export class IdentityManager {
 
         const identity = await this.getIdentity(did)
         try {
-            const password = await decryptString(
-                identity.securityConfig?.algorithm as SecurityAlgorithm,
-                token,
-                encryptedPassword
-            )
+            const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
+            const password = await decryptString(securityAlgorithm, token, encryptedPassword)
 
             // 解密身份
-            const blockAddress = await decryptBlockAddress(
-                identity.blockAddress,
-                identity.securityConfig?.algorithm as SecurityAlgorithm,
-                password
-            )
+            const blockAddress = await decryptBlockAddress(identity.blockAddress, securityAlgorithm, password)
 
             this.blockAddressMap.set(did, blockAddress)
             return blockAddress
@@ -249,15 +261,10 @@ export class IdentityManager {
             this.sessionCache.set(this.loginKey, did)
             return identity
         }
-
+        const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
         try {
             // 解密身份
-            const blockAddress = await decryptBlockAddress(
-                identity.blockAddress,
-                identity.securityConfig?.algorithm as SecurityAlgorithm,
-                password
-            )
-
+            const blockAddress = await decryptBlockAddress(identity.blockAddress, securityAlgorithm, password)
             this.blockAddressMap.set(did, blockAddress)
         } catch (err) {
             console.error(`Fail to decrypt identity=${did}`, err)
@@ -266,7 +273,7 @@ export class IdentityManager {
 
         try {
             // 缓存密码
-            await this.cachePassword(did, password, identity.securityConfig?.algorithm as SecurityAlgorithm)
+            await this.cachePassword(did, password, securityAlgorithm)
         } catch (err) {
             console.error(`Fail to cache password`, err)
         }
@@ -278,8 +285,8 @@ export class IdentityManager {
 
     /**
      * 创建新身份，生成 BlockAddress 并加密存储，同时缓存登录信息
-     * @param password - 身份密码
-     * @param template - 身份模板
+     * @param password 身份密码
+     * @param template 身份模板
      * @returns 返回创建的身份信息
      * @example
      * ```ts
@@ -288,56 +295,21 @@ export class IdentityManager {
      * ```
      */
     async createIdentity(password: string, template: IdentityTemplate) {
-        // 创建区块链地址
-        const blockAddress = createBlockAddress()
-        if (template.securityConfig === undefined) {
-            // 如果没有定义安全配置，则创建一个空的安全配置
-            template.securityConfig = {
-                algorithm: generateSecurityAlgorithm()
-            }
-        }
-
-        // 如果安全配置没有定义算法，则生成一个默认的安全算法
-        if (template.extend === undefined) {
-            switch (template.code) {
-                case IdentityCodeEnum.IDENTITY_CODE_PERSONAL:
-                    template.extend = IdentityPersonalExtend.create({})
-                    break
-                case IdentityCodeEnum.IDENTITY_CODE_ORGANIZATION:
-                    template.extend = IdentityOrganizationExtend.create({})
-                    break
-                case IdentityCodeEnum.IDENTITY_CODE_SERVICE:
-                    template.extend = IdentityServiceExtend.create({})
-                    break
-                case IdentityCodeEnum.IDENTITY_CODE_APPLICATION:
-                    template.extend = IdentityApplicationExtend.create({})
-                    break
-                default:
-                    throw new InvalidArgument(`Not support code=${template.code}`)
-            }
-        }
-
-        // 使用密码和安全算法加密区块链地址
-        const encryptedBlockAddress = await encryptBlockAddress(
-            blockAddress,
-            template.securityConfig.algorithm as SecurityAlgorithm,
-            password
-        )
-
         // 创建身份并返回
-        const identity = await createIdentity(blockAddress, encryptedBlockAddress, template)
+        const identity = await createIdentity(template, password)
         const metadata = identity.metadata as IdentityMetadata
         const did = metadata.did
 
         // 将身份数据缓存
         this.identityCache.set(did, serializeIdentityToJson(identity))
         this.identityMap.set(did, identity)
-        this.blockAddressMap.set(did, blockAddress)
+        const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
+        this.blockAddressMap.set(did, await decryptBlockAddress(identity.blockAddress, securityAlgorithm, password))
         this.setHistory(did)
 
         try {
             // 缓存密码
-            await this.cachePassword(did, password, identity.securityConfig?.algorithm as SecurityAlgorithm)
+            await this.cachePassword(did, password, securityAlgorithm)
         } catch (err) {
             console.error(`Fail to cache password`, err)
         }
@@ -349,9 +321,9 @@ export class IdentityManager {
 
     /**
      * 更新身份信息， 解密 BlockAddress 并使用新的模板信息更新身份
-     * @param did - 身份的 DID
-     * @param template - 部分更新的身份模板
-     * @param password - 身份密码
+     * @param did 身份的 DID
+     * @param template 部分更新的身份模板
+     * @param password 身份密码
      * @returns 返回更新后的身份信息
      * @example
      * ```ts
@@ -360,27 +332,24 @@ export class IdentityManager {
      * ```
      */
     async updateIdentity(did: string, template: Partial<IdentityTemplate>, password: string) {
+        // 获得原始的身份信息
         const identity = await this.getIdentity(did)
-        // 解密区块链地址
-        const blockAddress = await decryptBlockAddress(
-            identity.blockAddress,
-            identity.securityConfig?.algorithm as SecurityAlgorithm,
-            password
-        )
 
         // 使用模板更新身份
-        const newIdentity: Identity = await updateIdentity(template, identity, blockAddress)
+        const newIdentity: Identity = await updateIdentity(template, identity, password)
 
         // 更新缓存中的身份信息
         this.identityCache.set(did, serializeIdentityToJson(newIdentity))
         this.identityMap.set(did, newIdentity)
-        this.blockAddressMap.set(did, blockAddress)
+
+        const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
+        this.blockAddressMap.set(did, await decryptBlockAddress(identity.blockAddress, securityAlgorithm, password))
         return newIdentity
     }
 
     /**
      * 获取身份信息，如果身份已缓存，则直接返回；否则从本地缓存中加载并验证
-     * @param did - 身份的 DID
+     * @param did 身份的 DID
      * @returns 返回身份信息
      * @example
      * ```ts
@@ -449,18 +418,14 @@ export class IdentityManager {
         if (!(await verifyIdentity(identity))) {
             throw new DataTampering()
         }
-
+        const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
         // 解密区块链地址
-        const blockAddress = await decryptBlockAddress(
-            identity.blockAddress,
-            identity.securityConfig?.algorithm as SecurityAlgorithm,
-            password
-        )
+        const blockAddress = await decryptBlockAddress(identity.blockAddress, securityAlgorithm, password)
 
         const did = identity.metadata?.did as string
         try {
             // 缓存密码
-            await this.cachePassword(did, password, identity.securityConfig?.algorithm as SecurityAlgorithm)
+            await this.cachePassword(did, password, securityAlgorithm)
         } catch (err) {
             console.error(`Fail to cache password`, err)
         }

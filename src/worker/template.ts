@@ -13,9 +13,7 @@
 
 export function createDynamicWorker(processor: string, dependencies: string[] = []) {
     const imports = `
-    import { createGrpcWebTransport } from '${getModulePath('@connectrpc/connect-web')}';
-    import { createClient } from '${getModulePath('@connectrpc/connect')}';
-    import { create, toBinary } from '${getModulePath('@bufbuild/protobuf')}';
+    import { Uploader, Downloader } from '${getModulePath('@yeying-community/yeying-client-ts')}';
   `
 
     const code = WORKER_TEMPLATE.replace('{{IMPORTS}}', imports)

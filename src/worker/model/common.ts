@@ -1,4 +1,4 @@
-import { ProviderOption } from '../../provider/common/model'
+import { ProviderOption } from '@yeying-community/yeying-client-ts'
 
 export type CommandType = 'CONFIG' | 'START' | 'ABORT' | 'PAUSE' | 'RESUME'
 

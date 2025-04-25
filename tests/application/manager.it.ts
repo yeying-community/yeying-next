@@ -1,13 +1,13 @@
-import {ApplicationManager} from "../../src/application/manager";
-import {ApplicationCodeEnum} from "../../src";
-import {getApplicationAddress} from "../provider/common/common";
+import {ApplicationCodeEnum} from "@yeying-community/yeying-client-ts";
+import {getApplicationAddress} from "../common/common";
+import {Myself} from "../../src/application/myself";
 
-describe('Application', () => {
-    it('metadata', async () => {
-        const applicationManager = new ApplicationManager(getApplicationAddress(ApplicationCodeEnum.APPLICATION_CODE_MARKET));
-        const portal = await applicationManager.whoami()
+describe('Myself', () => {
+    it('whoami', async () => {
+        const myself = new Myself(getApplicationAddress(ApplicationCodeEnum.APPLICATION_CODE_MARKET));
+        const portal = await myself.whoami()
         expect(portal).toBeDefined()
-        const services = await applicationManager.registry()
+        const services = await myself.registry()
         expect(services.length).greaterThanOrEqual(1)
         for (const service of services) {
             console.log(`service proxy=${service.proxy}`)

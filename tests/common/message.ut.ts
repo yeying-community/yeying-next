@@ -1,6 +1,6 @@
 import {convertCipherTypeFrom, convertCipherTypeTo, getDigitalFormatByName} from "../../src/common/message";
-import {CipherTypeEnum, DigitalFormatEnum} from "../../src";
 import {expect} from "vitest";
+import {CipherTypeEnum, DigitalFormatEnum} from "@yeying-community/yeying-client-ts";
 
 describe('Message', () => {
     it ('code',() => {
@@ -13,7 +13,6 @@ describe('Message', () => {
         const str = convertCipherTypeTo(type) as string
         expect(str).toBe('CIPHER_TYPE_AES_GCM_256')
         expect(convertCipherTypeFrom(str)).toEqual(cipherType)
-
     })
 
     it('digital format', async () => {

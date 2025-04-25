@@ -1,4 +1,5 @@
-//
+import { LocalCache } from '../cache/local'
+
 // export interface StateMessage {
 //   uid: string
 //
@@ -20,21 +21,23 @@
 //   this.data = data
 // }
 //
-// // 状态元信息
-// export interface Metadata {
-//   // 状态作为个人资产，也会有一个唯一id
-//   this.assetId = assetId
-//   // 状态的版本号，只会按顺序增加
-//   this.version = version
-//   // 前一个状态的默克尔根
-//   this.parent = parent
-//   // 状态的默克尔树
-//   this.merkleTree = merkleTree
-//   // 快照的时间点
-//   this.checkpoint = checkpoint ? checkpoint : getCurrentUtcString()
-//   // 当前状态的数字签名
-//   this.signature = signature
-// }
+
+// 状态元信息
+export interface StateMetadata {
+    // 状态资产的哈希值
+    assetHash: string
+    // 前一个状态的默克尔根
+    parentRoot: string
+    // 状态的版本号，只会按顺序增加
+    version: number
+    // 状态的默克尔树
+    merkleTree: string
+    // 快照的时间点
+    checkpoint: string
+    // 当前状态的数字签名
+    signature: string
+}
+
 //
 // // 身份状态数据，身份关联到某个节点就可以参与到网络活动，节点服务作为跳板完成和网络的连接，背后的实际连接其实是应用和服务的选择
 // export function IdentityData(metadata, services, users, applications) {

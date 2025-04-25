@@ -1,7 +1,7 @@
 import { CommandMessage, ProcessMessage } from '../model/common'
 import { Processor } from './common'
 import { AssetWorkerConfig, UploadAssetMessage } from '../model/asset'
-import { Uploader } from '../../provider/warehouse/uploader'
+import { Uploader } from '@yeying-community/yeying-client-ts'
 
 export class UploadProcessor implements Processor {
     private uploader: Uploader | undefined
