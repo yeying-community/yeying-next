@@ -1,6 +1,8 @@
 export { IdentityManager } from './identity/manager'
 export { ApplicationManager } from './application/manager'
 export { ServiceManager } from './service/manager'
+export { WorkerManager } from './worker/manager'
+
 export { Myself } from './application/myself'
 
 export {
@@ -12,7 +14,6 @@ export {
     ProcessMessage,
     ProgressCallback
 } from './worker/model/common'
-export { WorkerManager } from './worker/manager'
 
 export { IndexedCache } from './cache/indexed'
 export { Index, Table } from './cache/model'

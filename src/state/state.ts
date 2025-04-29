@@ -33,8 +33,8 @@ export abstract class State {
     /**
      * 状态本身的元信息
      *
-     * @param key
-     * @param value
+     * @param key 元信息的属性
+     * @param value 元信息属性对应的值
      */
     setMetadata(key: string, value: any): void {
         this.setDict('metadata', key, value)

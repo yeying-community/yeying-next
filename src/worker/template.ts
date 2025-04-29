@@ -15,7 +15,6 @@ export function createDynamicWorker(processor: string, dependencies: string[] = 
     const imports = `
     import { Uploader, Downloader } from '${getModulePath('@yeying-community/yeying-client-ts')}';
   `
-
     const code = WORKER_TEMPLATE.replace('{{IMPORTS}}', imports)
         .replace('{{DEPENDENCIES}}', dependencies.join('\n'))
         .replace('{{CLASS_CODE}}', processor)
