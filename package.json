@@ -1,6 +1,6 @@
 {
   "name": "@yeying-community/yeying-next",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "a web3 application library for browser",
   "main": "dist/yeying-next.cjs.js",
   "module": "dist/yeying-next.esm.js",

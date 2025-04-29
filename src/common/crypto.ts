@@ -30,7 +30,7 @@ export async function encryptString(algorithm: SecurityAlgorithm, password: stri
 export async function decryptString(algorithm: SecurityAlgorithm, password: string, content: string) {
     const hashBytes = await digest(new TextEncoder().encode(content), 'SHA-256')
     const name = convertToAlgorithmName(algorithm.name)
-    const cryptoKey = await importKey(hashBytes, password)
+    const cryptoKey = await importKey(hashBytes, name)
     const plain = await decrypt(cryptoKey, decodeBase64(content), decodeBase64(algorithm.iv), name)
     return decodeString(plain)
 }
