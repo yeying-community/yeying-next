@@ -11,7 +11,7 @@ export class ServiceManager {
     myself: Myself
     blockAddress: BlockAddress
 
-    constructor(blockAddress: BlockAddress, myself: Myself) {
+    constructor(blockAddress: BlockAddress, myself?: Myself) {
         this.blockAddress = blockAddress
         this.myself = myself ? myself : new Myself()
     }
