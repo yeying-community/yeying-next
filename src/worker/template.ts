@@ -11,41 +11,29 @@
  *
  */
 
-export function createDynamicWorker(processor: string, dependencies: string[] = []) {
-    const imports = `
-    import { Uploader, Downloader } from '${getModulePath('@yeying-community/yeying-client-ts')}';
-  `
-    const code = WORKER_TEMPLATE.replace('{{IMPORTS}}', imports)
-        .replace('{{DEPENDENCIES}}', dependencies.join('\n'))
-        .replace('{{CLASS_CODE}}', processor)
+export function createDynamicWorker(processor: string, imports: string[] = []) {
+    const code = WORKER_TEMPLATE.replace('{{IMPORTS}}', imports.join('\n')).replace('{{CLASS_CODE}}', processor)
     console.log(`processor:${code}`)
     const blob = new Blob([code], { type: 'application/javascript' })
     return new Worker(URL.createObjectURL(blob), { type: 'module' })
-}
-
-function getModulePath(pkg: string): string {
-    return `https://esm.sh/${pkg}@latest?target=esnext`
-}
-
-function getLocalModulePath(relativePath: string): string {
-    return new URL(relativePath, import.meta.url).pathname
 }
 
 export const WORKER_TEMPLATE = `
   // --- Worker入口代码 ---
   {{IMPORTS}}
 
-  {{DEPENDENCIES}}
-  
   // 初始化依赖  
-  const processor = {{CLASS_CODE}}.deserialize(); 
+  const processor = {{CLASS_CODE}}.deserialize((r) => self.postMessage(r)); 
   
   // 消息处理器
   self.onmessage = async (e) => {
-    const { id, commandType, payload } = e.data;
+    const { workerId, msgId, commandType, payload } = e.data;
     let response = undefined
     try {
       switch (commandType) {
+        case 'INITIALIZE':
+          response = await processor.initialize(e.data);
+          break;
         case 'CONFIG':
           response = await processor.config(e.data);
           break;
@@ -62,12 +50,12 @@ export const WORKER_TEMPLATE = `
           response = await processor.resume(e.data);
           break;
         default:
-          throw new Error('Unknown task type' + type);
+          throw new Error('Unknown task type' + commandType);
       }
 
       self.postMessage(response);
     } catch (error) {
-      self.postMessage({ id: id, processType: 'ERROR', data: error.message });
+      self.postMessage({ workerId: workerId, msgId: msgId, processType: 'ERROR', data: error.message });
     }
   };
 `
