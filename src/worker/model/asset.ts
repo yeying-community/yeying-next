@@ -1,24 +1,19 @@
-import { WorkerConfig } from './common'
-import { SecurityAlgorithm } from '@yeying-community/yeying-web3/dist/yeying/api/web3/web3'
-import { Downloader, Uploader } from '@yeying-community/yeying-client-ts'
-
 export interface UploadAssetMessage {
-    file: File
+    namespaceId: string,
+    file: File,
+    encrypted: boolean,
 }
 
-export interface AssetWorkerConfig extends WorkerConfig {
-    securityAlgorithm: SecurityAlgorithm
+export interface DownloadAssetMessage {
+    namespaceId: string,
+    hash: string,
+    merged: boolean,
 }
 
-export interface AssetProgressMessage {
-    total: number
-    completed: number
+export function getClientImports() {
+    return [`import { Uploader, Downloader } from '${getModulePath('@yeying-community/yeying-client-ts')}';`]
 }
 
-export function getUploadDependencies() {
-    return [Uploader.toString()]
-}
-
-export function getDownloadDependencies() {
-    return [Downloader.toString()]
+function getModulePath(pkg: string): string {
+    return `https://esm.sh/${pkg}@latest?target=esnext`
 }

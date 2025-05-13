@@ -1,7 +1,7 @@
 import { IndexedCache } from '../../src/cache/indexed';
 import { Table } from '../../src/cache/model';
 import 'fake-indexeddb/auto';
-import {generateUuid} from "../../src/common/string";
+import {generateUuid} from "@yeying-community/yeying-client-ts";
 
 describe('IndexedCache', () => {
     let cache: IndexedCache;

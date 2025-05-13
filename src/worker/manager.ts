@@ -1,9 +1,20 @@
-import { createDynamicWorker } from './template'
-import { DownloadProcessor, UploadProcessor } from './processor/asset'
-import { CallbackFunction, CommandMessage, CommandType, ProcessMessage, WorkerType } from './model/common'
-import { StateProcessor } from './processor/state'
-import { generateUuid } from '../common/string'
-import { getDownloadDependencies, getUploadDependencies } from './model/asset'
+import {createDynamicWorker} from './template'
+import {UploadProcessor} from './processor/upload'
+import {DownloadProcessor} from './processor/download'
+import {
+    CommandMessage,
+    ProcessMessage,
+    serialize,
+    WorkerCallback,
+    WorkerOption,
+    WorkerState,
+    WorkerType
+} from './model/common'
+import {StateProcessor} from './processor/state'
+import {getClientImports} from './model/asset'
+import {generateUuid} from "@yeying-community/yeying-client-ts";
+import {IndexedCache} from "../cache/indexed";
+import {getCurrentUtcString} from "@yeying-community/yeying-web3";
 
 /**
  *
@@ -13,84 +24,237 @@ import { getDownloadDependencies, getUploadDependencies } from './model/asset'
  * 3、每个命令都有唯一ID，收到worker响应时，能够找到原始的命令，同时要考虑几种异常情况：
  *   1、如果页面刷新了，worker线程会终止，同时未处理的消息会丢失
  *   2、Blob Worker 默认无法使用 import 语句
- *
  */
 
 export class WorkerManager {
-    private worker: Worker
+    private workers: Map<string, Worker> = new Map();
+    private db: IndexedCache
+    private tableName: string = 'state'
+    private completeCallbacks: Map<string, WorkerCallback> = new Map()
+    private errorCallbacks: Map<string, WorkerCallback> = new Map()
+    private progressCallbacks: Map<string, WorkerCallback> = new Map()
+    private commandCallbacks: Map<string, WorkerCallback> = new Map()
+    private workerStates: Map<string, WorkerState> = new Map()
 
-    private callbacks: Map<string, CallbackFunction> = new Map<string, CallbackFunction>()
+    constructor() {
+        this.db = new IndexedCache("workers")
+    }
 
-    constructor(type: WorkerType) {
-        switch (type) {
-            case 'UPLOAD_ASSET':
-                this.worker = createDynamicWorker(UploadProcessor.toString(), getUploadDependencies())
-                break
-            case 'DOWNLOAD_ASSET':
-                this.worker = createDynamicWorker(DownloadProcessor.toString(), getDownloadDependencies())
-                break
-            case 'SYNC_STATE':
-                this.worker = createDynamicWorker(StateProcessor.toString())
-                break
-            default:
-                throw new Error(`Unsupported type: ${type}`)
-        }
+    /**
+     *
+     * @param type
+     * @param isPersisted
+     * @param onComplete
+     * @param onError
+     * @param onProgress
+     */
+    public async createWorker(type: WorkerType, workerOption: WorkerOption, onComplete: WorkerCallback, onError: WorkerCallback, onProgress: WorkerCallback): Promise<ProcessMessage> {
+        return new Promise<ProcessMessage>(async (resolve, reject) => {
+            const imports = getClientImports()
+            let worker: Worker
+            switch (type) {
+                case 'UPLOAD_ASSET':
+                    worker = createDynamicWorker(UploadProcessor.toString(), imports)
+                    break
+                case 'DOWNLOAD_ASSET':
+                    worker = createDynamicWorker(DownloadProcessor.toString(), imports)
+                    break
+                case 'SYNC_STATE':
+                    worker = createDynamicWorker(StateProcessor.toString(), imports)
+                    break
+                default:
+                    throw new Error(`Unsupported type: ${type}`)
+            }
 
-        this.worker.onmessage = this.handleMessage.bind(this)
-        this.worker.onerror = (err) => {
-            console.error('Worker error:', err.message)
-        }
+            const workerId: string = generateUuid()
+            worker.onmessage = this.handleMessage.bind(this)
+            worker.onerror = (err) => {
+                console.error(`Worker=${workerId} error:`, err.message)
+                this.handleError(workerId, err)
+            }
+
+            this.workers.set(workerId, worker)
+
+            this.completeCallbacks.set(workerId, onComplete ?? WorkerManager.skipMessage)
+            this.errorCallbacks.set(workerId, onError ?? WorkerManager.skipMessage)
+            this.progressCallbacks.set(workerId, onProgress ?? WorkerManager.skipMessage)
+            try {
+                // 创建状态存储到数据库中
+                await this.db.open([{
+                    name: this.tableName,
+                    key: "workerId",
+                    autoIncrement: false,
+                    indexes: [{
+                        keyPath: "workerType", name: "workerType", unique: false
+                    }]
+                }])
+
+                // 初始化worker
+                const msgId = generateUuid()
+                await this.command({
+                    workerId: workerId,
+                    msgId: msgId,
+                    commandType: 'INITIALIZE',
+                    payload: workerOption
+                }, async (d) => {
+                    console.log(`receive initialize!`)
+                    const state: WorkerState = {
+                        createdAt: getCurrentUtcString(),
+                        data: undefined,
+                        error: undefined,
+                        progress: 0,
+                        result: undefined,
+                        retries: 0,
+                        status: 'running',
+                        updatedAt: getCurrentUtcString(),
+                        workerType: type,
+                        workerId: d.workerId
+                    }
+
+                    this.workerStates.set(workerId, state)
+                    try {
+                        await this.db.insert(this.tableName, state)
+                    } finally {
+                        resolve(d)
+                    }
+                })
+                console.log(`create worker finished!`)
+            } catch (err) {
+                console.error(`Fail to initialize worker:${type}`, err)
+                reject({workerId: workerId, msgId: '', processType: 'ERROR', payload: err})
+            }
+        })
+    }
+
+    public getWorkerState(workerId: string): WorkerState | undefined {
+        return this.workerStates.get(workerId)
+    }
+
+    public async abortWorker(workerId: string): Promise<ProcessMessage> {
+        return new Promise<ProcessMessage>(async (resolve, reject) => {
+            const msgId = generateUuid()
+            await this.command({
+                workerId: workerId,
+                msgId: msgId,
+                commandType: 'ABORT',
+                payload:'',
+            }, async (d) => {
+                console.log(`receive abort!`)
+                this.clearWorker(workerId)
+                resolve(d)
+            }).catch(reject)
+        })
+    }
+
+    public clearWorker(workerId: string) {
+        this.completeCallbacks.delete(workerId)
+        this.errorCallbacks.delete(workerId)
+        this.progressCallbacks.delete(workerId)
+        this.workerStates.delete(workerId)
+        this.workers.delete(workerId)
+        this.db.deleteByKey(this.tableName, workerId).then(v => console.log(`Deleted from indexeddb, value=${JSON.stringify(v)}`)).catch(e => console.error(e))
+    }
+
+    public async getWorkersByType(workerType: WorkerType): Promise<WorkerState[]> {
+        // @ts-ignore, TODO: 如何解决这个问题
+        return await this.db.indexAll(this.tableName, "workerType", workerType)
+    }
+
+    private handleError(workerId: string, e: ErrorEvent) {
+        this.errorCallbacks.get(workerId)?.({workerId: workerId, msgId: '', processType: 'ERROR', payload: e.message})
+        this.clearWorker(workerId)
     }
 
     /**
      * 在主线程中处理各种响应消息
      *
-     * @param e 主线程收到的Worker线程的响应事件
+     * @param e - 主线程收到的Worker线程的响应事件
      *
-     * @private
      */
     private handleMessage(e: MessageEvent) {
-        console.log(`response =${JSON.stringify(e.data)}`)
-        const { id, processType } = e.data
-        try {
-            switch (processType) {
-                case 'PROGRESS':
-                    this.callbacks.get(id)?.progress?.(e.data)
-                    break
-                default:
-                    this.callbacks.get(id)?.callback?.(e.data)
-                    break
-            }
-        } finally {
-            this.callbacks.delete(id)
-        }
-    }
+        console.log(`receive=${serialize(e.data)}`)
+        const {workerId, msgId, processType} = e.data
+        const state = this.workerStates.get(workerId)
 
-    /**
-     * 创建命令
-     *
-     * @param commandType
-     * @param payload
-     */
-    static createCommand(commandType: CommandType, payload: any): CommandMessage {
-        return { id: generateUuid(), commandType: commandType, payload: payload }
+        switch (processType) {
+            case 'RESPONSE':
+                try {
+                    this.commandCallbacks.get(msgId)?.(e.data)
+                } finally {
+                    this.commandCallbacks.delete(msgId)
+                }
+                break
+            case 'PROGRESS':
+                if (state !== undefined) {
+                    state.progress = e.data?.progress
+                    this.db.updateByKey(this.tableName, state).catch(err => console.error(err))
+                }
+
+                this.progressCallbacks.get(workerId)?.(e.data)
+                break
+            case 'ERROR':
+                if (state !== undefined) {
+                    state.status = 'failed'
+                    state.error = e.data
+                    this.db.updateByKey(this.tableName, state).catch(err => console.error(err))
+                }
+
+                this.errorCallbacks.get(workerId)?.(e.data)
+                break
+            case 'COMPLETE':
+                try {
+                    if (state !== undefined) {
+                        state.status = 'completed'
+                        state.result = e.data
+                        this.db.updateByKey(this.tableName, state).catch(err => console.error(err))
+                    }
+                    this.completeCallbacks.get(workerId)?.(e.data)
+                } finally {
+                    this.clearWorker(workerId)
+                }
+                break
+            default:
+                this.errorCallbacks.get(workerId)?.(e.data)
+                break
+        }
     }
 
     /**
      * 主线程发起各种命令，可以是配置、开始、暂停、终止、重启等
      *
      * @param command 命令
-     * @param progressCallback 进度回调
+     * @param callback 当前命令的回调函数
      *
      */
-    async command(command: CommandMessage): Promise<ProcessMessage> {
+    async command(command: CommandMessage, callback?: WorkerCallback): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.callbacks.set(command.id, {
-                callback: (m: ProcessMessage) => (m.processType !== 'ERROR' ? resolve(m) : reject(m)),
-                progress: command.progress
-            })
+            const worker = this.workers.get(command.workerId)
+            if (worker === undefined) {
+                return reject(new Error("No such worker!"))
+            }
 
-            this.worker.postMessage(command)
+            if (callback) {
+                this.commandCallbacks.set(command.msgId, callback)
+            }
+
+            if (command.commandType === 'START') {
+                // 检测Transferable支持
+                const supportsTransferable = 'postMessage' in Worker.prototype && (new MessageChannel()).port1.postMessage.length > 1;
+                if (supportsTransferable) {
+                    console.log(`support transferable.`)
+                    worker.postMessage(command, [command.payload.file])
+                } else {
+                    worker.postMessage(command)
+                    console.log(`not support transferable.`)
+                }
+            } else {
+                worker.postMessage(command)
+            }
+            resolve()
         })
+    }
+
+    static skipMessage(message: ProcessMessage): void {
+        console.log(`skip process message: ${JSON.stringify(message)}`)
     }
 }

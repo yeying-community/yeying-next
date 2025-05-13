@@ -5,7 +5,7 @@
  */
 import { Index, Table } from '../cache/model'
 import { IndexedCache } from '../cache/indexed'
-import { isBlank } from '../common/string'
+import {isBlank} from "@yeying-community/yeying-client-ts";
 
 export class SessionMapper {
     tableName: string = 'session-message'
