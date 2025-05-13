@@ -1,5 +1,5 @@
 import { Processor } from './common'
-import {CommandMessage, ProcessMessage, WorkerCallback} from '../model/common'
+import { CommandMessage, ProcessMessage, WorkerCallback } from '../model/common'
 
 export class StateProcessor implements Processor {
     // 设置回调函数, 用于通知worker结束，或者中间状态
@@ -10,13 +10,13 @@ export class StateProcessor implements Processor {
     }
 
     async initialize(c: CommandMessage): Promise<ProcessMessage> {
-        return { workerId: c.workerId, msgId: c.msgId,  processType: 'RESPONSE' }
+        return { workerId: c.workerId, msgId: c.msgId, processType: 'RESPONSE' }
     }
 
     async config(c: CommandMessage): Promise<ProcessMessage> {
         console.log(`state worker config: ${JSON.stringify(c)}`)
         // 调节速度、并发度等
-        return { workerId: c.workerId, msgId: c.msgId,  processType: 'RESPONSE' }
+        return { workerId: c.workerId, msgId: c.msgId, processType: 'RESPONSE' }
     }
 
     async start(c: CommandMessage): Promise<ProcessMessage> {
@@ -32,12 +32,12 @@ export class StateProcessor implements Processor {
 
     async pause(c: CommandMessage): Promise<ProcessMessage> {
         console.log(`state worker pause: ${JSON.stringify(c)}`)
-        return {workerId: c.workerId, msgId: c.msgId,  processType: 'RESPONSE' }
+        return { workerId: c.workerId, msgId: c.msgId, processType: 'RESPONSE' }
     }
 
     async resume(c: CommandMessage): Promise<ProcessMessage> {
         console.log(`state worker resume: ${JSON.stringify(c)}`)
-        return { workerId: c.workerId, msgId: c.msgId,  processType: 'RESPONSE' }
+        return { workerId: c.workerId, msgId: c.msgId, processType: 'RESPONSE' }
     }
 
     // 必须实现静态序列化方法

@@ -1,13 +1,13 @@
 export interface UploadAssetMessage {
-    namespaceId: string,
-    file: File,
-    encrypted: boolean,
+    namespaceId: string
+    file: File
+    encrypted: boolean
 }
 
 export interface DownloadAssetMessage {
-    namespaceId: string,
-    hash: string,
-    merged: boolean,
+    namespaceId: string
+    hash: string
+    merged: boolean
 }
 
 export function getClientImports() {

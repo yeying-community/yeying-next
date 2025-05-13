@@ -1,6 +1,6 @@
-import {createDynamicWorker} from './template'
-import {UploadProcessor} from './processor/upload'
-import {DownloadProcessor} from './processor/download'
+import { createDynamicWorker, supportsTransferable } from './template'
+import { UploadProcessor } from './processor/upload'
+import { DownloadProcessor } from './processor/download'
 import {
     CommandMessage,
     ProcessMessage,
@@ -10,11 +10,11 @@ import {
     WorkerState,
     WorkerType
 } from './model/common'
-import {StateProcessor} from './processor/state'
-import {getClientImports} from './model/asset'
-import {generateUuid} from "@yeying-community/yeying-client-ts";
-import {IndexedCache} from "../cache/indexed";
-import {getCurrentUtcString} from "@yeying-community/yeying-web3";
+import { StateProcessor } from './processor/state'
+import { getClientImports } from './model/asset'
+import { generateUuid } from '@yeying-community/yeying-client-ts'
+import { IndexedCache } from '../cache/indexed'
+import { getCurrentUtcString } from '@yeying-community/yeying-web3'
 
 /**
  *
@@ -27,7 +27,7 @@ import {getCurrentUtcString} from "@yeying-community/yeying-web3";
  */
 
 export class WorkerManager {
-    private workers: Map<string, Worker> = new Map();
+    private workers: Map<string, Worker> = new Map()
     private db: IndexedCache
     private tableName: string = 'state'
     private completeCallbacks: Map<string, WorkerCallback> = new Map()
@@ -37,7 +37,7 @@ export class WorkerManager {
     private workerStates: Map<string, WorkerState> = new Map()
 
     constructor() {
-        this.db = new IndexedCache("workers")
+        this.db = new IndexedCache('workers')
     }
 
     /**
@@ -48,7 +48,13 @@ export class WorkerManager {
      * @param onError
      * @param onProgress
      */
-    public async createWorker(type: WorkerType, workerOption: WorkerOption, onComplete: WorkerCallback, onError: WorkerCallback, onProgress: WorkerCallback): Promise<ProcessMessage> {
+    public async createWorker(
+        type: WorkerType,
+        workerOption: WorkerOption,
+        onComplete: WorkerCallback,
+        onError: WorkerCallback,
+        onProgress: WorkerCallback
+    ): Promise<ProcessMessage> {
         return new Promise<ProcessMessage>(async (resolve, reject) => {
             const imports = getClientImports()
             let worker: Worker
@@ -80,48 +86,57 @@ export class WorkerManager {
             this.progressCallbacks.set(workerId, onProgress ?? WorkerManager.skipMessage)
             try {
                 // 创建状态存储到数据库中
-                await this.db.open([{
-                    name: this.tableName,
-                    key: "workerId",
-                    autoIncrement: false,
-                    indexes: [{
-                        keyPath: "workerType", name: "workerType", unique: false
-                    }]
-                }])
+                await this.db.open([
+                    {
+                        name: this.tableName,
+                        key: 'workerId',
+                        autoIncrement: false,
+                        indexes: [
+                            {
+                                keyPath: 'workerType',
+                                name: 'workerType',
+                                unique: false
+                            }
+                        ]
+                    }
+                ])
 
                 // 初始化worker
                 const msgId = generateUuid()
-                await this.command({
-                    workerId: workerId,
-                    msgId: msgId,
-                    commandType: 'INITIALIZE',
-                    payload: workerOption
-                }, async (d) => {
-                    console.log(`receive initialize!`)
-                    const state: WorkerState = {
-                        createdAt: getCurrentUtcString(),
-                        data: undefined,
-                        error: undefined,
-                        progress: 0,
-                        result: undefined,
-                        retries: 0,
-                        status: 'running',
-                        updatedAt: getCurrentUtcString(),
-                        workerType: type,
-                        workerId: d.workerId
-                    }
+                await this.command(
+                    {
+                        workerId: workerId,
+                        msgId: msgId,
+                        commandType: 'INITIALIZE',
+                        payload: workerOption
+                    },
+                    async (d) => {
+                        console.log(`receive initialize!`)
+                        const state: WorkerState = {
+                            createdAt: getCurrentUtcString(),
+                            data: undefined,
+                            error: undefined,
+                            progress: 0,
+                            result: undefined,
+                            retries: 0,
+                            status: 'running',
+                            updatedAt: getCurrentUtcString(),
+                            workerType: type,
+                            workerId: d.workerId
+                        }
 
-                    this.workerStates.set(workerId, state)
-                    try {
-                        await this.db.insert(this.tableName, state)
-                    } finally {
-                        resolve(d)
+                        this.workerStates.set(workerId, state)
+                        try {
+                            await this.db.insert(this.tableName, state)
+                        } finally {
+                            resolve(d)
+                        }
                     }
-                })
+                )
                 console.log(`create worker finished!`)
             } catch (err) {
                 console.error(`Fail to initialize worker:${type}`, err)
-                reject({workerId: workerId, msgId: '', processType: 'ERROR', payload: err})
+                reject({ workerId: workerId, msgId: '', processType: 'ERROR', payload: err })
             }
         })
     }
@@ -133,16 +148,19 @@ export class WorkerManager {
     public async abortWorker(workerId: string): Promise<ProcessMessage> {
         return new Promise<ProcessMessage>(async (resolve, reject) => {
             const msgId = generateUuid()
-            await this.command({
-                workerId: workerId,
-                msgId: msgId,
-                commandType: 'ABORT',
-                payload:'',
-            }, async (d) => {
-                console.log(`receive abort!`)
-                this.clearWorker(workerId)
-                resolve(d)
-            }).catch(reject)
+            await this.command(
+                {
+                    workerId: workerId,
+                    msgId: msgId,
+                    commandType: 'ABORT',
+                    payload: ''
+                },
+                async (d) => {
+                    console.log(`receive abort!`)
+                    this.clearWorker(workerId)
+                    resolve(d)
+                }
+            ).catch(reject)
         })
     }
 
@@ -152,16 +170,19 @@ export class WorkerManager {
         this.progressCallbacks.delete(workerId)
         this.workerStates.delete(workerId)
         this.workers.delete(workerId)
-        this.db.deleteByKey(this.tableName, workerId).then(v => console.log(`Deleted from indexeddb, value=${JSON.stringify(v)}`)).catch(e => console.error(e))
+        this.db
+            .deleteByKey(this.tableName, workerId)
+            .then((v) => console.log(`Deleted from indexeddb, value=${JSON.stringify(v)}`))
+            .catch((e) => console.error(e))
     }
 
     public async getWorkersByType(workerType: WorkerType): Promise<WorkerState[]> {
         // @ts-ignore, TODO: 如何解决这个问题
-        return await this.db.indexAll(this.tableName, "workerType", workerType)
+        return await this.db.indexAll(this.tableName, 'workerType', workerType)
     }
 
     private handleError(workerId: string, e: ErrorEvent) {
-        this.errorCallbacks.get(workerId)?.({workerId: workerId, msgId: '', processType: 'ERROR', payload: e.message})
+        this.errorCallbacks.get(workerId)?.({ workerId: workerId, msgId: '', processType: 'ERROR', payload: e.message })
         this.clearWorker(workerId)
     }
 
@@ -173,7 +194,7 @@ export class WorkerManager {
      */
     private handleMessage(e: MessageEvent) {
         console.log(`receive=${serialize(e.data)}`)
-        const {workerId, msgId, processType} = e.data
+        const { workerId, msgId, processType } = e.data
         const state = this.workerStates.get(workerId)
 
         switch (processType) {
@@ -187,7 +208,7 @@ export class WorkerManager {
             case 'PROGRESS':
                 if (state !== undefined) {
                     state.progress = e.data?.progress
-                    this.db.updateByKey(this.tableName, state).catch(err => console.error(err))
+                    this.db.updateByKey(this.tableName, state).catch((err) => console.error(err))
                 }
 
                 this.progressCallbacks.get(workerId)?.(e.data)
@@ -196,7 +217,7 @@ export class WorkerManager {
                 if (state !== undefined) {
                     state.status = 'failed'
                     state.error = e.data
-                    this.db.updateByKey(this.tableName, state).catch(err => console.error(err))
+                    this.db.updateByKey(this.tableName, state).catch((err) => console.error(err))
                 }
 
                 this.errorCallbacks.get(workerId)?.(e.data)
@@ -206,7 +227,7 @@ export class WorkerManager {
                     if (state !== undefined) {
                         state.status = 'completed'
                         state.result = e.data
-                        this.db.updateByKey(this.tableName, state).catch(err => console.error(err))
+                        this.db.updateByKey(this.tableName, state).catch((err) => console.error(err))
                     }
                     this.completeCallbacks.get(workerId)?.(e.data)
                 } finally {
@@ -222,34 +243,36 @@ export class WorkerManager {
     /**
      * 主线程发起各种命令，可以是配置、开始、暂停、终止、重启等
      *
-     * @param command 命令
-     * @param callback 当前命令的回调函数
+     * @param command - 命令信息
+     * @param callback - 命令的直接回调函数
+     * @param transfers - 零拷贝对象，避免在主线程和worker线程间拷贝数据：
+     *   ArrayBuffer
+     *   SharedArrayBuffer（受限）
+     *   MessagePort
+     *   ImageBitmap
+     *   OffscreenCanvas
      *
      */
-    async command(command: CommandMessage, callback?: WorkerCallback): Promise<void> {
+    async command(command: CommandMessage, callback?: WorkerCallback, transfers?: Transferable[]): Promise<void> {
         return new Promise((resolve, reject) => {
             const worker = this.workers.get(command.workerId)
             if (worker === undefined) {
-                return reject(new Error("No such worker!"))
+                return reject(new Error('No such worker!'))
             }
 
             if (callback) {
                 this.commandCallbacks.set(command.msgId, callback)
             }
 
-            if (command.commandType === 'START') {
-                // 检测Transferable支持
-                const supportsTransferable = 'postMessage' in Worker.prototype && (new MessageChannel()).port1.postMessage.length > 1;
-                if (supportsTransferable) {
-                    console.log(`support transferable.`)
-                    worker.postMessage(command, [command.payload.file])
-                } else {
-                    worker.postMessage(command)
-                    console.log(`not support transferable.`)
-                }
+            // 检测Transferable支持
+            if (supportsTransferable() && transfers && transfers.length > 0) {
+                console.log(`use transferable.`)
+                worker.postMessage(command, transfers)
             } else {
                 worker.postMessage(command)
+                console.log(`not support transferable.`)
             }
+
             resolve()
         })
     }

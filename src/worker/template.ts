@@ -18,6 +18,29 @@ export function createDynamicWorker(processor: string, imports: string[] = []) {
     return new Worker(URL.createObjectURL(blob), { type: 'module' })
 }
 
+export function supportsTransferable() {
+    // 基础支持检测
+    if (typeof Worker === 'undefined' || !Worker.prototype.postMessage) {
+        return false
+    }
+    let worker: Worker | undefined
+    try {
+        // 创建虚拟 Worker
+        worker = new Worker('data:,')
+        const buffer = new ArrayBuffer(1)
+
+        // 尝试转移 ArrayBuffer
+        worker.postMessage(buffer, [buffer])
+
+        // 验证缓冲区是否已分离（detached）
+        return buffer.byteLength === 0 // 转移成功时原 buffer 会被清空
+    } catch (e) {
+        return false
+    } finally {
+        worker?.terminate() // 清理资源
+    }
+}
+
 export const WORKER_TEMPLATE = `
   // --- Worker入口代码 ---
   {{IMPORTS}}
