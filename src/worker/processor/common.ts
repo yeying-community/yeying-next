@@ -1,7 +1,6 @@
 import { CommandMessage, ProcessMessage } from '../model/common'
 
 export interface Processor {
-
     // 初始化
     initialize(message: CommandMessage): Promise<ProcessMessage>
 

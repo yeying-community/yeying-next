@@ -8,4 +8,3 @@ export { WorkerManager } from './worker/manager'
 
 export { IndexedCache } from './cache/indexed'
 export { Index, Table } from './cache/model'
-
