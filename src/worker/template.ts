@@ -23,7 +23,7 @@ export const WORKER_TEMPLATE = `
   {{IMPORTS}}
 
   // 初始化依赖  
-  const processor = {{CLASS_CODE}}.deserialize((r) => self.postMessage(r)); 
+  const processor = {{CLASS_CODE}}.deserialize((r, t) => t ? self.postMessage(r, t) : self.postMessage(r)); 
   
   // 消息处理器
   self.onmessage = async (e) => {

@@ -1,5 +1,6 @@
 import {createDynamicWorker} from './template'
-import {DownloadProcessor, UploadProcessor} from './processor/asset'
+import {UploadProcessor} from './processor/upload'
+import {DownloadProcessor} from './processor/download'
 import {
     CommandMessage,
     ProcessMessage,
@@ -146,11 +147,11 @@ export class WorkerManager {
     }
 
     public clearWorker(workerId: string) {
-        this.workers.delete(workerId)
-        this.workerStates.delete(workerId)
         this.completeCallbacks.delete(workerId)
         this.errorCallbacks.delete(workerId)
         this.progressCallbacks.delete(workerId)
+        this.workerStates.delete(workerId)
+        this.workers.delete(workerId)
         this.db.deleteByKey(this.tableName, workerId).then(v => console.log(`Deleted from indexeddb, value=${JSON.stringify(v)}`)).catch(e => console.error(e))
     }
 
@@ -235,7 +236,20 @@ export class WorkerManager {
             if (callback) {
                 this.commandCallbacks.set(command.msgId, callback)
             }
-            worker.postMessage(command)
+
+            if (command.commandType === 'START') {
+                // 检测Transferable支持
+                const supportsTransferable = 'postMessage' in Worker.prototype && (new MessageChannel()).port1.postMessage.length > 1;
+                if (supportsTransferable) {
+                    console.log(`support transferable.`)
+                    worker.postMessage(command, [command.payload.file])
+                } else {
+                    worker.postMessage(command)
+                    console.log(`not support transferable.`)
+                }
+            } else {
+                worker.postMessage(command)
+            }
             resolve()
         })
     }

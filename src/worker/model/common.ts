@@ -9,7 +9,7 @@ export type CommandType = 'INITIALIZE' | 'CONFIG' | 'START' | 'ABORT' | 'PAUSE' 
 /**
  * Represents different types of process statuses that a worker can report.
  */
-export type ProcessType = 'PROGRESS' | 'ERROR' | 'COMPLETE' | 'RESPONSE';
+export type ProcessType = 'PROGRESS' | 'ERROR' | 'COMPLETE' | 'RESPONSE' | 'DATA';
 
 /**
  * Represents different types of workers available in the system.
@@ -110,7 +110,7 @@ export interface WorkerState<T = any> {
     data?: T;
 }
 
-export type WorkerCallback = (process: ProcessMessage) => void
+export type WorkerCallback = (process: ProcessMessage, transfer?: Transferable[]) => void
 
 export function serialize(data: any): string {
     return JSON.stringify(data, (key, value) => typeof value === 'bigint' ? value.toString() : value)
