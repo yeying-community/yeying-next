@@ -1,6 +1,6 @@
 {
   "name": "@yeying-community/yeying-next",
-  "version": "0.0.39",
+  "version": "0.0.40",
   "description": "a web3 application library for browser",
   "main": "dist/yeying-next.cjs.js",
   "module": "dist/yeying-next.esm.js",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@bufbuild/protobuf": "^2.2.3",
     "@connectrpc/connect-web": "^2.0.1",
-    "@yeying-community/yeying-client-ts": "^1.0.11",
+    "@yeying-community/yeying-client-ts": "^1.0.12",
     "@yeying-community/yeying-web3": "^0.0.36",
     "uuid": "^11.1.0"
   },
