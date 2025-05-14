@@ -245,9 +245,14 @@ export class IdentityManager {
 
     /**
      * 登录身份,解密身份信息
+     *
      * @param did - 身份的 DID
      * @param password - 登录密码
+     *
      * @returns 返回登录的身份信息
+     *
+     * @throws {@link InvalidPassword} 密码错误
+     *
      * @example
      * ```ts
      * const identity = await identityManager.login('example-did', 'example-password')
@@ -267,7 +272,7 @@ export class IdentityManager {
             const blockAddress = await decryptBlockAddress(identity.blockAddress, securityAlgorithm, password)
             this.blockAddressMap.set(did, blockAddress)
         } catch (err) {
-            console.error(`Fail to decrypt identity=${did}`, err)
+            console.error(`Fail to decrypt block address, did=${did}`, err)
             throw new InvalidPassword()
         }
 
@@ -324,7 +329,11 @@ export class IdentityManager {
      * @param did 身份的 DID
      * @param template 部分更新的身份模板
      * @param password 身份密码
+     *
      * @returns 返回更新后的身份信息
+     *
+     * @throws {@link InvalidPassword} 密码错误
+     *
      * @example
      * ```ts
      * const template = { extend: { name: 'New Name' } }
@@ -343,7 +352,15 @@ export class IdentityManager {
         this.identityMap.set(did, newIdentity)
 
         const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
-        this.blockAddressMap.set(did, await decryptBlockAddress(identity.blockAddress, securityAlgorithm, password))
+        let blockAddress: BlockAddress
+        try {
+            blockAddress = await decryptBlockAddress(identity.blockAddress, securityAlgorithm, password)
+        } catch (err) {
+            console.error(`Fail to decrypt block address`, err)
+            throw new InvalidPassword()
+        }
+
+        this.blockAddressMap.set(did, blockAddress)
         return newIdentity
     }
 
@@ -402,9 +419,14 @@ export class IdentityManager {
 
     /**
      * 导入身份信息，从 JSON 字符串导入身份，解密 BlockAddress 并缓存登录信息
+     *
      * @param content - 身份的 JSON 字符串
      * @param password - 身份密码
+     *
      * @returns 返回导入的身份信息
+     *
+     * @throws {@link InvalidPassword} 密码错误
+     *
      * @example
      * ```ts
      * const identity = await identityManager.importIdentity(identityJson, 'example-password')
@@ -420,7 +442,13 @@ export class IdentityManager {
         }
         const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
         // 解密区块链地址
-        const blockAddress = await decryptBlockAddress(identity.blockAddress, securityAlgorithm, password)
+        let blockAddress: BlockAddress
+        try {
+            blockAddress = await decryptBlockAddress(identity.blockAddress, securityAlgorithm, password)
+        } catch (err) {
+            console.error(`Fail to decrypt block address`, err)
+            throw new InvalidPassword()
+        }
 
         const did = identity.metadata?.did as string
         try {
