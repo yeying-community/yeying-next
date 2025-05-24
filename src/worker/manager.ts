@@ -19,8 +19,11 @@ import { getCurrentUtcString } from '@yeying-community/yeying-web3'
 /**
  *
  * 管理主线程发起的worker任务，worker文件使用内联代码动态生成，以及在主线程中处理消息响应，具体的流程：
+ *
  * 1、动态创建worker文件，用于和后台服务通信，比如下载和上传文件、同步状态，获取列表信息
+ *
  * 2、worker响应消息分为主动消息和被动消息，主动消息是响应主线程发送的命令，被动消息是worker通知给主线程当前的进度和状态等信息
+ *
  * 3、每个命令都有唯一ID，收到worker响应时，能够找到原始的命令，同时要考虑几种异常情况：
  *   1、如果页面刷新了，worker线程会终止，同时未处理的消息会丢失
  *   2、Blob Worker 默认无法使用 import 语句
@@ -35,9 +38,11 @@ export class WorkerManager {
     private progressCallbacks: Map<string, WorkerCallback> = new Map()
     private commandCallbacks: Map<string, WorkerCallback> = new Map()
     private workerStates: Map<string, WorkerState> = new Map()
+    private readonly workerOption: WorkerOption
 
-    constructor() {
+    constructor(workerOption: WorkerOption) {
         this.db = new IndexedCache('workers')
+        this.workerOption = workerOption
     }
 
     /**
@@ -50,7 +55,6 @@ export class WorkerManager {
      */
     public async createWorker(
         type: WorkerType,
-        workerOption: WorkerOption,
         onComplete: WorkerCallback,
         onError: WorkerCallback,
         onProgress: WorkerCallback
@@ -108,7 +112,7 @@ export class WorkerManager {
                         workerId: workerId,
                         msgId: msgId,
                         commandType: 'INITIALIZE',
-                        payload: workerOption
+                        payload: this.workerOption
                     },
                     async (d) => {
                         console.log(`receive initialize!`)
