@@ -1,4 +1,6 @@
-import { CommandMessage, ProcessMessage } from '../model/common'
+import {CommandMessage, ProcessMessage} from '../model/common'
+
+
 
 export interface Processor {
     // 初始化
