@@ -29,7 +29,7 @@ import {
 import { CookieCache } from '../cache/cookie'
 import { IdentityState } from '../state/identity'
 import { decryptString, encryptString } from '../common/crypto'
-import { NodeProvider } from '@yeying-community/yeying-client-ts'
+import { isBlank, NodeProvider } from '@yeying-community/yeying-client-ts'
 
 /**
  * 管理身份，支持身份的创建、登录、登出、更新和导入导出等操作
@@ -42,7 +42,7 @@ export class IdentityManager {
     private accountCache: LocalCache // 存储历史账号信息
     private identityCache: LocalCache // 存储历史身份信息
     private blockAddressMap: Map<string, BlockAddress> // 存储区块链地址的映射
-    private identityMap: Map<string, Identity> // 存储身份信息的映射
+    private identityMap: Map<string, string> // 存储身份信息的映射
     private readonly durationDays: number // 默认的有效期（天）
     private stateMap: Map<string, IdentityState> // 身份状态信息
 
@@ -65,7 +65,7 @@ export class IdentityManager {
         // 缓存区块链地址信息
         this.blockAddressMap = new Map<string, BlockAddress>()
         // 缓存身份信息
-        this.identityMap = new Map<string, Identity>()
+        this.identityMap = new Map<string, string>()
         // 默认密码保存有效期是7天
         this.durationDays = 7
         // 身份状态信息
@@ -181,29 +181,40 @@ export class IdentityManager {
             return blockAddress
         }
 
-        const token = this.cookieCache.get(did)
-        if (token === null) {
-            throw new NoPermission()
-        }
-
-        const encryptedPassword = this.sessionCache.get(did)
-        if (encryptedPassword === null) {
-            throw new NoPermission()
-        }
-
         const identity = await this.getIdentity(did)
+        const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
+        const password = await this.getPasswordFromCookie(did, securityAlgorithm)
+        if (isBlank(password)) {
+            throw new NoPermission()
+        }
+
+        // 解密身份
         try {
-            const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
-            const password = await decryptString(securityAlgorithm, token, encryptedPassword)
-
-            // 解密身份
             const blockAddress = await decryptBlockAddress(identity.blockAddress, securityAlgorithm, password)
-
             this.blockAddressMap.set(did, blockAddress)
             return blockAddress
         } catch (err) {
             console.error(`Fail to decrypt identity=${did}`, err)
             throw new NoPermission()
+        }
+    }
+
+    private async getPasswordFromCookie(did: string, securityAlgorithm: SecurityAlgorithm): Promise<string> {
+        const token = this.cookieCache.get(did)
+        if (token === null) {
+            return ''
+        }
+
+        const encryptedPassword = this.sessionCache.get(did)
+        if (encryptedPassword === null) {
+            return ''
+        }
+
+        try {
+            return await decryptString(securityAlgorithm, token, encryptedPassword)
+        } catch (err) {
+            console.error(`Fail to decrypt password=${did}`, err)
+            return ''
         }
     }
 
@@ -268,6 +279,7 @@ export class IdentityManager {
             this.sessionCache.set(this.loginKey, did)
             return identity
         }
+
         const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
         try {
             // 解密身份
@@ -308,8 +320,9 @@ export class IdentityManager {
         const did = metadata.did
 
         // 将身份数据缓存
-        this.identityCache.set(did, serializeIdentityToJson(identity))
-        this.identityMap.set(did, identity)
+        const identityJson = serializeIdentityToJson(identity)
+        this.identityCache.set(did, identityJson)
+        this.identityMap.set(did, identityJson)
         const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
         this.blockAddressMap.set(did, await decryptBlockAddress(identity.blockAddress, securityAlgorithm, password))
         this.setHistory(did)
@@ -330,11 +343,12 @@ export class IdentityManager {
      * 更新身份信息， 解密 BlockAddress 并使用新的模板信息更新身份
      * @param did 身份的 DID
      * @param template 部分更新的身份模板
-     * @param password 身份密码
+     * @param password 身份密码，如果已登陆可以不用传密码
      *
      * @returns 返回更新后的身份信息
      *
      * @throws {@link InvalidPassword} 密码错误
+     * @throws {@link NoPermission} 不允许执行更新操作
      *
      * @example
      * ```ts
@@ -342,18 +356,24 @@ export class IdentityManager {
      * const updatedIdentity = await identityManager.updateIdentity('example-did', template, 'example-password')
      * ```
      */
-    async updateIdentity(did: string, template: Partial<IdentityTemplate>, password: string) {
+    async updateIdentity(did: string, template: Partial<IdentityTemplate>, password?: string) {
         // 获得原始的身份信息
         const identity = await this.getIdentity(did)
+
+        const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
+        password = password ?? (await this.getPasswordFromCookie(did, securityAlgorithm))
+        if (isBlank(password)) {
+            throw new NoPermission()
+        }
 
         // 使用模板更新身份
         const newIdentity: Identity = await updateIdentity(template, identity, password)
 
         // 更新缓存中的身份信息
-        this.identityCache.set(did, serializeIdentityToJson(newIdentity))
-        this.identityMap.set(did, newIdentity)
+        const identityJson = serializeIdentityToJson(newIdentity)
+        this.identityCache.set(did, identityJson)
+        this.identityMap.set(did, identityJson)
 
-        const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
         let blockAddress: BlockAddress
         try {
             blockAddress = await decryptBlockAddress(identity.blockAddress, securityAlgorithm, password)
@@ -378,7 +398,7 @@ export class IdentityManager {
     async getIdentity(did: string): Promise<Identity> {
         const existing = this.identityMap.get(did)
         if (existing) {
-            return existing
+            return deserializeIdentityFromJson(existing)
         }
 
         const s = this.identityCache.get(did)
@@ -390,9 +410,10 @@ export class IdentityManager {
         const identity = deserializeIdentityFromJson(s)
         if (!(await verifyIdentity(identity))) {
             throw new DataTampering()
+        } else {
+            this.identityMap.set(did, s)
         }
 
-        this.identityMap.set(did, identity)
         return identity
     }
 
@@ -442,7 +463,10 @@ export class IdentityManager {
         if (!(await verifyIdentity(identity))) {
             throw new DataTampering()
         }
+
         const securityAlgorithm = identity.securityConfig?.algorithm as SecurityAlgorithm
+        const did = identity.metadata?.did as string
+
         // 解密区块链地址
         let blockAddress: BlockAddress
         try {
@@ -452,7 +476,6 @@ export class IdentityManager {
             throw new InvalidPassword()
         }
 
-        const did = identity.metadata?.did as string
         try {
             // 缓存密码
             await this.cachePassword(did, password, securityAlgorithm)
@@ -462,7 +485,7 @@ export class IdentityManager {
 
         // 将导入的身份缓存
         this.identityCache.set(metadata.did, content)
-        this.identityMap.set(did, identity)
+        this.identityMap.set(did, content)
         this.blockAddressMap.set(did, blockAddress)
         this.setHistory(metadata.did)
         // 设置当前登陆帐户
