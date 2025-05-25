@@ -1,5 +1,5 @@
-import { CommandMessage, CommonConfig, ProcessMessage, WorkerCallback, WorkerOption } from '../model/common'
-import { Processor } from './common'
+import {CommandMessage, CommonConfig, ProcessMessage, ProcessType, WorkerCallback, WorkerOption} from '../model/common'
+import {Processor} from './common'
 import { DownloadAssetMessage } from '../model/asset'
 
 export class DownloadProcessor implements Processor {
@@ -29,24 +29,11 @@ export class DownloadProcessor implements Processor {
     async start(c: CommandMessage): Promise<ProcessMessage> {
         console.log(`download worker start: ${JSON.stringify(c)}`)
         const message: DownloadAssetMessage = c.payload
-        const success = (a: any) =>
-            this.callback(
-                { workerId: c.workerId, msgId: c.msgId, processType: 'COMPLETE', payload: a },
-                message.merged ? [a.data] : undefined
-            )
-        const error = (e: any) =>
-            this.callback({ workerId: c.workerId, msgId: c.msgId, processType: 'ERROR', payload: e.message })
-        const callback = message.merged
-            ? undefined
-            : (b: any, d: any) =>
-                  this.callback(
-                      { workerId: c.workerId, msgId: c.msgId, processType: 'DATA', payload: { block: b, data: d } },
-                      [d]
-                  )
-        const progress = (e: any) =>
-            this.callback({ workerId: c.workerId, msgId: c.msgId, processType: 'PROGRESS', payload: e })
-        this.downloader.download(message.namespaceId, message.hash, progress, callback).then(success).catch(error)
-        return { workerId: c.workerId, msgId: c.msgId, processType: 'RESPONSE' }
+        const complete = (a: any) => this.callback(this.createProcessMessage(c, 'COMPLETE', a))
+        const error = (e: any) => this.callback(this.createProcessMessage(c, 'ERROR', e.message))
+        const progress = (b: any) => this.callback(this.createProcessMessage(c, 'PROGRESS', b), [b.data.buffer])
+        this.downloader.download(message.namespaceId, message.hash, progress).then(complete).catch(error)
+        return this.createProcessMessage(c, 'RESPONSE' )
     }
 
     async pause(c: CommandMessage): Promise<ProcessMessage> {
@@ -67,5 +54,9 @@ export class DownloadProcessor implements Processor {
     // 必须实现静态序列化方法
     static deserialize(callback: WorkerCallback): DownloadProcessor {
         return new DownloadProcessor(callback)
+    }
+
+    createProcessMessage(c: CommandMessage, type: ProcessType, payload?: any): ProcessMessage {
+        return { workerId: c.workerId, msgId: c.msgId, processType: type, payload: payload }
     }
 }

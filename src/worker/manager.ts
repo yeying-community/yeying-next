@@ -197,8 +197,8 @@ export class WorkerManager {
      *
      */
     private handleMessage(e: MessageEvent) {
-        console.log(`receive=${serialize(e.data)}`)
-        const { workerId, msgId, processType } = e.data
+        const { workerId, msgId, processType, payload } = e.data
+        console.log(`Receive message, workerId=${workerId}, msgId=${msgId}, processType=${processType}`)
         const state = this.workerStates.get(workerId)
 
         switch (processType) {
@@ -211,7 +211,18 @@ export class WorkerManager {
                 break
             case 'PROGRESS':
                 if (state !== undefined) {
-                    state.progress = e.data?.progress
+                    state.progress = payload.progress
+                    switch (state.workerType) {
+                        case "UPLOAD_ASSET":
+                            state.data = state.data ?? []
+                            state.data.push(payload.block)
+                            break
+                        case "DOWNLOAD_ASSET":
+                            state.data = state.data ?? []
+                            state.data.push(payload.block)
+                            break
+                    }
+
                     this.db.updateByKey(this.tableName, state).catch((err) => console.error(err))
                 }
 
@@ -220,7 +231,7 @@ export class WorkerManager {
             case 'ERROR':
                 if (state !== undefined) {
                     state.status = 'failed'
-                    state.error = e.data
+                    state.error = payload
                     this.db.updateByKey(this.tableName, state).catch((err) => console.error(err))
                 }
 
@@ -230,7 +241,7 @@ export class WorkerManager {
                 try {
                     if (state !== undefined) {
                         state.status = 'completed'
-                        state.result = e.data
+                        state.result = payload
                         this.db.updateByKey(this.tableName, state).catch((err) => console.error(err))
                     }
                     this.completeCallbacks.get(workerId)?.(e.data)

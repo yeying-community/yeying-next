@@ -232,10 +232,12 @@ export class IdentityManager {
      * ```
      */
     isLogin(did: string): boolean {
+        // 检查内存信息
         if (this.blockAddressMap.get(did) !== undefined) {
             return true
         }
 
+        // 检查cookie中缓存的token是否有效
         if (this.cookieCache.get(did) !== null && this.sessionCache.get(did) !== null) {
             return true
         }
