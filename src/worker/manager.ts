@@ -213,11 +213,11 @@ export class WorkerManager {
                 if (state !== undefined) {
                     state.progress = payload.progress
                     switch (state.workerType) {
-                        case "UPLOAD_ASSET":
+                        case 'UPLOAD_ASSET':
                             state.data = state.data ?? []
                             state.data.push(payload.block)
                             break
-                        case "DOWNLOAD_ASSET":
+                        case 'DOWNLOAD_ASSET':
                             state.data = state.data ?? []
                             state.data.push(payload.block)
                             break

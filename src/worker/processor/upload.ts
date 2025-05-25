@@ -1,4 +1,11 @@
-import {CommandMessage, CommonConfig, ProcessMessage, ProcessType, WorkerCallback, WorkerOption} from '../model/common'
+import {
+    CommandMessage,
+    CommonConfig,
+    ProcessMessage,
+    ProcessType,
+    WorkerCallback,
+    WorkerOption
+} from '../model/common'
 import { Processor } from './common'
 import { UploadAssetMessage } from '../model/asset'
 
@@ -32,13 +39,13 @@ export class UploadProcessor implements Processor {
         const message: UploadAssetMessage = c.payload
 
         const complete = (a: any) => this.callback(this.createProcessMessage(c, 'COMPLETE', a))
-        const error = (e: any) => this.callback(this.createProcessMessage(c, 'ERROR', e.message ))
-        const callback = (p: any) => this.callback(this.createProcessMessage(c, 'PROGRESS', p ))
+        const error = (e: any) => this.callback(this.createProcessMessage(c, 'ERROR', e.message))
+        const callback = (p: any) => this.callback(this.createProcessMessage(c, 'PROGRESS', p))
 
         //@ts-ignore, 当前定义的类是动态创建，这个类需要通过url传入进来
         this.uploader.upload(message.namespaceId, message.file, message.encrypted, callback).then(complete).catch(error)
         console.log(`upload worker start message: ${JSON.stringify(message)}`)
-        return this.createProcessMessage(c, 'RESPONSE' )
+        return this.createProcessMessage(c, 'RESPONSE')
     }
 
     async pause(c: CommandMessage): Promise<ProcessMessage> {

@@ -1,5 +1,12 @@
-import {CommandMessage, CommonConfig, ProcessMessage, ProcessType, WorkerCallback, WorkerOption} from '../model/common'
-import {Processor} from './common'
+import {
+    CommandMessage,
+    CommonConfig,
+    ProcessMessage,
+    ProcessType,
+    WorkerCallback,
+    WorkerOption
+} from '../model/common'
+import { Processor } from './common'
 import { DownloadAssetMessage } from '../model/asset'
 
 export class DownloadProcessor implements Processor {
@@ -33,7 +40,7 @@ export class DownloadProcessor implements Processor {
         const error = (e: any) => this.callback(this.createProcessMessage(c, 'ERROR', e.message))
         const progress = (b: any) => this.callback(this.createProcessMessage(c, 'PROGRESS', b), [b.data.buffer])
         this.downloader.download(message.namespaceId, message.hash, progress).then(complete).catch(error)
-        return this.createProcessMessage(c, 'RESPONSE' )
+        return this.createProcessMessage(c, 'RESPONSE')
     }
 
     async pause(c: CommandMessage): Promise<ProcessMessage> {
