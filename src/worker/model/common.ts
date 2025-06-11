@@ -115,3 +115,7 @@ export type WorkerCallback = (process: ProcessMessage, transfers?: Transferable[
 export function serialize(data: any): string {
     return JSON.stringify(data, (key, value) => (typeof value === 'bigint' ? value.toString() : value))
 }
+
+export function getModulePath(pkg: string): string {
+    return `https://esm.sh/${pkg}@latest?target=esnext`
+}
