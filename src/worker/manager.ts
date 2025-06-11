@@ -4,14 +4,14 @@ import { DownloadProcessor } from './processor/download'
 import {
     CommandMessage,
     ProcessMessage,
-    serialize,
     WorkerCallback,
     WorkerOption,
     WorkerState,
     WorkerType
 } from './model/common'
 import { StateProcessor } from './processor/state'
-import { getClientImports } from './model/asset'
+import { getUploadImports, getDownloadImports } from './model/asset'
+import { getStateImports } from './model/state'
 import { generateUuid } from '@yeying-community/yeying-client-ts'
 import { IndexedCache } from '../cache/indexed'
 import { getCurrentUtcString } from '@yeying-community/yeying-web3'
@@ -60,17 +60,16 @@ export class WorkerManager {
         onProgress: WorkerCallback
     ): Promise<ProcessMessage> {
         return new Promise<ProcessMessage>(async (resolve, reject) => {
-            const imports = getClientImports()
             let worker: Worker
             switch (type) {
                 case 'UPLOAD_ASSET':
-                    worker = createDynamicWorker(UploadProcessor.toString(), imports)
+                    worker = createDynamicWorker('UploadProcessor', getUploadImports())
                     break
                 case 'DOWNLOAD_ASSET':
-                    worker = createDynamicWorker(DownloadProcessor.toString(), imports)
+                    worker = createDynamicWorker('DownloadProcessor', getDownloadImports())
                     break
                 case 'SYNC_STATE':
-                    worker = createDynamicWorker(StateProcessor.toString(), imports)
+                    worker = createDynamicWorker('StateProcessor', getStateImports())
                     break
                 default:
                     throw new Error(`Unsupported type: ${type}`)

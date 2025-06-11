@@ -1,3 +1,5 @@
+import {getModulePath} from "./common";
+
 export interface UploadAssetMessage {
     namespaceId: string
     file: File
@@ -10,10 +12,10 @@ export interface DownloadAssetMessage {
     merged: boolean
 }
 
-export function getClientImports() {
-    return [`import { Uploader, Downloader } from '${getModulePath('@yeying-community/yeying-client-ts')}';`]
+export function getUploadImports() {
+    return [`import { UploadProcessor } from '${getModulePath('@yeying-community/yeying-next')}';`]
 }
 
-function getModulePath(pkg: string): string {
-    return `https://esm.sh/${pkg}@latest?target=esnext`
+export function getDownloadImports() {
+    return [`import { DownloadProcessor } from '${getModulePath('@yeying-community/yeying-next')}';`]
 }

@@ -1,4 +1,3 @@
-import {ApplicationManager} from "../../src/application/manager";
 import {ServiceManager} from "../../src/service/manager";
 import {ApplicationCodeEnum, ServiceCodeEnum} from "@yeying-community/yeying-client-ts";
 import {getApplicationAddress, getBlockAddress} from "../common/common";
