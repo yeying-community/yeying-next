@@ -1,18 +1,13 @@
 import { createDynamicWorker, supportsTransferable } from './template'
-import { UploadProcessor } from './processor/upload'
-import { DownloadProcessor } from './processor/download'
 import {
     CommandMessage,
+    WorkerType,
+    generateUuid, getModulePath,
     ProcessMessage,
     WorkerCallback,
     WorkerOption,
-    WorkerState,
-    WorkerType
-} from './model/common'
-import { StateProcessor } from './processor/state'
-import { getUploadImports, getDownloadImports } from './model/asset'
-import { getStateImports } from './model/state'
-import { generateUuid } from '@yeying-community/yeying-client-ts'
+    WorkerState
+} from '@yeying-community/yeying-client-ts'
 import { IndexedCache } from '../cache/indexed'
 import { getCurrentUtcString } from '@yeying-community/yeying-web3'
 
@@ -63,13 +58,13 @@ export class WorkerManager {
             let worker: Worker
             switch (type) {
                 case 'UPLOAD_ASSET':
-                    worker = createDynamicWorker('UploadProcessor', getUploadImports())
+                    worker = createDynamicWorker('UploadProcessor', [`import { UploadProcessor } from '${getModulePath('@yeying-community/yeying-client-ts')}';`])
                     break
                 case 'DOWNLOAD_ASSET':
-                    worker = createDynamicWorker('DownloadProcessor', getDownloadImports())
+                    worker = createDynamicWorker('DownloadProcessor', [`import { DownloadProcessor } from '${getModulePath('@yeying-community/yeying-client-ts')}';`])
                     break
                 case 'SYNC_STATE':
-                    worker = createDynamicWorker('StateProcessor', getStateImports())
+                    worker = createDynamicWorker('StateProcessor', [`import { StateProcessor } from '${getModulePath('@yeying-community/yeying-client-ts')}';`])
                     break
                 default:
                     throw new Error(`Unsupported type: ${type}`)
