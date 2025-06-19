@@ -27,7 +27,7 @@ export class ServiceManager {
     async listServiceByCode(code: ServiceCodeEnum): Promise<ServiceMetadata[]> {
         const node = await this.getCurrentNodeService()
         const serviceProvider = new ServiceProvider({ proxy: node.proxy, blockAddress: this.blockAddress })
-        const services = await serviceProvider.search({ code: code }, 1, 10)
+        const services = await serviceProvider.search(1, 10, { code: code })
         if (services === undefined || services.length === 0) {
             throw new NotFound(`There is no ${ServiceCodeEnum[code]} service!`)
         } else {
