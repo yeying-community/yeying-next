@@ -8,6 +8,7 @@ export abstract class State {
     protected constructor(stateId: string) {
         this.stateId = stateId
         this.storage = new LocalCache()
+        this.data = {}
     }
 
     abstract getStorageKey(key: string): string
@@ -27,7 +28,7 @@ export abstract class State {
     }
 
     getConfig(key: string): any {
-        this.getDict('config', key)
+        return this.getDict('config', key)
     }
 
     /**
@@ -45,7 +46,7 @@ export abstract class State {
     }
 
     getMetadata(key: string): any {
-        this.getDict('metadata', key)
+        return this.getDict('metadata', key)
     }
 
     /**
@@ -59,7 +60,7 @@ export abstract class State {
     }
 
     getData(key: string): any {
-        this.getDict('data', key)
+        return this.getDict('data', key)
     }
 
     clearData(): void {
@@ -77,7 +78,7 @@ export abstract class State {
     }
 
     getExtend(key: string): any {
-        this.getDict('extend', key)
+        return this.getDict('extend', key)
     }
 
     clearExtend(): void {
