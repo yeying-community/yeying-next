@@ -1,6 +1,6 @@
 import { BlockAddress } from '@yeying-community/yeying-web3'
 import { NotFound } from '../common/error'
-import { ServiceCodeEnum, ServiceMetadata, ServiceProvider } from '@yeying-community/yeying-client-ts'
+import { SearchServiceCondition, ServiceCodeEnum, ServiceMetadata, ServiceProvider } from '@yeying-community/yeying-client-ts'
 import { Myself } from '../application/myself'
 
 /**
@@ -27,11 +27,11 @@ export class ServiceManager {
     async listServiceByCode(code: ServiceCodeEnum): Promise<ServiceMetadata[]> {
         const node = await this.getCurrentNodeService()
         const serviceProvider = new ServiceProvider({ proxy: node.proxy, blockAddress: this.blockAddress })
-        const services = await serviceProvider.search(1, 10, { code: code })
-        if (services === undefined || services.length === 0) {
+        const res = await serviceProvider.search(1, 10, { code: code } as SearchServiceCondition)
+        if (res.body?.services === undefined || res.body?.services.length === 0) {
             throw new NotFound(`There is no ${ServiceCodeEnum[code]} service!`)
         } else {
-            return services
+            return res.body?.services
         }
     }
 
