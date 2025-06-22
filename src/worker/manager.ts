@@ -2,7 +2,8 @@ import { createDynamicWorker, supportsTransferable } from './template'
 import {
     CommandMessage,
     WorkerType,
-    generateUuid, getModulePath,
+    generateUuid,
+    getModulePath,
     ProcessMessage,
     WorkerCallback,
     WorkerOption,
@@ -58,13 +59,19 @@ export class WorkerManager {
             let worker: Worker
             switch (type) {
                 case 'UPLOAD_ASSET':
-                    worker = createDynamicWorker('UploadProcessor', [`import { UploadProcessor } from '${getModulePath('@yeying-community/yeying-client-ts')}';`])
+                    worker = createDynamicWorker('UploadProcessor', [
+                        `import { UploadProcessor } from '${getModulePath('@yeying-community/yeying-client-ts')}';`
+                    ])
                     break
                 case 'DOWNLOAD_ASSET':
-                    worker = createDynamicWorker('DownloadProcessor', [`import { DownloadProcessor } from '${getModulePath('@yeying-community/yeying-client-ts')}';`])
+                    worker = createDynamicWorker('DownloadProcessor', [
+                        `import { DownloadProcessor } from '${getModulePath('@yeying-community/yeying-client-ts')}';`
+                    ])
                     break
                 case 'SYNC_STATE':
-                    worker = createDynamicWorker('StateProcessor', [`import { StateProcessor } from '${getModulePath('@yeying-community/yeying-client-ts')}';`])
+                    worker = createDynamicWorker('StateProcessor', [
+                        `import { StateProcessor } from '${getModulePath('@yeying-community/yeying-client-ts')}';`
+                    ])
                     break
                 default:
                     throw new Error(`Unsupported type: ${type}`)

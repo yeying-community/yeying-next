@@ -1,7 +1,15 @@
 import { BlockAddress } from '@yeying-community/yeying-web3'
 import { NotFound } from '../common/error'
-import { SearchServiceCondition, ServiceCodeEnum, ServiceMetadata, ServiceProvider } from '@yeying-community/yeying-client-ts'
+import {
+    SearchServiceConditionSchema,
+    ServiceCodeEnum,
+    ServiceCodeEnumJson,
+    ServiceCodeEnumSchema,
+    ServiceMetadata,
+    ServiceProvider
+} from '@yeying-community/yeying-client-ts'
 import { Myself } from '../application/myself'
+import { create, toBinary, toJson, enumToJson, fromJson, enumFromJson } from '@bufbuild/protobuf'
 
 /**
  * 从当前应用的注册表搜索服务元信息，注册表通常存储在节点服务中
@@ -27,7 +35,7 @@ export class ServiceManager {
     async listServiceByCode(code: ServiceCodeEnum): Promise<ServiceMetadata[]> {
         const node = await this.getCurrentNodeService()
         const serviceProvider = new ServiceProvider({ proxy: node.proxy, blockAddress: this.blockAddress })
-        const res = await serviceProvider.search(1, 10, { code: code } as SearchServiceCondition)
+        const res = await serviceProvider.search(1, 10, { code: enumToJson(ServiceCodeEnumSchema, code) })
         if (res.body?.services === undefined || res.body?.services.length === 0) {
             throw new NotFound(`There is no ${ServiceCodeEnum[code]} service!`)
         } else {
